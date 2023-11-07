@@ -1,0 +1,56 @@
+<style>
+    @page {
+        size: A4 portrait;
+        margin: 1cm 0.3cm 0.5cm;
+        padding-bottom: 1cm;
+
+        @bottom-left {
+            content: element(footer);
+        }
+    }
+
+    @page :first {
+        margin-top: 0;
+
+        @top-left {
+            content: element(header);
+        }
+    }
+
+    * {
+        font-family: "Source Sans Pro";
+    }
+
+    h1 {
+        font-weight: 700;
+        font-style: normal;
+        font-size: 20px;
+        font-family: "Source Sans Pro";
+    }
+
+    p {
+        margin-top: 3px;
+        margin-bottom: 3px;
+        font-size: 14px;
+        font-family: "Source Sans Pro";
+    }
+    .title {
+      display: inline-block;
+      position: absolute;
+      top: 12px;
+      left: 100px;
+    }
+
+    .navlogo {
+      display: inline-block;
+      padding-top: 15px;
+      padding-bottom: 12px;
+      margin-left: 3px;
+      width: 48px;
+    }
+
+    .container {
+      margin: 0cm 0.7cm;
+      height: 850px;
+    }
+</style>

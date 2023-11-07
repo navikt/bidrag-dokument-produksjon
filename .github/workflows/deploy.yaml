@@ -1,0 +1,85 @@
+name: Bygg, publish og deploy
+on:
+  push:
+jobs:
+  build-and-publish:
+    name: Bygg, test og publiser docker image
+    runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
+    outputs:
+      image: ${{ steps.docker-build-push.outputs.image }}
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+      - name: docker-build-push
+        uses: nais/docker-build-push@v0
+        id: docker-build-push
+        with:
+          team: bidrag
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+
+  deploy-dev:
+    runs-on: ubuntu-latest
+    name: Deploy to dev
+    needs: build-and-publish
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: deploy
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: dev-gcp
+          RESOURCE: deploy/.nais/nais.yaml
+          VARS: deploy/.nais/dev.yaml
+          IMAGE: ${{ needs.build-and-publish.outputs.image }}
+    outputs:
+      image: ${{ needs.build-and-publish.outputs.image }}
+      tag: ${{ needs.build-and-publish.outputs.tag }}
+
+
+  deploy-prod:
+    runs-on: ubuntu-latest
+    name: Deploy to prod
+    if: github.ref == 'refs/heads/release'
+    needs: build-and-publish
+
+    steps:
+      - uses: actions/checkout@v3
+        with:
+          path: deploy
+      - uses: nais/deploy/actions/deploy@v1
+        env:
+          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
+          CLUSTER: prod-gcp
+          RESOURCE: deploy/.nais/nais.yaml
+          VARS: deploy/.nais/prod.yaml
+          IMAGE: ${{ needs.build-and-publish.outputs.image }}
+    outputs:
+      image: ${{ needs.build-and-publish.outputs.image }}
+      tag: ${{ needs.build-and-publish.outputs.tag }}
+
+  tag:
+    runs-on: ubuntu-latest
+    name: Tag release
+    permissions:
+      contents: write
+    needs: deploy-prod
+    steps:
+      - uses: actions/checkout@v3
+      - name: Push latest image tag as github tag
+        id: tag_version
+        uses: mathieudutour/github-tag-action@v6.1
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          custom_tag: ${{ needs.deploy-prod.outputs.tag }}
+      - name: Create a GitHub release
+        uses: ncipollo/release-action@v1
+        with:
+          tag: ${{ steps.tag_version.outputs.new_tag }}
+          name: Release ${{ steps.tag_version.outputs.new_tag }}
+          body: ${{ steps.tag_version.outputs.changelog }}
