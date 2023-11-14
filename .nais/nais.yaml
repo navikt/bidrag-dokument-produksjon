@@ -1,0 +1,50 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: bidrag-dokument-produksjon
+  namespace: bidrag
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-body-size: "20M"
+  labels:
+    team: bidrag
+spec:
+  image: {{ image }}
+  ingresses:
+  {{#each ingresses as |url|}}
+      - {{url}}
+  {{/each}}
+  port: 8080
+  azure:
+    application:
+      enabled: true
+      allowAllUsers: true
+      claims:
+        extra:
+          - "NAVident"
+          - "azp_name"
+  accessPolicy:
+    inbound:
+      rules:
+      {{#each azure_access_inbound}}
+          - application: {{this.application}}
+      {{/each}}
+  replicas:
+    min: 1
+    max: 2
+    cpuThresholdPercentage: 90
+  liveness:
+    path: /internal/is_alive
+  readiness:
+    path: /internal/is_ready
+  startup:
+    path: /internal/is_alive
+    initialDelay: 10
+  prometheus:
+    enabled: true
+    path: /internal/prometheus
+  resources:
+    limits:
+      memory: 256Mi
+    requests:
+      cpu: 100m
+      memory: 256Mi

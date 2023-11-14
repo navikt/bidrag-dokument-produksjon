@@ -1,0 +1,7 @@
+ingresses:
+  - https://bidrag-dokument-produksjon.intern.dev.nav.no
+azure_access_inbound:
+  - application: bidrag-ui-feature
+  - application: bidrag-ui
+  - application: bidrag-dokument-bestilling-feature
+  - application: bidrag-dokument-bestilling
