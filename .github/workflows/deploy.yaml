@@ -1,6 +1,9 @@
 name: Bygg, publish og deploy
 on:
   push:
+
+env:
+  GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 jobs:
   build-and-publish:
     name: Bygg, test og publiser docker image

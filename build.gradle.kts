@@ -1,6 +1,5 @@
 group = "no.nav.bidrag"
 version = "1.0.0" //This will never change. See GitHub releases for docker image release
-
 val handlebarsVersion = "4.3.1"
 val jacksonVersion = "2.15.3"
 val jaxbVersion = "4.0.4"
@@ -16,7 +15,7 @@ val junitJupiterVersion = "5.10.1"
 val verapdfVersion = "1.24.1"
 val ktfmtVersion = "0.44"
 val kotlinloggerVesion = "5.1.0"
-
+val mavenVersion = "3.9.5"
 
 plugins {
     id("application")
@@ -69,7 +68,17 @@ tasks {
 repositories {
     mavenCentral()
     mavenLocal()
+
+    maven {
+        name = "github"
+        url = uri("https://maven.pkg.github.com/navikt/pdfgen-core")
+        credentials {
+            username = System.getenv("GITHUB_USERNAME") ?: "x-access-token"
+            password = System.getenv("GITHUB_TOKEN")
+        }
+    }
 }
+
 
 dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
@@ -109,4 +118,5 @@ dependencies {
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
 
     testImplementation("io.ktor:ktor-client-cio:$ktorVersion")
+
 }
