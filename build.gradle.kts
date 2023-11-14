@@ -15,7 +15,6 @@ val junitJupiterVersion = "5.10.1"
 val verapdfVersion = "1.24.1"
 val ktfmtVersion = "0.44"
 val kotlinloggerVesion = "5.1.0"
-val mavenVersion = "3.9.5"
 
 plugins {
     id("application")

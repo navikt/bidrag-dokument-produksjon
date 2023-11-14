@@ -48,14 +48,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: deploy
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
-          RESOURCE: deploy/.nais/nais.yaml
-          VARS: deploy/.nais/dev.yaml
+          RESOURCE: .nais/nais.yaml
+          VARS: .nais/dev.yaml
           IMAGE: ${{ needs.build-and-publish.outputs.image }}
     outputs:
       image: ${{ needs.build-and-publish.outputs.image }}
@@ -70,14 +68,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-        with:
-          path: deploy
       - uses: nais/deploy/actions/deploy@v1
         env:
           APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
-          RESOURCE: deploy/.nais/nais.yaml
-          VARS: deploy/.nais/prod.yaml
+          RESOURCE: .nais/nais.yaml
+          VARS: .nais/prod.yaml
           IMAGE: ${{ needs.build-and-publish.outputs.image }}
     outputs:
       image: ${{ needs.build-and-publish.outputs.image }}
@@ -90,7 +86,7 @@ jobs:
       contents: write
     needs: deploy-prod
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Push latest image tag as github tag
         id: tag_version
         uses: mathieudutour/github-tag-action@v6.1

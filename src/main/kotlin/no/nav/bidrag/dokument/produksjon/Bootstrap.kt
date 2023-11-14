@@ -40,7 +40,7 @@ import org.verapdf.gf.foundry.VeraGreenfieldFoundryProvider
 val objectMapper: ObjectMapper = ObjectMapper().registerKotlinModule()
 
 fun main() {
-    initializeApplication(8580).start(wait = true)
+    initializeApplication(System.getenv("SERVER_PORT")?.toInt() ?: 8080).start(wait = true)
 }
 
 fun initializeApplication(port: Int): ApplicationEngine {
