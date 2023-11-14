@@ -25,7 +25,7 @@ plugins {
 }
 
 application {
-    mainClass.set("no.nav.pdfgen.BootstrapKt")
+    mainClass.set("no.nav.bidrag.dokument.produksjon.BootstrapKt")
 }
 
 tasks {
