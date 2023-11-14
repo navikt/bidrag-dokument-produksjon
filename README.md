@@ -32,7 +32,7 @@ COPY resources /app/resources # additional resources
 Check GitHub releases to find the latest `release` version 
 Check [Github releases](https://github.com/navikt/pdfgen/releases) to find the latest `release` version
 
-Set up the basic folder structure
+Set up the basic folder structure2
 ```bash
 mkdir {templates,fonts,resources,data}
 ```

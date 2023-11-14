@@ -1,14 +1,22 @@
-FROM gcr.io/distroless/java17@sha256:2f01c2ff0c0db866ed73085cf1bb5437dd162b48526f89c1baa21dd77ebb5e6d
+FROM busybox:1.36.1-uclibc as busybox
+
+FROM gcr.io/distroless/java21-debian12:nonroot
+LABEL maintainer="Team Bidrag" \
+      email="bidrag@nav.no"
+
+COPY --from=busybox /bin/sh /bin/sh
+COPY --from=busybox /bin/printenv /bin/printenv
 
 WORKDIR /app
 
-COPY build/libs/app-*.jar app.jar
-COPY fonts fonts
+COPY build/libs/app.jar app.jar
 COPY templates templates
 COPY resources resources
-ENV JDK_JAVA_OPTIONS="-Dlogback.configurationFile=logback-remote.xml"
-ENV DISABLE_PDF_GET="true"
-ENV ENABLE_HTML_ENDPOINT="false"
 
 EXPOSE 8080
-CMD [ "app.jar" ]
+ENV TZ="Europe/Oslo"
+ENV SPRING_PROFILES_ACTIVE=nais
+ENV JDK_JAVA_OPTIONS="-Dlogback.configurationFile=logback-remote.xml"
+ENV DISABLE_PDF_GET="false"
+ENV ENABLE_HTML_ENDPOINT="true"
+CMD ["app.jar"]

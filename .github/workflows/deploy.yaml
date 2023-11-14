@@ -12,7 +12,20 @@ jobs:
       image: ${{ steps.docker-build-push.outputs.image }}
     steps:
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
+      - name: Gradle wrapper validation
+        uses: gradle/wrapper-validation-action@v1
+      - name: Setup gradle dependency cache
+        uses: actions/cache@v3
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: ${{ runner.os }}-gradle-${{ hashFiles('**/.*gradle*') }}
+          restore-keys: |
+            ${{ runner.os }}-gradle-
+      - name: Build
+        run: ./gradlew build
       - name: docker-build-push
         uses: nais/docker-build-push@v0
         id: docker-build-push
@@ -27,7 +40,7 @@ jobs:
     needs: build-and-publish
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: deploy
       - uses: nais/deploy/actions/deploy@v1
@@ -49,7 +62,7 @@ jobs:
     needs: build-and-publish
 
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
         with:
           path: deploy
       - uses: nais/deploy/actions/deploy@v1

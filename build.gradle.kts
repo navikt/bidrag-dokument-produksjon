@@ -1,5 +1,5 @@
 group = "no.nav.bidrag"
-version = "2.0.0" //This will never change. See GitHub releases for docker image release
+version = "1.0.0" //This will never change. See GitHub releases for docker image release
 
 val handlebarsVersion = "4.3.1"
 val jacksonVersion = "2.15.3"
@@ -15,6 +15,7 @@ val prometheusVersion = "0.16.0"
 val junitJupiterVersion = "5.10.1"
 val verapdfVersion = "1.24.1"
 val ktfmtVersion = "0.44"
+val kotlinloggerVesion = "5.1.0"
 
 
 plugins {
@@ -44,13 +45,14 @@ tasks {
     }
 
     shadowJar {
-        archiveBaseName.set("app")
-        archiveClassifier.set("")
+        archiveBaseName = "app"
+        archiveClassifier = ""
+        archiveVersion = ""
         isZip64 = true
         manifest {
             attributes(
                 mapOf(
-                    "Main-Class" to "no.nav.pdfgen.BootstrapKt",
+                    "Main-Class" to "no.nav.bidrag.dokument.produksjon.BootstrapKt",
                 ),
             )
         }
@@ -96,10 +98,11 @@ dependencies {
     implementation("io.prometheus:simpleclient_hotspot:$prometheusVersion")
 
     implementation("org.verapdf:validation-model:$verapdfVersion")
+    implementation("io.github.oshai:kotlin-logging-jvm:$kotlinloggerVesion")
 
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashEncoderVersion")
-    implementation("no.nav.pdfgen:core:1.0-SNAPSHOT")
+    implementation("no.nav.pdfgen:pdfgen-core:local-build")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
