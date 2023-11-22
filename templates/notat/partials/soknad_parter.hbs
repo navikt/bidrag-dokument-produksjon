@@ -1,0 +1,25 @@
+<div class="soknad_parter">
+    <h2>Parter</h2>
+    <div>
+        {{#each parterISøknad as |part|~}}
+            {{#eq part.rolle "BIDRAGSMOTTAKER"}}
+                <dl>
+                    {{#> common/datarow  label="Bidragsmottaker:" value=(concat part.navn "/" (iso_to_date part.fødselsdato))}}
+                    {{/common/datarow  }}
+                </dl>
+            {{/eq}}
+            {{#eq part.rolle "BIDRAGSPLIKTIG"}}
+                {{#> common/datarow  label="Bidragspliktig:" value=(concat part.navn "/" (iso_to_date part.fødselsdato))}}
+                {{/common/datarow  }}
+            {{/eq}}
+        {{/each}}
+        <dl>
+            <dt>Barn i saken:</dt>
+            <dd style="display: inline-table">
+                    {{#filter parterISøknad "rolle" "BARN" as |barn|}}
+                        <span style="width: 100%; display: block">{{ barn.navn }} / {{ iso_to_date barn.fødselsdato }}</span>
+                    {{/filter}}
+            </dd>
+        </dl>
+    </div>
+</div>

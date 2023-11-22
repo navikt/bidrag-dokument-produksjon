@@ -5,16 +5,22 @@ package no.nav.bidrag.dokument.produksjon
 
 import com.fasterxml.jackson.databind.ObjectMapper
 import com.fasterxml.jackson.module.kotlin.registerKotlinModule
+import com.github.jknack.handlebars.Helper
 import com.github.jknack.handlebars.Template
 import com.openhtmltopdf.slf4j.Slf4jLogger
 import com.openhtmltopdf.util.XRLog
+import io.github.smiley4.ktorswaggerui.SwaggerUI
+import io.github.smiley4.ktorswaggerui.data.SwaggerUiSort
+import io.github.smiley4.ktorswaggerui.data.SwaggerUiSyntaxHighlight
 import io.ktor.http.ContentType
 import io.ktor.http.HttpHeaders
 import io.ktor.http.HttpStatusCode
 import io.ktor.http.content.TextContent
 import io.ktor.http.withCharset
 import io.ktor.serialization.jackson.jackson
+import io.ktor.server.application.*
 import io.ktor.server.application.call
+import io.ktor.server.application.createApplicationPlugin
 import io.ktor.server.application.install
 import io.ktor.server.engine.ApplicationEngine
 import io.ktor.server.engine.embeddedServer
@@ -33,25 +39,41 @@ import io.prometheus.client.exporter.common.TextFormat
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
-import no.nav.bidrag.dokument.produksjon.api.setupGeneratePdfApi
-import no.nav.pdfgen.core.template.loadTemplates
+import no.nav.bidrag.dokument.produksjon.api.setupApi
+import no.nav.bidrag.dokument.produksjon.api.setupProduserNotatApi
+import no.nav.pdfgen.core.Environment
+import no.nav.pdfgen.core.PDFGenCore
+import no.nav.pdfgen.core.PDFGenResource
 import org.verapdf.gf.foundry.VeraGreenfieldFoundryProvider
 
 val objectMapper: ObjectMapper = ObjectMapper().registerKotlinModule()
 
 fun main() {
-    initializeApplication(System.getenv("SERVER_PORT")?.toInt() ?: 8080).start(wait = true)
+    initializeApplication(no.nav.bidrag.dokument.produksjon.Environment().port).start(wait = true)
 }
 
 fun initializeApplication(port: Int): ApplicationEngine {
     System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider")
     VeraGreenfieldFoundryProvider.initialise()
-
-    val templates = loadTemplates()
+    val environment = no.nav.bidrag.dokument.produksjon.Environment()
+    PDFGenCore.init(
+            Environment(
+                    additionalHandlebarHelpers = mapOf(
+                            "enum_to_readable" to Helper<String> { context, _ ->
+                                when (context) {
+                                    "BIDRAGSMOTTAKER" -> "Bidragsmottaker"
+                                    else -> ""
+                                }
+                            },
+                    ),
+                    templateRoot = PDFGenResource("templates/"),
+                    resourcesRoot = PDFGenResource("resources/"),
+                    dataRoot = PDFGenResource("data/"),
+            ),
+    )
     val collectorRegistry: CollectorRegistry = CollectorRegistry.defaultRegistry
 
     XRLog.setLoggerImpl(Slf4jLogger())
-
     return embeddedServer(
         Netty,
         port,
@@ -65,19 +87,35 @@ fun initializeApplication(port: Int): ApplicationEngine {
             allowHost("client-host:8081")
             allowHeader(HttpHeaders.ContentType)
         }
+        install(SwaggerUI) {
+            swagger {
+                forwardRoot = true
+                swaggerUrl = "swagger-ui"
+                onlineSpecValidator()
+                displayOperationId = true
+                showTagFilterInput = true
+                sort = SwaggerUiSort.HTTP_METHOD
+                syntaxHighlight = SwaggerUiSyntaxHighlight.MONOKAI
+            }
+        }
         install(ContentNegotiation) { jackson {} }
 
         install(StatusPages) {
             status(HttpStatusCode.NotFound) { call, _ ->
                 call.respond(
                     TextContent(
-                        messageFor404(templates, call.request.path()),
+                        messageFor404(PDFGenCore.environment.templates, call.request.path()),
                         ContentType.Text.Plain.withCharset(Charsets.UTF_8),
                         HttpStatusCode.NotFound,
                     ),
                 )
             }
         }
+        install(createApplicationPlugin(name = "ReloadPDFGenCorePlugin") {
+            onCallReceive { _ ->
+               if (environment.isDevMode) PDFGenCore.reloadEnvironment()
+            }
+        })
         routing {
             get("/internal/is_ready") { call.respondText("I'm ready") }
             get("/internal/is_alive") { call.respondText("I'm alive") }
@@ -94,7 +132,8 @@ fun initializeApplication(port: Int): ApplicationEngine {
                     }
                 }
             }
-            setupGeneratePdfApi()
+            setupProduserNotatApi()
+            setupApi()
         }
     }
 }

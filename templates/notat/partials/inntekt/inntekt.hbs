@@ -1,0 +1,11 @@
+<h4>{{rolle}}</h4>
+<div>
+    {{#> notat/partials/inntekt/table list=inntekter.arbeidsforhold title="Arbeidsforhold" type="ARBEIDSFORHOLD"}}
+    {{/notat/partials/inntekt/table }}
+    {{#> notat/partials/inntekt/table list=inntekter.inntekterSomLeggesTilGrunn title="Inntektene som legges til grunn" type="INNTEKTER"}}
+    {{/notat/partials/inntekt/table }}
+    {{#> notat/partials/inntekt/table list=inntekter.barnetillegg title="Barnetillegg" type="BARNETILLEGG"}}
+    {{/notat/partials/inntekt/table }}
+    {{#> notat/partials/inntekt/table list=inntekter.utvidetBarnetrygd title="Utvidet barnetrygd" type="UTVIDET_BARNETRYGD"}}
+    {{/notat/partials/inntekt/table }}
+</div>

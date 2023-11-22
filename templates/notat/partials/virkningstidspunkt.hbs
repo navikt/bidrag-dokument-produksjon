@@ -1,0 +1,17 @@
+<div class="virkningstidspunkt">
+    <h2>Virkningstidspunkt</h2>
+    <div>
+        {{#> common/datarow label="Søknadstype:" value=søknadstype}}
+        {{/common/datarow }}
+        {{#> common/datarow  label="Søkt fra:" value=søktAv}}
+        {{/common/datarow  }}
+        {{#> common/datarow  label="Mottatt dato:" value=(iso_to_date mottattDato)}}
+        {{/common/datarow  }}
+        {{#> common/datarow  label="Søkt fra dato:" value=(iso_to_date søktFraDato)}}
+        {{/common/datarow  }}
+        {{#> common/datarow  label="Virkningstidspunkt:" value=(iso_to_date virkningstidspunkt)}}
+        {{/common/datarow  }}
+        {{#> notat/partials/notat notat}}
+        {{/notat/partials/notat }}
+    </div>
+</div>

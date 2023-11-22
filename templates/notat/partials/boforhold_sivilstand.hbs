@@ -1,0 +1,29 @@
+<div class="soknad_parter">
+    <h2>Boforhold</h2>
+    <div>
+        {{#> common/datarow  label="Antall barn i saken:" value=boforhold.length}}
+        {{/common/datarow  }}
+        {{#each boforhold as |barn|~}}
+            {{#> common/datarow  label="Barn i saken:"
+                                        value=(concat barn.navn "/" (iso_to_date barn.fødselsdato))}}
+            {{/common/datarow  }}
+            {{#> notat/partials/table list=barn.opplysningerFraFolkeregisteret
+                                      title="Opplysninger fra folkeregisteret"}}
+            {{/notat/partials/table }}
+            {{#> notat/partials/table list=barn.opplysningerBruktTilBeregning title="Opplysninger brukt til beregning"}}
+            {{/notat/partials/table }}
+            <div class="horizontal-line"></div>
+
+        {{/each}}
+
+    </div>
+    <div>
+        <h2>Sivilstand</h2>
+        <div>
+            {{#> notat/partials/table list=sivilstand}}
+            {{/notat/partials/table }}
+        </div>
+    </div>
+    {{#> notat/partials/notat notat}}
+    {{/notat/partials/notat }}
+</div>

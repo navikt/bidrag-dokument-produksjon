@@ -1,0 +1,140 @@
+<style>
+    @page {
+        size: A4 portrait;
+        margin: 1cm 1cm 1cm 0.5cm;
+        padding-bottom: 1cm;
+        padding-top: 1cm;
+
+        @bottom-left {
+            content: element(footer);
+        }
+    }
+
+    @page:first {
+        margin-top: 0;
+        @top-left {
+            content: element(header);
+        }
+    }
+    body {
+        background-color: white;
+        width: 210mm;
+        height: 100%;
+        color:black;
+    }
+
+    dt:before {
+        content: "";
+        display: block;
+    }
+    dt, dd {
+        display: inline;
+    }
+
+    dd {
+        margin-inline-start: 0px;
+        margin: 0;
+    }
+    dt {
+        font-weight: bold;
+    }
+    #header {
+        position: relative;
+        height: 80px;
+    }
+
+    .title {
+        display: inline-block;
+        position: absolute;
+        top: 1rem;
+        left: 0.5cm;
+        font-size: 32px;
+    }
+    .navlogo {
+        position: absolute;
+        right: 0;
+        top: 0;
+        margin-top: -30px;
+        margin-right: 90px;
+        width: 180px;
+        height: 180px;
+    }
+
+    * {
+        font-family: "Source Sans Pro";
+    }
+
+    h1 {
+        font-weight: 700;
+        font-style: normal;
+        font-size: 32px;
+        font-family: "Source Sans Pro";
+    }
+
+    p {
+        margin-top: 3px;
+        margin-bottom: 3px;
+        font-size: 14px;
+        font-family: "Source Sans Pro";
+    }
+
+    .container {
+        margin: 0cm 0.5cm;
+        height: 100%;
+    }
+
+    .flex-inline {
+        display: inline-flex;
+    }
+    .flex-col {
+        flex-direction: column;
+    }
+
+    .table {
+        display: table;
+        width: 100%;
+        border-collapse: collapse;
+        table-layout: auto;
+    }
+    .table thead {
+        display: table-header-group;
+    }
+    .table tr {
+        display: table-row;
+    }
+    .table thead tr th {
+        display: table-cell;
+        text-align: left;
+        padding: 2px;
+    }
+
+    .table tbody {
+        display: table-row-group;
+    }
+    .table tbody tr th {
+        display: table-cell;
+        text-align: left;
+        padding: 2px;
+        font-weight: bold;
+        width: auto;
+    }
+    .table tbody tr td {
+        display: table-cell;
+        text-align: left;
+        padding: 2px 2px 8px 2px;
+        width: auto;
+    }
+
+    .horizontal-line {
+        border-bottom: 1px solid black;
+        width: 100%;
+        padding-top: 5px;
+        padding-bottom: 5px;
+    }
+    #pagenumber:before {
+        content: counter(page);
+    }
+    #pagecount:before {
+        content: counter(pages)
+    }
+</style>

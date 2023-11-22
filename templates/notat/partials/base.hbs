@@ -1,25 +1,40 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8" />
-        <meta name="description" content="{{> doctitle}}"/>
-        <meta name="author" content="bidrag-dokument-produksjon"/>
-        <meta name="subject" content="{{> doctitle}}"/>
+    <meta charset="UTF-8"/>
+    <meta name="description" content="{{> doctitle}}"/>
+    <meta name="author" content="bidrag-dokument-produksjon"/>
+    <meta name="subject" content="{{> doctitle}}"/>
     <title>{{> doctitle}}</title>
-    {{#block 'notat/partials/style' }}
+    {{#block 'common/style' }}
     {{/block}}
 </head>
 <body>
-<div id="header">
-    <img alt="NAV logo" class="navlogo" src="{{ image "Navlogo.png" }}"/>
-    <h1 class="title">{{> title}}</h1>
-</div>
-<div class="container">
+    <div id="header">
+        <h1 class="title">{{> title}}</h1>
+        <img alt="NAV logo" class="navlogo" src="{{ image "NavlogoRød.svg" }}"/>
+    </div>
 
-</div>
-<div id="footer">
-    <span class="saksnummer">{{ saksnummer }}</span>
-    <span class="sidetall">side <span id="pagenumber"></span> av <span id="pagecount"></span></span>
-</div>
+    <div class="container">
+        <div class="detaljer">
+            <dl>
+                <dt>Saksnummer:</dt>
+                <dd>{{ saksnummer }}</dd>
+            </dl>
+        </div>
+        {{#> notat/partials/soknad_parter }}
+        {{/notat/partials/soknad_parter}}
+        {{#> notat/partials/virkningstidspunkt virkningstidspunkt }}
+        {{/notat/partials/virkningstidspunkt}}
+        {{#> notat/partials/boforhold_sivilstand }}
+        {{/notat/partials/boforhold_sivilstand}}
+        {{#> notat/partials/inntekt/inntektBase }}
+        {{/notat/partials/inntekt/inntektBase}}
+        {{#> notat/partials/vedtak }}
+        {{/notat/partials/vedtak}}
+    </div>
+    <div id="footer">
+        <span class="sidetall">side <span id="pagenumber"></span> av <span id="pagecount"></span></span>
+    </div>
 </body>
 </html>

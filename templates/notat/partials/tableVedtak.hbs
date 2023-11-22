@@ -1,0 +1,27 @@
+<div style="padding-bottom: 10px;">
+    {{#is_defined title}}
+        <h4 style="padding: 0; margin: 0 0 5px 0">{{title}}</h4>
+    {{/is_defined}}
+    <table class="table">
+        <tr>
+                <th style="width: 80px">Type</th>
+                <th style="width: 220px">Periode</th>
+                <th style="width: 100px">Inntekt</th>
+                <th style="width: 150px">Sivilstand til BM</th>
+                <th style="width: 150px">Antall barn</th>
+                <th style="width: 200px">Resultat</th>
+
+        </tr>
+        {{#each list as |data|~}}
+            <tr>
+                <td>{{data.type}}</td>
+                <td>{{json_to_period (stringify data.periode)}}</td>
+                <td>{{data.inntekt}}</td>
+                <td>{{data.sivilstand}}</td>
+                <td>{{data.antallBarn}}</td>
+                <td>{{data.resultat}}</td>
+            </tr>
+        {{/each}}
+
+    </table>
+</div>

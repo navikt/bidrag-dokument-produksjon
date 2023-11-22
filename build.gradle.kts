@@ -14,6 +14,7 @@ val prometheusVersion = "0.16.0"
 val junitJupiterVersion = "5.10.1"
 val verapdfVersion = "1.24.1"
 val ktfmtVersion = "0.44"
+val bidragTransportVersion = "20231121154912_d2da786"
 val kotlinloggerVesion = "5.1.0"
 
 plugins {
@@ -110,7 +111,9 @@ dependencies {
 
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashEncoderVersion")
-    implementation("no.nav.pdfgen:pdfgen-core:1.0.2")
+    implementation("no.nav.pdfgen:pdfgen-core:local-build")
+    implementation("no.nav.bidrag:bidrag-transport:$bidragTransportVersion")
+    implementation("io.github.smiley4:ktor-swagger-ui:2.7.1")
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
