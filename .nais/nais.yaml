@@ -33,15 +33,15 @@ spec:
     max: 2
     cpuThresholdPercentage: 90
   liveness:
-    path: /internal/is_alive
+    path: /actuator/health
   readiness:
-    path: /internal/is_ready
+    path: /actuator/health
   startup:
     path: /internal/is_alive
     initialDelay: 10
   prometheus:
     enabled: true
-    path: /internal/prometheus
+    path: /actuator/prometheus
   resources:
     limits:
       memory: 256Mi

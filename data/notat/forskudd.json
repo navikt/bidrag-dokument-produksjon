@@ -1,0 +1,269 @@
+{
+  "saksnummer": "2300455",
+  "saksbehandlerNavn": "Hansen, Hans Madsen",
+  "virkningstidspunkt": {
+    "søknadstype": "Forskudd",
+    "søktAv": "Bidragsmottaker",
+    "mottattDato": "2023-03",
+    "søktFraDato": "2023-01",
+    "virkningstidspunkt": "2023-01",
+    "notat": {
+      "medIVedtaket": "Du har søkt om bidragsforskudd fra 01.05.2022 med den begrunnelse at du ikke har har blitt informert muligheten for å søke tidligere. I brev av 05.10.2022 er du blitt bedt om å dokumentere påstanden, men NAV har ikke mottatt etterspurt dokumentasjon innen fristen.  Bidragsforskuddet er fastsatt med virkning fra 01.07.2022, som er tre måneder før NAV fikk søknaden din.",
+      "intern": ""
+    }
+  },
+  "boforhold": {
+    "barn": [
+      {
+        "navn": "Emma Banan",
+        "fødselsdato": "2023-03-01",
+        "opplysningerFraFolkeregisteret": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "status": "Registrert på adresse"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "status": "Ikke registrert på adresse"
+          }
+        ],
+        "opplysningerBruktTilBeregning": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "status": "Registrert på adresse",
+            "kilde": "OFFENTLIG"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "status": "Ikke registrert på adresse",
+            "kilde": "MANUELT"
+          }
+        ]
+      },
+      {
+        "navn": "Lemma Banan",
+        "fødselsdato": "2018-06-03",
+        "opplysningerFraFolkeregisteret": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "status": "Registrert på adresse"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "status": "Ikke registrert på adresse"
+          }
+        ],
+        "opplysningerBruktTilBeregning": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "status": "Registrert på adresse",
+            "kilde": "Offentlig"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "status": "Ikke registrert på adresse",
+            "kilde": "Manuelt"
+          }
+        ]
+      }
+    ],
+    "sivilstand": [
+      {
+        "periode": {
+          "fom": "2022-05-01",
+          "til": "2022-10-31"
+        },
+        "status": "Bor alene med barn"
+      },
+      {
+        "periode": {
+          "fom": "2022-11-01"
+        },
+        "status": "Gift/Samboer"
+      }
+    ],
+    "notat": {
+      "medIVedtaket": "Du har søkt om bidragsforskudd fra 01.05.2022 med den begrunnelse at du ikke har har blitt informert muligheten for å søke tidligere. I brev av 05.10.2022 er du blitt bedt om å dokumentere påstanden, men NAV har ikke mottatt etterspurt dokumentasjon innen fristen.  Bidragsforskuddet er fastsatt med virkning fra 01.07.2022, som er tre måneder før NAV fikk søknaden din.",
+      "intern": ""
+    }
+  },
+
+  "parterISøknad": [
+    {
+      "rolle": "BIDRAGSMOTTAKER",
+      "navn": "Mia Banan",
+      "fødselsdato": "1996-02-20",
+      "personident": "12123312313"
+    },
+    {
+      "rolle": "BIDRAGSPLIKTIG",
+      "navn": "Amalie Banan",
+      "fødselsdato": "1993-01-20",
+      "personident": "4545454545"
+    },
+    {
+      "rolle": "BARN",
+      "navn": "Emma Banan",
+      "fødselsdato": "2023-03-01",
+      "personident": "45455454545"
+    },
+    {
+      "rolle": "BARN",
+      "navn": "Lemma Banan",
+      "fødselsdato": "2018-06-03",
+      "personident": "45455454545"
+    }
+  ],
+  "inntekter": {
+    "inntekterPerRolle": [
+      {
+        "rolle": "BIDRAGSMOTTAKER",
+        "arbeidsforhold": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "arbeidsgiver": "Barnehage AS",
+            "stillingProsent": "90",
+            "lønnsendringDato": "2022-10-05"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "arbeidsgiver": "Videregående skole AS",
+            "stillingProsent": "90",
+            "lønnsendringDato": "2022-10-05"
+          }
+        ],
+        "inntekterSomLeggesTilGrunn": [
+          {
+            "beskrivelse": "3 måneder beregnet",
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "beløp": "12341"
+          },
+          {
+            "beskrivelse": "12 måneder beregnet",
+            "beløp": "12341"
+          },
+          {
+            "beskrivelse": "Lønn og trekkoppgave 2022",
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-12-31"
+            },
+            "beløp": "12341"
+          },
+          {
+            "beskrivelse": "Skattegrunnlagg 2021",
+            "beløp": "12"
+          }
+        ],
+        "barnetillegg": [
+          {
+            "status": "Registrert på adresse",
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-12-31"
+            },
+            "beløp": "12341"
+          }
+        ],
+        "utvidetBarnetrygd": [
+          {
+            "deltBosted": true,
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-12-31"
+            },
+            "beløp": "12341"
+          }
+        ]
+      }
+    ],
+    "notat": {
+      "medIVedtaket": "Du har søkt om bidragsforskudd fra 01.05.2022 med den begrunnelse at du ikke har har blitt informert muligheten for å søke tidligere. I brev av 05.10.2022 er du blitt bedt om å dokumentere påstanden, men NAV har ikke mottatt etterspurt dokumentasjon innen fristen.  Bidragsforskuddet er fastsatt med virkning fra 01.07.2022, som er tre måneder før NAV fikk søknaden din.",
+      "intern": ""
+    }
+  },
+  "vedtak": [
+    {
+      "navn": "Emma Banan",
+      "fødselsdato": "2018-06-03",
+      "resultat": [
+        {
+          "type": "Forskudd",
+          "periode": {
+            "fom": "2022-07-01"
+          },
+          "inntekt": 651791,
+          "sivilstand": "Ugift",
+          "antallBarn": 2,
+          "resultat": "Opphør pga høy inntekt"
+        },
+        {
+          "type": "Forskudd",
+          "periode": {
+            "fom": "2021-09-01",
+            "til": "2022-07-01"
+          },
+          "inntekt": 851791,
+          "sivilstand": "Ugift",
+          "antallBarn": 2,
+          "resultat": "Redusert"
+        }
+      ]
+    },
+    {
+      "navn": "Lemma Banan",
+      "fødselsdato": "2018-06-03",
+      "resultat": [
+        {
+          "type": "Forskudd",
+          "periode": {
+            "fom": "2022-07-01"
+          },
+          "inntekt": 651791,
+          "sivilstand": "Ugift",
+          "antallBarn": 2,
+          "resultat": "Opphør pga høy inntekt"
+        },
+        {
+          "type": "Forskudd",
+          "periode": {
+            "fom": "2021-09-01",
+            "til": "2022-07-01"
+          },
+          "inntekt": 851791,
+          "sivilstand": "Ugift",
+          "antallBarn": 2,
+          "resultat": "Redusert"
+        }
+      ]
+    }
+  ]
+}

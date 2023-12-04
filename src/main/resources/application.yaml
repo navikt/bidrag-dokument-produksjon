@@ -1,0 +1,22 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: "prometheus,health"
+
+spring:
+  devtools:
+    livereload:
+      port: 35730
+  jackson:
+    deserialization:
+      READ_UNKNOWN_ENUM_VALUES_AS_NULL: true
+
+
+springdoc:
+  packages-to-scan: no.nav.bidrag.dokument.produksjon.api
+  swagger-ui:
+    path: /
+
+spring.main.banner-mode: off
+
