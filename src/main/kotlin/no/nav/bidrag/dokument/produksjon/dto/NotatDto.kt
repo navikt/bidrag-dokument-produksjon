@@ -1,12 +1,12 @@
 package no.nav.bidrag.dokument.produksjon.dto
 
+import java.math.BigDecimal
+import java.time.LocalDate
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
-import java.math.BigDecimal
-import java.time.LocalDate
 
 data class NotatDto(
     val saksnummer: String,

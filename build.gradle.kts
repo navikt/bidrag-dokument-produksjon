@@ -1,4 +1,5 @@
 import org.jetbrains.kotlin.ir.backend.js.compile
+import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 group = "no.nav.bidrag"
 version = "1.0.0" //This will never change. See GitHub releases for docker image release
@@ -36,8 +37,17 @@ application {
 java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
-tasks {
 
+tasks {
+    withType(Tar::class.java).configureEach {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
+    withType(BootJar::class.java).configureEach {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
+    withType(Zip::class.java).configureEach {
+        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+    }
     test {
         useJUnitPlatform {}
         testLogging {

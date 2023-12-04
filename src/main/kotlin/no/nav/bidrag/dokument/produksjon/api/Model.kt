@@ -14,7 +14,6 @@ import org.springframework.http.ResponseEntity
 
 private val log = KotlinLogging.logger {}
 
-
 fun generateHTMLResponse(
     category: String,
     template: String,
@@ -22,9 +21,7 @@ fun generateHTMLResponse(
     useHottemplate: Boolean = false
 ): ResponseEntity<*> {
     return generateHtml(category, template, content, useHottemplate)?.let {
-        ResponseEntity.ok()
-            .contentType(MediaType.TEXT_HTML)
-            .body(it)
+        ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
     }
         ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
 }
@@ -51,7 +48,9 @@ fun generatePDFResponse(
     val startTime = System.currentTimeMillis()
     return generateHtml(category, template, payload, useHottemplate)?.let { document ->
         val bytes = PdfContent(document).generate()
-        log.info { "Done generating PDF for category $category and template $template in ${System.currentTimeMillis() - startTime}ms" }
+        log.info {
+            "Done generating PDF for category $category and template $template in ${System.currentTimeMillis() - startTime}ms"
+        }
         ResponseEntity.ok()
             .contentType(MediaType.APPLICATION_PDF)
             .header(
@@ -59,7 +58,8 @@ fun generatePDFResponse(
                 "inline; filename=dokumenter_sammenslatt.pdf",
             )
             .body(bytes)
-    } ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
+    }
+        ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
 }
 
 fun generateHtml(

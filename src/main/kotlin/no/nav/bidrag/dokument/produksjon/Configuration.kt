@@ -20,9 +20,8 @@ class Configuration {
     fun openApiCustomiser(examples: Collection<Example>): OpenApiCustomizer {
         return OpenApiCustomizer { openAPI ->
             examples.forEach { example ->
-                    openAPI.components.addExamples(example.description, example)
-                }
-
+                openAPI.components.addExamples(example.description, example)
+            }
         }
     }
 }
