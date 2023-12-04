@@ -44,6 +44,7 @@ import no.nav.bidrag.dokument.produksjon.api.setupProduserNotatApi
 import no.nav.pdfgen.core.Environment
 import no.nav.pdfgen.core.PDFGenCore
 import no.nav.pdfgen.core.PDFGenResource
+import org.slf4j.MDC
 import org.verapdf.gf.foundry.VeraGreenfieldFoundryProvider
 
 val objectMapper: ObjectMapper = ObjectMapper().registerKotlinModule()

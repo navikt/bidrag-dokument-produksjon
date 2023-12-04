@@ -26,7 +26,7 @@ private val log = KotlinLogging.logger {}
 fun Routing.setupApi(env: Environment = Environment()) {
     route("/api/genpdf") {
         if (!env.disablePdfGet) {
-            get("/{category}/{dokumentmal}") {
+            get("/get/{category}/{dokumentmal}") {
                 generatePDFResponse(call.category, call.template, call, true)
             }
         }

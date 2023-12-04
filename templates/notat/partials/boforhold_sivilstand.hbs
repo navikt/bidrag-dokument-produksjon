@@ -1,9 +1,9 @@
 <div class="soknad_parter">
     <h2>Boforhold</h2>
     <div>
-        {{#> common/datarow  label="Antall barn i saken:" value=boforhold.length}}
+        {{#> common/datarow  label="Antall barn i saken:" value=boforhold.barn.length}}
         {{/common/datarow  }}
-        {{#each boforhold as |barn|~}}
+        {{#each boforhold.barn as |barn|~}}
             {{#> common/datarow  label="Barn i saken:"
                                         value=(concat barn.navn "/" (iso_to_date barn.fødselsdato))}}
             {{/common/datarow  }}
@@ -20,10 +20,10 @@
     <div>
         <h2>Sivilstand</h2>
         <div>
-            {{#> notat/partials/table list=sivilstand}}
+            {{#> notat/partials/table list=boforhold.sivilstand}}
             {{/notat/partials/table }}
         </div>
     </div>
-    {{#> notat/partials/notat notat}}
+    {{#> notat/partials/notat boforhold.notat}}
     {{/notat/partials/notat }}
 </div>

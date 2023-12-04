@@ -14,7 +14,7 @@ val prometheusVersion = "0.16.0"
 val junitJupiterVersion = "5.10.1"
 val verapdfVersion = "1.24.1"
 val ktfmtVersion = "0.44"
-val bidragTransportVersion = "20231121154912_d2da786"
+val bidragTransportVersion = "20231201150118_8d33deb"
 val kotlinloggerVesion = "5.1.0"
 
 plugins {

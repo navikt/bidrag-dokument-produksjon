@@ -12,8 +12,7 @@ data class NotatDto(
     val saksnummer: String,
     val saksbehandlerNavn: String,
     val virkningstidspunkt: Virkningstidspunkt,
-    val boforhold: List<Boforhold>,
-    val sivilstand: List<Sivilstand>,
+    val boforhold: Boforhold,
     val parterIsøknad: List<ParterISøknad>,
     val inntekter: Inntekter,
     val vedtak: List<Vedtak>,
@@ -22,8 +21,8 @@ data class NotatDto(
 data class Virkningstidspunkt(
     val søknadstype: String,
     val søktAv: SøktAvType,
-    val mottattDato: String,
-    val søktFraDato: String,
+    val mottattDato: LocalDate,
+    val søktFraDato: LocalDate,
     val virkningstidspunkt: String,
     val notat: Notat,
 )
@@ -34,11 +33,16 @@ data class Notat(
 )
 
 data class Boforhold(
+    val barn: List<BoforholdBarn> = emptyList(),
+    val sivilstand: List<SivilstandPeriode> = emptyList(),
+    val notat: Notat,
+)
+
+data class BoforholdBarn(
     val navn: String,
     val fødselsdato: String,
     val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteret>,
     val opplysningerBruktTilBeregning: List<OpplysningerBruktTilBeregning>,
-    val notat: Notat,
 )
 
 data class OpplysningerFraFolkeregisteret(
@@ -52,7 +56,7 @@ data class OpplysningerBruktTilBeregning(
     val kilde: String,
 )
 
-data class Sivilstand(
+data class SivilstandPeriode(
     val periode: ÅrMånedsperiode,
     val status: String,
     val kode: Sivilstandskode?
