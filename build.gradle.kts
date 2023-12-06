@@ -138,6 +138,9 @@ dependencies {
     implementation("no.nav.bidrag:bidrag-transport:$bidragTransportVersion")
     implementation("no.nav.bidrag:bidrag-commons:$bidragCommonsVersion"){
         exclude("org.springframework.boot", "spring-boot-starter-web")
+        exclude("org.springframework.security", "spring-security-config")
+        exclude("no.nav.security", "token-validation-spring")
+        exclude("no.nav.security", "token-client-spring")
         exclude("org.apache.tomcat.embed", "tomcat-embed-core")
         exclude("org.apache.tomcat.embed", "tomcat-embed-el")
         exclude("no.nav.bidrag","bidrag-transport")

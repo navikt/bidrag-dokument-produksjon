@@ -1,7 +1,6 @@
 package no.nav.bidrag.dokument.produksjon
 
 import com.fasterxml.jackson.databind.ObjectMapper
-import com.github.jknack.handlebars.Helper
 import io.swagger.v3.oas.annotations.OpenAPIDefinition
 import io.swagger.v3.oas.annotations.info.Info
 import io.swagger.v3.oas.models.examples.Example
@@ -20,7 +19,6 @@ import org.springframework.context.annotation.EnableAspectJAutoProxy
 import org.springframework.context.annotation.Import
 import org.verapdf.gf.foundry.VeraGreenfieldFoundryProvider
 
-
 @Configuration
 @EnableAspectJAutoProxy
 @OpenAPIDefinition(info = Info(title = "bidrag-dokument-produksjon", version = "v1"))
@@ -32,14 +30,14 @@ class Configuration {
         val environment = no.nav.bidrag.dokument.produksjon.Environment()
         PDFGenCore.init(
             Environment(
-                additionalHandlebarHelpers =
-                mapOf(handlebarEnumMapper()),
+                additionalHandlebarHelpers = mapOf(handlebarEnumMapper()),
                 templateRoot = PDFGenResource("templates/"),
                 resourcesRoot = PDFGenResource("resources/"),
                 dataRoot = PDFGenResource("data/"),
             ),
         )
     }
+
     @Bean
     fun openApiCustomiser(examples: Collection<Example>): OpenApiCustomizer {
         return OpenApiCustomizer { openAPI ->
@@ -49,7 +47,5 @@ class Configuration {
         }
     }
 
-    @Bean
-    fun objectMapper(): ObjectMapper = getObjectmapper()
+    @Bean fun objectMapper(): ObjectMapper = getObjectmapper()
 }
-
