@@ -12,6 +12,7 @@ WORKDIR /app
 COPY build/libs/app.jar app.jar
 COPY templates templates
 COPY resources resources
+COPY data data
 
 EXPOSE 8080
 ENV TZ="Europe/Oslo"
