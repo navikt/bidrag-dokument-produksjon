@@ -1,9 +1,9 @@
 <div class="virkningstidspunkt">
     <h2>Virkningstidspunkt</h2>
     <div>
-        {{#> common/datarow label="Søknadstype:" value=søknadstype}}
+        {{#> common/datarow label="Søknadstype:" value=(capitalize søknadstype)}}
         {{/common/datarow }}
-        {{#> common/datarow  label="Søkt fra:" value=søktAv}}
+        {{#> common/datarow  label="Søkt fra:" value=(enum_to_readable søktAv)}}
         {{/common/datarow  }}
         {{#> common/datarow  label="Mottatt dato:" value=(iso_to_date mottattDato)}}
         {{/common/datarow  }}

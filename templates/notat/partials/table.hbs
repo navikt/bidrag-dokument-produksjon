@@ -15,9 +15,9 @@
         {{#each list as |data|~}}
             <tr>
                 <td>{{json_to_period (stringify data.periode)}}</td>
-                <td>{{data.status}}</td>
+                <td>{{enum_to_readable data.status}}</td>
                 {{#is_defined kilde}}
-                    <td>{{data.kilde}}</td>
+                    <td>{{capitalize data.kilde}}</td>
                 {{/is_defined}}
             </tr>
         {{/each}}

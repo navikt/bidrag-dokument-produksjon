@@ -11,12 +11,13 @@ spring:
   jackson:
     deserialization:
       READ_UNKNOWN_ENUM_VALUES_AS_NULL: true
+  main:
+    lazy-initialization: true
 
 
 springdoc:
   packages-to-scan: no.nav.bidrag.dokument.produksjon.api
   swagger-ui:
     path: /
-
+spring.threads.virtual.enabled: true
 spring.main.banner-mode: off
-

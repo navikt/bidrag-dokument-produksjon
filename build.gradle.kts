@@ -116,10 +116,7 @@ dependencies {
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
     implementation("com.github.jknack:handlebars:$handlebarsVersion")
-    implementation("com.github.jknack:handlebars-jackson2:$handlebarsVersion")
-    implementation("com.openhtmltopdf:openhtmltopdf-pdfbox:$openHtmlToPdfVersion")
-    implementation("com.openhtmltopdf:openhtmltopdf-slf4j:$openHtmlToPdfVersion")
-    implementation("com.openhtmltopdf:openhtmltopdf-svg-support:$openHtmlToPdfVersion")
+    implementation("org.verapdf:validation-model-jakarta:1.24.1")
 
     implementation("org.jsoup:jsoup:$jsoupVersion")
     implementation("com.fasterxml.jackson.core:jackson-core:$jacksonVersion")
@@ -131,19 +128,19 @@ dependencies {
     implementation("io.prometheus:simpleclient_common:$prometheusVersion")
     implementation("io.prometheus:simpleclient_hotspot:$prometheusVersion")
 
-    implementation("org.verapdf:validation-model:$verapdfVersion")
     implementation("io.github.oshai:kotlin-logging-jvm:$kotlinloggerVesion")
 
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashEncoderVersion")
-    implementation("no.nav.pdfgen:pdfgen-core:1.1.0")
-    implementation("no.nav.bidrag:bidrag-transport:$bidragTransportVersion"){
-        exclude("org.springframework.boot", "spring-boot-starter-web")
+    implementation("no.nav.pdfgen:pdfgen-core:1.1.0"){
+        exclude("org.verapdf:validation-model")
     }
+    implementation("no.nav.bidrag:bidrag-transport:$bidragTransportVersion")
     implementation("no.nav.bidrag:bidrag-commons:$bidragCommonsVersion"){
         exclude("org.springframework.boot", "spring-boot-starter-web")
         exclude("org.apache.tomcat.embed", "tomcat-embed-core")
         exclude("org.apache.tomcat.embed", "tomcat-embed-el")
+        exclude("no.nav.bidrag","bidrag-transport")
     }
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")

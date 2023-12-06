@@ -1,35 +1,38 @@
 package no.nav.bidrag.dokument.produksjon.dto
 
-import java.math.BigDecimal
-import java.time.LocalDate
+import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
+import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import java.math.BigDecimal
+import java.time.LocalDate
+import java.time.YearMonth
 
 data class NotatDto(
     val saksnummer: String,
     val saksbehandlerNavn: String,
     val virkningstidspunkt: Virkningstidspunkt,
     val boforhold: Boforhold,
-    val parterIsøknad: List<ParterISøknad>,
+    val parterISøknad: List<ParterISøknad>,
     val inntekter: Inntekter,
     val vedtak: List<Vedtak>,
 )
 
 data class Virkningstidspunkt(
-    val søknadstype: String,
-    val søktAv: SøktAvType,
-    val mottattDato: LocalDate,
-    val søktFraDato: LocalDate,
-    val virkningstidspunkt: String,
+    val søknadstype: String?,
+    val søktAv: SøktAvType?,
+    val mottattDato: YearMonth?,
+    val søktFraDato: YearMonth?,
+    val virkningstidspunkt: LocalDate?,
     val notat: Notat,
 )
 
 data class Notat(
-    val medIVedtaket: String,
-    val intern: String,
+    val medIVedtaket: String?,
+    val intern: String?,
 )
 
 data class Boforhold(
@@ -41,31 +44,31 @@ data class Boforhold(
 data class BoforholdBarn(
     val navn: String,
     val fødselsdato: String,
-    val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteret>,
-    val opplysningerBruktTilBeregning: List<OpplysningerBruktTilBeregning>,
+    val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteret> = emptyList(),
+    val opplysningerBruktTilBeregning: List<OpplysningerBruktTilBeregning> = emptyList(),
 )
 
 data class OpplysningerFraFolkeregisteret(
     val periode: ÅrMånedsperiode,
-    val status: String,
+    val status: Bostatuskode,
 )
 
 data class OpplysningerBruktTilBeregning(
     val periode: ÅrMånedsperiode,
-    val status: String,
+    val status: Bostatuskode,
     val kilde: String,
 )
 
 data class SivilstandPeriode(
     val periode: ÅrMånedsperiode,
-    val status: String,
-    val kode: Sivilstandskode?
+    val status: Sivilstandskode?,
+    val kilde: String
 )
 
 data class ParterISøknad(
     val rolle: Rolletype,
-    val navn: String,
-    val fødselsdato: LocalDate,
+    val navn: String?,
+    val fødselsdato: LocalDate?,
     val personident: Personident,
 )
 
@@ -90,19 +93,18 @@ data class Arbeidsforhold(
 )
 
 data class InntekterSomLeggesTilGrunn(
-    val beskrivelse: String,
+    val inntektType: Inntektsrapportering,
     val periode: ÅrMånedsperiode?,
     val beløp: BigDecimal,
 )
 
 data class Barnetillegg(
-    val status: String,
+    val navn: String,
     val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
 )
 
 data class UtvidetBarnetrygd(
-    val deltBosted: Boolean,
     val periode: ÅrMånedsperiode,
     val beløp: BigDecimal,
 )

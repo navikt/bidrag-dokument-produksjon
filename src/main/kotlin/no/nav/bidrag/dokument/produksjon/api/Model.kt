@@ -17,9 +17,9 @@ private val log = KotlinLogging.logger {}
 fun generateHTMLResponse(
     category: String,
     template: String,
-    content: String,
+    content: String?,
     useHottemplate: Boolean = false
-): ResponseEntity<*> {
+): ResponseEntity<String> {
     return generateHtml(category, template, content, useHottemplate)?.let {
         ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
     }
@@ -42,7 +42,7 @@ fun generatePDFFromHtmlResponse(html: String): ResponseEntity<ByteArray> {
 fun generatePDFResponse(
     category: String,
     template: String,
-    payload: String,
+    payload: String?,
     useHottemplate: Boolean = false
 ): ResponseEntity<*> {
     val startTime = System.currentTimeMillis()
@@ -65,7 +65,7 @@ fun generatePDFResponse(
 fun generateHtml(
     category: String,
     template: String,
-    payload: String,
+    payload: String?,
     useHottemplate: Boolean = false,
 ): String? {
     return if (useHottemplate) createHtmlFromTemplateData(template, category)

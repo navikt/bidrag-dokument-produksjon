@@ -17,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import org.verapdf.gf.foundry.VeraGreenfieldFoundryProvider
 
 private val log = KotlinLogging.logger {}
 
@@ -28,9 +29,8 @@ class GenPDFController {
     fun generatePDFFromSample(
         @PathVariable category: String,
         @PathVariable dokumentmal: String,
-        @RequestBody payload: String
     ): ResponseEntity<*> {
-        return generatePDFResponse(category, dokumentmal, payload, true)
+        return generatePDFResponse(category, dokumentmal, null, true)
     }
 
     @PostMapping("/html")
@@ -72,9 +72,8 @@ class GenHtmlController {
     fun generateHtmlFromSample(
         @PathVariable category: String,
         @PathVariable dokumentmal: String,
-        @RequestBody payload: String
     ): ResponseEntity<*> {
-        return generateHTMLResponse(category, dokumentmal, payload, true)
+        return generateHTMLResponse(category, dokumentmal, null, true)
     }
 
     @PostMapping("/{category}/{dokumentmal}")

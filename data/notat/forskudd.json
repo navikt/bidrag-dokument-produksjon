@@ -2,8 +2,8 @@
   "saksnummer": "2300455",
   "saksbehandlerNavn": "Hansen, Hans Madsen",
   "virkningstidspunkt": {
-    "søknadstype": "Forskudd",
-    "søktAv": "Bidragsmottaker",
+    "søknadstype": "FORSKUDD",
+    "søktAv": "BIDRAGSMOTTAKER",
     "mottattDato": "2023-03",
     "søktFraDato": "2023-01",
     "virkningstidspunkt": "2023-01",
@@ -23,13 +23,13 @@
               "fom": "2022-05-01",
               "til": "2022-10-31"
             },
-            "status": "Registrert på adresse"
+            "status": "MED_FORELDER"
           },
           {
             "periode": {
               "fom": "2022-11-01"
             },
-            "status": "Ikke registrert på adresse"
+            "status": "IKKE_MED_FORELDER"
           }
         ],
         "opplysningerBruktTilBeregning": [
@@ -38,14 +38,14 @@
               "fom": "2022-05-01",
               "til": "2022-10-31"
             },
-            "status": "Registrert på adresse",
+            "status": "MED_FORELDER",
             "kilde": "OFFENTLIG"
           },
           {
             "periode": {
               "fom": "2022-11-01"
             },
-            "status": "Ikke registrert på adresse",
+            "status": "IKKE_MED_FORELDER",
             "kilde": "MANUELT"
           }
         ]
@@ -59,13 +59,13 @@
               "fom": "2022-05-01",
               "til": "2022-10-31"
             },
-            "status": "Registrert på adresse"
+            "status": "MED_FORELDER"
           },
           {
             "periode": {
               "fom": "2022-11-01"
             },
-            "status": "Ikke registrert på adresse"
+            "status": "IKKE_MED_FORELDER"
           }
         ],
         "opplysningerBruktTilBeregning": [
@@ -74,14 +74,14 @@
               "fom": "2022-05-01",
               "til": "2022-10-31"
             },
-            "status": "Registrert på adresse",
+            "status": "MED_FORELDER",
             "kilde": "Offentlig"
           },
           {
             "periode": {
               "fom": "2022-11-01"
             },
-            "status": "Ikke registrert på adresse",
+            "status": "IKKE_MED_FORELDER",
             "kilde": "Manuelt"
           }
         ]
@@ -93,13 +93,15 @@
           "fom": "2022-05-01",
           "til": "2022-10-31"
         },
-        "status": "Bor alene med barn"
+        "status": "BOR_ALENE_MED_BARN",
+        "kilde": "MANUELL"
       },
       {
         "periode": {
           "fom": "2022-11-01"
         },
-        "status": "Gift/Samboer"
+        "status": "GIFT_SAMBOER",
+        "kilde": "OFFENTLIG"
       }
     ],
     "notat": {
@@ -185,7 +187,7 @@
         ],
         "barnetillegg": [
           {
-            "status": "Registrert på adresse",
+            "barn": "MED_FORELDER",
             "periode": {
               "fom": "2022-05-01",
               "til": "2022-12-31"
