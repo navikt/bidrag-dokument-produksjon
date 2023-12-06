@@ -36,9 +36,6 @@ spec:
     path: /actuator/health
   readiness:
     path: /actuator/health
-  startup:
-    path: /internal/is_alive
-    initialDelay: 10
   prometheus:
     enabled: true
     path: /actuator/prometheus
