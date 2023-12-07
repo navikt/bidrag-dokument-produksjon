@@ -20,7 +20,10 @@
     <div>
         <h2>Sivilstand</h2>
         <div>
-            {{#> notat/partials/table list=boforhold.sivilstand}}
+            {{#> notat/partials/table list=boforhold.sivilstand.opplysningerFraFolkeregisteret
+                                      title="Opplysninger fra folkeregisteret"}}
+            {{/notat/partials/table }}
+            {{#> notat/partials/table list=boforhold.sivilstand.opplysningerBruktTilBeregning title="Opplysninger brukt til beregning"}}
             {{/notat/partials/table }}
         </div>
     </div>
