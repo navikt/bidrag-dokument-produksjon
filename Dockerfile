@@ -17,7 +17,6 @@ COPY data data
 EXPOSE 8080
 ENV TZ="Europe/Oslo"
 ENV SPRING_PROFILES_ACTIVE=nais
-ENV JDK_JAVA_OPTIONS="-Dlogback.configurationFile=logback-remote.xml"
 ENV DISABLE_PDF_GET="false"
 ENV ENABLE_HTML_ENDPOINT="true"
 CMD ["app.jar"]

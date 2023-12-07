@@ -26,27 +26,25 @@ plugins {
     id("org.springframework.boot") version "3.2.0"
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("plugin.spring") version "1.9.20"
-    id("com.diffplug.spotless") version "6.22.0"
-    id("com.github.johnrengelman.shadow") version "8.1.1"
-    id("com.github.ben-manes.versions") version "0.49.0"
+    id("com.github.ben-manes.versions") version "0.50.0"
 }
 
-application {
-    mainClass.set("no.nav.bidrag.dokument.produksjon.AppKt")
-}
 java {
     sourceCompatibility = JavaVersion.VERSION_21
+}
+springBoot {
+    mainClass = "no.nav.bidrag.dokument.produksjon.AppKt"
 }
 
 tasks {
     withType(Tar::class.java).configureEach {
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        duplicatesStrategy = DuplicatesStrategy.WARN
     }
     withType(BootJar::class.java).configureEach {
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        duplicatesStrategy = DuplicatesStrategy.WARN
     }
     withType(Zip::class.java).configureEach {
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
+        duplicatesStrategy = DuplicatesStrategy.WARN
     }
     test {
         useJUnitPlatform {}
@@ -61,25 +59,15 @@ tasks {
 
     }
 
-    shadowJar {
+    bootJar {
         archiveBaseName = "app"
+        enabled = true
         archiveClassifier = ""
         archiveVersion = ""
-        isZip64 = true
-        manifest {
-            attributes(
-                mapOf(
-                    "Main-Class" to "no.nav.bidrag.dokument.produksjon.AppKt",
-                ),
-            )
-        }
-        duplicatesStrategy = DuplicatesStrategy.INCLUDE
-    }
-
-    spotless {
-        kotlin { ktfmt(ktfmtVersion).kotlinlangStyle() }
-        check {
-            dependsOn("spotlessApply")
+        mainClass = "no.nav.bidrag.dokument.produksjon.AppKt"
+        launchScript()
+        layered {
+            enabled = true
         }
     }
 }
@@ -103,6 +91,7 @@ dependencies {
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-jetty")
+    implementation("org.springframework.boot:spring-boot-starter-security")
     implementation("org.springframework.boot:spring-boot-starter-web"){
         exclude("org.springframework.boot", "spring-boot-starter-tomcat")
     }
@@ -138,9 +127,6 @@ dependencies {
     implementation("no.nav.bidrag:bidrag-transport:$bidragTransportVersion")
     implementation("no.nav.bidrag:bidrag-commons:$bidragCommonsVersion"){
         exclude("org.springframework.boot", "spring-boot-starter-web")
-        exclude("org.springframework.security", "spring-security-config")
-        exclude("no.nav.security", "token-validation-spring")
-        exclude("no.nav.security", "token-client-spring")
         exclude("org.apache.tomcat.embed", "tomcat-embed-core")
         exclude("org.apache.tomcat.embed", "tomcat-embed-el")
         exclude("no.nav.bidrag","bidrag-transport")
