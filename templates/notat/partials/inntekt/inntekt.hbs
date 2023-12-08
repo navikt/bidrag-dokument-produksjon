@@ -1,11 +1,15 @@
-<h4>{{rolle}}</h4>
+<h3 style="margin-bottom: 10px; margin-top: 10px">{{rolle}}</h3>
 <div>
     {{#> notat/partials/inntekt/table list=inntekter.arbeidsforhold title="Arbeidsforhold" type="ARBEIDSFORHOLD"}}
     {{/notat/partials/inntekt/table }}
-    {{#> notat/partials/inntekt/table list=inntekter.inntekterSomLeggesTilGrunn title="Inntektene som legges til grunn" type="INNTEKTER"}}
+    {{#> notat/partials/inntekt/table list=inntekter.inntekterSomLeggesTilGrunn title="Inntektene som legges til grunn"
+                                      type="INNTEKTER"}}
     {{/notat/partials/inntekt/table }}
-    {{#> notat/partials/inntekt/table list=inntekter.barnetillegg title="Barnetillegg" type="BARNETILLEGG"}}
-    {{/notat/partials/inntekt/table }}
-    {{#> notat/partials/inntekt/table list=inntekter.utvidetBarnetrygd title="Utvidet barnetrygd" type="UTVIDET_BARNETRYGD"}}
-    {{/notat/partials/inntekt/table }}
+    {{#eq rolle "Bidragsmottaker"}}
+        {{#> notat/partials/inntekt/table list=inntekter.barnetillegg title="Barnetillegg" type="BARNETILLEGG"}}
+        {{/notat/partials/inntekt/table }}
+        {{#> notat/partials/inntekt/table list=inntekter.utvidetBarnetrygd title="Utvidet barnetrygd"
+                                          type="UTVIDET_BARNETRYGD"}}
+        {{/notat/partials/inntekt/table }}
+    {{/eq}}
 </div>

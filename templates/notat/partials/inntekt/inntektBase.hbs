@@ -1,5 +1,5 @@
 <div>
-    <h2>Inntekter</h2>
+    <h2 style="margin-bottom: 15px">Inntekter</h2>
     {{#filter inntekter.inntekterPerRolle "rolle" "BIDRAGSMOTTAKER" as |inntekter|~}}
         {{#> notat/partials/inntekt/inntekt inntekter=inntekter rolle="Bidragsmottaker"}}
         {{/notat/partials/inntekt/inntekt }}
@@ -7,6 +7,12 @@
     {{#filter inntekter.inntekterPerRolle "rolle" "BIDRAGSPLIKTIG" as |inntekter|~}}
         {{#> notat/partials/inntekt/inntekt inntekter=inntekter rolle="Bidragspliktig"}}
         {{/notat/partials/inntekt/inntekt }}
+    {{/filter}}
+    {{#filter inntekter.inntekterPerRolle "rolle" "BARN" as |inntekter|~}}
+        {{#if inntekter.inntekterSomLeggesTilGrunn}}
+            {{#> notat/partials/inntekt/inntekt inntekter=inntekter rolle="Barn"}}
+            {{/notat/partials/inntekt/inntekt }}
+        {{/if}}
     {{/filter}}
     {{#> notat/partials/notat inntekter.notat}}
     {{/notat/partials/notat }}
