@@ -63,7 +63,7 @@ jobs:
   deploy-prod:
     runs-on: ubuntu-latest
     name: Deploy to prod
-    if: github.ref == 'refs/heads/release'
+    if: github.ref == 'refs/heads/main'
     needs: build-and-publish
 
     steps:
