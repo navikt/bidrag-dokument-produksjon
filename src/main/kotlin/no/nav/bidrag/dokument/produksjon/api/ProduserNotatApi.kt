@@ -50,6 +50,7 @@ class ProduserNotatApi {
         )
         payload: NotatDto
     ): ResponseEntity<*> {
+        log.info { "Produserer notat PDF for dokumentmal $dokumentmal" }
         return generatePDFResponse(
             "notat",
             dokumentmal,
@@ -62,6 +63,7 @@ class ProduserNotatApi {
         @Parameter(name = "dokumentmal", example = "forskudd") @PathVariable dokumentmal: String,
         @org.springframework.web.bind.annotation.RequestBody payload: NotatDto
     ): ResponseEntity<String> {
+        log.info { "Produserer notat HTML for dokumentmal $dokumentmal" }
         return generateHTMLResponse(
             "notat",
             dokumentmal,
