@@ -1,6 +1,6 @@
 <div>
-    {{#> common/datarow  label="Begrunnelse (med i vedtaket):" value=medIVedtaket}}
+    {{#> common/datarow  label="Begrunnelse (med i vedtaket):" value=(breaklines medIVedtaket)}}
     {{/common/datarow  }}
-    {{#> common/datarow  label="Begrunnelse (kun for intern notat):" value=intern}}
+    {{#> common/datarow  label="Begrunnelse (kun for intern notat):" value=(breaklines intern)}}
     {{/common/datarow  }}
 </div>

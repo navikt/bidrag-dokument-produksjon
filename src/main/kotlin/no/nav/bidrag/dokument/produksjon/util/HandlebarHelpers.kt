@@ -9,18 +9,6 @@ import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
 import no.nav.bidrag.domene.util.visningsnavn
 
-fun handlebarCapitalize(): Pair<String, Helper<Any>> =
-    "capitalize" to
-        Helper<Any> { context, _ ->
-            return@Helper when (context) {
-                is String ->
-                    context.lowercase().replaceFirstChar {
-                        if (it.isLowerCase()) it.titlecase(Locale.getDefault()) else it.toString()
-                    }
-                else -> context
-            }
-        }
-
 fun handlebarEnumMapper(): Pair<String, Helper<Any>> =
     "enum_to_readable" to
         Helper<Any> { context, _ ->
