@@ -29,7 +29,7 @@
                 {{#each list as |data|~}}
                     <tr>
                         <td style="width: 15%">{{json_to_period data.periode}}</td>
-                        <td style="width: 20%">{{data.status}}</td>
+                        <td style="width: 20%">{{data.navn}}</td>
                         <td style="width: 10%">{{data.beløp}}</td>
                     </tr>
                 {{/each}}
@@ -42,7 +42,7 @@
                 </tr>
                 {{#each list as |data|~}}
                     <tr>
-                        <td style="width: 40%">{{data.beskrivelse}}</td>
+                        <td style="width: 40%">{{enum_to_readable data.inntektType}}</td>
                         <td style="width: 10%">{{data.beløp}}</td>
                         <td style="width: 180px">{{json_to_period data.periode}}</td>
                     </tr>
@@ -51,17 +51,11 @@
             {{#eq type "UTVIDET_BARNETRYGD"}}
                 <tr>
                     <th>Fra og med - Til og med</th>
-                    <th>Delt bosted</th>
                     <th>Beløp</th>
                 </tr>
                 {{#each list as |data|~}}
                     <tr>
                         <td style="width: 15%">{{json_to_period data.periode}}</td>
-                        {{#if data.deltBosted}}
-                            <td style="width: 10%">Ja</td>
-                        {{else}}
-                            <td style="width: 10%">Nei</td>
-                        {{/if}}
                         <td style="width: 20%">{{data.beløp}}</td>
                     </tr>
                 {{/each}}

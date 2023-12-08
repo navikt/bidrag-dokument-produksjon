@@ -2,74 +2,70 @@ package no.nav.bidrag.dokument.produksjon.api
 
 import com.fasterxml.jackson.databind.JsonNode
 import io.github.oshai.kotlinlogging.KotlinLogging
-import io.ktor.http.ContentType
-import io.ktor.http.HttpStatusCode
-import io.ktor.http.content.OutgoingContent
-import io.ktor.server.application.ApplicationCall
-import io.ktor.server.request.receive
-import io.ktor.server.request.receiveText
-import io.ktor.server.response.respondBytes
-import io.ktor.server.response.respondText
 import no.nav.bidrag.dokument.produksjon.OPENHTMLTOPDF_RENDERING_SUMMARY
-import no.nav.bidrag.dokument.produksjon.objectMapper
+import no.nav.pdfgen.core.objectMapper
 import no.nav.pdfgen.core.pdf.createHtml
 import no.nav.pdfgen.core.pdf.createHtmlFromTemplateData
 import no.nav.pdfgen.core.pdf.createPDFA
+import org.springframework.http.HttpHeaders
+import org.springframework.http.HttpStatus
+import org.springframework.http.MediaType
+import org.springframework.http.ResponseEntity
 
 private val log = KotlinLogging.logger {}
 
-val ApplicationCall.category get() = parameters["category"]!!
-val ApplicationCall.template get() = parameters["dokumentmal"] ?: parameters["template"] ?: "Ukjent"
-
-suspend fun generateHTMLResponse(
+fun generateHTMLResponse(
     category: String,
     template: String,
-    call: ApplicationCall,
+    content: String?,
     useHottemplate: Boolean = false
-) {
-    val content = call.receiveText()
+): ResponseEntity<String> {
     return generateHtml(category, template, content, useHottemplate)?.let {
-        call.respondText(it, contentType = ContentType.Text.Html)
+        ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
     }
-        ?: call.respondText(
-            "Template or application not found",
-            status = HttpStatusCode.NotFound,
-        )
+        ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
 }
 
-suspend fun generatePDFFromHtmlResponse(html: String, call: ApplicationCall) {
+fun generatePDFFromHtmlResponse(html: String): ResponseEntity<ByteArray> {
     val timer = OPENHTMLTOPDF_RENDERING_SUMMARY.labels("converthtml").startTimer()
-    call.respondBytes(
-        PdfContent(html).bytes(),
-        contentType = ContentType.Application.Pdf,
-    )
+    val bytes = PdfContent(html).generate()
     log.info { "Done generating PDF from html in ${timer.observeDuration()}ms" }
+    return ResponseEntity.ok()
+        .contentType(MediaType.APPLICATION_PDF)
+        .header(
+            HttpHeaders.CONTENT_DISPOSITION,
+            "inline; filename=dokumenter_sammenslatt.pdf",
+        )
+        .body(bytes)
 }
 
-suspend fun generatePDFResponse(
+fun generatePDFResponse(
     category: String,
     template: String,
-    call: ApplicationCall,
+    payload: String?,
     useHottemplate: Boolean = false
-) {
+): ResponseEntity<*> {
     val startTime = System.currentTimeMillis()
-    generateHtml(category, template, call.receive(), useHottemplate)?.let { document ->
-        call.respondBytes(
-            PdfContent(document).bytes(),
-            contentType = ContentType.Application.Pdf,
-        )
-        log.info { "Done generating PDF for category $category and template $template in ${System.currentTimeMillis() - startTime}ms" }
+    return generateHtml(category, template, payload, useHottemplate)?.let { document ->
+        val bytes = PdfContent(document).generate()
+        log.info {
+            "Done generating PDF for category $category and template $template in ${System.currentTimeMillis() - startTime}ms"
+        }
+        ResponseEntity.ok()
+            .contentType(MediaType.APPLICATION_PDF)
+            .header(
+                HttpHeaders.CONTENT_DISPOSITION,
+                "inline; filename=dokumenter_sammenslatt.pdf",
+            )
+            .body(bytes)
     }
-        ?: call.respondText(
-            "Template or category not found",
-            status = HttpStatusCode.NotFound,
-        )
+        ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
 }
 
 fun generateHtml(
     category: String,
     template: String,
-    payload: String,
+    payload: String?,
     useHottemplate: Boolean = false,
 ): String? {
     return if (useHottemplate) createHtmlFromTemplateData(template, category)
@@ -81,7 +77,6 @@ fun generateHtml(
 
 class PdfContent(
     private val html: String,
-    override val contentType: ContentType = ContentType.Application.Pdf,
-) : OutgoingContent.ByteArrayContent() {
-    override fun bytes(): ByteArray = createPDFA(html)
+) {
+    fun generate(): ByteArray = createPDFA(html)
 }

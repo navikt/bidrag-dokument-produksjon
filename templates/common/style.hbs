@@ -16,6 +16,15 @@
             content: element(header);
         }
     }
+    @media print {
+        div { break-inside: avoid; }
+    }
+    #footer {
+        position: running(footer);
+        font-size: 12px;
+        margin-top: -25px;
+        padding-left: 0.6cm;
+    }
     body {
         background-color: white;
         width: 210mm;
