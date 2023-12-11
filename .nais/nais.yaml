@@ -34,6 +34,8 @@ spec:
     cpuThresholdPercentage: 90
   liveness:
     path: /actuator/health
+  secureLogs:
+    enabled: true
   readiness:
     path: /actuator/health
   prometheus:

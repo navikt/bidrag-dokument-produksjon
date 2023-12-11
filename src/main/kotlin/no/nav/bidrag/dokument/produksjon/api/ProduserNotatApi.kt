@@ -6,6 +6,7 @@ import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.ExampleObject
 import io.swagger.v3.oas.annotations.parameters.RequestBody
 import io.swagger.v3.oas.models.examples.Example
+import no.nav.bidrag.dokument.produksjon.SIKKER_LOGG
 import java.nio.file.Paths
 import kotlin.io.path.readText
 import no.nav.bidrag.dokument.produksjon.dto.NotatDto
@@ -63,6 +64,7 @@ class ProduserNotatApi {
         @Parameter(name = "dokumentmal", example = "forskudd") @PathVariable dokumentmal: String,
         @org.springframework.web.bind.annotation.RequestBody payload: NotatDto
     ): ResponseEntity<String> {
+        SIKKER_LOGG.info{ "Produserer notat HTML for dokumentmal $dokumentmal for input $payload" }
         log.info { "Produserer notat HTML for dokumentmal $dokumentmal" }
         return generateHTMLResponse(
             "notat",
