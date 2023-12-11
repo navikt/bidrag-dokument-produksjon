@@ -3,6 +3,7 @@ package no.nav.bidrag.dokument.produksjon.api
 import com.fasterxml.jackson.databind.JsonNode
 import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.dokument.produksjon.OPENHTMLTOPDF_RENDERING_SUMMARY
+import no.nav.bidrag.dokument.produksjon.SIKKER_LOGG
 import no.nav.pdfgen.core.objectMapper
 import no.nav.pdfgen.core.pdf.createHtml
 import no.nav.pdfgen.core.pdf.createHtmlFromTemplateData
@@ -70,8 +71,14 @@ fun generateHtml(
 ): String? {
     return if (useHottemplate) createHtmlFromTemplateData(template, category)
     else {
-        val jsonNode: JsonNode = objectMapper.readTree(payload)
-        createHtml(template, category, jsonNode)
+        return try {
+            val jsonNode: JsonNode = objectMapper.readTree(payload)
+            createHtml(template, category, jsonNode)
+        } catch (e: Exception){
+            SIKKER_LOGG.error(e){ "Kunne ikke opprette $category $template for input $payload" }
+            throw e
+        }
+
     }
 }
 

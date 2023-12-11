@@ -14,8 +14,10 @@
                 {{#each list as |data|~}}
                     <tr>
                         <td style="width: 180px">{{json_to_period data.periode}}</td>
-                        <td style="width: 30%">{{data.arbeidsgiver}}</td>
-                        <td style="width: 10%">{{data.stillingProsent}}%</td>
+                        <td style="width: 30%">{{capitalize data.arbeidsgiver}}</td>
+                        <td style="width: 10%">{{#if data.stillingProsent}}
+                            {{data.stillingProsent}}%
+                        {{/if}}</td>
                         <td>{{iso_to_date data.lønnsendringDato}}</td>
                     </tr>
                 {{/each}}
