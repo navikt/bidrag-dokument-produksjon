@@ -18,7 +18,7 @@ val verapdfVersion = "1.24.1"
 val ktfmtVersion = "0.44"
 val bidragTransportVersion = "20231201150118_8d33deb"
 val bidragCommonsVersion = "20231201131246_f719b2b"
-val kotlinloggerVesion = "5.1.0"
+val kotlinloggerVesion = "6.0.2"
 
 plugins {
     id("application")
