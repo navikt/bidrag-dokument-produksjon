@@ -4,13 +4,14 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+permissions:
+  contents: write
+  id-token: write
 jobs:
   build-and-publish:
     name: Bygg, test og publiser docker image
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     outputs:
       image: ${{ steps.docker-build-push.outputs.image }}
     steps:
@@ -80,8 +81,6 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     name: Tag release
-    permissions:
-      contents: write
     needs: deploy-prod
     steps:
       - uses: actions/checkout@v4
