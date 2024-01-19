@@ -83,7 +83,15 @@ repositories {
         }
     }
 }
-
+dependencyManagement {
+    dependencies {
+        dependency("org.apache.xmlgraphics:batik-script:1.17")
+        dependency("org.apache.xmlgraphics:batik-bridge:1.17")
+        dependency("org.apache.xmlgraphics:batik-transcoder:1.17")
+        dependency("commons-io:commons-io:2.15.1")
+        dependency("xalan:xalan:2.7.3")
+    }
+}
 dependencies {
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-actuator")
