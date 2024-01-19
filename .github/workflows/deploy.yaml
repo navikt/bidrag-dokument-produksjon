@@ -4,13 +4,14 @@ on:
 
 env:
   GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+permissions:
+  contents: write
+  id-token: write
 jobs:
   build-and-publish:
     name: Bygg, test og publiser docker image
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      id-token: write
     outputs:
       image: ${{ steps.docker-build-push.outputs.image }}
     steps:
@@ -48,9 +49,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: nais/deploy/actions/deploy@v1
+      - uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: dev-gcp
           RESOURCE: .nais/nais.yaml
           VARS: .nais/dev.yaml
@@ -68,9 +68,8 @@ jobs:
 
     steps:
       - uses: actions/checkout@v4
-      - uses: nais/deploy/actions/deploy@v1
+      - uses: nais/deploy/actions/deploy@v2
         env:
-          APIKEY: ${{ secrets.NAIS_DEPLOY_APIKEY }}
           CLUSTER: prod-gcp
           RESOURCE: .nais/nais.yaml
           VARS: .nais/prod.yaml
@@ -82,8 +81,6 @@ jobs:
   tag:
     runs-on: ubuntu-latest
     name: Tag release
-    permissions:
-      contents: write
     needs: deploy-prod
     steps:
       - uses: actions/checkout@v4

@@ -1,15 +1,14 @@
-import org.jetbrains.kotlin.ir.backend.js.compile
 import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 group = "no.nav.bidrag"
-version = "1.0.0" //This will never change. See GitHub releases for docker image release
+version = "1.0.0" // This will never change. See GitHub releases for docker image release
 val handlebarsVersion = "4.3.1"
-val jacksonVersion = "2.15.3"
+val jacksonVersion = "2.16.1"
 val jaxbVersion = "4.0.4"
 val jaxbApiVersion = "2.3.1"
 val jsoupVersion = "1.16.2"
 val kluentVersion = "1.72"
-val logbackVersion = "1.4.11"
+val logbackVersion = "1.4.14"
 val logstashEncoderVersion = "7.4"
 val openHtmlToPdfVersion = "1.0.10"
 val prometheusVersion = "0.16.0"
@@ -18,12 +17,12 @@ val verapdfVersion = "1.24.1"
 val ktfmtVersion = "0.44"
 val bidragTransportVersion = "20231201150118_8d33deb"
 val bidragCommonsVersion = "20231201131246_f719b2b"
-val kotlinloggerVesion = "5.1.0"
+val kotlinloggerVesion = "6.0.3"
 
 plugins {
     id("application")
-    kotlin("jvm") version "1.9.20"
-    id("org.springframework.boot") version "3.2.0"
+    kotlin("jvm") version "1.9.22"
+    id("org.springframework.boot") version "3.2.1"
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("plugin.spring") version "1.9.20"
     id("com.github.ben-manes.versions") version "0.50.0"
@@ -54,9 +53,8 @@ tasks {
         }
     }
 
-    compileKotlin{
+    compileKotlin {
         kotlinOptions.jvmTarget = "21"
-
     }
 
     bootJar {
@@ -86,13 +84,12 @@ repositories {
     }
 }
 
-
 dependencies {
     // Spring
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-jetty")
     implementation("org.springframework.boot:spring-boot-starter-security")
-    implementation("org.springframework.boot:spring-boot-starter-web"){
+    implementation("org.springframework.boot:spring-boot-starter-web") {
         exclude("org.springframework.boot", "spring-boot-starter-tomcat")
     }
     implementation("org.springframework.boot:spring-boot-starter-aop")
@@ -100,7 +97,6 @@ dependencies {
     implementation("com.fasterxml.jackson.module:jackson-module-kotlin")
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:2.3.0")
-
 
     implementation("org.jetbrains.kotlin:kotlin-stdlib")
 
@@ -121,20 +117,19 @@ dependencies {
 
     implementation("ch.qos.logback:logback-classic:$logbackVersion")
     implementation("net.logstash.logback:logstash-logback-encoder:$logstashEncoderVersion")
-    implementation("no.nav.pdfgen:pdfgen-core:1.1.0"){
+    implementation("no.nav.pdfgen:pdfgen-core:1.1.0") {
         exclude("org.verapdf:validation-model")
     }
     implementation("no.nav.bidrag:bidrag-transport:$bidragTransportVersion")
-    implementation("no.nav.bidrag:bidrag-commons:$bidragCommonsVersion"){
+    implementation("no.nav.bidrag:bidrag-commons:$bidragCommonsVersion") {
         exclude("org.springframework.boot", "spring-boot-starter-web")
         exclude("org.apache.tomcat.embed", "tomcat-embed-core")
         exclude("org.apache.tomcat.embed", "tomcat-embed-el")
-        exclude("no.nav.bidrag","bidrag-transport")
+        exclude("no.nav.bidrag", "bidrag-transport")
     }
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.junit.jupiter:junit-jupiter-api:$junitJupiterVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-params:$junitJupiterVersion")
     testImplementation("org.junit.jupiter:junit-jupiter-engine:$junitJupiterVersion")
-
 }
