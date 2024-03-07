@@ -2,7 +2,7 @@ import org.springframework.boot.gradle.tasks.bundling.BootJar
 
 group = "no.nav.bidrag"
 version = "1.0.0" // This will never change. See GitHub releases for docker image release
-val handlebarsVersion = "4.3.1"
+val handlebarsVersion = "4.4.0"
 val jacksonVersion = "2.16.1"
 val jaxbVersion = "4.0.4"
 val jaxbApiVersion = "2.3.1"
