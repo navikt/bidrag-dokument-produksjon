@@ -22,7 +22,7 @@ val kotlinloggerVesion = "6.0.3"
 plugins {
     id("application")
     kotlin("jvm") version "1.9.22"
-    id("org.springframework.boot") version "3.2.1"
+    id("org.springframework.boot") version "3.2.4"
     id("io.spring.dependency-management") version "1.1.4"
     kotlin("plugin.spring") version "1.9.20"
     id("com.github.ben-manes.versions") version "0.50.0"
