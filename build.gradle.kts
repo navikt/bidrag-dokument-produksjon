@@ -88,7 +88,7 @@ dependencyManagement {
         dependency("org.apache.xmlgraphics:batik-script:1.17")
         dependency("org.apache.xmlgraphics:batik-bridge:1.17")
         dependency("org.apache.xmlgraphics:batik-transcoder:1.17")
-        dependency("commons-io:commons-io:2.15.1")
+        dependency("commons-io:commons-io:2.16.1")
         dependency("xalan:xalan:2.7.3")
     }
 }
