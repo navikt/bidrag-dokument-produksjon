@@ -1,3 +1,3 @@
 package no.nav.bidrag.dokument.produksjon.dto
 
-class BaseDto {}
+class BaseDto

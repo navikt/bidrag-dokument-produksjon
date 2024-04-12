@@ -1,17 +1,40 @@
 version: 2
+registries:
+  maven-github:
+    type: maven-repository
+    url: https://github-package-registry-mirror.gc.nav.no/cached/maven-release
+    username: x-access-token
+    password: no-secret-required
 updates:
-  - package-ecosystem: "gradle"
+  - package-ecosystem: "maven"
     directory: "/"
+    registries:
+      - "maven-github"
+    ignore:
+      - dependency-name: "no.nav.bidrag:bidrag-commons"
+        versions: [ "0.x.x" ]
     schedule:
-      interval: "daily"
-    open-pull-requests-limit: 15
+      interval: "weekly"
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Oslo"
+    commit-message:
+      prefix: "[dependency] "
   - package-ecosystem: "docker"
     directory: "/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 15
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Oslo"
+    commit-message:
+      prefix: "[docker] "
   - package-ecosystem: "github-actions"
     directory: "/"
     schedule:
       interval: "weekly"
-    open-pull-requests-limit: 15
+      day: "monday"
+      time: "06:00"
+      timezone: "Europe/Oslo"
+    commit-message:
+      prefix: "[github-actions] "

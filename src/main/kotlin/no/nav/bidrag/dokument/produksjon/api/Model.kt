@@ -19,7 +19,7 @@ fun generateHTMLResponse(
     category: String,
     template: String,
     content: String?,
-    useHottemplate: Boolean = false
+    useHottemplate: Boolean = false,
 ): ResponseEntity<String> {
     return generateHtml(category, template, content, useHottemplate)?.let {
         ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
@@ -44,7 +44,7 @@ fun generatePDFResponse(
     category: String,
     template: String,
     payload: String?,
-    useHottemplate: Boolean = false
+    useHottemplate: Boolean = false,
 ): ResponseEntity<*> {
     val startTime = System.currentTimeMillis()
     return generateHtml(category, template, payload, useHottemplate)?.let { document ->
@@ -69,16 +69,16 @@ fun generateHtml(
     payload: String?,
     useHottemplate: Boolean = false,
 ): String? {
-    return if (useHottemplate) createHtmlFromTemplateData(template, category)
-    else {
+    return if (useHottemplate) {
+        createHtmlFromTemplateData(template, category)
+    } else {
         return try {
             val jsonNode: JsonNode = objectMapper.readTree(payload)
             createHtml(template, category, jsonNode)
-        } catch (e: Exception){
-            SIKKER_LOGG.error(e){ "Kunne ikke opprette $category $template for input $payload" }
+        } catch (e: Exception) {
+            SIKKER_LOGG.error(e) { "Kunne ikke opprette $category $template for input $payload" }
             throw e
         }
-
     }
 }
 

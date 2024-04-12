@@ -1,10 +1,8 @@
 package no.nav.bidrag.dokument.produksjon.aop
 
 import com.fasterxml.jackson.databind.exc.MismatchedInputException
-import com.fasterxml.jackson.module.kotlin.MissingKotlinParameterException
 import io.github.oshai.kotlinlogging.KotlinLogging
 import jakarta.servlet.http.HttpServletRequest
-import org.springframework.core.MethodParameter
 import org.springframework.core.convert.ConversionFailedException
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -14,42 +12,51 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
-val LOGGER = KotlinLogging.logger {  }
+
+val LOGGER = KotlinLogging.logger { }
+
 @RestControllerAdvice
 class DefaultRestControllerAdvice {
     @ResponseBody
-    @ExceptionHandler(value = [IllegalArgumentException::class, MethodArgumentTypeMismatchException::class, ConversionFailedException::class, HttpMessageNotReadableException::class])
-    fun handleInvalidValueExceptions(exception: Exception, request: HttpServletRequest): ResponseEntity<*> {
+    @ExceptionHandler(
+        value = [
+            IllegalArgumentException::class, MethodArgumentTypeMismatchException::class,
+            ConversionFailedException::class, HttpMessageNotReadableException::class,
+        ],
+    )
+    fun handleInvalidValueExceptions(
+        exception: Exception,
+        request: HttpServletRequest,
+    ): ResponseEntity<*> {
         val cause = exception.cause
         val valideringsFeil =
             if (cause is MismatchedInputException) {
                 createMissingKotlinParameterViolation(
-                    cause
+                    cause,
                 )
             } else {
                 null
             }
         LOGGER.warn(
-            exception
+            exception,
         ) { "Forespørselen inneholder ugyldig verdi: ${valideringsFeil ?: "ukjent feil"}" }
-
 
         return ResponseEntity
             .status(HttpStatus.BAD_REQUEST)
             .header(
                 HttpHeaders.WARNING,
-                "Forespørselen inneholder ugyldig verdi: ${valideringsFeil ?: exception.message}"
+                "Forespørselen inneholder ugyldig verdi: ${valideringsFeil ?: exception.message}",
             )
             .build<Any>()
     }
 
-
     private fun createMissingKotlinParameterViolation(ex: MismatchedInputException): String {
         val errorFieldRegex = Regex("\\.([^.]*)\\[\\\"(.*)\"\\]\$")
-        val paths = ex.path.map { errorFieldRegex.find(it.description)!! }.map {
-            val (objectName, field) = it.destructured
-            "$objectName.$field"
-        }
+        val paths =
+            ex.path.map { errorFieldRegex.find(it.description)!! }.map {
+                val (objectName, field) = it.destructured
+                "$objectName.$field"
+            }
         return "${paths.joinToString("->")} kan ikke være null"
     }
 
@@ -62,5 +69,4 @@ class DefaultRestControllerAdvice {
             .header(HttpHeaders.WARNING, "Det skjedde en ukjent feil: ${exception.message}")
             .build<Any>()
     }
-
 }

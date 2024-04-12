@@ -10,7 +10,11 @@ import org.springframework.stereotype.Component
 
 @Component
 class ReloadFilter : Filter {
-    override fun doFilter(request: ServletRequest, response: ServletResponse, chain: FilterChain) {
+    override fun doFilter(
+        request: ServletRequest,
+        response: ServletResponse,
+        chain: FilterChain,
+    ) {
         if (Environment().isDevMode) PDFGenCore.reloadEnvironment()
         chain.doFilter(request, response)
     }

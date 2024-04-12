@@ -8,8 +8,7 @@ COPY --from=busybox /bin/sh /bin/sh
 COPY --from=busybox /bin/printenv /bin/printenv
 
 WORKDIR /app
-
-COPY build/libs/app.jar app.jar
+COPY ./target/bidrag-dokument-*.jar app.jar
 COPY templates templates
 COPY resources resources
 COPY data data
