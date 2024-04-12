@@ -5,14 +5,22 @@ import org.springframework.boot.actuate.autoconfigure.security.servlet.Managemen
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.autoconfigure.security.servlet.SecurityAutoConfiguration
 import org.springframework.boot.runApplication
+
+private val log = KotlinLogging.logger {}
+
 val SIKKER_LOGG = KotlinLogging.logger("secureLogger")
 
 @SpringBootApplication(
-    exclude = [SecurityAutoConfiguration::class, ManagementWebSecurityAutoConfiguration::class]
+    exclude = [SecurityAutoConfiguration::class, ManagementWebSecurityAutoConfiguration::class],
 )
 class App
 
 fun main(args: Array<String>) {
-
-    runApplication<App>(*args)
+    try {
+        runApplication<App>(*args)
+    } catch (e: Exception) {
+        log.error(e) { "Feil ved oppstart av applikasjon" }
+    } catch (e: Error) {
+        log.error(e) { "Feil ved oppstart av applikasjon" }
+    }
 }

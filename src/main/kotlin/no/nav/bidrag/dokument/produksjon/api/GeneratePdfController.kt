@@ -1,7 +1,6 @@
 package no.nav.bidrag.dokument.produksjon.api
 
 import io.github.oshai.kotlinlogging.KotlinLogging
-import java.io.InputStream
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import no.nav.bidrag.dokument.produksjon.OPENHTMLTOPDF_RENDERING_SUMMARY
@@ -17,13 +16,13 @@ import org.springframework.web.bind.annotation.RequestBody
 import org.springframework.web.bind.annotation.RequestHeader
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RestController
+import java.io.InputStream
 
 private val log = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping("/api/genpdf")
 class GenPDFController {
-
     @GetMapping("/{category}/{dokumentmal}")
     fun generatePDFFromSample(
         @PathVariable category: String,
@@ -33,20 +32,23 @@ class GenPDFController {
     }
 
     @PostMapping("/html")
-    fun html(@RequestBody payload: String): ResponseEntity<*> {
+    fun html(
+        @RequestBody payload: String,
+    ): ResponseEntity<*> {
         return generatePDFFromHtmlResponse(payload)
     }
 
     @PostMapping("/image")
     suspend fun image(
         @RequestHeader(HttpHeaders.CONTENT_TYPE) contentType: MediaType,
-        @RequestBody inputStream: InputStream
+        @RequestBody inputStream: InputStream,
     ): ResponseEntity<*> {
         val timer = OPENHTMLTOPDF_RENDERING_SUMMARY.labels("convertjpeg").startTimer()
         val response =
             when (contentType) {
                 MediaType.IMAGE_JPEG,
-                MediaType.IMAGE_PNG ->
+                MediaType.IMAGE_PNG,
+                ->
                     withContext(Dispatchers.IO) {
                         ResponseEntity.ok()
                             .contentType(MediaType.APPLICATION_PDF)
@@ -66,7 +68,6 @@ class GenPDFController {
 @RestController
 @RequestMapping("/api/genhtml")
 class GenHtmlController {
-
     @GetMapping("/{category}/{dokumentmal}")
     fun generateHtmlFromSample(
         @PathVariable category: String,
@@ -79,7 +80,7 @@ class GenHtmlController {
     fun fromHtml(
         @PathVariable category: String,
         @PathVariable dokumentmal: String,
-        @RequestBody payload: String
+        @RequestBody payload: String,
     ): ResponseEntity<*> {
         return generateHTMLResponse(category, dokumentmal, payload)
     }

@@ -1,13 +1,13 @@
 package no.nav.bidrag.dokument.produksjon.util
 
 import com.github.jknack.handlebars.Helper
-import java.util.Locale
 import no.nav.bidrag.domene.enums.beregning.ResultatkodeForskudd
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
 import no.nav.bidrag.domene.util.visningsnavn
+import java.util.Locale
 
 fun handlebarEnumMapper(): Pair<String, Helper<Any>> =
     "enum_to_readable" to
@@ -27,11 +27,13 @@ fun handlebarEnumMapper(): Pair<String, Helper<Any>> =
 
 val Any.toEnum
     get() =
-        if (this is String)
+        if (this is String) {
             toEnum<Sivilstandskode>(this)
                 ?: toEnum<Bostatuskode>(this) ?: toEnum<Inntektsrapportering>(this)
-                    ?: toEnum<ResultatkodeForskudd>(this) ?: toEnum<SøktAvType>(this)
-        else null
+                ?: toEnum<ResultatkodeForskudd>(this) ?: toEnum<SøktAvType>(this)
+        } else {
+            null
+        }
 
 inline fun <reified T : Enum<T>> toEnum(enumStr: String): T? {
     return try {

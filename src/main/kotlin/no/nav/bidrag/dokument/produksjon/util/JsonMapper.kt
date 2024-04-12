@@ -12,9 +12,9 @@ import com.fasterxml.jackson.databind.deser.std.StdDeserializer
 import com.fasterxml.jackson.databind.module.SimpleModule
 import com.fasterxml.jackson.databind.ser.std.StdSerializer
 import com.fasterxml.jackson.databind.util.StdDateFormat
+import no.nav.bidrag.domene.enums.rolle.Rolletype
 import java.io.IOException
 import java.time.YearMonth
-import no.nav.bidrag.domene.enums.rolle.Rolletype
 
 fun getObjectmapper(): ObjectMapper {
     val mapper = ObjectMapper().findAndRegisterModules()
@@ -32,25 +32,30 @@ fun getObjectmapper(): ObjectMapper {
 
 class YearMontDeserializer(t: Class<YearMonth>? = null) : StdDeserializer<YearMonth?>(t) {
     @Throws(IOException::class, JsonProcessingException::class)
-    override fun deserialize(jp: JsonParser, ctxt: DeserializationContext?): YearMonth {
+    override fun deserialize(
+        jp: JsonParser,
+        ctxt: DeserializationContext?,
+    ): YearMonth {
         val node: JsonNode = jp.codec.readTree(jp)
         return formatToYearMonth(node.asText())
     }
 }
 
 class YearMonthSerializer(t: Class<YearMonth>? = null) : StdSerializer<YearMonth>(t) {
-
-    override fun serialize(value: YearMonth, gen: JsonGenerator, provider: SerializerProvider) {
+    override fun serialize(
+        value: YearMonth,
+        gen: JsonGenerator,
+        provider: SerializerProvider,
+    ) {
         gen.writeString(value.atDay(1).toString())
     }
 }
 
 class RolletypeSerializer(t: Class<Enum<Rolletype>>? = null) : StdSerializer<Enum<Rolletype>>(t) {
-
     override fun serialize(
         value: Enum<Rolletype>,
         gen: JsonGenerator,
-        provider: SerializerProvider
+        provider: SerializerProvider,
     ) {
         gen.writeString(value.name)
     }

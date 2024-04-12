@@ -1,16 +1,15 @@
 package no.nav.bidrag.dokument.produksjon.dto
 
-import java.math.BigDecimal
-import java.time.LocalDate
-import java.time.YearMonth
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
-import no.nav.bidrag.domene.enums.person.SivilstandskodePDL
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import java.math.BigDecimal
+import java.time.LocalDate
+import java.time.YearMonth
 
 data class NotatDto(
     val saksnummer: String,
@@ -43,15 +42,19 @@ data class Boforhold(
 )
 
 data class SivilstandNotat(
-    val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteret<Sivilstandskode>> = emptyList(),
-    val opplysningerBruktTilBeregning: List<OpplysningerBruktTilBeregning<Sivilstandskode>> = emptyList(),
+    val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteret<Sivilstandskode>> =
+        emptyList(),
+    val opplysningerBruktTilBeregning: List<OpplysningerBruktTilBeregning<Sivilstandskode>> =
+        emptyList(),
 )
 
 data class BoforholdBarn(
     val navn: String,
     val fødselsdato: LocalDate?,
-    val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteret<Bostatuskode>> = emptyList(),
-    val opplysningerBruktTilBeregning: List<OpplysningerBruktTilBeregning<Bostatuskode>> = emptyList(),
+    val opplysningerFraFolkeregisteret: List<OpplysningerFraFolkeregisteret<Bostatuskode>> =
+        emptyList(),
+    val opplysningerBruktTilBeregning: List<OpplysningerBruktTilBeregning<Bostatuskode>> =
+        emptyList(),
 )
 
 data class OpplysningerFraFolkeregisteret<T>(
