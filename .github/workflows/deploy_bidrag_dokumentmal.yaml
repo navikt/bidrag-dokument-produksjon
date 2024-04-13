@@ -28,6 +28,7 @@ jobs:
           project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
           image_suffix: bidrag-dokumentmal
           tag: bidrag-dokumentmal
+          docker_context: ./bidrag-dokumentmal
           dockerfile: ./bidrag-dokumentmal/Dockerfile
           build_args: |
             NPM_TOKEN=${{ secrets.READER_TOKEN }}
