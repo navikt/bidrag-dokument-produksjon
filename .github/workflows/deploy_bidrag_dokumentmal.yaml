@@ -36,6 +36,6 @@ jobs:
         uses: nais/deploy/actions/deploy@v2
         env:
           CLUSTER: dev-gcp
-          RESOURCE: nais/naismal.yaml
+          RESOURCE: .nais/naismal.yaml
           IMAGE: ${{ steps.docker-push.outputs.image }}
       - run: echo ${{ steps.docker-push.outputs.image }}
