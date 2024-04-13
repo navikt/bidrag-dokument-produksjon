@@ -1,12 +1,16 @@
 package no.nav.bidrag.dokument.produksjon.dto
 
+import no.nav.bidrag.domene.enums.beregning.Resultatkode
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
+import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
+import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
+import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import java.math.BigDecimal
 import java.time.LocalDate
 import java.time.YearMonth
@@ -16,7 +20,7 @@ data class NotatDto(
     val saksbehandlerNavn: String?,
     val virkningstidspunkt: Virkningstidspunkt,
     val boforhold: Boforhold,
-    val parterISøknad: List<ParterISøknad>,
+    val roller: List<RolleNotatDto>,
     val inntekter: Inntekter,
     val vedtak: List<Vedtak>,
 )
@@ -27,6 +31,8 @@ data class Virkningstidspunkt(
     val mottattDato: YearMonth?,
     val søktFraDato: YearMonth?,
     val virkningstidspunkt: LocalDate?,
+    val årsak: VirkningstidspunktÅrsakstype?,
+    val avslag: Resultatkode?,
     val notat: Notat,
 )
 
@@ -65,10 +71,10 @@ data class OpplysningerFraFolkeregisteret<T>(
 data class OpplysningerBruktTilBeregning<T>(
     val periode: ÅrMånedsperiode,
     val status: T,
-    val kilde: String,
+    val kilde: Kilde,
 )
 
-data class ParterISøknad(
+data class RolleNotatDto(
     val rolle: Rolletype,
     val navn: String?,
     val fødselsdato: LocalDate?,
@@ -81,11 +87,19 @@ data class Inntekter(
 )
 
 data class InntekterPerRolle(
-    val rolle: Rolletype,
+    val rolle: RolleNotatDto,
     val arbeidsforhold: List<Arbeidsforhold>,
-    val inntekterSomLeggesTilGrunn: List<InntekterSomLeggesTilGrunn>,
-    val barnetillegg: List<Barnetillegg>,
-    val utvidetBarnetrygd: List<UtvidetBarnetrygd>,
+    val årsinntekter: List<NotatInntektDto>,
+    val barnetillegg: List<NotatInntektDto>,
+    val utvidetBarnetrygd: List<NotatInntektDto>,
+    val småbarnstillegg: List<NotatInntektDto>,
+    val kontantstøtte: List<NotatInntektDto>,
+    val beregnetInntekter: List<NotatBeregnetInntektDto>,
+)
+
+data class NotatBeregnetInntektDto(
+    val gjelderBarn: RolleNotatDto,
+    val summertInntektListe: List<DelberegningSumInntekt>,
 )
 
 data class Arbeidsforhold(
@@ -95,20 +109,22 @@ data class Arbeidsforhold(
     val lønnsendringDato: LocalDate?,
 )
 
-data class InntekterSomLeggesTilGrunn(
-    val inntektType: Inntektsrapportering?,
-    val beskrivelse: String?,
-    val periode: ÅrMånedsperiode?,
+data class NotatInntektDto(
+    val periode: ÅrMånedsperiode,
+    val opprinneligPeriode: ÅrMånedsperiode?,
     val beløp: BigDecimal,
+    val kilde: Kilde = Kilde.OFFENTLIG,
+    val visningsnavn: String? = null,
+    val type: Inntektsrapportering,
+    val medIBeregning: Boolean = false,
+    val gjelderBarn: RolleNotatDto?,
+    val inntektsposter: List<NotatInntektspostDto>,
 )
 
-data class Barnetillegg(
-    val periode: ÅrMånedsperiode,
-    val beløp: BigDecimal,
-)
-
-data class UtvidetBarnetrygd(
-    val periode: ÅrMånedsperiode,
+data class NotatInntektspostDto(
+    val kode: String?,
+    val visningsnavn: String?,
+    val inntektstype: Inntektstype?,
     val beløp: BigDecimal,
 )
 
@@ -126,3 +142,8 @@ data class Resultat(
     val antallBarn: Int,
     val resultat: String,
 )
+
+enum class Kilde {
+    MANUELT,
+    OFFENTLIG,
+}

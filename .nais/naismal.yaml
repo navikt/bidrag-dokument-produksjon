@@ -1,0 +1,29 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "bidrag-dokumentmal"
+  namespace: "bidrag"
+  labels:
+    team: bidrag
+spec:
+  image: {{ image }}
+  port: 8080
+  liveness:
+    path: /
+    initialDelay: 10
+    timeout: 1
+    periodSeconds: 10
+    failureThreshold: 10
+  readiness:
+    path: /
+    initialDelay: 10
+    timeout: 1
+  resources:
+    limits:
+      cpu: 2000m
+      memory: 2048Mi
+    requests:
+      cpu: 100m
+      memory: 100Mi
+  ingresses:
+    - "https://bidrag-dokumentmal.intern.dev.nav.no"

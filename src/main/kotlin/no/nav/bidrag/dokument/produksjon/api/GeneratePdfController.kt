@@ -28,7 +28,7 @@ class GenPDFController {
         @PathVariable category: String,
         @PathVariable dokumentmal: String,
     ): ResponseEntity<*> {
-        return generatePDFResponse(category, dokumentmal, null, true)
+        return generatePDFResponse2(category, dokumentmal, null, true)
     }
 
     @PostMapping("/html")

@@ -15,15 +15,9 @@
         <img alt="NAV logo" class="navlogo" src="{{ image "NavlogoRød.svg" }}"/>
     </div>
 
-    <div class="container">
-        <div class="detaljer">
-            <dl>
-                <dt>Saksnummer:</dt>
-                <dd>{{ saksnummer }}</dd>
-            </dl>
-        </div>
-        {{#> notat/partials/soknad_parter }}
-        {{/notat/partials/soknad_parter}}
+    <div class="container page">
+        {{#> notat/partials/soknad_detaljer }}
+        {{/notat/partials/soknad_detaljer}}
         {{#> notat/partials/virkningstidspunkt virkningstidspunkt }}
         {{/notat/partials/virkningstidspunkt}}
         {{#> notat/partials/boforhold_sivilstand }}
