@@ -8,6 +8,10 @@ metadata:
 spec:
   image: {{ image }}
   port: 8080
+  accessPolicy:
+    inbound:
+      rules:
+        - application: bidrag-dokument-produksjon
   liveness:
     path: /
     initialDelay: 10

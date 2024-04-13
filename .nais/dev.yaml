@@ -5,3 +5,5 @@ azure_access_inbound:
   - application: bidrag-ui
   - application: bidrag-dokument-bestilling-feature
   - application: bidrag-dokument-bestilling
+outbound-access-apps:
+  - bidrag-dokumentmal

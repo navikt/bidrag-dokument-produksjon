@@ -6,7 +6,7 @@ import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.postForEntity
 
 class BidragDokumentmalConsumer {
-    val url = "https://bidrag-dokumentmal.intern.dev.nav.no"
+    val url = "http://bidrag-dokumentmal"
 
     fun hentDokumentmal(
         category: String,
