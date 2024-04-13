@@ -16,8 +16,7 @@ jobs:
       contents: "read"
       id-token: "write"
     runs-on: ubuntu-latest
-    name: Deploy to feature
-    needs: build
+    name: Deploy
 
     steps:
       - uses: actions/checkout@v4
