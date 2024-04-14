@@ -2,6 +2,7 @@ import {NotatForskuddProps} from "~/routes/notat.forskudd/route";
 import {formatPeriode} from "~/utils/date-utils";
 import React from "react";
 import {
+    Kilde,
     OpplysningerFraFolkeregisteretBostatuskode,
     OpplysningerFraFolkeregisteretSivilstandskodePDL
 } from "~/types/Api";
@@ -14,7 +15,7 @@ export default function VedleggBoforhold({data}: NotatForskuddProps) {
     return <div style={{pageBreakBefore: "always"}}>
         <h2>Vedlegg nr. 1: Boforhold</h2>
         <h3>Opplysninger fra folkeregisteret</h3>
-        {groupBy(data.boforhold.barn.sort((d) => d.medIBehandling ? -1 : 1)
+        {groupBy(data.boforhold.barn.filter((d)=>d.opplysningerFraFolkeregisteret.length > 0).sort((d) => d.medIBehandling ? -1 : 1)
             , (d) => d.gjelder.ident ?? d.gjelder.fødselsdato!!).map(([key, value]) => {
             const gjelderBarn = value[0].gjelder!!
             const barn = value[0]

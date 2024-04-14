@@ -26,6 +26,7 @@ export interface Boforhold {
 export interface BoforholdBarn {
   gjelder: PersonNotatDto;
   medIBehandling: boolean;
+  kilde: Kilde;
   opplysningerFraFolkeregisteret: OpplysningerFraFolkeregisteretBostatuskode[];
   opplysningerBruktTilBeregning: OpplysningerBruktTilBeregningBostatuskode[];
 }
@@ -388,8 +389,8 @@ export interface MediaType {
   parameters?: Record<string, string>;
   /** @format double */
   qualityValue?: number;
-  wildcardSubtype?: boolean;
   subtypeSuffix?: string;
+  wildcardSubtype?: boolean;
   charset?: string;
   wildcardType?: boolean;
   concrete?: boolean;
