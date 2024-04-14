@@ -5,6 +5,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.dokument.produksjon.OPENHTMLTOPDF_RENDERING_SUMMARY
 import no.nav.bidrag.dokument.produksjon.SIKKER_LOGG
 import no.nav.bidrag.dokument.produksjon.consumer.BidragDokumentmalConsumer
+import no.nav.bidrag.dokument.produksjon.dto.NotatDto
 import no.nav.bidrag.transport.felles.commonObjectmapper
 import no.nav.pdfgen.core.PDFGenCore.Companion.environment
 import no.nav.pdfgen.core.objectMapper
@@ -101,13 +102,13 @@ private fun hotTemplateData(
 ): String {
     val dataFile = environment.dataRoot.getPath("$foldername/$template.json")
     val data =
-        objectMapper.readValue(
+        commonObjectmapper.readValue(
             if (Files.exists(dataFile)) {
                 Files.readAllBytes(dataFile)
             } else {
                 "{}".toByteArray(Charsets.UTF_8)
             },
-            JsonNode::class.java,
+            NotatDto::class.java,
         )
     return commonObjectmapper.writeValueAsString(data)
 }

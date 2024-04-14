@@ -1,0 +1,427 @@
+{
+  "saksnummer": "2300455",
+  "saksbehandlerNavn": "Hansen, Hans Madsen",
+  "virkningstidspunkt": {
+    "søknadstype": "FORSKUDD",
+    "søktAv": "BIDRAGSMOTTAKER",
+    "mottattDato": "2023-03",
+    "søktFraDato": "2023-01",
+    "virkningstidspunkt": "2023-01",
+    "avslag": "BARNETS_INNTEKT",
+    "notat": {
+      "medIVedtaket": "Du har søkt om bidragsforskudd fra 01.05.2022 med den begrunnelse at du ikke har har blitt informert muligheten for å søke tidligere. I brev av 05.10.2022 er du blitt bedt om å dokumentere påstanden, men NAV har ikke mottatt etterspurt dokumentasjon innen fristen.  Bidragsforskuddet er fastsatt med virkning fra 01.07.2022, som er tre måneder før NAV fikk søknaden din.",
+      "intern": ""
+    }
+  },
+  "boforhold": {
+    "barn": [
+      {
+        "navn": "Emma Banan",
+        "fødselsdato": "2023-03-01",
+        "medIBehandling": true,
+        "opplysningerFraFolkeregisteret": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "status": "MED_FORELDER"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "status": "IKKE_MED_FORELDER"
+          }
+        ],
+        "opplysningerBruktTilBeregning": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "status": "MED_FORELDER",
+            "kilde": "OFFENTLIG"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "status": "IKKE_MED_FORELDER",
+            "kilde": "MANUELT"
+          }
+        ]
+      },
+      {
+        "navn": "Lemma Banan",
+        "fødselsdato": "2018-06-03",
+        "medIBehandling": true,
+        "opplysningerFraFolkeregisteret": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "status": "MED_FORELDER"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "status": "IKKE_MED_FORELDER"
+          }
+        ],
+        "opplysningerBruktTilBeregning": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "status": "MED_FORELDER",
+            "kilde": "OFFENTLIG"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "status": "IKKE_MED_FORELDER",
+            "kilde": "MANUELT"
+          }
+        ]
+      },
+      {
+        "navn": "Kalle Anke",
+        "fødselsdato": "2019-04-03",
+        "medIBehandling": false,
+        "opplysningerFraFolkeregisteret": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "status": "MED_FORELDER"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "status": "IKKE_MED_FORELDER"
+          }
+        ],
+        "opplysningerBruktTilBeregning": [
+          {
+            "periode": {
+              "fom": "2022-01-01",
+              "til": "2022-10-31"
+            },
+            "status": "MED_FORELDER",
+            "kilde": "MANUELT"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "status": "IKKE_MED_FORELDER",
+            "kilde": "MANUELT"
+          }
+        ]
+      }
+    ],
+    "sivilstand": {
+      "opplysningerFraFolkeregisteret": [
+        {
+          "periode": {
+            "fom": "2022-05-01",
+            "til": "2022-10-31"
+          },
+          "status": "BOR_ALENE_MED_BARN"
+        },
+        {
+          "periode": {
+            "fom": "2022-11-01"
+          },
+          "status": "BOR_ALENE_MED_BARN"
+        }
+      ],
+      "opplysningerBruktTilBeregning": [
+        {
+          "periode": {
+            "fom": "2022-05-01",
+            "til": "2022-10-31"
+          },
+          "status": "BOR_ALENE_MED_BARN",
+          "kilde": "MANUELL"
+        },
+        {
+          "periode": {
+            "fom": "2022-11-01"
+          },
+          "status": "GIFT_SAMBOER",
+          "kilde": "OFFENTLIG"
+        }
+      ]
+    },
+    "notat": {
+      "medIVedtaket": "Du har søkt om bidragsforskudd fra 01.05.2022 med den begrunnelse at du ikke har har blitt informert muligheten for å søke tidligere. I brev av 05.10.2022 er du blitt bedt om å dokumentere påstanden, men NAV har ikke mottatt etterspurt dokumentasjon innen fristen.  Bidragsforskuddet er fastsatt med virkning fra 01.07.2022, som er tre måneder før NAV fikk søknaden din.",
+      "intern": ""
+    }
+  },
+  "roller": [
+    {
+      "rolle": "BIDRAGSMOTTAKER",
+      "navn": "Mia Banan",
+      "fødselsdato": "1996-02-20",
+      "personident": "12123312313"
+    },
+    {
+      "rolle": "BIDRAGSPLIKTIG",
+      "navn": "Amalie Banan",
+      "fødselsdato": "1993-01-20",
+      "personident": "4545454545"
+    },
+    {
+      "rolle": "BARN",
+      "navn": "Emma Banan",
+      "fødselsdato": "2023-03-01",
+      "personident": "55555555"
+    },
+    {
+      "rolle": "BARN",
+      "navn": "Lemma Banan",
+      "fødselsdato": "2018-06-03",
+      "personident": "6666666666"
+    }
+  ],
+  "inntekter": {
+    "inntekterPerRolle": [
+      {
+        "gjelder": {
+          "rolle": "BIDRAGSMOTTAKER",
+          "navn": "Mia Banan",
+          "fødselsdato": "1996-02-20",
+          "personident": "12123312313"
+        },
+        "arbeidsforhold": [
+          {
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "arbeidsgiver": "Barnehage AS",
+            "stillingProsent": "90",
+            "lønnsendringDato": "2022-10-05"
+          },
+          {
+            "periode": {
+              "fom": "2022-11-01"
+            },
+            "arbeidsgiver": "Videregående skole AS",
+            "stillingProsent": "90",
+            "lønnsendringDato": "2022-10-05"
+          }
+        ],
+        "årsinntekter": [
+          {
+            "visningsnavn": "3 måneder beregnet",
+            "type": "AINNTEKT_BEREGNET_3MND",
+            "kilde": "OFFENTLIG",
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-10-31"
+            },
+            "beløp": "12341",
+            "opprinneligPeriode": {
+              "fom": "2022-01-01",
+              "til": "2022-10-31"
+            },
+            "medIBeregning": true,
+            "inntektsposter": [
+              {
+                "visningsnavn": "Fastlønn",
+                "beløp": "12341"
+              }
+            ]
+          },
+          {
+            "visningsnavn": "12 måneder beregnet",
+            "type": "AINNTEKT_BEREGNET_12MND",
+            "kilde": "OFFENTLIG",
+            "beløp": "12341",
+            "opprinneligPeriode": {
+              "fom": "2022-01-01",
+              "til": "2022-10-31"
+            },
+            "medIBeregning": false,
+            "inntektsposter": [
+              {
+                "visningsnavn": "Fastlønn",
+                "beløp": "12341"
+              }
+            ]
+          },
+          {
+            "visningsnavn": "Lønn og trekkoppgave 2022",
+            "type": "AINNTEKT",
+            "kilde": "OFFENTLIG",
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-12-31"
+            },
+            "beløp": "12341",
+            "opprinneligPeriode": {
+              "fom": "2022-01-01",
+              "til": "2022-10-31"
+            },
+            "medIBeregning": true,
+            "inntektsposter": [
+              {
+                "visningsnavn": "Fastlønn",
+                "beløp": "12341"
+              }
+            ]
+          },
+          {
+            "visningsnavn": "Saksbehandlers beregnet inntekt",
+            "kilde": "MANUELT",
+            "type": "SAKSBEHANDLER_BEREGNET_INNTEKT",
+            "periode": {
+              "fom": "2022-05-01"
+            },
+            "beløp": "12",
+            "medIBeregning": true
+          }
+        ],
+        "barnetillegg": [
+          {
+            "gjelderBarn": {
+              "rolle": "BARN",
+              "navn": "Lemma Banan",
+              "fødselsdato": "2018-06-03",
+              "personident": "6666666666"
+            },
+            "type": "BARNETILLEGG",
+            "kilde": "OFFENTLIG",
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-12-31"
+            },
+            "beløp": "5000",
+            "opprinneligPeriode": {
+              "fom": "2022-01-01",
+              "til": "2022-10-31"
+            },
+            "medIBeregning": true,
+            "inntektsposter": [
+              {
+                "visningsnavn": "Pensjon",
+                "beløp": "5000"
+              }
+            ]
+          },
+          {
+            "gjelderBarn": {
+              "rolle": "BARN",
+              "navn": "Emma Banan",
+              "fødselsdato": "2023-03-01",
+              "personident": "55555555"
+            },
+            "type": "BARNETILLEGG",
+            "kilde": "OFFENTLIG",
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-12-31"
+            },
+            "beløp": "5000",
+            "opprinneligPeriode": {
+              "fom": "2022-01-01",
+              "til": "2022-10-31"
+            },
+            "medIBeregning": true,
+            "inntektsposter": [
+              {
+                "visningsnavn": "BARNETILLEGG_PENSJON",
+                "beløp": "5000"
+              }
+            ]
+          }
+        ],
+        "utvidetBarnetrygd": [
+          {
+            "type": "UTVIDET_BARNETRYGD",
+            "kilde": "OFFENTLIG",
+            "periode": {
+              "fom": "2022-05-01",
+              "til": "2022-12-31"
+            },
+            "beløp": "5000",
+            "opprinneligPeriode": {
+              "fom": "2022-01-01",
+              "til": "2022-10-31"
+            },
+            "medIBeregning": true
+          }
+        ]
+      }
+    ],
+    "notat": {
+      "medIVedtaket": "Du har søkt om bidragsforskudd fra 01.05.2022 med den begrunnelse at du ikke har har blitt informert muligheten for å søke tidligere. I brev av 05.10.2022 er du blitt bedt om å dokumentere påstanden, men NAV har ikke mottatt etterspurt dokumentasjon innen fristen.  Bidragsforskuddet er fastsatt med virkning fra 01.07.2022, som er tre måneder før NAV fikk søknaden din.",
+      "intern": ""
+    }
+  },
+  "vedtak": [
+    {
+      "navn": "Emma Banan",
+      "fødselsdato": "2018-06-03",
+      "resultat": [
+        {
+          "type": "Forskudd",
+          "periode": {
+            "fom": "2022-07-01"
+          },
+          "inntekt": 651791,
+          "sivilstand": "Ugift",
+          "antallBarn": 2,
+          "resultat": "Opphør pga høy inntekt"
+        },
+        {
+          "type": "Forskudd",
+          "periode": {
+            "fom": "2021-09-01",
+            "til": "2022-07-01"
+          },
+          "inntekt": 851791,
+          "sivilstand": "Ugift",
+          "antallBarn": 2,
+          "resultat": "Redusert"
+        }
+      ]
+    },
+    {
+      "navn": "Lemma Banan",
+      "fødselsdato": "2018-06-03",
+      "resultat": [
+        {
+          "type": "Forskudd",
+          "periode": {
+            "fom": "2022-07-01"
+          },
+          "inntekt": 651791,
+          "sivilstand": "Ugift",
+          "antallBarn": 2,
+          "resultat": "Opphør pga høy inntekt"
+        },
+        {
+          "type": "Forskudd",
+          "periode": {
+            "fom": "2021-09-01",
+            "til": "2022-07-01"
+          },
+          "inntekt": 851791,
+          "sivilstand": "Ugift",
+          "antallBarn": 2,
+          "resultat": "Redusert"
+        }
+      ]
+    }
+  ]
+}

@@ -1,128 +1,210 @@
 {
-  "saksnummer": "2300455",
-  "saksbehandlerNavn": "Hansen, Hans Madsen",
+  "saksnummer": "2400033",
+  "saksbehandlerNavn": "F_Z994977 E_Z994977",
   "virkningstidspunkt": {
-    "søknadstype": "FORSKUDD",
+    "søknadstype": "ENDRING",
     "søktAv": "BIDRAGSMOTTAKER",
-    "mottattDato": "2023-03",
-    "søktFraDato": "2023-01",
-    "virkningstidspunkt": "2023-01",
-    "avslag": "BARNETS_INNTEKT",
+    "mottattDato": "2023-01",
+    "søktFraDato": "2022-01",
+    "virkningstidspunkt": "2022-01-01",
+    "årsak": "FRA_SØKNADSTIDSPUNKT",
     "notat": {
-      "medIVedtaket": "Du har søkt om bidragsforskudd fra 01.05.2022 med den begrunnelse at du ikke har har blitt informert muligheten for å søke tidligere. I brev av 05.10.2022 er du blitt bedt om å dokumentere påstanden, men NAV har ikke mottatt etterspurt dokumentasjon innen fristen.  Bidragsforskuddet er fastsatt med virkning fra 01.07.2022, som er tre måneder før NAV fikk søknaden din.",
-      "intern": ""
-    }
+      "medIVedtaket": "asdasd"
+    },
+    "årsakVisningsnavn": "Fra søknadstidspunkt"
   },
   "boforhold": {
     "barn": [
       {
-        "navn": "Emma Banan",
-        "fødselsdato": "2023-03-01",
-        "medIBehandling": true,
-        "opplysningerFraFolkeregisteret": [
-          {
-            "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-10-31"
-            },
-            "status": "MED_FORELDER"
-          },
-          {
-            "periode": {
-              "fom": "2022-11-01"
-            },
-            "status": "IKKE_MED_FORELDER"
-          }
-        ],
-        "opplysningerBruktTilBeregning": [
-          {
-            "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-10-31"
-            },
-            "status": "MED_FORELDER",
-            "kilde": "OFFENTLIG"
-          },
-          {
-            "periode": {
-              "fom": "2022-11-01"
-            },
-            "status": "IKKE_MED_FORELDER",
-            "kilde": "MANUELT"
-          }
-        ]
-      },
-      {
-        "navn": "Lemma Banan",
-        "fødselsdato": "2018-06-03",
-        "medIBehandling": true,
-        "opplysningerFraFolkeregisteret": [
-          {
-            "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-10-31"
-            },
-            "status": "MED_FORELDER"
-          },
-          {
-            "periode": {
-              "fom": "2022-11-01"
-            },
-            "status": "IKKE_MED_FORELDER"
-          }
-        ],
-        "opplysningerBruktTilBeregning": [
-          {
-            "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-10-31"
-            },
-            "status": "MED_FORELDER",
-            "kilde": "OFFENTLIG"
-          },
-          {
-            "periode": {
-              "fom": "2022-11-01"
-            },
-            "status": "IKKE_MED_FORELDER",
-            "kilde": "MANUELT"
-          }
-        ]
-      },
-      {
-        "navn": "Kalle Anke",
-        "fødselsdato": "2019-04-03",
+        "gjelder": {
+          "navn": "Usensuell Fallende Pyramide",
+          "fødselsdato": "2017-07-07",
+          "ident": "07471780639"
+        },
         "medIBehandling": false,
         "opplysningerFraFolkeregisteret": [
           {
             "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-10-31"
+              "fom": "2022-01",
+              "til": "2022-06"
             },
-            "status": "MED_FORELDER"
+            "status": "IKKE_MED_FORELDER",
+            "statusVisningsnavn": "Ikke registrert på adresse"
           },
           {
             "periode": {
-              "fom": "2022-11-01"
+              "fom": "2022-07"
             },
-            "status": "IKKE_MED_FORELDER"
+            "status": "MED_FORELDER",
+            "statusVisningsnavn": "Registrert på adresse"
           }
         ],
         "opplysningerBruktTilBeregning": [
           {
             "periode": {
-              "fom": "2022-01-01",
-              "til": "2022-10-31"
+              "fom": "2022-01",
+              "til": "2022-06"
             },
-            "status": "MED_FORELDER",
-            "kilde": "MANUELT"
+            "status": "IKKE_MED_FORELDER",
+            "kilde": "OFFENTLIG",
+            "statusVisningsnavn": "Ikke registrert på adresse"
           },
           {
             "periode": {
-              "fom": "2022-11-01"
+              "fom": "2022-07"
+            },
+            "status": "MED_FORELDER",
+            "kilde": "OFFENTLIG",
+            "statusVisningsnavn": "Registrert på adresse"
+          }
+        ]
+      },
+      {
+        "gjelder": {
+          "navn": "Normal Utnyttende Pakke",
+          "fødselsdato": "2015-05-13",
+          "ident": "13451585880"
+        },
+        "medIBehandling": true,
+        "opplysningerFraFolkeregisteret": [
+          {
+            "periode": {
+              "fom": "2022-01",
+              "til": "2022-06"
             },
             "status": "IKKE_MED_FORELDER",
-            "kilde": "MANUELT"
+            "statusVisningsnavn": "Ikke registrert på adresse"
+          },
+          {
+            "periode": {
+              "fom": "2022-07"
+            },
+            "status": "MED_FORELDER",
+            "statusVisningsnavn": "Registrert på adresse"
+          }
+        ],
+        "opplysningerBruktTilBeregning": [
+          {
+            "periode": {
+              "fom": "2022-01",
+              "til": "2022-06"
+            },
+            "status": "IKKE_MED_FORELDER",
+            "kilde": "OFFENTLIG",
+            "statusVisningsnavn": "Ikke registrert på adresse"
+          },
+          {
+            "periode": {
+              "fom": "2022-07"
+            },
+            "status": "MED_FORELDER",
+            "kilde": "OFFENTLIG",
+            "statusVisningsnavn": "Registrert på adresse"
+          }
+        ]
+      },
+      {
+        "gjelder": {
+          "navn": "Firkantet Levende Skive",
+          "fødselsdato": "2005-09-16",
+          "ident": "16490550511"
+        },
+        "medIBehandling": false,
+        "opplysningerFraFolkeregisteret": [
+          {
+            "periode": {
+              "fom": "2022-01",
+              "til": "2022-06"
+            },
+            "status": "IKKE_MED_FORELDER",
+            "statusVisningsnavn": "Ikke registrert på adresse"
+          },
+          {
+            "periode": {
+              "fom": "2022-07",
+              "til": "2023-09"
+            },
+            "status": "MED_FORELDER",
+            "statusVisningsnavn": "Registrert på adresse"
+          },
+          {
+            "periode": {
+              "fom": "2023-10"
+            },
+            "status": "REGNES_IKKE_SOM_BARN",
+            "statusVisningsnavn": "Regnes ikke som barn"
+          }
+        ],
+        "opplysningerBruktTilBeregning": [
+          {
+            "periode": {
+              "fom": "2022-01",
+              "til": "2022-06"
+            },
+            "status": "IKKE_MED_FORELDER",
+            "kilde": "OFFENTLIG",
+            "statusVisningsnavn": "Ikke registrert på adresse"
+          },
+          {
+            "periode": {
+              "fom": "2022-07",
+              "til": "2023-09"
+            },
+            "status": "MED_FORELDER",
+            "kilde": "OFFENTLIG",
+            "statusVisningsnavn": "Registrert på adresse"
+          },
+          {
+            "periode": {
+              "fom": "2023-10"
+            },
+            "status": "REGNES_IKKE_SOM_BARN",
+            "kilde": "OFFENTLIG",
+            "statusVisningsnavn": "Regnes ikke som barn"
+          }
+        ]
+      },
+      {
+        "gjelder": {
+          "navn": "Geometrisk Detalj",
+          "fødselsdato": "2022-07-26",
+          "ident": "26472252274"
+        },
+        "medIBehandling": true,
+        "opplysningerFraFolkeregisteret": [
+          {
+            "periode": {
+              "fom": "2022-01",
+              "til": "2022-06"
+            },
+            "status": "IKKE_MED_FORELDER",
+            "statusVisningsnavn": "Ikke registrert på adresse"
+          },
+          {
+            "periode": {
+              "fom": "2022-07"
+            },
+            "status": "MED_FORELDER",
+            "statusVisningsnavn": "Registrert på adresse"
+          }
+        ],
+        "opplysningerBruktTilBeregning": [
+          {
+            "periode": {
+              "fom": "2022-01",
+              "til": "2022-06"
+            },
+            "status": "IKKE_MED_FORELDER",
+            "kilde": "OFFENTLIG",
+            "statusVisningsnavn": "Ikke registrert på adresse"
+          },
+          {
+            "periode": {
+              "fom": "2022-07"
+            },
+            "status": "MED_FORELDER",
+            "kilde": "OFFENTLIG",
+            "statusVisningsnavn": "Registrert på adresse"
           }
         ]
       }
@@ -131,297 +213,1076 @@
       "opplysningerFraFolkeregisteret": [
         {
           "periode": {
-            "fom": "2022-05-01",
-            "til": "2022-10-31"
+            "fom": "1978-11"
           },
-          "status": "BOR_ALENE_MED_BARN"
+          "status": "UGIFT",
+          "statusVisningsnavn": "Ugift"
         },
         {
           "periode": {
-            "fom": "2022-11-01"
+            "fom": "2022-11"
           },
-          "status": "BOR_ALENE_MED_BARN"
+          "status": "SKILT",
+          "statusVisningsnavn": "Skilt"
+        },
+        {
+          "periode": {
+            "fom": "2024-02"
+          },
+          "status": "SEPARERT",
+          "statusVisningsnavn": "Separert"
         }
       ],
       "opplysningerBruktTilBeregning": [
         {
           "periode": {
-            "fom": "2022-05-01",
-            "til": "2022-10-31"
+            "fom": "2022-01",
+            "til": "2023-12"
           },
           "status": "BOR_ALENE_MED_BARN",
-          "kilde": "MANUELL"
+          "kilde": "MANUELT",
+          "statusVisningsnavn": "Bor alene med barn"
         },
         {
           "periode": {
-            "fom": "2022-11-01"
+            "fom": "2024-01"
           },
           "status": "GIFT_SAMBOER",
-          "kilde": "OFFENTLIG"
+          "kilde": "MANUELT",
+          "statusVisningsnavn": "Gift/samboer"
         }
       ]
     },
     "notat": {
-      "medIVedtaket": "Du har søkt om bidragsforskudd fra 01.05.2022 med den begrunnelse at du ikke har har blitt informert muligheten for å søke tidligere. I brev av 05.10.2022 er du blitt bedt om å dokumentere påstanden, men NAV har ikke mottatt etterspurt dokumentasjon innen fristen.  Bidragsforskuddet er fastsatt med virkning fra 01.07.2022, som er tre måneder før NAV fikk søknaden din.",
-      "intern": ""
+      "medIVedtaket": "asdsad",
+      "intern": "asdasd"
     }
   },
   "roller": [
     {
-      "rolle": "BIDRAGSMOTTAKER",
-      "navn": "Mia Banan",
-      "fødselsdato": "1996-02-20",
-      "personident": "12123312313"
+      "rolle": "BM",
+      "navn": "Rakrygget Etat",
+      "fødselsdato": "1978-11-15",
+      "ident": "15517829118"
     },
     {
-      "rolle": "BIDRAGSPLIKTIG",
-      "navn": "Amalie Banan",
-      "fødselsdato": "1993-01-20",
-      "personident": "4545454545"
+      "rolle": "BA",
+      "navn": "Normal Utnyttende Pakke",
+      "fødselsdato": "2015-05-13",
+      "ident": "13451585880"
     },
     {
-      "rolle": "BARN",
-      "navn": "Emma Banan",
-      "fødselsdato": "2023-03-01",
-      "personident": "55555555"
-    },
-    {
-      "rolle": "BARN",
-      "navn": "Lemma Banan",
-      "fødselsdato": "2018-06-03",
-      "personident": "6666666666"
+      "rolle": "BA",
+      "navn": "Geometrisk Detalj",
+      "fødselsdato": "2022-07-26",
+      "ident": "26472252274"
     }
   ],
   "inntekter": {
     "inntekterPerRolle": [
       {
         "gjelder": {
-          "rolle": "BIDRAGSMOTTAKER",
-          "navn": "Mia Banan",
-          "fødselsdato": "1996-02-20",
-          "personident": "12123312313"
+          "rolle": "BM",
+          "navn": "Rakrygget Etat",
+          "fødselsdato": "1978-11-15",
+          "ident": "15517829118"
         },
         "arbeidsforhold": [
           {
             "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-10-31"
+              "fom": "2022-12"
             },
-            "arbeidsgiver": "Barnehage AS",
-            "stillingProsent": "90",
-            "lønnsendringDato": "2022-10-05"
-          },
-          {
-            "periode": {
-              "fom": "2022-11-01"
-            },
-            "arbeidsgiver": "Videregående skole AS",
-            "stillingProsent": "90",
-            "lønnsendringDato": "2022-10-05"
+            "arbeidsgiver": "SAUEFABRIKK"
           }
         ],
         "årsinntekter": [
           {
-            "visningsnavn": "3 måneder beregnet",
+            "opprinneligPeriode": {
+              "fom": "2024-01",
+              "til": "2024-03"
+            },
+            "beløp": 240000,
+            "kilde": "OFFENTLIG",
             "type": "AINNTEKT_BEREGNET_3MND",
-            "kilde": "OFFENTLIG",
-            "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-10-31"
-            },
-            "beløp": "12341",
-            "opprinneligPeriode": {
-              "fom": "2022-01-01",
-              "til": "2022-10-31"
-            },
-            "medIBeregning": true,
-            "inntektsposter": [
-              {
-                "visningsnavn": "Fastlønn",
-                "beløp": "12341"
-              }
-            ]
-          },
-          {
-            "visningsnavn": "12 måneder beregnet",
-            "type": "AINNTEKT_BEREGNET_12MND",
-            "kilde": "OFFENTLIG",
-            "beløp": "12341",
-            "opprinneligPeriode": {
-              "fom": "2022-01-01",
-              "til": "2022-10-31"
-            },
             "medIBeregning": false,
             "inntektsposter": [
               {
-                "visningsnavn": "Fastlønn",
-                "beløp": "12341"
+                "kode": "fastloenn",
+                "beløp": 240000,
+                "visningsnavn": "Fastlønn"
               }
-            ]
+            ],
+            "visningsnavn": "A-inntekt siste 3 måneder 2024"
           },
           {
-            "visningsnavn": "Lønn og trekkoppgave 2022",
-            "type": "AINNTEKT",
-            "kilde": "OFFENTLIG",
             "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-12-31"
+              "fom": "2023-01",
+              "til": "2023-12"
             },
-            "beløp": "12341",
             "opprinneligPeriode": {
-              "fom": "2022-01-01",
-              "til": "2022-10-31"
+              "fom": "2023-01",
+              "til": "2023-12"
             },
+            "beløp": 668000.0,
+            "kilde": "OFFENTLIG",
+            "type": "AINNTEKT",
             "medIBeregning": true,
             "inntektsposter": [
               {
-                "visningsnavn": "Fastlønn",
-                "beløp": "12341"
+                "kode": "fastloenn",
+                "beløp": 668000,
+                "visningsnavn": "Fastlønn"
               }
-            ]
+            ],
+            "visningsnavn": "Lønn og trekk 2023"
           },
           {
-            "visningsnavn": "Saksbehandlers beregnet inntekt",
-            "kilde": "MANUELT",
-            "type": "SAKSBEHANDLER_BEREGNET_INNTEKT",
             "periode": {
-              "fom": "2022-05-01"
+              "fom": "2023-01",
+              "til": "2023-12"
             },
-            "beløp": "12",
-            "medIBeregning": true
+            "opprinneligPeriode": {
+              "fom": "2023-01",
+              "til": "2023-12"
+            },
+            "beløp": 0,
+            "kilde": "OFFENTLIG",
+            "type": "KAPITALINNTEKT",
+            "medIBeregning": false,
+            "inntektsposter": [],
+            "visningsnavn": "Sigrun kapitalinntekt (KAPS) 2023"
+          },
+          {
+            "opprinneligPeriode": {
+              "fom": "2023-01",
+              "til": "2023-12"
+            },
+            "beløp": 612000.0,
+            "kilde": "OFFENTLIG",
+            "type": "LIGNINGSINNTEKT",
+            "medIBeregning": false,
+            "inntektsposter": [
+              {
+                "kode": "samletLoennsinntektMedTrygdeavgiftspliktOgMedTrekkplikt",
+                "beløp": 600000.0,
+                "visningsnavn": "Lønnsinntekt med trygdeavgiftsplikt og med trekkplikt"
+              },
+              {
+                "kode": "overgangsstoenadTilEnsligForelder",
+                "beløp": 12000.0,
+                "visningsnavn": "Overgangsstønad"
+              }
+            ],
+            "visningsnavn": "Sigrun ligningsinntekt (LIGS) 2023"
+          },
+          {
+            "opprinneligPeriode": {
+              "fom": "2022-01",
+              "til": "2022-12"
+            },
+            "beløp": 1055000.0,
+            "kilde": "OFFENTLIG",
+            "type": "AINNTEKT",
+            "medIBeregning": false,
+            "inntektsposter": [
+              {
+                "kode": "fastloenn",
+                "beløp": 1055000,
+                "visningsnavn": "Fastlønn"
+              }
+            ],
+            "visningsnavn": "Lønn og trekk 2022"
+          },
+          {
+            "periode": {
+              "fom": "2022-01"
+            },
+            "opprinneligPeriode": {
+              "fom": "2023-04",
+              "til": "2024-03"
+            },
+            "beløp": 573000.0,
+            "kilde": "OFFENTLIG",
+            "type": "AINNTEKT_BEREGNET_12MND",
+            "medIBeregning": true,
+            "inntektsposter": [
+              {
+                "kode": "fastloenn",
+                "beløp": 573000,
+                "visningsnavn": "Fastlønn"
+              }
+            ],
+            "visningsnavn": "A-inntekt siste 12 måneder 2022"
+          },
+          {
+            "periode": {
+              "fom": "2022-01",
+              "til": "2022-12"
+            },
+            "opprinneligPeriode": {
+              "fom": "2022-01",
+              "til": "2022-12"
+            },
+            "beløp": 25000.0,
+            "kilde": "OFFENTLIG",
+            "type": "KAPITALINNTEKT",
+            "medIBeregning": true,
+            "inntektsposter": [
+              {
+                "kode": "tapVedRealisasjonAvAnnetFinansprodukt",
+                "beløp": 30000.0,
+                "visningsnavn": "Tap ved realisasjon av annet finansprodukt"
+              },
+              {
+                "kode": "gevinstOgAnnenInntektFraVirtuellEiendel",
+                "beløp": 45000.0,
+                "visningsnavn": "Gevinst og annen inntekt fra virtuell eiendel"
+              },
+              {
+                "kode": "gevinstVedRealisasjonAvAksje",
+                "beløp": 10000.0,
+                "visningsnavn": "Gevinst ved realisasjon av aksje"
+              }
+            ],
+            "visningsnavn": "Sigrun kapitalinntekt (KAPS) 2022"
+          },
+          {
+            "periode": {
+              "fom": "2022-01",
+              "til": "2022-12"
+            },
+            "opprinneligPeriode": {
+              "fom": "2022-01",
+              "til": "2022-12"
+            },
+            "beløp": 850000.0,
+            "kilde": "OFFENTLIG",
+            "type": "LIGNINGSINNTEKT",
+            "medIBeregning": false,
+            "inntektsposter": [
+              {
+                "kode": "samletLoennsinntektMedTrygdeavgiftspliktOgMedTrekkplikt",
+                "beløp": 850000.0,
+                "visningsnavn": "Lønnsinntekt med trygdeavgiftsplikt og med trekkplikt"
+              }
+            ],
+            "visningsnavn": "Sigrun ligningsinntekt (LIGS) 2022"
+          },
+          {
+            "periode": {
+              "fom": "2021-01",
+              "til": "2021-12"
+            },
+            "opprinneligPeriode": {
+              "fom": "2021-01",
+              "til": "2021-12"
+            },
+            "beløp": 0,
+            "kilde": "OFFENTLIG",
+            "type": "KAPITALINNTEKT",
+            "medIBeregning": false,
+            "inntektsposter": [],
+            "visningsnavn": "Sigrun kapitalinntekt (KAPS) 2021"
+          },
+          {
+            "periode": {
+              "fom": "2021-01",
+              "til": "2021-12"
+            },
+            "opprinneligPeriode": {
+              "fom": "2021-01",
+              "til": "2021-12"
+            },
+            "beløp": 0,
+            "kilde": "OFFENTLIG",
+            "type": "LIGNINGSINNTEKT",
+            "medIBeregning": false,
+            "inntektsposter": [],
+            "visningsnavn": "Sigrun ligningsinntekt (LIGS) 2021"
+          },
+          {
+            "periode": {
+              "fom": "2020-01",
+              "til": "2020-12"
+            },
+            "opprinneligPeriode": {
+              "fom": "2020-01",
+              "til": "2020-12"
+            },
+            "beløp": 0,
+            "kilde": "OFFENTLIG",
+            "type": "KAPITALINNTEKT",
+            "medIBeregning": false,
+            "inntektsposter": [],
+            "visningsnavn": "Sigrun kapitalinntekt (KAPS) 2020"
+          },
+          {
+            "periode": {
+              "fom": "2020-01",
+              "til": "2020-12"
+            },
+            "opprinneligPeriode": {
+              "fom": "2020-01",
+              "til": "2020-12"
+            },
+            "beløp": 0,
+            "kilde": "OFFENTLIG",
+            "type": "LIGNINGSINNTEKT",
+            "medIBeregning": false,
+            "inntektsposter": [],
+            "visningsnavn": "Sigrun ligningsinntekt (LIGS) 2020"
+          },
+          {
+            "periode": {
+              "fom": "2019-01",
+              "til": "2019-12"
+            },
+            "opprinneligPeriode": {
+              "fom": "2019-01",
+              "til": "2019-12"
+            },
+            "beløp": 0,
+            "kilde": "OFFENTLIG",
+            "type": "KAPITALINNTEKT",
+            "medIBeregning": false,
+            "inntektsposter": [],
+            "visningsnavn": "Sigrun kapitalinntekt (KAPS) 2019"
+          },
+          {
+            "periode": {
+              "fom": "2019-01",
+              "til": "2019-12"
+            },
+            "opprinneligPeriode": {
+              "fom": "2019-01",
+              "til": "2019-12"
+            },
+            "beløp": 0,
+            "kilde": "OFFENTLIG",
+            "type": "LIGNINGSINNTEKT",
+            "medIBeregning": false,
+            "inntektsposter": [],
+            "visningsnavn": "Sigrun ligningsinntekt (LIGS) 2019"
           }
         ],
         "barnetillegg": [
           {
-            "gjelderBarn": {
-              "rolle": "BARN",
-              "navn": "Lemma Banan",
-              "fødselsdato": "2018-06-03",
-              "personident": "6666666666"
-            },
-            "type": "BARNETILLEGG",
-            "kilde": "OFFENTLIG",
             "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-12-31"
+              "fom": "2022-01",
+              "til": "2022-02"
             },
-            "beløp": "5000",
-            "opprinneligPeriode": {
-              "fom": "2022-01-01",
-              "til": "2022-10-31"
-            },
+            "beløp": 3996,
+            "kilde": "MANUELT",
+            "type": "BARNETILLEGG",
             "medIBeregning": true,
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Normal Utnyttende Pakke",
+              "fødselsdato": "2015-05-13",
+              "ident": "13451585880"
+            },
             "inntektsposter": [
               {
-                "visningsnavn": "Pensjon",
-                "beløp": "5000"
+                "kode": "BARNETILLEGG",
+                "inntektstype": "BARNETILLEGG_PENSJON",
+                "beløp": 3996,
+                "visningsnavn": "Pensjon"
               }
-            ]
+            ],
+            "visningsnavn": "Barnetillegg 2022"
           },
           {
-            "gjelderBarn": {
-              "rolle": "BARN",
-              "navn": "Emma Banan",
-              "fødselsdato": "2023-03-01",
-              "personident": "55555555"
-            },
-            "type": "BARNETILLEGG",
-            "kilde": "OFFENTLIG",
             "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-12-31"
+              "fom": "2023-05",
+              "til": "2024-02"
             },
-            "beløp": "5000",
-            "opprinneligPeriode": {
-              "fom": "2022-01-01",
-              "til": "2022-10-31"
-            },
+            "beløp": 6000,
+            "kilde": "MANUELT",
+            "type": "BARNETILLEGG",
             "medIBeregning": true,
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Normal Utnyttende Pakke",
+              "fødselsdato": "2015-05-13",
+              "ident": "13451585880"
+            },
             "inntektsposter": [
               {
-                "visningsnavn": "BARNETILLEGG_PENSJON",
-                "beløp": "5000"
+                "kode": "BARNETILLEGG",
+                "inntektstype": "BARNETILLEGG_KVALIFISERINGSSTØNAD",
+                "beløp": 6000,
+                "visningsnavn": "Kvalifiseringsstønad"
               }
-            ]
+            ],
+            "visningsnavn": "Barnetillegg 2023"
+          },
+          {
+            "periode": {
+              "fom": "2023-06"
+            },
+            "beløp": 5508,
+            "kilde": "MANUELT",
+            "type": "BARNETILLEGG",
+            "medIBeregning": true,
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Geometrisk Detalj",
+              "fødselsdato": "2022-07-26",
+              "ident": "26472252274"
+            },
+            "inntektsposter": [
+              {
+                "kode": "BARNETILLEGG",
+                "inntektstype": "BARNETILLEGG_DAGPENGER",
+                "beløp": 5508,
+                "visningsnavn": "Dagpenger"
+              }
+            ],
+            "visningsnavn": "Barnetillegg 2023"
+          },
+          {
+            "periode": {
+              "fom": "2024-01"
+            },
+            "beløp": 5328,
+            "kilde": "MANUELT",
+            "type": "BARNETILLEGG",
+            "medIBeregning": true,
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Geometrisk Detalj",
+              "fødselsdato": "2022-07-26",
+              "ident": "26472252274"
+            },
+            "inntektsposter": [
+              {
+                "kode": "BARNETILLEGG",
+                "inntektstype": "BARNETILLEGG_UFØRETRYGD",
+                "beløp": 5328,
+                "visningsnavn": "Uføretrygd"
+              }
+            ],
+            "visningsnavn": "Barnetillegg 2024"
           }
         ],
         "utvidetBarnetrygd": [
           {
-            "type": "UTVIDET_BARNETRYGD",
-            "kilde": "OFFENTLIG",
-            "periode": {
-              "fom": "2022-05-01",
-              "til": "2022-12-31"
-            },
-            "beløp": "5000",
             "opprinneligPeriode": {
-              "fom": "2022-01-01",
-              "til": "2022-10-31"
+              "fom": "2023-03",
+              "til": "2023-06"
             },
-            "medIBeregning": true
+            "beløp": 29868,
+            "kilde": "OFFENTLIG",
+            "type": "UTVIDET_BARNETRYGD",
+            "medIBeregning": false,
+            "inntektsposter": [],
+            "visningsnavn": "Utvidet barnetrygd 2023"
+          },
+          {
+            "opprinneligPeriode": {
+              "fom": "2023-07",
+              "til": "2035-06"
+            },
+            "beløp": 30192,
+            "kilde": "OFFENTLIG",
+            "type": "UTVIDET_BARNETRYGD",
+            "medIBeregning": false,
+            "inntektsposter": [],
+            "visningsnavn": "Utvidet barnetrygd 2023"
+          },
+          {
+            "periode": {
+              "fom": "2022-01"
+            },
+            "opprinneligPeriode": {
+              "fom": "2019-03",
+              "til": "2023-02"
+            },
+            "beløp": 12648,
+            "kilde": "OFFENTLIG",
+            "type": "UTVIDET_BARNETRYGD",
+            "medIBeregning": true,
+            "inntektsposter": [],
+            "visningsnavn": "Utvidet barnetrygd 2022"
+          }
+        ],
+        "småbarnstillegg": [
+          {
+            "periode": {
+              "fom": "2024-01"
+            },
+            "beløp": 333,
+            "kilde": "MANUELT",
+            "type": "SMÅBARNSTILLEGG",
+            "medIBeregning": true,
+            "inntektsposter": [],
+            "visningsnavn": "Småbarnstillegg 2024"
+          }
+        ],
+        "kontantstøtte": [
+          {
+            "periode": {
+              "fom": "2022-01"
+            },
+            "opprinneligPeriode": {
+              "fom": "2023-08",
+              "til": "2024-06"
+            },
+            "beløp": 90000,
+            "kilde": "OFFENTLIG",
+            "type": "KONTANTSTØTTE",
+            "medIBeregning": true,
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Geometrisk Detalj",
+              "fødselsdato": "2022-07-26",
+              "ident": "26472252274"
+            },
+            "inntektsposter": [],
+            "visningsnavn": "Kontantstøtte 2022"
+          },
+          {
+            "periode": {
+              "fom": "2024-01",
+              "til": "2024-02"
+            },
+            "beløp": 3213,
+            "kilde": "MANUELT",
+            "type": "KONTANTSTØTTE",
+            "medIBeregning": true,
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Normal Utnyttende Pakke",
+              "fødselsdato": "2015-05-13",
+              "ident": "13451585880"
+            },
+            "inntektsposter": [],
+            "visningsnavn": "Kontantstøtte 2024"
+          }
+        ],
+        "beregnetInntekter": [
+          {
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Normal Utnyttende Pakke",
+              "fødselsdato": "2015-05-13",
+              "ident": "13451585880"
+            },
+            "summertInntektListe": [
+              {
+                "periode": {
+                  "fom": "2022-01",
+                  "til": "2022-02"
+                },
+                "totalinntekt": 604644.0,
+                "skattepliktigInntekt": 588000.0,
+                "barnetillegg": 3996,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2022-02",
+                  "til": "2022-12"
+                },
+                "totalinntekt": 600648.0,
+                "skattepliktigInntekt": 588000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2022-12",
+                  "til": "2023-01"
+                },
+                "totalinntekt": 585648.0,
+                "skattepliktigInntekt": 573000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-01",
+                  "til": "2023-05"
+                },
+                "totalinntekt": 1253648.0,
+                "skattepliktigInntekt": 1241000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-05",
+                  "til": "2023-12"
+                },
+                "totalinntekt": 1259648.0,
+                "skattepliktigInntekt": 1241000.0,
+                "barnetillegg": 6000,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-12",
+                  "til": "2024-01"
+                },
+                "totalinntekt": 591648.0,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 6000,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2024-01",
+                  "til": "2024-02"
+                },
+                "totalinntekt": 595194.0,
+                "kontantstøtte": 3213,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 6000,
+                "utvidetBarnetrygd": 12648,
+                "småbarnstillegg": 333
+              },
+              {
+                "periode": {
+                  "fom": "2024-02"
+                },
+                "totalinntekt": 585981.0,
+                "skattepliktigInntekt": 573000.0,
+                "utvidetBarnetrygd": 12648,
+                "småbarnstillegg": 333
+              }
+            ]
+          },
+          {
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Geometrisk Detalj",
+              "fødselsdato": "2022-07-26",
+              "ident": "26472252274"
+            },
+            "summertInntektListe": [
+              {
+                "periode": {
+                  "fom": "2022-01",
+                  "til": "2022-12"
+                },
+                "totalinntekt": 690648.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 588000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2022-12",
+                  "til": "2023-01"
+                },
+                "totalinntekt": 675648.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 573000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-01",
+                  "til": "2023-06"
+                },
+                "totalinntekt": 1343648.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 1241000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-06",
+                  "til": "2023-12"
+                },
+                "totalinntekt": 1349156.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 1241000.0,
+                "barnetillegg": 5508,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-12",
+                  "til": "2024-01"
+                },
+                "totalinntekt": 681156.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 5508,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2024-01"
+                },
+                "totalinntekt": 686817.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 10836,
+                "utvidetBarnetrygd": 12648,
+                "småbarnstillegg": 333
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "gjelder": {
+          "rolle": "BA",
+          "navn": "Normal Utnyttende Pakke",
+          "fødselsdato": "2015-05-13",
+          "ident": "13451585880"
+        },
+        "arbeidsforhold": [],
+        "årsinntekter": [],
+        "barnetillegg": [],
+        "utvidetBarnetrygd": [],
+        "småbarnstillegg": [],
+        "kontantstøtte": [],
+        "beregnetInntekter": [
+          {
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Normal Utnyttende Pakke",
+              "fødselsdato": "2015-05-13",
+              "ident": "13451585880"
+            },
+            "summertInntektListe": [
+              {
+                "periode": {
+                  "fom": "2022-01",
+                  "til": "2022-02"
+                },
+                "totalinntekt": 604644.0,
+                "skattepliktigInntekt": 588000.0,
+                "barnetillegg": 3996,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2022-02",
+                  "til": "2022-12"
+                },
+                "totalinntekt": 600648.0,
+                "skattepliktigInntekt": 588000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2022-12",
+                  "til": "2023-01"
+                },
+                "totalinntekt": 585648.0,
+                "skattepliktigInntekt": 573000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-01",
+                  "til": "2023-05"
+                },
+                "totalinntekt": 1253648.0,
+                "skattepliktigInntekt": 1241000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-05",
+                  "til": "2023-12"
+                },
+                "totalinntekt": 1259648.0,
+                "skattepliktigInntekt": 1241000.0,
+                "barnetillegg": 6000,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-12",
+                  "til": "2024-01"
+                },
+                "totalinntekt": 591648.0,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 6000,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2024-01",
+                  "til": "2024-02"
+                },
+                "totalinntekt": 595194.0,
+                "kontantstøtte": 3213,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 6000,
+                "utvidetBarnetrygd": 12648,
+                "småbarnstillegg": 333
+              },
+              {
+                "periode": {
+                  "fom": "2024-02"
+                },
+                "totalinntekt": 585981.0,
+                "skattepliktigInntekt": 573000.0,
+                "utvidetBarnetrygd": 12648,
+                "småbarnstillegg": 333
+              }
+            ]
+          },
+          {
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Geometrisk Detalj",
+              "fødselsdato": "2022-07-26",
+              "ident": "26472252274"
+            },
+            "summertInntektListe": [
+              {
+                "periode": {
+                  "fom": "2022-01",
+                  "til": "2022-12"
+                },
+                "totalinntekt": 690648.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 588000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2022-12",
+                  "til": "2023-01"
+                },
+                "totalinntekt": 675648.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 573000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-01",
+                  "til": "2023-06"
+                },
+                "totalinntekt": 1343648.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 1241000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-06",
+                  "til": "2023-12"
+                },
+                "totalinntekt": 1349156.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 1241000.0,
+                "barnetillegg": 5508,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-12",
+                  "til": "2024-01"
+                },
+                "totalinntekt": 681156.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 5508,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2024-01"
+                },
+                "totalinntekt": 686817.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 10836,
+                "utvidetBarnetrygd": 12648,
+                "småbarnstillegg": 333
+              }
+            ]
+          }
+        ]
+      },
+      {
+        "gjelder": {
+          "rolle": "BA",
+          "navn": "Geometrisk Detalj",
+          "fødselsdato": "2022-07-26",
+          "ident": "26472252274"
+        },
+        "arbeidsforhold": [],
+        "årsinntekter": [],
+        "barnetillegg": [],
+        "utvidetBarnetrygd": [],
+        "småbarnstillegg": [],
+        "kontantstøtte": [],
+        "beregnetInntekter": [
+          {
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Normal Utnyttende Pakke",
+              "fødselsdato": "2015-05-13",
+              "ident": "13451585880"
+            },
+            "summertInntektListe": [
+              {
+                "periode": {
+                  "fom": "2022-01",
+                  "til": "2022-02"
+                },
+                "totalinntekt": 604644.0,
+                "skattepliktigInntekt": 588000.0,
+                "barnetillegg": 3996,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2022-02",
+                  "til": "2022-12"
+                },
+                "totalinntekt": 600648.0,
+                "skattepliktigInntekt": 588000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2022-12",
+                  "til": "2023-01"
+                },
+                "totalinntekt": 585648.0,
+                "skattepliktigInntekt": 573000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-01",
+                  "til": "2023-05"
+                },
+                "totalinntekt": 1253648.0,
+                "skattepliktigInntekt": 1241000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-05",
+                  "til": "2023-12"
+                },
+                "totalinntekt": 1259648.0,
+                "skattepliktigInntekt": 1241000.0,
+                "barnetillegg": 6000,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-12",
+                  "til": "2024-01"
+                },
+                "totalinntekt": 591648.0,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 6000,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2024-01",
+                  "til": "2024-02"
+                },
+                "totalinntekt": 595194.0,
+                "kontantstøtte": 3213,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 6000,
+                "utvidetBarnetrygd": 12648,
+                "småbarnstillegg": 333
+              },
+              {
+                "periode": {
+                  "fom": "2024-02"
+                },
+                "totalinntekt": 585981.0,
+                "skattepliktigInntekt": 573000.0,
+                "utvidetBarnetrygd": 12648,
+                "småbarnstillegg": 333
+              }
+            ]
+          },
+          {
+            "gjelderBarn": {
+              "rolle": "BA",
+              "navn": "Geometrisk Detalj",
+              "fødselsdato": "2022-07-26",
+              "ident": "26472252274"
+            },
+            "summertInntektListe": [
+              {
+                "periode": {
+                  "fom": "2022-01",
+                  "til": "2022-12"
+                },
+                "totalinntekt": 690648.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 588000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2022-12",
+                  "til": "2023-01"
+                },
+                "totalinntekt": 675648.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 573000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-01",
+                  "til": "2023-06"
+                },
+                "totalinntekt": 1343648.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 1241000.0,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-06",
+                  "til": "2023-12"
+                },
+                "totalinntekt": 1349156.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 1241000.0,
+                "barnetillegg": 5508,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2023-12",
+                  "til": "2024-01"
+                },
+                "totalinntekt": 681156.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 5508,
+                "utvidetBarnetrygd": 12648
+              },
+              {
+                "periode": {
+                  "fom": "2024-01"
+                },
+                "totalinntekt": 686817.0,
+                "kontantstøtte": 90000,
+                "skattepliktigInntekt": 573000.0,
+                "barnetillegg": 10836,
+                "utvidetBarnetrygd": 12648,
+                "småbarnstillegg": 333
+              }
+            ]
           }
         ]
       }
     ],
-    "notat": {
-      "medIVedtaket": "Du har søkt om bidragsforskudd fra 01.05.2022 med den begrunnelse at du ikke har har blitt informert muligheten for å søke tidligere. I brev av 05.10.2022 er du blitt bedt om å dokumentere påstanden, men NAV har ikke mottatt etterspurt dokumentasjon innen fristen.  Bidragsforskuddet er fastsatt med virkning fra 01.07.2022, som er tre måneder før NAV fikk søknaden din.",
-      "intern": ""
-    }
+    "notat": {}
   },
-  "vedtak": [
-    {
-      "navn": "Emma Banan",
-      "fødselsdato": "2018-06-03",
-      "resultat": [
-        {
-          "type": "Forskudd",
-          "periode": {
-            "fom": "2022-07-01"
-          },
-          "inntekt": 651791,
-          "sivilstand": "Ugift",
-          "antallBarn": 2,
-          "resultat": "Opphør pga høy inntekt"
-        },
-        {
-          "type": "Forskudd",
-          "periode": {
-            "fom": "2021-09-01",
-            "til": "2022-07-01"
-          },
-          "inntekt": 851791,
-          "sivilstand": "Ugift",
-          "antallBarn": 2,
-          "resultat": "Redusert"
-        }
-      ]
-    },
-    {
-      "navn": "Lemma Banan",
-      "fødselsdato": "2018-06-03",
-      "resultat": [
-        {
-          "type": "Forskudd",
-          "periode": {
-            "fom": "2022-07-01"
-          },
-          "inntekt": 651791,
-          "sivilstand": "Ugift",
-          "antallBarn": 2,
-          "resultat": "Opphør pga høy inntekt"
-        },
-        {
-          "type": "Forskudd",
-          "periode": {
-            "fom": "2021-09-01",
-            "til": "2022-07-01"
-          },
-          "inntekt": 851791,
-          "sivilstand": "Ugift",
-          "antallBarn": 2,
-          "resultat": "Redusert"
-        }
-      ]
-    }
-  ]
+  "vedtak": {
+    "erFattet": false,
+    "resultat": []
+  }
 }

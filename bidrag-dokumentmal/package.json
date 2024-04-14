@@ -12,7 +12,8 @@
     "icons": "npx @svgr/cli --out-dir app/components/icons -- app/icons",
     "icons:watch": "npm-watch icons",
     "dev:svg": "run-s icons icons:watch",
-    "dev": "remix dev"
+    "dev": "remix dev",
+    "gen_api": "swagger-typescript-api -p http://localhost:8183/v3/api-docs --no-client -n Api.ts -o app/types"
   },
   "dependencies": {
     "@navikt/aksel-icons": "^6.5.0",
@@ -29,6 +30,7 @@
     "remix-utils": "^7.6.0"
   },
   "devDependencies": {
+    "swagger-typescript-api": "13.0.3",
     "@remix-run/dev": "^2.8.1",
     "@svgr/cli": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",

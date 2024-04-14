@@ -2,7 +2,7 @@ name: bidrag-dokumentmal - Build and deploy prod
 on:
   push:
     branches:
-      - '**'
+      - 'main'
     paths:
       - '.nais/bidrag-dokumentmal/**.yaml'
       - '**/bidrag-dokumentmal/**'
