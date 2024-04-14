@@ -31,6 +31,25 @@ fun generateHTMLResponse(
         ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
 }
 
+fun generateHTMLResponse2(
+    bidragDokumentmalConsumer: BidragDokumentmalConsumer,
+    category: String,
+    template: String,
+    payload: String?,
+    useHottemplate: Boolean = false,
+): ResponseEntity<String> {
+    if (payload == null && !useHottemplate) {
+        throw RuntimeException(
+            "Mangler data for å generere brev",
+        )
+    }
+    val jsonPayload = payload ?: hotTemplateData(category, template)
+    return bidragDokumentmalConsumer.hentDokumentmal(category, template, jsonPayload)?.let {
+        ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
+    }
+        ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
+}
+
 fun generatePDFFromHtmlResponse(html: String): ResponseEntity<ByteArray> {
     val timer = OPENHTMLTOPDF_RENDERING_SUMMARY.labels("converthtml").startTimer()
     val bytes = PdfContent(html).generate()
@@ -45,14 +64,20 @@ fun generatePDFFromHtmlResponse(html: String): ResponseEntity<ByteArray> {
 }
 
 fun generatePDFResponse2(
+    bidragDokumentmalConsumer: BidragDokumentmalConsumer,
     category: String,
     template: String,
     payload: String?,
     useHottemplate: Boolean = false,
 ): ResponseEntity<*> {
+    if (payload == null && !useHottemplate) {
+        throw RuntimeException(
+            "Mangler data for å generere brev",
+        )
+    }
     val jsonPayload = payload ?: hotTemplateData(category, template)
     val startTime = System.currentTimeMillis()
-    return BidragDokumentmalConsumer().hentDokumentmal(category, template, jsonPayload)?.let {
+    return bidragDokumentmalConsumer.hentDokumentmal(category, template, jsonPayload)?.let {
             document ->
         log.info { document }
         val bytes = PdfContent(document).generate()
@@ -71,10 +96,10 @@ fun generatePDFResponse2(
 }
 
 private fun hotTemplateData(
-    applicationName: String,
+    foldername: String,
     template: String,
 ): String {
-    val dataFile = environment.dataRoot.getPath("$applicationName/$template.json")
+    val dataFile = environment.dataRoot.getPath("$foldername/$template.json")
     val data =
         objectMapper.readValue(
             if (Files.exists(dataFile)) {

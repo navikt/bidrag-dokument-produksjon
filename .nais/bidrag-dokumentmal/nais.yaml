@@ -11,7 +11,14 @@ spec:
   accessPolicy:
     inbound:
       rules:
-        - application: bidrag-dokument-produksjon
+      {{#each azure_access_inbound}}
+         - application: {{this.application}}
+      {{/each}}
+    outbound:
+      rules:
+      {{#each outbound-access-apps}}
+         - application: {{this}}
+      {{/each}}
   liveness:
     path: /
     initialDelay: 10
@@ -24,10 +31,12 @@ spec:
     timeout: 1
   resources:
     limits:
-      cpu: 2000m
-      memory: 2048Mi
+      cpu: 1000m
+      memory: 1000Mi
     requests:
       cpu: 300m
       memory: 200Mi
   ingresses:
-    - "https://bidrag-dokumentmal.intern.dev.nav.no"
+  {{#each ingresses as |url|}}
+     - {{url}}
+  {{/each}}
