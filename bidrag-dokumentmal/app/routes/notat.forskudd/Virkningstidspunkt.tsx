@@ -16,7 +16,6 @@ export default function Virkningstidspunkt({data}: { data: NotatDto }) {
             <Datadisplay label={"Søkt fra dato"} value={dateToDDMMYYYY(virkningstidspunkt.søktFraDato as string)}/>
             {virkningstidspunkt.avslag ? <Datadisplay label={"Avslag"} value={virkningstidspunkt.avslagVisningsnavn}/> : <Datadisplay label={"Årsak"} value={virkningstidspunkt.årsakVisningsnavn}/> }
             <Datadisplay label={"Virkningstidspunkt"} value={dateToDDMMYYYY(virkningstidspunkt.virkningstidspunkt)}/>
-            <Notat data={virkningstidspunkt.notat}/>
         </div>
     </div>
 

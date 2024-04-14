@@ -17,6 +17,7 @@ import Inntekter from "~/routes/notat.forskudd/Inntekter";
 import Vedtak from "~/routes/notat.forskudd/Vedtak";
 import VedleggBoforhold from "~/routes/notat.forskudd/VedleggBoforhold";
 import VedleggInntekter from "~/routes/notat.forskudd/VedleggInntekter";
+import SaksbehandlerNotat from "~/routes/notat.forskudd/SaksbehandlerNotat";
 
 export async function action({request}: ActionFunctionArgs) {
     const body = await request.json();
@@ -48,6 +49,7 @@ export default function NotatForskudd() {
                 <Boforhold data={data}/>
                 <Inntekter data={data}/>
                 <Vedtak data={data}/>
+                <SaksbehandlerNotat data={data}/>
                 <VedleggBoforhold data={data}/>
                 <VedleggInntekter data={data}/>
             </div>

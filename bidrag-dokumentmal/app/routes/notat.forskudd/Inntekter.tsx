@@ -27,16 +27,11 @@ function InntekterBidragsmottaker({data}: { data?: InntekterPerRolle }) {
     if (data == null) return null
     return <div>
         <div style={{marginTop: "-10px"}}>
-            {data.årsinntekter.length > 0 &&
-                <InntektTable data={data.årsinntekter} title={"Skattepliktige og pensjonsgivende inntekt"}/>}
-            {data.barnetillegg.length > 0 &&
-                <InntektPerBarnTable data={data.barnetillegg} title={"Barnetillegg"}/>}
-            {data.utvidetBarnetrygd.length > 0 &&
-                <InntektTable data={data.utvidetBarnetrygd} title={"Utvidet barnetrygd"} inkluderBeskrivelse={false}/>}
-            {data.småbarnstillegg.length > 0 &&
-                <InntektTable data={data.småbarnstillegg} title={"Småbarnstillegg"} inkluderBeskrivelse={false}/>}
-            {data.kontantstøtte.length > 0 &&
-                <InntektPerBarnTable data={data.kontantstøtte} title={"Kontantstøtte"}/>}
+            <InntektTable data={data.årsinntekter} title={"Skattepliktige og pensjonsgivende inntekt"}/>
+            <InntektPerBarnTable data={data.barnetillegg} title={"Barnetillegg"}/>
+            <InntektTable data={data.utvidetBarnetrygd} title={"Utvidet barnetrygd"} inkluderBeskrivelse={false}/>
+            <InntektTable data={data.småbarnstillegg} title={"Småbarnstillegg"} inkluderBeskrivelse={false}/>
+            <InntektPerBarnTable data={data.kontantstøtte} title={"Kontantstøtte"}/>
             <BeregnetInntektTable data={data.beregnetInntekter}/>
         </div>
     </div>
@@ -58,6 +53,7 @@ function InntektTable({
                           bareMedIBeregning = true,
                           inkluderBeskrivelse = true
                       }: InntektTableProps) {
+    if (data.length == 0) return null
     return <div style={{paddingTop: "10px"}}>
         <TableTitle title={title} subtitle={subtitle}/>
         <div className={"background_section"}>
@@ -86,6 +82,7 @@ function InntektTable({
 }
 
 function InntektPerBarnTable({data, title, subtitle, bareMedIBeregning = true}: InntektTableProps) {
+    if (data.length == null) return null
     return <div style={{paddingTop: "10px"}}>
         <TableTitle title={title} subtitle={subtitle}/>
         {groupBy(data, (d) => d.gjelderBarn?.ident!!).map(([key, value]) => {

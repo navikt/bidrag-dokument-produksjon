@@ -2,8 +2,6 @@ package no.nav.bidrag.dokument.produksjon.api
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.swagger.v3.oas.annotations.Parameter
-import io.swagger.v3.oas.annotations.media.Content
-import io.swagger.v3.oas.annotations.media.ExampleObject
 import io.swagger.v3.oas.annotations.parameters.RequestBody
 import io.swagger.v3.oas.models.examples.Example
 import no.nav.bidrag.dokument.produksjon.SIKKER_LOGG
@@ -35,22 +33,8 @@ class ProduserNotatApi(val bidragDokumentmalConsumer: BidragDokumentmalConsumer)
     @PostMapping("/pdf/{dokumentmal}")
     fun generatePDF(
         @Parameter(name = "dokumentmal", example = "forskudd") @PathVariable dokumentmal: String,
-        @RequestBody(
-            content =
-                [
-                    Content(
-                        examples =
-                            [
-                                ExampleObject(
-                                    ref = "#/components/examples/Forskudd notat",
-                                    name = "Forskudd",
-                                ),
-                            ],
-                    ),
-                ],
-        )
-        payload: NotatDto,
-    ): ResponseEntity<*> {
+        @org.springframework.web.bind.annotation.RequestBody payload: NotatDto,
+    ): ResponseEntity<ByteArray> {
         log.info { "Produserer notat PDF for dokumentmal $dokumentmal" }
         return generatePDFResponse2(
             bidragDokumentmalConsumer,

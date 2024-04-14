@@ -70,7 +70,7 @@ fun generatePDFResponse2(
     template: String,
     payload: String?,
     useHottemplate: Boolean = false,
-): ResponseEntity<*> {
+): ResponseEntity<ByteArray> {
     if (payload == null && !useHottemplate) {
         throw RuntimeException(
             "Mangler data for å generere brev",
@@ -93,7 +93,9 @@ fun generatePDFResponse2(
             )
             .body(bytes)
     }
-        ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
+        ?: ResponseEntity.status(
+            HttpStatus.NOT_FOUND,
+        ).body("Template or category not found".toByteArray())
 }
 
 private fun hotTemplateData(

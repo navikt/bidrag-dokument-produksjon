@@ -37,8 +37,8 @@ function InntektTable({data, inkluderBeskrivelse = true}: InntektTableProps) {
     return <div className={"background_section"}>
         <table className="table ">
             <tr>
-                <th style={{width: "300px"}}>Fra og med - Til og med</th>
-                {inkluderBeskrivelse && <th style={{width: "250px"}}>Beskrivelse</th>}
+                <th>Fra og med - Til og med</th>
+                {inkluderBeskrivelse && <th >Beskrivelse</th>}
                 <th>Beløp</th>
             </tr>
             {data.filter((d) => d.kilde == Kilde.OFFENTLIG).map((d) => {
@@ -46,13 +46,13 @@ function InntektTable({data, inkluderBeskrivelse = true}: InntektTableProps) {
                 return (
                     <>
                         <tr>
-                            <td>{formatPeriode(periode!!.fom, periode!!.til)}</td>
-                            {inkluderBeskrivelse && <td>{d.visningsnavn}</td>}
+                            <td  style={{width: "300px"}}>{formatPeriode(periode!!.fom, periode!!.til)}</td>
+                            {inkluderBeskrivelse && <td style={{width: "250px"}}>{d.visningsnavn}</td>}
                             <td>{d.beløp}</td>
                         </tr>
-                        <tr style={{paddingLeft: "30px", borderBottom: "1px solid black"}}>
+                        <tr>
                             <td colSpan={3}>
-                                <div>
+                                <div style={{paddingLeft: "10px", paddingBottom: "10px", width: "700px", borderBottom: "1px solid black"}}>
                                     <Inntektspost label={"Periode"}
                                                   value={formatPeriode(periode!!.fom, periode!!.til)}/>
                                     {d.inntektsposter.map((d) => (
@@ -72,7 +72,7 @@ function InntektTable({data, inkluderBeskrivelse = true}: InntektTableProps) {
 function Inntektspost({label, value}: { label?: string, value?: string | number }) {
     return (
         <dl>
-            <dt style={{fontWeight: "initial"}}>{label}:</dt>
+            <dt style={{fontWeight: "normal"}}>{label}:</dt>
             <dd>{value}</dd>
         </dl>
     );
