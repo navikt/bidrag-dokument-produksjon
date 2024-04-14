@@ -32,6 +32,14 @@ class GenPDFController(val bidragDokumentmalConsumer: BidragDokumentmalConsumer)
         return generatePDFResponse2(bidragDokumentmalConsumer, category, dokumentmal, null, true)
     }
 
+    @GetMapping("/old/{category}/{dokumentmal}")
+    fun generatePDFFromSample2(
+        @PathVariable category: String,
+        @PathVariable dokumentmal: String,
+    ): ResponseEntity<*> {
+        return generatePDFResponse(category, dokumentmal, null, true)
+    }
+
     @PostMapping("/html")
     fun html(
         @RequestBody payload: String,
@@ -68,9 +76,17 @@ class GenPDFController(val bidragDokumentmalConsumer: BidragDokumentmalConsumer)
 
 @RestController
 @RequestMapping("/api/genhtml")
-class GenHtmlController {
+class GenHtmlController(val bidragDokumentmalConsumer: BidragDokumentmalConsumer) {
     @GetMapping("/{category}/{dokumentmal}")
     fun generateHtmlFromSample(
+        @PathVariable category: String,
+        @PathVariable dokumentmal: String,
+    ): ResponseEntity<*> {
+        return generateHTMLResponse2(bidragDokumentmalConsumer, category, dokumentmal, null, true)
+    }
+
+    @GetMapping("/old/{category}/{dokumentmal}")
+    fun generateHtmlFromSampleOld(
         @PathVariable category: String,
         @PathVariable dokumentmal: String,
     ): ResponseEntity<*> {

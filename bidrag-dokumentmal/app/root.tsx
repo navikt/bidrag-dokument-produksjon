@@ -1,5 +1,6 @@
-import {Links, Meta, Outlet,} from "@remix-run/react";
+import {Meta, Outlet,} from "@remix-run/react";
 import fs from "fs"
+
 const styles = fs.readFileSync("app/style/style.css").toString()
 
 export function Layout({children}: { children: React.ReactNode }) {
@@ -8,9 +9,7 @@ export function Layout({children}: { children: React.ReactNode }) {
         <html lang="nb">
         <head>
             <meta charSet="utf-8"/>
-            <meta name="viewport" content="width=device-width, initial-scale=1"/>
             <Meta/>
-            <Links/>
             <style dangerouslySetInnerHTML={{
                 __html: styles
             }}/>

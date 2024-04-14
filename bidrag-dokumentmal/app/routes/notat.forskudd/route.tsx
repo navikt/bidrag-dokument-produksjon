@@ -21,7 +21,7 @@ export function meta() {
         { title: "Forskudd, Saksbehandlingsnotat" },
         { name: "description", content: "Forskudd, Saksbehandlingsnotat" },
         { property: "author", content: "bidrag-dokument-produksjon" },
-        { property: "og:title", content: "Forskudd, Saksbehandlingsnotat" },
+        { property: "subject", content: "Forskudd, Saksbehandlingsnotat" },
     ];
 }
 export default function NotatForskudd() {
