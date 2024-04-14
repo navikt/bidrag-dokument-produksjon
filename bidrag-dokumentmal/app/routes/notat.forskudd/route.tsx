@@ -21,7 +21,6 @@ import SaksbehandlerNotat from "~/routes/notat.forskudd/SaksbehandlerNotat";
 
 export async function action({request}: ActionFunctionArgs) {
     const body = await request.json();
-    console.log("asd", body)
     return json(body);
 }
 export function meta() {
@@ -40,7 +39,7 @@ export default function NotatForskudd() {
         return <div>Oops</div>;
     }
     return (
-        <div id="contact">
+        <div id="forskudd_notat">
             <Header title={"Forskudd, Saksbehandlingsnotat"}/>
             <div className='footer custom-footer-page-number'/>
             <div className={"container page"}>

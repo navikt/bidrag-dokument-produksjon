@@ -4,7 +4,6 @@ import Datadisplay from "~/components/Datadisplay";
 import {dateToDDMMYYYY} from "~/utils/date-utils";
 
 export default function Soknaddetaljer({data}: { data: NotatDto }) {
-    console.log(data.roller)
     const rollerIkkeBarn = data.roller.filter((rolle) => !erRolle(rolle.rolle, Rolletype.BA))
     const rollerBarn = data.roller.filter((rolle) => erRolle(rolle.rolle, Rolletype.BA))
     return <div className={"soknad_detaljer"}>

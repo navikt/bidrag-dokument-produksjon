@@ -27,8 +27,9 @@ export default function SaksbehandlerNotat({data}: NotatForskuddProps) {
 }
 
 function NotatVisning({medIVedtaket, innhold}: { medIVedtaket?: boolean, innhold?: string }) {
+    if (innhold == null || innhold.trim().length == 0) return null
     return <div>
-        <h4>{medIVedtaket ? "Begrunnelse (med i vedtaket)" : "Begrunnelse (kun for intern notat)\n: "}</h4>
+        <h4>{medIVedtaket ? "Begrunnelse (med i vedtaket):" : "Begrunnelse (kun for intern notat): "}</h4>
         <span>{innhold}</span>
     </div>
 }

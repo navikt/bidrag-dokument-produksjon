@@ -82,7 +82,7 @@ function InntektTable({
 }
 
 function InntektPerBarnTable({data, title, subtitle, bareMedIBeregning = true}: InntektTableProps) {
-    if (data.length == null) return null
+    if (data.length == 0) return null
     return <div style={{paddingTop: "10px"}}>
         <TableTitle title={title} subtitle={subtitle}/>
         {groupBy(data, (d) => d.gjelderBarn?.ident!!).map(([key, value]) => {

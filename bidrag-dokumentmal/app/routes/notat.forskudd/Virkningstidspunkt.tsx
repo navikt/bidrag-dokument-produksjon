@@ -6,7 +6,6 @@ import Notat from "~/components/Notat";
 
 export default function Virkningstidspunkt({data}: { data: NotatDto }) {
     const virkningstidspunkt = data.virkningstidspunkt;
-    console.log(virkningstidspunkt);
     return <div className={"virkningstidspunkt"}>
         <h2>Virkningstidspunkt</h2>
         <div>
