@@ -7,8 +7,11 @@ import io.swagger.v3.oas.models.examples.Example
 import no.nav.bidrag.commons.web.DefaultCorsFilter
 import no.nav.bidrag.commons.web.UserMdcFilter
 import no.nav.bidrag.dokument.produksjon.util.ReloadFilter
+import no.nav.bidrag.dokument.produksjon.util.divide
 import no.nav.bidrag.dokument.produksjon.util.getObjectmapper
+import no.nav.bidrag.dokument.produksjon.util.groupBy
 import no.nav.bidrag.dokument.produksjon.util.handlebarEnumMapper
+import no.nav.bidrag.dokument.produksjon.util.multiply
 import no.nav.pdfgen.core.Environment
 import no.nav.pdfgen.core.PDFGenCore
 import no.nav.pdfgen.core.PDFGenResource
@@ -30,7 +33,13 @@ class Configuration {
         val environment = no.nav.bidrag.dokument.produksjon.Environment()
         PDFGenCore.init(
             Environment(
-                additionalHandlebarHelpers = mapOf(handlebarEnumMapper()),
+                additionalHandlebarHelpers =
+                    mapOf(
+                        handlebarEnumMapper(),
+                        groupBy(),
+                        multiply(),
+                        divide(),
+                    ),
                 templateRoot = PDFGenResource("templates/"),
                 resourcesRoot = PDFGenResource("resources/"),
                 dataRoot = PDFGenResource("data/"),

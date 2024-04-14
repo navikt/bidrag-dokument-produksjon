@@ -1,23 +1,33 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration>
-    <springProfile name="local">
-        <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder>
-                <pattern>%green(%d{HH:mm:ss}) %cyan([%-5.5t]) %boldCyan(%0.-5p) %yellow(%-20.20logger{19}) %cyan(:) %m%n</pattern>
-            </encoder>
-        </appender>
+    <appender name="stdout_json" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <mdc/>
+                <timestamp/>
+                <message/>
+                <loggerName/>
+                <threadName/>
+                <logLevel/>
+                <callerData/>
+                <arguments/>
+                <stackTrace/>
+            </providers>
+            <jsonGeneratorDecorator class="net.logstash.logback.mask.MaskingJsonGeneratorDecorator">
+                <valueMasker class="no.nav.bidrag.commons.logging.SensitiveLogMasker"/>
+            </jsonGeneratorDecorator>
+        </encoder>
+    </appender>
 
-        <logger name="no.nav.bidrag" level="INFO"/>
-
-        <root level="INFO">
-            <appender-ref ref="CONSOLE"/>
-        </root>
-    </springProfile>
+    <appender name="secureLog" class="ch.qos.logback.core.ConsoleAppender">
+        <layout class="ch.qos.logback.classic.PatternLayout">
+            <Pattern>
+                SECURE_LOG -- %d{yyyy-MM-dd HH:mm:ss} %X{correlationId} [%thread] %-5level %logger{70} - %msg%n
+            </Pattern>
+        </layout>
+    </appender>
 
     <springProfile name="nais">
-        <appender name="stdout_json" class="ch.qos.logback.core.ConsoleAppender">
-            <encoder class="net.logstash.logback.encoder.LogstashEncoder"/>
-        </appender>
         <appender name="secureLog" class="ch.qos.logback.core.rolling.RollingFileAppender">
             <file>/secure-logs/secure.log</file>
             <rollingPolicy class="ch.qos.logback.core.rolling.FixedWindowRollingPolicy">
@@ -30,13 +40,23 @@
             </triggeringPolicy>
             <encoder class="net.logstash.logback.encoder.LogstashEncoder" />
         </appender>
-        <logger name="no.nav.bidrag" level="INFO"/>
-
-        <root level="INFO">
-            <appender-ref ref="stdout_json"/>
-        </root>
-        <logger name="secureLogger" level="INFO" additivity="false" >
-            <appender-ref ref="secureLog" />
-        </logger>
     </springProfile>
+
+    <springProfile name="test">
+        <appender name="stdout" class="ch.qos.logback.core.ConsoleAppender">
+            <layout class="ch.qos.logback.classic.PatternLayout">
+                <Pattern>
+                    %d{yyyy-MM-dd HH:mm:ss} %X{correlationId} [%thread] %-5level %logger{70} - %msg%n
+                </Pattern>
+            </layout>
+        </appender>
+    </springProfile>
+
+    <root level="info">
+        <appender-ref ref="stdout_json"/>
+    </root>
+
+    <logger name="secureLogger" level="INFO" additivity="false" >
+        <appender-ref ref="secureLog" />
+    </logger>
 </configuration>

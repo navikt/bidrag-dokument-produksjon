@@ -18,6 +18,16 @@
     }
     @media print {
         div { break-inside: avoid; }
+        .page {
+            margin: 0;
+            border: initial;
+            border-radius: initial;
+            width: initial;
+            min-height: initial;
+            box-shadow: initial;
+            background: initial;
+            page-break-after: always;
+        }
     }
     #footer {
         position: running(footer);
@@ -36,6 +46,12 @@
         content: "";
         display: block;
     }
+    .datarow dt:after {
+        content: ": ";
+    }
+    dl {
+        margin: 5px 0;
+    }
     dt, dd {
         display: inline;
     }
@@ -46,6 +62,7 @@
     }
     dt {
         font-weight: bold;
+        display: inline-block;
     }
     #header {
         position: relative;
@@ -103,7 +120,7 @@
         display: table;
         width: 100%;
         border-collapse: collapse;
-        table-layout: auto;
+        table-layout: fixed;
     }
     .table thead {
         display: table-header-group;
@@ -125,19 +142,29 @@
         text-align: left;
         padding: 2px;
         font-weight: bold;
-        width: auto;
     }
     .table tbody tr td {
         display: table-cell;
         text-align: left;
         padding: 2px 2px 8px 2px;
-        width: auto;
+    }
+
+    .table_head_periode {
+        width: 150px;
+    }
+
+    .table_head_beskrivelse {
+        width: 200px;
+    }
+
+    .table_head_belop {
+        width: 20px;
     }
 
     .horizontal-line {
-        border-bottom: 1px solid black;
+        border-top: 1px solid black;
         width: 100%;
-        padding-top: 5px;
+        padding-top: 0px;
         padding-bottom: 5px;
     }
     #pagenumber:before {

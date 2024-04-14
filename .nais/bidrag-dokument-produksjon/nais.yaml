@@ -28,6 +28,11 @@ spec:
       {{#each azure_access_inbound}}
           - application: {{this.application}}
       {{/each}}
+    outbound:
+      rules:
+      {{#each outbound-access-apps}}
+          - application: {{this}}
+        {{/each}}
   replicas:
     min: 1
     max: 2
@@ -43,7 +48,7 @@ spec:
     path: /actuator/prometheus
   resources:
     limits:
-      memory: 256Mi
+      memory: 1000Mi
     requests:
-      cpu: 100m
-      memory: 256Mi
+      cpu: 300m
+      memory: 500Mi

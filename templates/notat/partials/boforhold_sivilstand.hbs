@@ -1,29 +1,28 @@
 <div class="soknad_parter">
     <h2>Boforhold</h2>
     <div>
-        {{#> common/datarow  label="Antall barn i saken:" value=boforhold.barn.length}}
-        {{/common/datarow  }}
         {{#each boforhold.barn as |barn|~}}
-            {{#> common/datarow  label="Barn i saken:"
-                                        value=(concat barn.navn "/" (iso_to_date barn.fødselsdato))}}
-            {{/common/datarow  }}
-            {{#> notat/partials/table list=barn.opplysningerFraFolkeregisteret
-                                      title="Opplysninger fra folkeregisteret"}}
-            {{/notat/partials/table }}
-            {{#> notat/partials/table list=barn.opplysningerBruktTilBeregning title="Opplysninger brukt til beregning"}}
-            {{/notat/partials/table }}
-            <div class="horizontal-line"></div>
+            {{#if barn.medIBehandling}}
+                {{#> common/datarow  label="Søknadsbarn"
+                                     value=(concat barn.navn "/" (iso_to_date barn.fødselsdato))}}
+                {{/common/datarow }}
+            {{else}}
+                {{#> common/datarow  label="Eget barn i husstanden"
+                                     value=(concat barn.navn "/" (iso_to_date barn.fødselsdato))}}
+                {{/common/datarow }}
+            {{/if}}
 
+            {{#> notat/partials/table list=barn.opplysningerBruktTilBeregning title=""}}
+            {{/notat/partials/table }}
+            <div class="horizontal-line" style="break-after: avoid-page"></div>
         {{/each}}
 
     </div>
-    <div>
-        <h2>Sivilstand</h2>
+    <div style="break-before: page">
+        <h3>Sivilstand</h3>
         <div>
-            {{#> notat/partials/table list=boforhold.sivilstand.opplysningerFraFolkeregisteret
-                                      title="Opplysninger fra folkeregisteret"}}
-            {{/notat/partials/table }}
-            {{#> notat/partials/table list=boforhold.sivilstand.opplysningerBruktTilBeregning title="Opplysninger brukt til beregning"}}
+            {{#> notat/partials/table list=boforhold.sivilstand.opplysningerBruktTilBeregning
+                                      title=""}}
             {{/notat/partials/table }}
         </div>
     </div>

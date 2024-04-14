@@ -1,0 +1,44 @@
+name: bidrag-dokumentmal - Build and deploy prod
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '.nais/bidrag-dokumentmal/**.yaml'
+      - '**/bidrag-dokumentmal/**'
+env:
+  IS_FEATURE: ${{ github.ref != 'refs/heads/release' && github.ref != 'refs/heads/main'}}
+  IS_DEV: ${{ github.ref == 'refs/heads/main' }}
+  NPM_TOKEN: ${{ secrets.READER_TOKEN }}
+
+jobs:
+
+  deploy_feature:
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ubuntu-latest
+    name: Deploy
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nais/docker-build-push@v0
+        id: docker-push
+        with:
+          team: bidrag
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          image_suffix: bidrag-dokumentmal
+          tag: bidrag-dokumentmal
+          docker_context: ./bidrag-dokumentmal
+          dockerfile: ./bidrag-dokumentmal/Dockerfile
+          build_args: |
+            NPM_TOKEN=${{ secrets.READER_TOKEN }}
+      - name: Deploy to prod-gcp
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/bidrag-dokumentmal/nais.yaml
+          VARS: .nais/bidrag-dokumentmal/prod.yaml
+          IMAGE: ${{ steps.docker-push.outputs.image }}
+      - run: echo ${{ steps.docker-push.outputs.image }}

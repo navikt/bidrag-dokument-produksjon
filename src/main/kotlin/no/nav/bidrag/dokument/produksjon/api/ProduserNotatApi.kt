@@ -2,11 +2,10 @@ package no.nav.bidrag.dokument.produksjon.api
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.swagger.v3.oas.annotations.Parameter
-import io.swagger.v3.oas.annotations.media.Content
-import io.swagger.v3.oas.annotations.media.ExampleObject
 import io.swagger.v3.oas.annotations.parameters.RequestBody
 import io.swagger.v3.oas.models.examples.Example
 import no.nav.bidrag.dokument.produksjon.SIKKER_LOGG
+import no.nav.bidrag.dokument.produksjon.consumer.BidragDokumentmalConsumer
 import no.nav.bidrag.dokument.produksjon.dto.NotatDto
 import no.nav.bidrag.dokument.produksjon.util.getObjectmapper
 import org.springframework.context.annotation.Bean
@@ -22,7 +21,7 @@ private val log = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping("/api/notat")
-class ProduserNotatApi {
+class ProduserNotatApi(val bidragDokumentmalConsumer: BidragDokumentmalConsumer) {
     @Bean
     fun notatForskuddExample(): Example {
         val example = Example()
@@ -34,24 +33,11 @@ class ProduserNotatApi {
     @PostMapping("/pdf/{dokumentmal}")
     fun generatePDF(
         @Parameter(name = "dokumentmal", example = "forskudd") @PathVariable dokumentmal: String,
-        @RequestBody(
-            content =
-                [
-                    Content(
-                        examples =
-                            [
-                                ExampleObject(
-                                    ref = "#/components/examples/Forskudd notat",
-                                    name = "Forskudd",
-                                ),
-                            ],
-                    ),
-                ],
-        )
-        payload: NotatDto,
-    ): ResponseEntity<*> {
+        @org.springframework.web.bind.annotation.RequestBody payload: NotatDto,
+    ): ResponseEntity<ByteArray> {
         log.info { "Produserer notat PDF for dokumentmal $dokumentmal" }
-        return generatePDFResponse(
+        return generatePDFResponse2(
+            bidragDokumentmalConsumer,
             "notat",
             dokumentmal,
             getObjectmapper().writeValueAsString(payload),
@@ -65,7 +51,8 @@ class ProduserNotatApi {
     ): ResponseEntity<String> {
         SIKKER_LOGG.info { "Produserer notat HTML for dokumentmal $dokumentmal for input $payload" }
         log.info { "Produserer notat HTML for dokumentmal $dokumentmal" }
-        return generateHTMLResponse(
+        return generateHTMLResponse2(
+            bidragDokumentmalConsumer,
             "notat",
             dokumentmal,
             getObjectmapper().writeValueAsString(payload),

@@ -17,7 +17,10 @@
                 <td>{{json_to_period (stringify data.periode)}}</td>
                 <td>{{enum_to_readable data.status}}</td>
                 {{#is_defined kilde}}
-                    <td>{{capitalize data.kilde}}</td>
+                    <td>
+                        {{#> notat/partials/kilde kilde=data.kilde}}
+                        {{/notat/partials/kilde}}
+                    </td>
                 {{/is_defined}}
             </tr>
         {{/each}}

@@ -4,6 +4,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.withContext
 import no.nav.bidrag.dokument.produksjon.OPENHTMLTOPDF_RENDERING_SUMMARY
+import no.nav.bidrag.dokument.produksjon.consumer.BidragDokumentmalConsumer
 import no.nav.pdfgen.core.pdf.createPdfFromImage
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -22,9 +23,17 @@ private val log = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping("/api/genpdf")
-class GenPDFController {
+class GenPDFController(val bidragDokumentmalConsumer: BidragDokumentmalConsumer) {
     @GetMapping("/{category}/{dokumentmal}")
     fun generatePDFFromSample(
+        @PathVariable category: String,
+        @PathVariable dokumentmal: String,
+    ): ResponseEntity<*> {
+        return generatePDFResponse2(bidragDokumentmalConsumer, category, dokumentmal, null, true)
+    }
+
+    @GetMapping("/old/{category}/{dokumentmal}")
+    fun generatePDFFromSample2(
         @PathVariable category: String,
         @PathVariable dokumentmal: String,
     ): ResponseEntity<*> {
@@ -67,9 +76,17 @@ class GenPDFController {
 
 @RestController
 @RequestMapping("/api/genhtml")
-class GenHtmlController {
+class GenHtmlController(val bidragDokumentmalConsumer: BidragDokumentmalConsumer) {
     @GetMapping("/{category}/{dokumentmal}")
     fun generateHtmlFromSample(
+        @PathVariable category: String,
+        @PathVariable dokumentmal: String,
+    ): ResponseEntity<*> {
+        return generateHTMLResponse2(bidragDokumentmalConsumer, category, dokumentmal, null, true)
+    }
+
+    @GetMapping("/old/{category}/{dokumentmal}")
+    fun generateHtmlFromSampleOld(
         @PathVariable category: String,
         @PathVariable dokumentmal: String,
     ): ResponseEntity<*> {
