@@ -64,6 +64,8 @@ fun generatePDFFromHtmlResponse(html: String): ResponseEntity<ByteArray> {
         .body(bytes)
 }
 
+fun String.fjernKontrollTegn() = this.replace("\\p{C}".toRegex(), "")
+
 fun generatePDFResponse2(
     bidragDokumentmalConsumer: BidragDokumentmalConsumer,
     category: String,
@@ -80,8 +82,7 @@ fun generatePDFResponse2(
     val startTime = System.currentTimeMillis()
     return bidragDokumentmalConsumer.hentDokumentmal(category, template, jsonPayload)?.let {
             document ->
-        log.info { document }
-        val bytes = PdfContent(document).generate()
+        val bytes = PdfContent(document.fjernKontrollTegn()).generate()
         log.info {
             "Done generating PDF for category $category and template $template in ${System.currentTimeMillis() - startTime}ms"
         }
