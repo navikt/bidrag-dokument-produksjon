@@ -14,8 +14,8 @@ export default function Boforhold({ data }: NotatForskuddProps) {
       <div>
         {data.boforhold.barn
           .sort((d) => (d.medIBehandling ? -1 : 1))
-          .map((b) => (
-            <BoforholdHusstandsmedlem data={b} />
+          .map((b, i) => (
+            <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />
           ))}
         <Sivilstand data={data} />
       </div>

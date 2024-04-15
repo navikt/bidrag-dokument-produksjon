@@ -10,5 +10,9 @@ fun formatToYearMonth(value: String): YearMonth =
     try {
         YearMonth.parse(value, yearMonthFormatter)
     } catch (e: Exception) {
-        YearMonth.parse(value, yearMonthDayFormatter)
+        try {
+            YearMonth.parse(value, yearMonthDayFormatter)
+        } catch (e: Exception) {
+            YearMonth.parse(value)
+        }
     }

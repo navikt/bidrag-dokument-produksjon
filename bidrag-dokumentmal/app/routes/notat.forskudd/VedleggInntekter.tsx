@@ -140,8 +140,9 @@ function InntektTable({
                           label={"Periode"}
                           value={formatPeriode(periode!.fom, periode!.til)}
                         />
-                        {d.inntektsposter.map((d) => (
+                        {d.inntektsposter.map((d, i) => (
                           <Inntektspost
+                            key={d.kode + i.toString()}
                             label={d.visningsnavn!}
                             value={d.beløp!}
                           />
@@ -183,8 +184,8 @@ function ArbeidsforholdTable({ data }: { data: Arbeidsforhold[] }) {
         <th style={{ width: "50px" }}>Stilling</th>
         <th style={{ width: "100px" }}>Lønnsendring</th>
       </tr>
-      {data.map((d) => (
-        <tr>
+      {data.map((d, i) => (
+        <tr key={"arbeidsforhold" + d.periode.fom + i.toString()}>
           <td>{formatPeriode(d.periode.fom, d.periode.til)}</td>
           <td>{d.arbeidsgiver}</td>
           <td>
@@ -200,12 +201,12 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
   if (data.length == 0) return null;
   return (
     <div>
-      {groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value]) => {
+      {groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value], i) => {
         const gjelderBarn = value[0].gjelderBarn!;
         const erBarnetillegg =
           value[0].type == Inntektsrapportering.BARNETILLEGG;
         return (
-          <div className="background_section">
+          <div key={key + i.toString()} className="background_section">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
             <table className="table" style={{ width: "580px" }}>
               <colgroup>
