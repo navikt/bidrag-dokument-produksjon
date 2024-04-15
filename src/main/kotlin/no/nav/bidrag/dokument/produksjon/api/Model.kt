@@ -64,8 +64,6 @@ fun generatePDFFromHtmlResponse(html: String): ResponseEntity<ByteArray> {
         .body(bytes)
 }
 
-fun String.fjernKontrollTegn() = this.replace("\\p{C}".toRegex(), "")
-
 fun generatePDFResponse2(
     bidragDokumentmalConsumer: BidragDokumentmalConsumer,
     category: String,
@@ -163,3 +161,5 @@ class PdfContent(
 ) {
     fun generate(): ByteArray = createPDFA(html)
 }
+
+fun String.fjernKontrollTegn() = this.replace("\\p{C}".toRegex(), "")
