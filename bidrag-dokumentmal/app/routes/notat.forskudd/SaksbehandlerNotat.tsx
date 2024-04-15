@@ -56,7 +56,7 @@ function NotatVisning({
           ? "Begrunnelse (med i vedtaket):"
           : "Begrunnelse (kun for intern notat): "}
       </h4>
-      <span>{innhold}</span>
+      <div style={{ maxWidth: "90%" }}>{innhold}</div>
     </div>
   );
 }
