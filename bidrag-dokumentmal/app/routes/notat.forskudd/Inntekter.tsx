@@ -72,7 +72,8 @@ function InntektTable({
   bareMedIBeregning = true,
   inkluderBeskrivelse = true,
 }: InntektTableProps) {
-  if (data.length == 0) return null;
+  const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
+  if (inntekter.length == 0) return null;
   return (
     <div style={{ paddingTop: "10px" }}>
       <TableTitle title={title} subtitle={subtitle} />
@@ -86,21 +87,19 @@ function InntektTable({
             <th style={{ width: "50px" }}>Kilde</th>
             <th>Beløp</th>
           </tr>
-          {data
-            .filter((d) => !bareMedIBeregning || d.medIBeregning)
-            .map((d) => {
-              const periode = d.periode ?? d.opprinneligPeriode;
-              return (
-                <tr>
-                  <td>{formatPeriode(periode!.fom, periode!.til)}</td>
-                  {inkluderBeskrivelse && <td>{d.visningsnavn}</td>}
-                  <td>
-                    <KildeIcon kilde={d.kilde} />
-                  </td>
-                  <td>{d.beløp}</td>
-                </tr>
-              );
-            })}
+          {inntekter.map((d) => {
+            const periode = d.periode ?? d.opprinneligPeriode;
+            return (
+              <tr>
+                <td>{formatPeriode(periode!.fom, periode!.til)}</td>
+                {inkluderBeskrivelse && <td>{d.visningsnavn}</td>}
+                <td>
+                  <KildeIcon kilde={d.kilde} />
+                </td>
+                <td>{d.beløp}</td>
+              </tr>
+            );
+          })}
         </table>
       </div>
     </div>
@@ -113,7 +112,8 @@ function InntektPerBarnTable({
   subtitle,
   bareMedIBeregning = true,
 }: InntektTableProps) {
-  if (data.length == 0) return null;
+  const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
+  if (inntekter.length == 0) return null;
   return (
     <div style={{ paddingTop: "10px" }}>
       <TableTitle title={title} subtitle={subtitle} />
@@ -151,16 +151,16 @@ function InntektPerBarnTable({
                   <th>Beløp</th>
                 )}
               </tr>
-              {data
+              {value
                 .filter((d) => !bareMedIBeregning || d.medIBeregning)
-                .map((d) => {
+                .map((d, i) => {
                   const periode = d.periode ?? d.opprinneligPeriode;
                   const visningsnavnInntektstype =
                     d.inntektsposter.length > 0
                       ? d.inntektsposter[0].visningsnavn
                       : "";
                   return (
-                    <tr>
+                    <tr key={d.gjelderBarn + i.toString()}>
                       <td>{formatPeriode(periode!.fom, periode!.til)}</td>
                       <td>
                         <KildeIcon kilde={d.kilde} />
