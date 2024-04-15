@@ -1,6 +1,4 @@
 import type { MetaFunction } from "@remix-run/node";
-import { json, redirect } from "@remix-run/node"; // or cloudflare/deno
-import type { ActionFunctionArgs } from "@remix-run/node"; // or cloudflare/deno
 
 export const meta: MetaFunction = () => {
   return [
