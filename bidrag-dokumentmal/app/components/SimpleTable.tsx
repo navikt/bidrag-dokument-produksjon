@@ -1,7 +1,6 @@
 import { Kilde, TypeArManedsperiode } from "~/types/Api";
 import { formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
-import React from "react";
 
 type TableData = {
   periode: TypeArManedsperiode;
@@ -21,8 +20,8 @@ export function SimpleTable({ data }: SimpleTableProps) {
         <th style={{ width: "180px" }}>Status</th>
         <th>Kilde</th>
       </tr>
-      {data.map((d) => (
-        <tr>
+      {data.map((d, i) => (
+        <tr key={d.statusVisningsnavn + i.toString()}>
           <td>{formatPeriode(d.periode.fom, d.periode.til)}</td>
           <td>{d.statusVisningsnavn}</td>
           <td>{<KildeIcon kilde={d.kilde} />}</td>

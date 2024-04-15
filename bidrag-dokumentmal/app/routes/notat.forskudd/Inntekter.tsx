@@ -87,10 +87,10 @@ function InntektTable({
             <th style={{ width: "50px" }}>Kilde</th>
             <th>Beløp</th>
           </tr>
-          {inntekter.map((d) => {
+          {inntekter.map((d, i) => {
             const periode = d.periode ?? d.opprinneligPeriode;
             return (
-              <tr>
+              <tr key={d.type + i.toString()}>
                 <td>{formatPeriode(periode!.fom, periode!.til)}</td>
                 {inkluderBeskrivelse && <td>{d.visningsnavn}</td>}
                 <td>
@@ -117,12 +117,15 @@ function InntektPerBarnTable({
   return (
     <div style={{ paddingTop: "10px" }}>
       <TableTitle title={title} subtitle={subtitle} />
-      {groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value]) => {
+      {groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value], i) => {
         const gjelderBarn = value[0].gjelderBarn!;
         const erBarnetillegg =
           value[0].type == Inntektsrapportering.BARNETILLEGG;
         return (
-          <div className="background_section">
+          <div
+            key={gjelderBarn + key + i.toString()}
+            className="background_section"
+          >
             <GjelderBarn gjelderBarn={gjelderBarn} />
             <table className="table" style={{ width: "580px" }}>
               <colgroup>
@@ -193,11 +196,15 @@ function BeregnetInntektTable({ data }: BeregnetInntektTableProps) {
   return (
     <div>
       <TableTitle title={"Beregnet totalt"} />
-      {groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value]) => {
+      {groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value], i) => {
         const gjelderBarn = value[0].gjelderBarn!;
         const inntekter = value[0].summertInntektListe;
         return (
-          <div className="background_section" style={{ paddingTop: "10px" }}>
+          <div
+            key={gjelderBarn + key + i.toString()}
+            className="background_section"
+            style={{ paddingTop: "10px" }}
+          >
             <GjelderBarn gjelderBarn={gjelderBarn} />
             <table className="table" style={{ width: "700px" }}>
               <tr>
@@ -209,9 +216,9 @@ function BeregnetInntektTable({ data }: BeregnetInntektTableProps) {
                 <th style={{ width: "60px" }}>Kontant- støtte</th>
                 <th style={{ width: "60px" }}>Totalt</th>
               </tr>
-              {inntekter.map((d) => {
+              {inntekter.map((d, i) => {
                 return (
-                  <tr>
+                  <tr key={"beregnet_inntekt" + d.periode.fom + i.toString()}>
                     <td>{formatPeriode(d.periode!.fom, d.periode!.til)}</td>
                     <td>{d.skattepliktigInntekt ?? 0}</td>
                     <td>{d.barnetillegg ?? 0}</td>

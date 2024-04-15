@@ -181,12 +181,15 @@ export const getYearFromDate = (date?: Date | string): number | undefined => {
 };
 export const dateToDDMMYYYY = (date?: Date | string): string | undefined => {
   if (!date) return;
-  if (typeof date == "string")
+  if (typeof date == "string") {
+    if (isNaN(Date.parse(date))) return "";
     return new Date(date).toLocaleDateString("nb-NB", {
       day: "2-digit",
       month: "2-digit",
       year: "numeric",
     });
+  }
+
   return date.toLocaleDateString("nb-NB", {
     day: "2-digit",
     month: "2-digit",

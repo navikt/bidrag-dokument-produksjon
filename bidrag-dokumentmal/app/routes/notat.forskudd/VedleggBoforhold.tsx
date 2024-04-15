@@ -24,7 +24,7 @@ export default function VedleggBoforhold({ data }: NotatForskuddProps) {
         const gjelderBarn = value[0].gjelder!;
         const barn = value[0];
         return (
-          <div className="background_section">
+          <div key={key} className="background_section">
             <Datadisplay
               label={
                 barn.medIBehandling ? "Søknadsbarn" : "Eget barn i husstanden"
@@ -71,8 +71,8 @@ export function BoforholdTable({
         </th>
         <th style={{ width: "100px" }}>Status</th>
       </tr>
-      {data.map((d) => (
-        <tr>
+      {data.map((d, i) => (
+        <tr key={d.statusVisningsnavn + i.toString()}>
           <td>{formatPeriode(d.periode.fom, d.periode.til)}</td>
           <td>{d.statusVisningsnavn}</td>
         </tr>
