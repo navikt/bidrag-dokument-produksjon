@@ -5,7 +5,6 @@
     padding-top: 1cm;
 
     @bottom-center { content: element(footer) }
-
 }
 
 @page:first {
@@ -24,7 +23,6 @@
         min-height: initial;
         box-shadow: initial;
         background: initial;
-        page-break-after: always;
     }
 }
 h2 {
@@ -194,5 +192,5 @@ div.footer {
 }
 
 .custom-footer-page-number:after {
-    content: "-" counter(page) "-";
+    content: counter(page) ' av ' counter(pages);
 }

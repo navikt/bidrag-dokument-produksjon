@@ -11,6 +11,7 @@ import { dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
 import { groupBy } from "~/utils/array-utils";
 import { erRolle } from "~/utils/visningsnavn";
+import Inntektspost from "~/components/Inntekspost";
 
 export default function Inntekter({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
@@ -87,19 +88,51 @@ function InntektTable({
             <th style={{ width: "50px" }}>Kilde</th>
             <th>Beløp</th>
           </tr>
-          {inntekter.map((d, i) => {
-            const periode = d.periode ?? d.opprinneligPeriode;
-            return (
-              <tr key={d.type + i.toString()}>
-                <td>{formatPeriode(periode!.fom, periode!.til)}</td>
-                {inkluderBeskrivelse && <td>{d.visningsnavn}</td>}
-                <td>
-                  <KildeIcon kilde={d.kilde} />
-                </td>
-                <td>{d.beløp}</td>
-              </tr>
-            );
-          })}
+          {inntekter
+            .sort((a, b) =>
+              a.periode?.fom && b.periode?.fom
+                ? a.periode?.fom.localeCompare(b.periode?.fom)
+                : 1,
+            )
+            .map((d, i) => {
+              const periode = d.periode ?? d.opprinneligPeriode;
+              return (
+                <>
+                  <tr key={d.type + i.toString()}>
+                    <td>{formatPeriode(periode!.fom, periode!.til)}</td>
+                    {inkluderBeskrivelse && <td>{d.visningsnavn}</td>}
+                    <td>
+                      <KildeIcon kilde={d.kilde} />
+                    </td>
+                    <td>{d.beløp}</td>
+                  </tr>
+                  <tr>
+                    <td colSpan={4}>
+                      <div
+                        style={{
+                          paddingLeft: "10px",
+                          paddingBottom: "10px",
+                          width: "700px",
+                          borderBottom: "1px solid black",
+                        }}
+                      >
+                        <Inntektspost
+                          label={"Periode"}
+                          value={formatPeriode(periode!.fom, periode!.til)}
+                        />
+                        {d.inntektsposter.map((d, i) => (
+                          <Inntektspost
+                            key={d.kode + i.toString()}
+                            label={d.visningsnavn!}
+                            value={d.beløp!}
+                          />
+                        ))}
+                      </div>
+                    </td>
+                  </tr>
+                </>
+              );
+            })}
         </table>
       </div>
     </div>

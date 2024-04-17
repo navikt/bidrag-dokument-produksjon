@@ -12,6 +12,7 @@ import { erRolle } from "~/utils/visningsnavn";
 import { groupBy } from "~/utils/array-utils";
 import KildeIcon from "~/components/KildeIcon";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
+import Inntektspost from "~/components/Inntekspost";
 
 export default function VedleggInntekter({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
@@ -156,21 +157,6 @@ function InntektTable({
           })}
       </table>
     </div>
-  );
-}
-
-function Inntektspost({
-  label,
-  value,
-}: {
-  label?: string;
-  value?: string | number;
-}) {
-  return (
-    <dl>
-      <dt style={{ fontWeight: "normal" }}>{label}:</dt>
-      <dd>{value}</dd>
-    </dl>
   );
 }
 

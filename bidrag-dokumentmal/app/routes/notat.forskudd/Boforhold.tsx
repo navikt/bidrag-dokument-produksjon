@@ -12,11 +12,9 @@ export default function Boforhold({ data }: NotatForskuddProps) {
     <div className="soknad_parter">
       <h2>Boforhold</h2>
       <div>
-        {data.boforhold.barn
-          .sort((d) => (d.medIBehandling ? -1 : 1))
-          .map((b, i) => (
-            <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />
-          ))}
+        {data.boforhold.barn.map((b, i) => (
+          <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />
+        ))}
         <Sivilstand data={data} />
       </div>
     </div>
