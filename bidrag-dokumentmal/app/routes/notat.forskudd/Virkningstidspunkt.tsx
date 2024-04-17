@@ -2,6 +2,7 @@ import { capitalizeFirstLetter } from "~/utils/visningsnavn";
 import Datadisplay from "~/components/Datadisplay";
 import { NotatDto } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
+import Notat from "~/components/Notat";
 
 export default function Virkningstidspunkt({ data }: { data: NotatDto }) {
   const virkningstidspunkt = data.virkningstidspunkt;
@@ -40,6 +41,7 @@ export default function Virkningstidspunkt({ data }: { data: NotatDto }) {
           label={"Virkningstidspunkt"}
           value={dateToDDMMYYYY(virkningstidspunkt.virkningstidspunkt)}
         />
+        <Notat data={virkningstidspunkt.notat} />
       </div>
     </div>
   );

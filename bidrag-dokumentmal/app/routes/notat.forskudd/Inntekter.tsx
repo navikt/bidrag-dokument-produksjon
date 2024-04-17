@@ -12,6 +12,7 @@ import KildeIcon from "~/components/KildeIcon";
 import { groupBy } from "~/utils/array-utils";
 import { erRolle } from "~/utils/visningsnavn";
 import Inntektspost from "~/components/Inntekspost";
+import Notat from "~/components/Notat";
 
 export default function Inntekter({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
@@ -24,6 +25,7 @@ export default function Inntekter({ data }: NotatForskuddProps) {
           erRolle(d.gjelder.rolle, Rolletype.BM),
         )}
       />
+      <Notat data={data.inntekter.notat} />
     </div>
   );
 }
@@ -52,6 +54,14 @@ function InntekterBidragsmottaker({ data }: { data?: InntekterPerRolle }) {
           data={data.kontantstøtte}
           title={"Kontantstøtte"}
         />
+        <div
+          className="horizontal-line"
+          style={{
+            pageBreakAfter: "avoid",
+            marginTop: "8px",
+            marginBottom: "24px",
+          }}
+        ></div>
         <BeregnetInntektTable data={data.beregnetInntekter} />
       </div>
     </div>
@@ -76,7 +86,7 @@ function InntektTable({
   const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
   if (inntekter.length == 0) return null;
   return (
-    <div style={{ paddingTop: "10px" }}>
+    <div style={{ marginTop: "24px" }}>
       <TableTitle title={title} subtitle={subtitle} />
       <div className={"background_section"}>
         <table className="table ">
@@ -106,30 +116,30 @@ function InntektTable({
                     </td>
                     <td>{d.beløp}</td>
                   </tr>
-                  <tr>
-                    <td colSpan={4}>
-                      <div
-                        style={{
-                          paddingLeft: "10px",
-                          paddingBottom: "10px",
-                          width: "700px",
-                          borderBottom: "1px solid black",
-                        }}
-                      >
-                        <Inntektspost
-                          label={"Periode"}
-                          value={formatPeriode(periode!.fom, periode!.til)}
-                        />
-                        {d.inntektsposter.map((d, i) => (
+                  {d.inntektsposter.length > 0 && (
+                    <tr>
+                      <td colSpan={4}>
+                        <div
+                          style={{
+                            width: "700px",
+                            borderBottom: "1px solid black",
+                          }}
+                        >
                           <Inntektspost
-                            key={d.kode + i.toString()}
-                            label={d.visningsnavn!}
-                            value={d.beløp!}
+                            label={"Periode"}
+                            value={formatPeriode(periode!.fom, periode!.til)}
                           />
-                        ))}
-                      </div>
-                    </td>
-                  </tr>
+                          {d.inntektsposter.map((d, i) => (
+                            <Inntektspost
+                              key={d.kode + i.toString()}
+                              label={d.visningsnavn!}
+                              value={d.beløp!}
+                            />
+                          ))}
+                        </div>
+                      </td>
+                    </tr>
+                  )}
                 </>
               );
             })}

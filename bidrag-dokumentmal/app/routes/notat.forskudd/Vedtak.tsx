@@ -27,7 +27,7 @@ function VedtakFattetDetaljer({ data }: { data: VedtakDto }) {
   if (!data.erFattet) return null;
   return (
     <div>
-      <h3>Vedtak fattet:</h3>
+      <h4 style={{ marginBottom: "0" }}>Ferdigstilt</h4>
       <Datadisplay label={"Saksbehandler"} value={data.fattetAvSaksbehandler} />
       <Datadisplay
         label={"Dato"}
@@ -104,6 +104,14 @@ function VedtakTable({ data }: { data: NotatResultatBeregningBarnDto[] }) {
                 );
               })}
             </table>
+            <div
+              className="horizontal-line"
+              style={{
+                pageBreakAfter: "avoid",
+                marginTop: "8px",
+                marginBottom: "24px",
+              }}
+            ></div>
           </div>
         );
       })}

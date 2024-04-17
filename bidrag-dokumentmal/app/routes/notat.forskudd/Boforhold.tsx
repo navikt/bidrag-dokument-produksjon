@@ -4,6 +4,7 @@ import { BoforholdBarn } from "~/types/Api";
 import Person from "~/components/Person";
 import { SimpleTable } from "~/components/SimpleTable";
 import Sivilstand from "~/routes/notat.forskudd/Sivilstand";
+import Notat from "~/components/Notat";
 
 export default function Boforhold({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
@@ -16,6 +17,7 @@ export default function Boforhold({ data }: NotatForskuddProps) {
           <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />
         ))}
         <Sivilstand data={data} />
+        <Notat data={data.boforhold.notat} />
       </div>
     </div>
   );
@@ -23,7 +25,7 @@ export default function Boforhold({ data }: NotatForskuddProps) {
 
 function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
   return (
-    <div>
+    <div style={{ marginBottom: "24px" }}>
       <Datadisplay
         label={data.medIBehandling ? "Søknadsbarn" : "Eget barn i husstanden"}
         value={

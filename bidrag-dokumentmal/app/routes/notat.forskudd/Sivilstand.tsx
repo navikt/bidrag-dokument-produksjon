@@ -3,7 +3,7 @@ import { SimpleTable } from "~/components/SimpleTable";
 
 export default function Sivilstand({ data }: NotatForskuddProps) {
   return (
-    <div style={{ pageBreakBefore: "always" }}>
+    <div style={{ pageBreakBefore: "auto" }}>
       <h3>Sivilstand</h3>
       <div>
         <SimpleTable

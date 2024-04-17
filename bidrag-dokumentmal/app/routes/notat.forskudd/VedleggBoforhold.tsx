@@ -37,6 +37,13 @@ export default function VedleggBoforhold({ data }: NotatForskuddProps) {
               }
             />
             <BoforholdTable data={barn.opplysningerFraFolkeregisteret} />
+            <div
+              className="horizontal-line"
+              style={{
+                pageBreakAfter: "avoid",
+                marginBottom: "24px",
+              }}
+            ></div>
           </div>
         );
       })}

@@ -126,13 +126,11 @@ function InntektTable({
                   )}
                   <td>{d.beløp}</td>
                 </tr>
-                {medInntektsposter && (
+                {medInntektsposter && d.inntektsposter.length > 0 && (
                   <tr>
                     <td colSpan={3}>
                       <div
                         style={{
-                          paddingLeft: "10px",
-                          paddingBottom: "10px",
                           width: "700px",
                           borderBottom: "1px solid black",
                         }}

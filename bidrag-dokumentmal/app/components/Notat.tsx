@@ -6,7 +6,13 @@ type NotatProps = {
 };
 export default function Notat({ data }: NotatProps) {
   return (
-    <div style={{ maxWidth: "90%" }}>
+    <div
+      style={{
+        maxWidth: "44rem",
+        overflow: "none",
+        marginTop: "14px",
+      }}
+    >
       <Datadisplay
         label={"Begrunnelse (med i vedtaket)"}
         value={data.medIVedtaket}
