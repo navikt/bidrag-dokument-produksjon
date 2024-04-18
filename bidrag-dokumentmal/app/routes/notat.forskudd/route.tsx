@@ -5,7 +5,7 @@ import { createContext, useContext } from "react";
 import Soknaddetaljer from "~/routes/notat.forskudd/Soknaddetaljer";
 import Virkningstidspunkt from "~/routes/notat.forskudd/Virkningstidspunkt";
 import Header from "~/components/Header";
-import { NotatDto } from "~/types/Api";
+import { NotatDto, Vedtakstype } from "~/types/Api";
 import Boforhold from "~/routes/notat.forskudd/Boforhold";
 import Inntekter from "~/routes/notat.forskudd/Inntekter";
 import Vedtak from "~/routes/notat.forskudd/Vedtak";
@@ -28,6 +28,7 @@ export function meta() {
 
 interface INotatContext {
   erAvslag: boolean;
+  erOpphør: boolean;
 }
 
 export const NotatContext = createContext<INotatContext | null>(null);
@@ -50,7 +51,10 @@ export default function NotatForskudd() {
       </div>
       <div className="footer custom-footer-page-number" />
       <NotatContext.Provider
-        value={{ erAvslag: data.virkningstidspunkt.avslag != null }}
+        value={{
+          erAvslag: data.virkningstidspunkt.avslag != null,
+          erOpphør: data.virkningstidspunkt.vedtakstype == Vedtakstype.OPPHOR,
+        }}
       >
         <div className={"container page"}>
           <Soknaddetaljer data={data} />

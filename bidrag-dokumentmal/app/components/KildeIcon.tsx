@@ -5,9 +5,9 @@ export default function KildeIcon({ kilde }: { kilde: Kilde }) {
   return (
     <>
       {kilde == Kilde.OFFENTLIG ? (
-        <Buldings2Icon style={{ scale: "1.2" }} title={"Offentlig"} />
+        <Buldings2Icon style={{ scale: "1" }} title={"Offentlig"} />
       ) : (
-        <PersonIcon style={{ scale: "1.2" }} title={"Manuell"} />
+        <PersonIcon style={{ scale: "1" }} title={"Manuell"} />
       )}
     </>
   );

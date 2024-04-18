@@ -10,6 +10,7 @@ import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.person.SivilstandskodePDL
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
+import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -34,6 +35,7 @@ data class NotatDto(
 
 data class Virkningstidspunkt(
     val søknadstype: String?,
+    val vedtakstype: Vedtakstype?,
     val søktAv: SøktAvType?,
     @Schema(type = "string", format = "date", example = "01.12.2025")
     @JsonFormat(pattern = "yyyy-MM")
@@ -168,6 +170,7 @@ data class NotatInntektDto(
     val visningsnavn get() =
         type.visningsnavnMedÅrstall(
             periode?.fom?.year ?: opprinneligPeriode?.fom?.year,
+            opprinneligPeriode,
         )
 }
 
@@ -205,6 +208,6 @@ data class NotatResultatBeregningBarnDto(
 
 @Schema(enumAsRef = true)
 enum class Kilde {
-    MANUELT,
+    MANUELL,
     OFFENTLIG,
 }

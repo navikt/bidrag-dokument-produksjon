@@ -41,6 +41,8 @@ function VedtakTableAvslag({
 }: {
   data: NotatResultatBeregningBarnDto[];
 }) {
+  const { erOpphør } = useNotat();
+
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
     <div style={{ paddingTop: "10px" }}>
@@ -60,18 +62,26 @@ function VedtakTableAvslag({
                 return (
                   <tr key={d.periode.fom}>
                     <td>{formatPeriode(d.periode!.fom, d.periode!.til)}</td>
-                    <td>Avslag</td>
+                    <td>{erOpphør ? "Opphør" : "Avslag"}</td>
                     <td>{d.resultatKodeVisningsnavn}</td>
                   </tr>
                 );
               })}
             </table>
+            <div
+              className="horizontal-line"
+              style={{
+                pageBreakAfter: "avoid",
+                marginBottom: "24px",
+              }}
+            ></div>
           </div>
         );
       })}
     </div>
   );
 }
+
 function VedtakTable({ data }: { data: NotatResultatBeregningBarnDto[] }) {
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
