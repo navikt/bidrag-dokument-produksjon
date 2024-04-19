@@ -101,7 +101,7 @@ function InntektTable({
             {inkluderBeskrivelse && (
               <th style={{ width: "250px" }}>Beskrivelse</th>
             )}
-            <th style={{ width: "50px" }}>Kilde</th>
+            <th style={{ width: "70px" }}>Kilde</th>
             <th>Beløp</th>
           </tr>
           {inntekter
