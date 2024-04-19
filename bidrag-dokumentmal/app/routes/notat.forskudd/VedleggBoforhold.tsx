@@ -7,13 +7,14 @@ import {
 import { groupBy } from "~/utils/array-utils";
 import Datadisplay from "~/components/Datadisplay";
 import Person from "~/components/Person";
+import elementIds from "~/utils/elementIds";
 
 export default function VedleggBoforhold({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
   if (erAvslag) return null;
   return (
     <div style={{ pageBreakBefore: "always" }}>
-      <h2>Vedlegg nr. 1: Boforhold</h2>
+      <h2 id={elementIds.vedleggBoforhold}>Vedlegg nr. 1: Boforhold</h2>
       <h3>Opplysninger fra folkeregisteret</h3>
       {groupBy(
         data.boforhold.barn

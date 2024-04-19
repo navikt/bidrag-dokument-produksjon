@@ -3,6 +3,7 @@ package no.nav.bidrag.dokument.produksjon.dto
 import com.fasterxml.jackson.annotation.JsonFormat
 import io.swagger.v3.oas.annotations.media.Schema
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
+import no.nav.bidrag.domene.enums.diverse.Kilde
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.inntekt.Inntektstype
 import no.nav.bidrag.domene.enums.person.Bostatuskode
@@ -10,6 +11,7 @@ import no.nav.bidrag.domene.enums.person.Sivilstandskode
 import no.nav.bidrag.domene.enums.person.SivilstandskodePDL
 import no.nav.bidrag.domene.enums.rolle.Rolletype
 import no.nav.bidrag.domene.enums.rolle.SøktAvType
+import no.nav.bidrag.domene.enums.vedtak.Vedtakstype
 import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
@@ -34,6 +36,7 @@ data class NotatDto(
 
 data class Virkningstidspunkt(
     val søknadstype: String?,
+    val vedtakstype: Vedtakstype?,
     val søktAv: SøktAvType?,
     @Schema(type = "string", format = "date", example = "01.12.2025")
     @JsonFormat(pattern = "yyyy-MM")
@@ -201,10 +204,4 @@ data class NotatResultatBeregningBarnDto(
         val resultatKodeVisningsnavn get() = resultatKode.visningsnavn.intern
         val sivilstandVisningsnavn get() = sivilstand?.visningsnavn?.intern
     }
-}
-
-@Schema(enumAsRef = true)
-enum class Kilde {
-    MANUELT,
-    OFFENTLIG,
 }

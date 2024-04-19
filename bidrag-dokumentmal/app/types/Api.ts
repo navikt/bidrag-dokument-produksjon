@@ -71,6 +71,8 @@ export enum Inntektsrapportering {
   AINNTEKT = "AINNTEKT",
   AINNTEKTBEREGNET3MND = "AINNTEKT_BEREGNET_3MND",
   AINNTEKTBEREGNET12MND = "AINNTEKT_BEREGNET_12MND",
+  AINNTEKTBEREGNET3MNDFRAOPPRINNELIGVEDTAKSTIDSPUNKT = "AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT",
+  AINNTEKTBEREGNET12MNDFRAOPPRINNELIGVEDTAKSTIDSPUNKT = "AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAKSTIDSPUNKT",
   AINNTEKTBEREGNET3MNDFRAOPPRINNELIGVEDTAK = "AINNTEKT_BEREGNET_3MND_FRA_OPPRINNELIG_VEDTAK",
   AINNTEKTBEREGNET12MNDFRAOPPRINNELIGVEDTAK = "AINNTEKT_BEREGNET_12MND_FRA_OPPRINNELIG_VEDTAK",
   KAPITALINNTEKT = "KAPITALINNTEKT",
@@ -145,7 +147,7 @@ export enum Inntektstype {
 }
 
 export enum Kilde {
-  MANUELT = "MANUELT",
+  MANUELL = "MANUELL",
   OFFENTLIG = "OFFENTLIG",
 }
 
@@ -294,6 +296,7 @@ export enum Sivilstandskode {
   BOR_ALENE_MED_BARN = "BOR_ALENE_MED_BARN",
   ENSLIG = "ENSLIG",
   SAMBOER = "SAMBOER",
+  UKJENT = "UKJENT",
 }
 
 export enum SivilstandskodePDL {
@@ -334,8 +337,22 @@ export interface Vedtak {
   resultat: NotatResultatBeregningBarnDto[];
 }
 
+export enum Vedtakstype {
+  INDEKSREGULERING = "INDEKSREGULERING",
+  ALDERSJUSTERING = "ALDERSJUSTERING",
+  OPPHOR = "OPPHØR",
+  ALDERSOPPHOR = "ALDERSOPPHØR",
+  REVURDERING = "REVURDERING",
+  FASTSETTELSE = "FASTSETTELSE",
+  INNKREVING = "INNKREVING",
+  KLAGE = "KLAGE",
+  ENDRING = "ENDRING",
+  ENDRING_MOTTAKER = "ENDRING_MOTTAKER",
+}
+
 export interface Virkningstidspunkt {
   søknadstype?: string;
+  vedtakstype?: Vedtakstype;
   søktAv?: SoktAvType;
   /** @format date */
   mottattDato?: string;
@@ -389,9 +406,9 @@ export interface MediaType {
   parameters?: Record<string, string>;
   /** @format double */
   qualityValue?: number;
-  subtypeSuffix?: string;
   wildcardSubtype?: boolean;
-  charset?: string;
+  subtypeSuffix?: string;
   wildcardType?: boolean;
   concrete?: boolean;
+  charset?: string;
 }
