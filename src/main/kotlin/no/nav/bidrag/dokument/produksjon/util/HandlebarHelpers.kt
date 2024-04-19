@@ -2,8 +2,8 @@ package no.nav.bidrag.dokument.produksjon.util
 
 import com.fasterxml.jackson.databind.JsonNode
 import com.github.jknack.handlebars.Helper
-import no.nav.bidrag.dokument.produksjon.dto.Kilde
 import no.nav.bidrag.domene.enums.beregning.Resultatkode
+import no.nav.bidrag.domene.enums.diverse.Kilde
 import no.nav.bidrag.domene.enums.inntekt.Inntektsrapportering
 import no.nav.bidrag.domene.enums.person.Bostatuskode
 import no.nav.bidrag.domene.enums.person.Sivilstandskode
