@@ -14,13 +14,16 @@ import KildeIcon from "~/components/KildeIcon";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
 import Inntektspost from "~/components/Inntekspost";
 import elementIds from "~/utils/elementIds";
+import tekster from "~/utils/tekster";
 
 export default function VedleggInntekter({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
   if (erAvslag) return null;
   return (
     <div style={{ pageBreakBefore: "always" }}>
-      <h2 id={elementIds.vedleggInntekter}>Vedlegg nr. 2: Inntekt</h2>
+      <h2 id={elementIds.vedleggInntekter}>
+        Vedlegg nr. 2: Inntekt - {tekster.fraOffentligeRegistre}
+      </h2>
       <OpplysningerBidragsmottaker
         data={data.inntekter.inntekterPerRolle.find((d) =>
           erRolle(d.gjelder.rolle, Rolletype.BM),
