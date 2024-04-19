@@ -5,13 +5,19 @@ import Person from "~/components/Person";
 import { SimpleTable } from "~/components/SimpleTable";
 import Sivilstand from "~/routes/notat.forskudd/Sivilstand";
 import Notat from "~/components/Notat";
+import elementIds from "~/utils/elementIds";
 
 export default function Boforhold({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
   if (erAvslag) return null;
   return (
     <div className="soknad_parter">
-      <h2>Boforhold</h2>
+      <div className={"elements_inline"}>
+        <h2>Boforhold</h2>
+        <a href={`#${elementIds.vedleggBoforhold}`}>
+          se vedlegg nr. 1 for opplysninger fra offentlige registre
+        </a>
+      </div>
       <div>
         {data.boforhold.barn.map((b, i) => (
           <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />

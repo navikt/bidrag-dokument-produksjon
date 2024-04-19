@@ -13,13 +13,19 @@ import { groupBy } from "~/utils/array-utils";
 import { erRolle } from "~/utils/visningsnavn";
 import Inntektspost from "~/components/Inntekspost";
 import Notat from "~/components/Notat";
+import elementIds from "~/utils/elementIds";
 
 export default function Inntekter({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
   if (erAvslag) return null;
   return (
     <div className="soknad_parter">
-      <h2>Inntekter</h2>
+      <div className={"elements_inline"}>
+        <h2>Inntekter</h2>
+        <a href={`#${elementIds.vedleggInntekter}`}>
+          se vedlegg nr. 2 for opplysninger fra offentlige registre
+        </a>
+      </div>
       <InntekterBidragsmottaker
         data={data.inntekter.inntekterPerRolle.find((d) =>
           erRolle(d.gjelder.rolle, Rolletype.BM),

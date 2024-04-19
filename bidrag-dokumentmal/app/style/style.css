@@ -60,6 +60,15 @@ dt, dd {
     display: inline;
 }
 
+.elements_inline :first-child {
+    display: inline;
+    margin-right: 5px;
+
+}
+.elements_inline :last-child {
+    display: inline;
+    vertical-align: middle;
+}
 dd {
     margin-inline-start: 0px;
     margin: 0;
