@@ -179,7 +179,7 @@ function InntektPerBarnTable({
             <table className="table" style={{ width: "580px" }}>
               <colgroup>
                 <col style={{ width: "200px" }} />
-                <col style={{ width: "50px" }} />
+                <col style={{ width: "70px" }} />
                 {erBarnetillegg ? (
                   <>
                     <col style={{ width: "150px" }} />
