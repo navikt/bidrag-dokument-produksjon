@@ -18,7 +18,7 @@ export default function Soknaddetaljer({ data }: { data: NotatDto }) {
           <Datadisplay
             key={rolle.ident}
             label={capitalizeFirstLetter(rolle.rolle)!}
-            value={rolle.navn + " / " + rolle.fødselsdato}
+            value={rolle.navn + " / " + dateToDDMMYYYY(rolle.fødselsdato)}
           />
         ))}
         <RollerBarn rollerBarn={rollerBarn} />
