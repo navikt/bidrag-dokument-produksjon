@@ -41,8 +41,14 @@ export const deductMonths = (date: Date, months: number) => {
   return newDate;
 };
 
-export const lastDayOfMonth = (date: Date) =>
-  new Date(date.getFullYear(), date.getMonth() + 1, 0);
+export const lastDayOfMonth = (dateValue: Date | string): Date => {
+  if (typeof dateValue == "string") {
+    const dateObject = new Date(dateValue);
+    return new Date(dateObject.getFullYear(), dateObject.getMonth() + 1, 0);
+  } else {
+    return new Date(dateValue.getFullYear(), dateValue.getMonth() + 1, 0);
+  }
+};
 export const firstDayOfMonth = (date: Date) =>
   new Date(date.getFullYear(), date.getMonth(), 1);
 export const isValidDate = (date: unknown | Date): boolean =>
@@ -201,5 +207,5 @@ export const formatPeriode = (
   dateTom: Date | string | undefined,
 ): string | undefined => {
   if (dateTom == undefined) return dateToDDMMYYYY(dateFom);
-  return `${dateToDDMMYYYY(dateFom)} - ${dateToDDMMYYYY(dateTom)}`;
+  return `${dateToDDMMYYYY(dateFom)} - ${dateToDDMMYYYY(lastDayOfMonth(dateTom))}`;
 };
