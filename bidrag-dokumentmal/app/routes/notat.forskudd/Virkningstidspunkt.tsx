@@ -1,9 +1,24 @@
 import { capitalizeFirstLetter } from "~/utils/visningsnavn";
 import Datadisplay from "~/components/Datadisplay";
-import { NotatDto } from "~/types/Api";
+import { NotatDto, SoktAvType } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import Notat from "~/components/Notat";
 
+function søktAvTilVisningsnavn(søktAv?: SoktAvType) {
+  switch (søktAv) {
+    case SoktAvType.NAV_INTERNASJONALT:
+    case SoktAvType.NAV_BIDRAG:
+      return "NAV";
+    case SoktAvType.BARN18AR:
+      return "Barn";
+    case SoktAvType.BM_I_ANNEN_SAK:
+      return "Bidragsmottaker i annen sak";
+    case SoktAvType.KLAGE_ANKE:
+      return "Klage";
+    default:
+      return capitalizeFirstLetter(søktAv);
+  }
+}
 export default function Virkningstidspunkt({ data }: { data: NotatDto }) {
   const virkningstidspunkt = data.virkningstidspunkt;
   return (
@@ -16,7 +31,7 @@ export default function Virkningstidspunkt({ data }: { data: NotatDto }) {
         />
         <Datadisplay
           label={"Søkt fra"}
-          value={capitalizeFirstLetter(virkningstidspunkt.søktAv)}
+          value={søktAvTilVisningsnavn(virkningstidspunkt.søktAv)}
         />
         <Datadisplay
           label={"Mottatt dato"}
