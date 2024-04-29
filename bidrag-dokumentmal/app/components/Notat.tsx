@@ -15,11 +15,7 @@ export default function Notat({ data }: NotatProps) {
       }}
     >
       <Datadisplay
-        label={"Begrunnelse (med i vedtaket)"}
-        value={<PurifiedHtml text={data.medIVedtaket} />}
-      />
-      <Datadisplay
-        label={"Begrunnelse (kun for intern notat)"}
+        label={"Begrunnelse"}
         value={<PurifiedHtml text={data.intern} />}
       />
     </div>

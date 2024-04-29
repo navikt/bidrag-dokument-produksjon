@@ -7,6 +7,7 @@ import {
 import { dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
 import Datadisplay from "~/components/Datadisplay";
+import { formatterBeløp } from "~/utils/visningsnavn";
 
 export default function Vedtak({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
@@ -105,10 +106,10 @@ function VedtakTable({ data }: { data: NotatResultatBeregningBarnDto[] }) {
                 return (
                   <tr key={d.periode.fom}>
                     <td>{formatPeriode(d.periode!.fom, d.periode!.til)}</td>
-                    <td>{d.inntekt}</td>
+                    <td>{formatterBeløp(d.inntekt)}</td>
                     <td>{d.sivilstandVisningsnavn}</td>
                     <td>{d.antallBarnIHusstanden}</td>
-                    <td>{d.beløp}</td>
+                    <td>{formatterBeløp(d.beløp)}</td>
                     <td>{d.resultatKodeVisningsnavn}</td>
                   </tr>
                 );

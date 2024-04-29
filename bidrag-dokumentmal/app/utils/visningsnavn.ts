@@ -29,3 +29,8 @@ export function capitalizeFirstLetter(str?: string) {
   if (!str) return str;
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
+
+export function formatterBeløp(beløp: number | string | undefined): string {
+  if (!beløp) return "0";
+  return beløp.toLocaleString("nb-NO");
+}

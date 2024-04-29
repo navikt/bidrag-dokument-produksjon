@@ -10,7 +10,7 @@ import {
 import { dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
 import { groupBy } from "~/utils/array-utils";
-import { erRolle } from "~/utils/visningsnavn";
+import { erRolle, formatterBeløp } from "~/utils/visningsnavn";
 import Inntektspost from "~/components/Inntekspost";
 import Notat from "~/components/Notat";
 import elementIds from "~/utils/elementIds";
@@ -120,7 +120,7 @@ function InntektTable({
                     <td>
                       <KildeIcon kilde={d.kilde} />
                     </td>
-                    <td>{d.beløp}</td>
+                    <td>{formatterBeløp(d.beløp)}</td>
                   </tr>
                   {d.inntektsposter.length > 0 && (
                     <tr>
@@ -139,7 +139,7 @@ function InntektTable({
                             <Inntektspost
                               key={d.kode + i.toString()}
                               label={d.visningsnavn!}
-                              value={d.beløp!}
+                              value={formatterBeløp(d.beløp)}
                             />
                           ))}
                         </div>
@@ -220,11 +220,11 @@ function InntektPerBarnTable({
                       {erBarnetillegg ? (
                         <>
                           <td>{visningsnavnInntektstype}</td>
-                          <td>{Math.round(d.beløp / 12)}</td>
-                          <td>{d.beløp}</td>
+                          <td>{formatterBeløp(Math.round(d.beløp / 12))}</td>
+                          <td>{formatterBeløp(d.beløp)}</td>
                         </>
                       ) : (
-                        <td>{d.beløp}</td>
+                        <td>{formatterBeløp(d.beløp)}</td>
                       )}
                     </tr>
                   );
@@ -269,12 +269,12 @@ function BeregnetInntektTable({ data }: BeregnetInntektTableProps) {
                 return (
                   <tr key={"beregnet_inntekt" + d.periode.fom + i.toString()}>
                     <td>{formatPeriode(d.periode!.fom, d.periode!.til)}</td>
-                    <td>{d.skattepliktigInntekt ?? 0}</td>
-                    <td>{d.barnetillegg ?? 0}</td>
-                    <td>{d.utvidetBarnetrygd ?? 0}</td>
-                    <td>{d.småbarnstillegg ?? 0}</td>
-                    <td>{d.kontantstøtte ?? 0}</td>
-                    <td>{d.totalinntekt ?? 0}</td>
+                    <td>{formatterBeløp(d.skattepliktigInntekt ?? 0)}</td>
+                    <td>{formatterBeløp(d.barnetillegg ?? 0)}</td>
+                    <td>{formatterBeløp(d.utvidetBarnetrygd ?? 0)}</td>
+                    <td>{formatterBeløp(d.småbarnstillegg ?? 0)}</td>
+                    <td>{formatterBeløp(d.kontantstøtte ?? 0)}</td>
+                    <td>{formatterBeløp(d.totalinntekt ?? 0)}</td>
                   </tr>
                 );
               })}

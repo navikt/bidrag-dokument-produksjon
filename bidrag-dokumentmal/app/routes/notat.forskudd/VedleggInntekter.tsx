@@ -13,7 +13,7 @@ import {
   NotatInntektDto,
   Rolletype,
 } from "~/types/Api";
-import { erRolle } from "~/utils/visningsnavn";
+import { erRolle, formatterBeløp } from "~/utils/visningsnavn";
 import { groupBy } from "~/utils/array-utils";
 import KildeIcon from "~/components/KildeIcon";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
@@ -172,7 +172,7 @@ function InntektTable({
                   {inkluderBeskrivelse && (
                     <td style={{ width: "250px" }}>{d.visningsnavn}</td>
                   )}
-                  <td>{d.beløp}</td>
+                  <td>{formatterBeløp(d.beløp)}</td>
                 </tr>
                 {medInntektsposter && d.inntektsposter.length > 0 && (
                   <tr>
@@ -191,7 +191,7 @@ function InntektTable({
                           <Inntektspost
                             key={d.kode + i.toString()}
                             label={d.visningsnavn!}
-                            value={d.beløp!}
+                            value={formatterBeløp(d.beløp)}
                           />
                         ))}
                       </div>
@@ -284,11 +284,11 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
                       {erBarnetillegg ? (
                         <>
                           <td>{visningsnavnInntektstype}</td>
-                          <td>{Math.round(d.beløp / 12)}</td>
-                          <td>{d.beløp}</td>
+                          <td>{formatterBeløp(Math.round(d.beløp / 12))}</td>
+                          <td>{formatterBeløp(d.beløp)}</td>
                         </>
                       ) : (
-                        <td>{d.beløp}</td>
+                        <td>{formatterBeløp(d.beløp)}</td>
                       )}
                     </tr>
                   );
