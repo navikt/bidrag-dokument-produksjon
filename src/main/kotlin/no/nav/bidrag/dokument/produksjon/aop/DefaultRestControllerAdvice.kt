@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.ExceptionHandler
 import org.springframework.web.bind.annotation.ResponseBody
 import org.springframework.web.bind.annotation.RestControllerAdvice
 import org.springframework.web.method.annotation.MethodArgumentTypeMismatchException
+import java.io.IOException
 
 val LOGGER = KotlinLogging.logger { }
 
@@ -58,6 +59,16 @@ class DefaultRestControllerAdvice {
                 "$objectName.$field"
             }
         return "${paths.joinToString("->")} kan ikke være null"
+    }
+
+    @ResponseBody
+    @ExceptionHandler(IOException::class)
+    fun handleRequestNotUsableException(exception: IOException): ResponseEntity<*> {
+        LOGGER.warn(exception) { "Det skjedde en ukjent feil: ${exception.message}" }
+        return ResponseEntity
+            .status(HttpStatus.INTERNAL_SERVER_ERROR)
+            .header(HttpHeaders.WARNING, "Det skjedde en ukjent feil: ${exception.message}")
+            .build<Any>()
     }
 
     @ResponseBody
