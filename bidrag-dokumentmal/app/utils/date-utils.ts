@@ -147,9 +147,10 @@ export const isAfterDate = (
   return d.getTime() > c.getTime();
 };
 export const isAfterEqualsDate = (
-  date: Date | string,
+  date?: Date | string,
   comparedWith: Date | string = new Date(),
 ) => {
+  if (date == null) return true;
   const d = new Date(date);
   d.setHours(0, 0, 0);
   const c = new Date(comparedWith);
