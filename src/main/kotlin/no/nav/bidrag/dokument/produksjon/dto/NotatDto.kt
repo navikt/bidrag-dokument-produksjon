@@ -16,6 +16,7 @@ import no.nav.bidrag.domene.enums.vedtak.VirkningstidspunktÅrsakstype
 import no.nav.bidrag.domene.ident.Personident
 import no.nav.bidrag.domene.tid.ÅrMånedsperiode
 import no.nav.bidrag.domene.util.visningsnavn
+import no.nav.bidrag.domene.util.visningsnavnIntern
 import no.nav.bidrag.domene.util.visningsnavnMedÅrstall
 import no.nav.bidrag.transport.behandling.felles.grunnlag.DelberegningSumInntekt
 import java.math.BigDecimal
@@ -56,7 +57,13 @@ data class Virkningstidspunkt(
     val årsakVisningsnavn get() = årsak?.visningsnavn?.intern
 
     @get:Schema(name = "avslagVisningsnavn")
-    val avslagVisningsnavn get() = avslag?.visningsnavn?.intern
+    val avslagVisningsnavn
+        get() =
+            vedtakstype?.let {
+                avslag?.visningsnavnIntern(
+                    vedtakstype,
+                )
+            } ?: avslag?.visningsnavn?.intern
 }
 
 data class Notat(
@@ -199,9 +206,16 @@ data class NotatResultatBeregningBarnDto(
         val regel: String,
         val sivilstand: Sivilstandskode?,
         val inntekt: BigDecimal,
+        val vedtakstype: Vedtakstype?,
         val antallBarnIHusstanden: Int,
     ) {
-        val resultatKodeVisningsnavn get() = resultatKode.visningsnavn.intern
+        val resultatKodeVisningsnavn
+            get() =
+                vedtakstype?.let {
+                    resultatKode.visningsnavnIntern(
+                        it,
+                    )
+                } ?: resultatKode.visningsnavn.intern
         val sivilstandVisningsnavn get() = sivilstand?.visningsnavn?.intern
     }
 }
