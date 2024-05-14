@@ -32,7 +32,7 @@
         <ktfmt.version>0.44</ktfmt.version>
         <bidrag.felles.version>2024.05.14.133020
         </bidrag.felles.version>
-        <kotlin.logger.version>6.0.4</kotlin.logger.version>
+        <kotlin.logger.version>6.0.9</kotlin.logger.version>
         <snakeyaml.version>2.2</snakeyaml.version>
         <swagger.version>2.2.21</swagger.version>
     </properties>
