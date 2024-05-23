@@ -11,15 +11,22 @@ import { dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
 import { groupBy } from "~/utils/array-utils";
 import { erRolle, formatterBeløp } from "~/utils/visningsnavn";
-import Inntektspost from "~/components/Inntekspost";
 import Notat from "~/components/Notat";
 import elementIds from "~/utils/elementIds";
+import {
+  CommonTable,
+  TableColumn,
+  TableHeader,
+} from "~/components/CommonTable";
+import tekster from "~/tekster";
+import { getInntektTableHeaders } from "~/constants/tableHeaders";
+import Inntektsposter from "~/routes/notat.forskudd/Inntektsposter";
 
 export default function Inntekter({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
   if (erAvslag) return null;
   return (
-    <div className="soknad_parter">
+    <div className="soknad_parter section">
       <div className={"elements_inline"}>
         <h2>Inntekter</h2>
         <a href={`#${elementIds.vedleggInntekter}`}>
@@ -64,8 +71,6 @@ function InntekterBidragsmottaker({ data }: { data?: InntekterPerRolle }) {
           className="horizontal-line"
           style={{
             pageBreakAfter: "avoid",
-            marginTop: "8px",
-            marginBottom: "24px",
           }}
         ></div>
         <BeregnetInntektTable data={data.beregnetInntekter} />
@@ -92,64 +97,49 @@ function InntektTable({
   const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
   if (inntekter.length == 0) return null;
   return (
-    <div style={{ marginTop: "24px" }}>
+    <div className={"subsection"}>
       <TableTitle title={title} subtitle={subtitle} />
-      <div className={"background_section"}>
-        <table className="table ">
-          <tr>
-            <th style={{ width: "200px" }}>Fra og med - Til og med</th>
-            {inkluderBeskrivelse && (
-              <th style={{ width: "250px" }}>Beskrivelse</th>
-            )}
-            <th style={{ width: "70px" }}>Kilde</th>
-            <th>Beløp</th>
-          </tr>
-          {inntekter
-            .sort((a, b) =>
-              a.periode?.fom && b.periode?.fom
-                ? a.periode?.fom.localeCompare(b.periode?.fom)
-                : 1,
-            )
-            .map((d, i) => {
-              const periode = d.periode ?? d.opprinneligPeriode;
-              return (
-                <>
-                  <tr key={d.type + i.toString()}>
-                    <td>{formatPeriode(periode!.fom, periode!.til)}</td>
-                    {inkluderBeskrivelse && <td>{d.visningsnavn}</td>}
-                    <td>
-                      <KildeIcon kilde={d.kilde} />
-                    </td>
-                    <td>{formatterBeløp(d.beløp)}</td>
-                  </tr>
-                  {d.inntektsposter.length > 0 && (
-                    <tr>
-                      <td colSpan={4}>
-                        <div
-                          style={{
-                            width: "700px",
-                            borderBottom: "1px solid black",
-                          }}
-                        >
-                          <Inntektspost
-                            label={"Periode"}
-                            value={formatPeriode(periode!.fom, periode!.til)}
-                          />
-                          {d.inntektsposter.map((d, i) => (
-                            <Inntektspost
-                              key={d.kode + i.toString()}
-                              label={d.visningsnavn!}
-                              value={formatterBeløp(d.beløp)}
-                            />
-                          ))}
-                        </div>
-                      </td>
-                    </tr>
-                  )}
-                </>
-              );
-            })}
-        </table>
+      <div className={"table_container"}>
+        <CommonTable
+          data={{
+            headers: [
+              { name: tekster.tabell.felles.fraTilOgMed, width: "200px" },
+              inkluderBeskrivelse && {
+                name: tekster.tabell.felles.beskrivelse,
+                width: "250px",
+              },
+              { name: tekster.tabell.felles.kilde, width: "70px" },
+              { name: tekster.tabell.inntekt.beløp },
+            ].filter((d) => typeof d != "boolean") as TableHeader[],
+            rows: inntekter
+              .sort((a, b) =>
+                a.periode?.fom && b.periode?.fom
+                  ? a.periode?.fom.localeCompare(b.periode?.fom)
+                  : 1,
+              )
+              .map((d) => {
+                const periode = d.periode ?? d.opprinneligPeriode;
+                return {
+                  columns: [
+                    { content: formatPeriode(periode!.fom, periode!.til) },
+                    inkluderBeskrivelse && { content: d.visningsnavn },
+                    { content: <KildeIcon kilde={d.kilde} /> },
+                    { content: formatterBeløp(d.beløp) },
+                  ].filter((d) => typeof d != "boolean") as TableColumn[],
+                  expandableContent:
+                    d.inntektsposter.length > 0
+                      ? [
+                          {
+                            content: (
+                              <Inntektsposter data={d} periode={periode} />
+                            ),
+                          },
+                        ]
+                      : undefined,
+                };
+              }),
+          }}
+        />
       </div>
     </div>
   );
@@ -163,6 +153,7 @@ function InntektPerBarnTable({
 }: InntektTableProps) {
   const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
   if (inntekter.length == 0) return null;
+
   return (
     <div style={{ paddingTop: "10px" }}>
       <TableTitle title={title} subtitle={subtitle} />
@@ -173,63 +164,42 @@ function InntektPerBarnTable({
         return (
           <div
             key={gjelderBarn + key + i.toString()}
-            className="background_section"
+            className="table_container"
           >
             <GjelderBarn gjelderBarn={gjelderBarn} />
-            <table className="table" style={{ width: "580px" }}>
-              <colgroup>
-                <col style={{ width: "200px" }} />
-                <col style={{ width: "70px" }} />
-                {erBarnetillegg ? (
-                  <>
-                    <col style={{ width: "150px" }} />
-                    <col style={{ width: "100px" }} />
-                    <col style={{ width: "120px" }} />
-                  </>
-                ) : (
-                  <col style={{ width: "100px" }} />
-                )}
-              </colgroup>
-              <tr>
-                <th>Fra og med - Til og med</th>
-                <th>Kilde</th>
-                {erBarnetillegg ? (
-                  <>
-                    <th>Type</th>
-                    <th>Beløp (mnd)</th>
-                    <th>Beløp (12mnd)</th>
-                  </>
-                ) : (
-                  <th>Beløp</th>
-                )}
-              </tr>
-              {value
-                .filter((d) => !bareMedIBeregning || d.medIBeregning)
-                .map((d, i) => {
-                  const periode = d.periode ?? d.opprinneligPeriode;
-                  const visningsnavnInntektstype =
-                    d.inntektsposter.length > 0
-                      ? d.inntektsposter[0].visningsnavn
-                      : "";
-                  return (
-                    <tr key={d.gjelderBarn + i.toString()}>
-                      <td>{formatPeriode(periode!.fom, periode!.til)}</td>
-                      <td>
-                        <KildeIcon kilde={d.kilde} />
-                      </td>
-                      {erBarnetillegg ? (
-                        <>
-                          <td>{visningsnavnInntektstype}</td>
-                          <td>{formatterBeløp(Math.round(d.beløp / 12))}</td>
-                          <td>{formatterBeløp(d.beløp)}</td>
-                        </>
-                      ) : (
-                        <td>{formatterBeløp(d.beløp)}</td>
-                      )}
-                    </tr>
-                  );
-                })}
-            </table>
+            <CommonTable
+              width={"580px"}
+              data={{
+                headers: getInntektTableHeaders(erBarnetillegg),
+                rows: value
+                  .filter((d) => !bareMedIBeregning || d.medIBeregning)
+                  .map((d) => {
+                    const periode = d.periode ?? d.opprinneligPeriode;
+                    const visningsnavnInntektstype =
+                      d.inntektsposter.length > 0
+                        ? d.inntektsposter[0].visningsnavn
+                        : "";
+
+                    return {
+                      columns: [
+                        { content: formatPeriode(periode!.fom, periode!.til) },
+                        { content: <KildeIcon kilde={d.kilde} /> },
+                        erBarnetillegg
+                          ? [
+                              { content: visningsnavnInntektstype },
+                              {
+                                content: formatterBeløp(
+                                  Math.round(d.beløp / 12),
+                                ),
+                              },
+                              { content: formatterBeløp(d.beløp) },
+                            ]
+                          : [{ content: formatterBeløp(d.beløp) }],
+                      ].flatMap((d) => d),
+                    };
+                  }),
+              }}
+            />
           </div>
         );
       })}
@@ -243,7 +213,7 @@ type BeregnetInntektTableProps = {
 
 function BeregnetInntektTable({ data }: BeregnetInntektTableProps) {
   return (
-    <div>
+    <div className={"subsection"}>
       <TableTitle title={"Beregnet totalt"} />
       {groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value], i) => {
         const gjelderBarn = value[0].gjelderBarn!;
@@ -251,34 +221,47 @@ function BeregnetInntektTable({ data }: BeregnetInntektTableProps) {
         return (
           <div
             key={gjelderBarn + key + i.toString()}
-            className="background_section"
+            className="table_container"
             style={{ paddingTop: "10px" }}
           >
             <GjelderBarn gjelderBarn={gjelderBarn} />
-            <table className="table" style={{ width: "700px" }}>
-              <tr>
-                <th style={{ width: "170px" }}>Fra og med - Til og med</th>
-                <th style={{ width: "100px" }}>Skattepliktige- inntekter</th>
-                <th style={{ width: "60px" }}>Barne- tillegg</th>
-                <th style={{ width: "80px" }}>Utvidet- barnetrygd</th>
-                <th style={{ width: "80px" }}>Småbarns- tillegg</th>
-                <th style={{ width: "60px" }}>Kontant- støtte</th>
-                <th style={{ width: "60px" }}>Totalt</th>
-              </tr>
-              {inntekter.map((d, i) => {
-                return (
-                  <tr key={"beregnet_inntekt" + d.periode.fom + i.toString()}>
-                    <td>{formatPeriode(d.periode!.fom, d.periode!.til)}</td>
-                    <td>{formatterBeløp(d.skattepliktigInntekt ?? 0)}</td>
-                    <td>{formatterBeløp(d.barnetillegg ?? 0)}</td>
-                    <td>{formatterBeløp(d.utvidetBarnetrygd ?? 0)}</td>
-                    <td>{formatterBeløp(d.småbarnstillegg ?? 0)}</td>
-                    <td>{formatterBeløp(d.kontantstøtte ?? 0)}</td>
-                    <td>{formatterBeløp(d.totalinntekt ?? 0)}</td>
-                  </tr>
-                );
-              })}
-            </table>
+            <CommonTable
+              width={"700px"}
+              data={{
+                headers: [
+                  { name: tekster.tabell.felles.fraTilOgMed, width: "170px" },
+                  {
+                    name: tekster.tabell.beregnet.skattepliktigInntekt,
+                    width: "100px",
+                  },
+                  { name: tekster.tabell.beregnet.barnetillegg, width: "60px" },
+                  {
+                    name: tekster.tabell.beregnet.utvidetBarnetrygd,
+                    width: "80px",
+                  },
+                  {
+                    name: tekster.tabell.beregnet.småbarnstillegg,
+                    width: "80px",
+                  },
+                  {
+                    name: tekster.tabell.beregnet.kontantstøtte,
+                    width: "60px",
+                  },
+                  { name: tekster.tabell.beregnet.total, width: "60px" },
+                ],
+                rows: inntekter.map((d) => ({
+                  columns: [
+                    { content: formatPeriode(d.periode!.fom, d.periode!.til) },
+                    { content: formatterBeløp(d.skattepliktigInntekt ?? 0) },
+                    { content: formatterBeløp(d.barnetillegg ?? 0) },
+                    { content: formatterBeløp(d.utvidetBarnetrygd ?? 0) },
+                    { content: formatterBeløp(d.småbarnstillegg ?? 0) },
+                    { content: formatterBeløp(d.kontantstøtte ?? 0) },
+                    { content: formatterBeløp(d.totalinntekt ?? 0) },
+                  ],
+                })),
+              }}
+            />
           </div>
         );
       })}
@@ -287,7 +270,6 @@ function BeregnetInntektTable({ data }: BeregnetInntektTableProps) {
 }
 
 function GjelderBarn({ gjelderBarn }: { gjelderBarn: PersonNotatDto }) {
-  // return <div style={{display: "inline-block"}}><BaTag/><Person navn={gjelderBarn.navn!!} fødselsdato={gjelderBarn.fødselsdato!!}/></div>
   return (
     <dl>
       <dt>{gjelderBarn.navn}</dt>
@@ -295,25 +277,6 @@ function GjelderBarn({ gjelderBarn }: { gjelderBarn: PersonNotatDto }) {
         / {dateToDDMMYYYY(gjelderBarn.fødselsdato)}
       </dd>
     </dl>
-  );
-}
-
-function BaTag() {
-  return (
-    <div
-      style={{
-        display: "inline-block",
-        border: "1px solid black",
-        width: "1rem",
-        borderRadius: "0.25rem",
-        backgroundColor: "#e0d8e9",
-        padding: "0 0.375rem",
-        marginRight: "0.25rem",
-        alignItems: "center",
-      }}
-    >
-      BA
-    </div>
   );
 }
 

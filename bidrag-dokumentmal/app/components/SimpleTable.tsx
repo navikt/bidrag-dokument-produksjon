@@ -16,7 +16,7 @@ export function SimpleTable({ data }: SimpleTableProps) {
   return (
     <table className="table" style={{ breakBefore: "recto" }}>
       <tr>
-        <th style={{ width: "180px" }}>Fra og med - Til og med</th>
+        <th style={{ width: "190px" }}>Fra og med - Til og med</th>
         <th style={{ width: "180px" }}>Status</th>
         <th>Kilde</th>
       </tr>

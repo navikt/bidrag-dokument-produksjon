@@ -17,9 +17,15 @@ import { erRolle, formatterBeløp } from "~/utils/visningsnavn";
 import { groupBy } from "~/utils/array-utils";
 import KildeIcon from "~/components/KildeIcon";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
-import Inntektspost from "~/components/Inntekspost";
 import elementIds from "~/utils/elementIds";
-import tekster from "~/utils/tekster";
+import tekster from "~/tekster";
+import {
+  CommonTable,
+  TableColumn,
+  TableHeader,
+} from "~/components/CommonTable";
+import { getInntektTableHeaders } from "~/constants/tableHeaders";
+import Inntektsposter from "~/routes/notat.forskudd/Inntektsposter";
 
 export default function VedleggInntekter({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
@@ -115,7 +121,7 @@ function OffentligeInntekter({
   );
   if (offentligeInntekter.length == 0) return null;
   return (
-    <div>
+    <div className={"subsection"}>
       <h4>{tittel}</h4>
       {medBarn ? (
         <InntektPerBarnTable data={offentligeInntekter} />
@@ -144,89 +150,79 @@ function InntektTable({
   medInntektsposter,
 }: InntektTableProps) {
   return (
-    <div className={"background_section"}>
-      <table className="table ">
-        <tr>
-          <th>Fra og med - Til og med</th>
-          {inkluderBeskrivelse && <th>Beskrivelse</th>}
-          <th>Beløp</th>
-        </tr>
-        {data
-          .sort((a, b) =>
-            !sorterEtterOpprinneligPeriode ||
-            a.opprinneligPeriode == null ||
-            b.opprinneligPeriode == null
-              ? 0
-              : a.opprinneligPeriode.fom.localeCompare(
-                  b.opprinneligPeriode.fom,
-                ),
-          )
-          .map((d) => {
-            const periode = d.opprinneligPeriode;
-            return (
-              <>
-                <tr>
-                  <td style={{ width: "300px" }}>
-                    {formatPeriode(periode!.fom, periode!.til)}
-                  </td>
-                  {inkluderBeskrivelse && (
-                    <td style={{ width: "250px" }}>{d.visningsnavn}</td>
-                  )}
-                  <td>{formatterBeløp(d.beløp)}</td>
-                </tr>
-                {medInntektsposter && d.inntektsposter.length > 0 && (
-                  <tr>
-                    <td colSpan={3}>
-                      <div
-                        style={{
-                          width: "700px",
-                          borderBottom: "1px solid black",
-                        }}
-                      >
-                        <Inntektspost
-                          label={"Periode"}
-                          value={formatPeriode(periode!.fom, periode!.til)}
-                        />
-                        {d.inntektsposter.map((d, i) => (
-                          <Inntektspost
-                            key={d.kode + i.toString()}
-                            label={d.visningsnavn!}
-                            value={formatterBeløp(d.beløp)}
-                          />
-                        ))}
-                      </div>
-                    </td>
-                  </tr>
-                )}
-              </>
-            );
-          })}
-      </table>
+    <div className={"table_container"}>
+      <CommonTable
+        data={{
+          headers: [
+            { name: tekster.tabell.felles.periode, width: "250px" },
+            inkluderBeskrivelse && {
+              name: tekster.tabell.felles.beskrivelse,
+              width: "250px",
+            },
+            { name: tekster.tabell.inntekt.beløp },
+          ].filter((d) => typeof d != "boolean") as TableHeader[],
+          rows: data
+            .sort((a, b) =>
+              !sorterEtterOpprinneligPeriode ||
+              a.opprinneligPeriode == null ||
+              b.opprinneligPeriode == null
+                ? 0
+                : a.opprinneligPeriode.fom.localeCompare(
+                    b.opprinneligPeriode.fom,
+                  ),
+            )
+            .map((d) => {
+              const periode = d.opprinneligPeriode;
+              return {
+                columns: [
+                  { content: formatPeriode(periode!.fom, periode!.til) },
+                  inkluderBeskrivelse && { content: d.visningsnavn },
+                  { content: formatterBeløp(d.beløp) },
+                ].filter((d) => typeof d != "boolean") as TableColumn[],
+                expandableContent:
+                  medInntektsposter && d.inntektsposter.length > 0
+                    ? [
+                        {
+                          content: (
+                            <Inntektsposter data={d} periode={periode} />
+                          ),
+                        },
+                      ]
+                    : undefined,
+              };
+            }),
+        }}
+      />
     </div>
   );
 }
 
 function ArbeidsforholdTable({ data }: { data: Arbeidsforhold[] }) {
   if (data.length === 0) return null;
+
   return (
-    <table className="table" style={{ width: "500px" }}>
-      <tr>
-        <th style={{ width: "100px" }}>Periode</th>
-        <th style={{ width: "100px" }}>Arbeidsgiver</th>
-        <th style={{ width: "50px" }}>Stilling</th>
-        <th style={{ width: "100px" }}>Lønnsendring</th>
-      </tr>
-      {data.map((d, i) => (
-        <tr key={"arbeidsforhold" + d.periode.fom + i.toString()}>
-          <td>{formatPeriode(d.periode.fom, d.periode.til)}</td>
-          <td>{d.arbeidsgiver}</td>
-          <td>
-            {d.stillingProsent != undefined ? d.stillingProsent + "%" : "0%"}
-          </td>
-          <td>{dateToDDMMYYYY(d.lønnsendringDato)}</td>
-        </tr>
-      ))}
-    </table>
+    <CommonTable
+      width={"500px"}
+      data={{
+        headers: [
+          { name: tekster.tabell.felles.periode, width: "100px" },
+          { name: tekster.tabell.arbeidsforhold.arbeidsgiver, width: "100px" },
+          { name: tekster.tabell.arbeidsforhold.stilling, width: "50px" },
+          { name: tekster.tabell.arbeidsforhold.lønnsendring, width: "100px" },
+        ],
+        rows: data.map((d) => ({
+          columns: [
+            { content: formatPeriode(d.periode.fom, d.periode.til) },
+            { content: d.arbeidsgiver },
+            {
+              content:
+                d.stillingProsent != undefined ? d.stillingProsent + "%" : "0%",
+            },
+            { content: dateToDDMMYYYY(d.lønnsendringDato) },
+          ],
+        })),
+      }}
+    />
   );
 }
 function InntektPerBarnTable({ data }: InntektTableProps) {
@@ -238,62 +234,40 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
         const erBarnetillegg =
           value[0].type == Inntektsrapportering.BARNETILLEGG;
         return (
-          <div key={key + i.toString()} className="background_section">
+          <div key={key + i.toString()} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            <table className="table" style={{ width: "580px" }}>
-              <colgroup>
-                <col style={{ width: "200px" }} />
-                <col style={{ width: "70px" }} />
-                {erBarnetillegg ? (
-                  <>
-                    <col style={{ width: "150px" }} />
-                    <col style={{ width: "100px" }} />
-                    <col style={{ width: "120px" }} />
-                  </>
-                ) : (
-                  <col style={{ width: "100px" }} />
-                )}
-              </colgroup>
-              <tr>
-                <th>Fra og med - Til og med</th>
-                <th>Kilde</th>
-                {erBarnetillegg ? (
-                  <>
-                    <th>Type</th>
-                    <th>Beløp (mnd)</th>
-                    <th>Beløp (12mnd)</th>
-                  </>
-                ) : (
-                  <th>Beløp</th>
-                )}
-              </tr>
-              {data
-                .filter((d) => d.kilde == Kilde.OFFENTLIG)
-                .map((d) => {
-                  const periode = d.periode ?? d.opprinneligPeriode;
-                  const visningsnavnInntektstype =
-                    d.inntektsposter.length > 0
-                      ? d.inntektsposter[0].visningsnavn
-                      : "";
-                  return (
-                    <tr key={d.type + d.opprinneligPeriode?.fom}>
-                      <td>{formatPeriode(periode!.fom, periode!.til)}</td>
-                      <td>
-                        <KildeIcon kilde={d.kilde} />
-                      </td>
-                      {erBarnetillegg ? (
-                        <>
-                          <td>{visningsnavnInntektstype}</td>
-                          <td>{formatterBeløp(Math.round(d.beløp / 12))}</td>
-                          <td>{formatterBeløp(d.beløp)}</td>
-                        </>
-                      ) : (
-                        <td>{formatterBeløp(d.beløp)}</td>
-                      )}
-                    </tr>
-                  );
-                })}
-            </table>
+            <CommonTable
+              width={"580px"}
+              data={{
+                headers: getInntektTableHeaders(erBarnetillegg),
+                rows: data
+                  .filter((d) => d.kilde == Kilde.OFFENTLIG)
+                  .map((d) => {
+                    const periode = d.periode ?? d.opprinneligPeriode;
+                    const visningsnavnInntektstype =
+                      d.inntektsposter.length > 0
+                        ? d.inntektsposter[0].visningsnavn
+                        : "";
+                    return {
+                      columns: [
+                        { content: formatPeriode(periode!.fom, periode!.til) },
+                        { content: <KildeIcon kilde={d.kilde} /> },
+                        erBarnetillegg
+                          ? [
+                              { content: visningsnavnInntektstype },
+                              {
+                                content: formatterBeløp(
+                                  Math.round(d.beløp / 12),
+                                ),
+                              },
+                              { content: formatterBeløp(d.beløp) },
+                            ]
+                          : { content: formatterBeløp(d.beløp) },
+                      ].flatMap((d) => d),
+                    };
+                  }),
+              }}
+            />
           </div>
         );
       })}

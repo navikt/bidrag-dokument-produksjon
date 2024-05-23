@@ -29,6 +29,7 @@ export function meta() {
 interface INotatContext {
   erAvslag: boolean;
   erOpphør: boolean;
+  data: NotatDto;
 }
 
 export const NotatContext = createContext<INotatContext | null>(null);
@@ -44,7 +45,10 @@ export default function NotatForskudd() {
   return (
     <div id="forskudd_notat">
       <Header title={"Forskudd, Saksbehandlingsnotat"} />
-      <div className="header custom-footer-page-number">
+      <div
+        className="header custom-footer-page-number"
+        data-content={data.saksnummer}
+      >
         {/*<span style={{ textAlign: "left", display: "block" }}>*/}
         {/*  Forskudd, Saksbehandlingsnotat. Saksnummer {data.saksnummer}*/}
         {/*</span>*/}
@@ -52,6 +56,7 @@ export default function NotatForskudd() {
       <div className="footer custom-footer-page-number" />
       <NotatContext.Provider
         value={{
+          data: data,
           erAvslag: data.virkningstidspunkt.avslag != null,
           erOpphør: data.virkningstidspunkt.vedtakstype == Vedtakstype.OPPHOR,
         }}

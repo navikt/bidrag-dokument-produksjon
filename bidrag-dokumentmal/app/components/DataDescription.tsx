@@ -4,7 +4,7 @@ type DatadisplayProps = {
   label: string;
   value: ReactElement | string | undefined | number;
 };
-export default function Datadisplay({ label, value }: DatadisplayProps) {
+export default function DataDescription({ label, value }: DatadisplayProps) {
   return (
     <dl className="datarow">
       <dt>{label}</dt>

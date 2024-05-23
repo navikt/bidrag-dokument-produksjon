@@ -1,5 +1,5 @@
 import { NotatForskuddProps, useNotat } from "~/routes/notat.forskudd/route";
-import Datadisplay from "~/components/Datadisplay";
+import DataDescription from "~/components/DataDescription";
 import { BoforholdBarn } from "~/types/Api";
 import Person from "~/components/Person";
 import { SimpleTable } from "~/components/SimpleTable";
@@ -11,7 +11,7 @@ export default function Boforhold({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
   if (erAvslag) return null;
   return (
-    <div className="soknad_parter">
+    <div className="soknad_parter section">
       <div className={"elements_inline"}>
         <h2>Boforhold</h2>
         <a href={`#${elementIds.vedleggBoforhold}`}>
@@ -31,8 +31,8 @@ export default function Boforhold({ data }: NotatForskuddProps) {
 
 function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
   return (
-    <div style={{ marginBottom: "24px" }}>
-      <Datadisplay
+    <div>
+      <DataDescription
         label={data.medIBehandling ? "Søknadsbarn" : "Eget barn i husstanden"}
         value={
           <Person

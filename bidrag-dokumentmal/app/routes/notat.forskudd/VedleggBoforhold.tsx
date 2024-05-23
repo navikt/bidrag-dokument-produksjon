@@ -5,10 +5,11 @@ import {
   OpplysningerFraFolkeregisteretSivilstandskodePDL,
 } from "~/types/Api";
 import { groupBy } from "~/utils/array-utils";
-import Datadisplay from "~/components/Datadisplay";
+import DataDescription from "~/components/DataDescription";
 import Person from "~/components/Person";
 import elementIds from "~/utils/elementIds";
-import tekster from "~/utils/tekster";
+import tekster from "~/tekster";
+import { CommonTable } from "~/components/CommonTable";
 
 export default function VedleggBoforhold({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
@@ -27,8 +28,8 @@ export default function VedleggBoforhold({ data }: NotatForskuddProps) {
         const gjelderBarn = value[0].gjelder!;
         const barn = value[0];
         return (
-          <div key={key} className="background_section">
-            <Datadisplay
+          <div key={key} className="table_container">
+            <DataDescription
               label={
                 barn.medIBehandling ? "Søknadsbarn" : "Eget barn i husstanden"
               }
@@ -52,7 +53,7 @@ export default function VedleggBoforhold({ data }: NotatForskuddProps) {
       })}
       <div>
         <h3>Sivilstand</h3>
-        <div className="background_section">
+        <div className="table_container">
           <BoforholdTable
             sivilstand
             data={data.boforhold.sivilstand.opplysningerFraFolkeregisteret}
@@ -73,20 +74,26 @@ export function BoforholdTable({
     | OpplysningerFraFolkeregisteretSivilstandskodePDL[];
 }) {
   if (data.length === 0) return null;
+
   return (
-    <table className="table">
-      <tr>
-        <th style={{ width: "150px" }}>
-          {sivilstand ? "Fra dato" : "Periode"}
-        </th>
-        <th style={{ width: "100px" }}>Status</th>
-      </tr>
-      {data.map((d, i) => (
-        <tr key={d.statusVisningsnavn + i.toString()}>
-          <td>{formatPeriode(d.periode.fom, d.periode.til)}</td>
-          <td>{d.statusVisningsnavn}</td>
-        </tr>
-      ))}
-    </table>
+    <CommonTable
+      data={{
+        headers: [
+          {
+            name: sivilstand
+              ? tekster.tabell.felles.fraDato
+              : tekster.tabell.felles.periode,
+            width: "190px",
+          },
+          { name: tekster.tabell.felles.status },
+        ],
+        rows: data.map((d) => ({
+          columns: [
+            { content: formatPeriode(d.periode.fom, d.periode.til) },
+            { content: d.statusVisningsnavn },
+          ],
+        })),
+      }}
+    />
   );
 }

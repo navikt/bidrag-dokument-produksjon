@@ -1,5 +1,5 @@
 import { capitalizeFirstLetter } from "~/utils/visningsnavn";
-import Datadisplay from "~/components/Datadisplay";
+import DataDescription from "~/components/DataDescription";
 import { NotatDto, SoktAvType } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import Notat from "~/components/Notat";
@@ -25,37 +25,43 @@ export default function Virkningstidspunkt({ data }: { data: NotatDto }) {
     <div className={"virkningstidspunkt"}>
       <h2>Virkningstidspunkt</h2>
       <div>
-        <Datadisplay
-          label={"Søknadstype"}
-          value={capitalizeFirstLetter(virkningstidspunkt.søknadstype)}
-        />
-        <Datadisplay
-          label={"Søkt fra"}
-          value={søktAvTilVisningsnavn(virkningstidspunkt.søktAv)}
-        />
-        <Datadisplay
-          label={"Mottatt dato"}
-          value={dateToDDMMYYYY(virkningstidspunkt.mottattDato as string)}
-        />
-        <Datadisplay
-          label={"Søkt fra dato"}
-          value={dateToDDMMYYYY(virkningstidspunkt.søktFraDato as string)}
-        />
-        {virkningstidspunkt.avslag ? (
-          <Datadisplay
-            label={"Avslag"}
-            value={virkningstidspunkt.avslagVisningsnavn}
-          />
-        ) : (
-          <Datadisplay
-            label={"Årsak"}
-            value={virkningstidspunkt.årsakVisningsnavn}
-          />
-        )}
-        <Datadisplay
-          label={"Virkningstidspunkt"}
-          value={dateToDDMMYYYY(virkningstidspunkt.virkningstidspunkt)}
-        />
+        <div style={{ width: "800px", height: "80px", marginBottom: 0 }}>
+          <div className="two_column_view">
+            <DataDescription
+              label={"Søknadstype"}
+              value={capitalizeFirstLetter(virkningstidspunkt.søknadstype)}
+            />
+            <DataDescription
+              label={"Søkt fra"}
+              value={søktAvTilVisningsnavn(virkningstidspunkt.søktAv)}
+            />
+            {virkningstidspunkt.avslag ? (
+              <DataDescription
+                label={"Avslag"}
+                value={virkningstidspunkt.avslagVisningsnavn}
+              />
+            ) : (
+              <DataDescription
+                label={"Årsak"}
+                value={virkningstidspunkt.årsakVisningsnavn}
+              />
+            )}
+          </div>
+          <div className="two_column_view">
+            <DataDescription
+              label={"Mottatt dato"}
+              value={dateToDDMMYYYY(virkningstidspunkt.mottattDato as string)}
+            />
+            <DataDescription
+              label={"Søkt fra dato"}
+              value={dateToDDMMYYYY(virkningstidspunkt.søktFraDato as string)}
+            />
+            <DataDescription
+              label={"Virkningstidspunkt"}
+              value={dateToDDMMYYYY(virkningstidspunkt.virkningstidspunkt)}
+            />
+          </div>
+        </div>
         <Notat data={virkningstidspunkt.notat} />
       </div>
     </div>
