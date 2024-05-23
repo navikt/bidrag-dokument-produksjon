@@ -154,10 +154,10 @@ function InntektTable({
       <CommonTable
         data={{
           headers: [
-            { name: tekster.tabell.felles.periode, width: "250px" },
+            { name: tekster.tabell.felles.fraTilOgMed, width: "200px" },
             inkluderBeskrivelse && {
               name: tekster.tabell.felles.beskrivelse,
-              width: "250px",
+              width: "200px",
             },
             { name: tekster.tabell.inntekt.beløp },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
