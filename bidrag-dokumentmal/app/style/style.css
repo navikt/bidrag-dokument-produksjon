@@ -66,7 +66,7 @@ dt, dd {
 
 .elements_inline :first-child {
     display: inline;
-    margin-right: 5px;
+    margin-right: 16px;
 
 }
 .elements_inline :last-child {
