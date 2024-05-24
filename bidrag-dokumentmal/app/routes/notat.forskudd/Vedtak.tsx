@@ -6,13 +6,17 @@ import {
 } from "~/types/Api";
 import { dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
-import Datadisplay from "~/components/Datadisplay";
+import DataDescription from "~/components/DataDescription";
 import { formatterBeløp } from "~/utils/visningsnavn";
+import { CommonTable, TableData } from "~/components/CommonTable";
 
 export default function Vedtak({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
   return (
-    <div style={{ pageBreakBefore: erAvslag ? "auto" : "always" }}>
+    <div
+      className={"section"}
+      style={{ pageBreakBefore: erAvslag ? "auto" : "always" }}
+    >
       <h2>Vedtak</h2>
       {erAvslag ? (
         <VedtakTableAvslag data={data.vedtak.resultat} />
@@ -29,8 +33,11 @@ function VedtakFattetDetaljer({ data }: { data: VedtakDto }) {
   return (
     <div>
       <h4 style={{ marginBottom: "0" }}>Ferdigstilt</h4>
-      <Datadisplay label={"Saksbehandler"} value={data.fattetAvSaksbehandler} />
-      <Datadisplay
+      <DataDescription
+        label={"Saksbehandler"}
+        value={data.fattetAvSaksbehandler}
+      />
+      <DataDescription
         label={"Dato"}
         value={dateToDDMMYYYY(data.fattetTidspunkt)}
       />
@@ -50,25 +57,24 @@ function VedtakTableAvslag({
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
+        const tableData: TableData = {
+          headers: [
+            { name: "Periode", width: "170px" },
+            { name: "Resultat", width: "150px" },
+            { name: "Årsak", width: "150px" },
+          ],
+          rows: perioder.map((d) => ({
+            columns: [
+              { content: formatPeriode(d.periode!.fom, d.periode!.til) },
+              { content: erOpphør ? "Opphør" : "Avslag" },
+              { content: d.resultatKodeVisningsnavn },
+            ],
+          })),
+        };
         return (
-          <div key={key} className="background_section">
+          <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            <table className="table" style={{ width: "500px" }}>
-              <tr>
-                <th style={{ width: "170px" }}>Periode</th>
-                <th style={{ width: "150px" }}>Resultat</th>
-                <th style={{ width: "150px" }}>Årsak</th>
-              </tr>
-              {perioder.map((d) => {
-                return (
-                  <tr key={d.periode.fom}>
-                    <td>{formatPeriode(d.periode!.fom, d.periode!.til)}</td>
-                    <td>{erOpphør ? "Opphør" : "Avslag"}</td>
-                    <td>{d.resultatKodeVisningsnavn}</td>
-                  </tr>
-                );
-              })}
-            </table>
+            <CommonTable width={"500px"} data={tableData} />
             <div
               className="horizontal-line"
               style={{
@@ -90,37 +96,34 @@ function VedtakTable({ data }: { data: NotatResultatBeregningBarnDto[] }) {
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
+        const tableData: TableData = {
+          headers: [
+            { name: "Periode", width: "170px" },
+            { name: "Inntekt" },
+            { name: "Sivilstand", width: "140px" },
+            { name: "Antall barn i husstand", width: "80px" },
+            { name: "Forskudd", width: "80px" },
+            { name: "Resultat", width: "150px" },
+          ],
+          rows: perioder.map((d) => ({
+            columns: [
+              { content: formatPeriode(d.periode!.fom, d.periode!.til) },
+              { content: formatterBeløp(d.inntekt) },
+              { content: d.sivilstandVisningsnavn },
+              { content: d.antallBarnIHusstanden },
+              { content: formatterBeløp(d.beløp) },
+              { content: d.resultatKodeVisningsnavn },
+            ],
+          })),
+        };
         return (
-          <div key={key} className="background_section">
+          <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            <table className="table" style={{ width: "710px" }}>
-              <tr>
-                <th style={{ width: "170px" }}>Periode</th>
-                <th>Inntekt</th>
-                <th style={{ width: "140px" }}>Sivilstand</th>
-                <th style={{ width: "80px" }}>Antall barn i husstand</th>
-                <th style={{ width: "80px" }}>Forskudd</th>
-                <th style={{ width: "150px" }}>Resultat</th>
-              </tr>
-              {perioder.map((d) => {
-                return (
-                  <tr key={d.periode.fom}>
-                    <td>{formatPeriode(d.periode!.fom, d.periode!.til)}</td>
-                    <td>{formatterBeløp(d.inntekt)}</td>
-                    <td>{d.sivilstandVisningsnavn}</td>
-                    <td>{d.antallBarnIHusstanden}</td>
-                    <td>{formatterBeløp(d.beløp)}</td>
-                    <td>{d.resultatKodeVisningsnavn}</td>
-                  </tr>
-                );
-              })}
-            </table>
+            <CommonTable data={tableData} width={"710px"} />
             <div
               className="horizontal-line"
               style={{
                 pageBreakAfter: "avoid",
-                marginTop: "8px",
-                marginBottom: "24px",
               }}
             ></div>
           </div>

@@ -11,24 +11,35 @@ import Inntekter from "~/routes/notat.forskudd/Inntekter";
 import Vedtak from "~/routes/notat.forskudd/Vedtak";
 import VedleggBoforhold from "~/routes/notat.forskudd/VedleggBoforhold";
 import VedleggInntekter from "~/routes/notat.forskudd/VedleggInntekter";
+import tekster from "~/tekster";
 
+type NotatRequest = {
+  renderForPdf: boolean;
+  data: NotatDto;
+};
 export async function action({ request }: ActionFunctionArgs) {
   const body = await request.json();
-  return json(body);
+  return json({
+    data: body,
+    renderForPdf:
+      request.headers.get("renderforpdf") == "true" ||
+      request.headers.get("renderforpdf") == null,
+  });
 }
 
 export function meta() {
   return [
-    { title: "Forskudd, Saksbehandlingsnotat" },
-    { name: "description", content: "Forskudd, Saksbehandlingsnotat" },
+    { title: tekster.titler.forskudd },
+    { name: "description", content: tekster.titler.forskudd },
     { property: "author", content: "bidrag-dokument-produksjon" },
-    { property: "subject", content: "Forskudd, Saksbehandlingsnotat" },
+    { property: "subject", content: tekster.titler.forskudd },
   ];
 }
 
 interface INotatContext {
   erAvslag: boolean;
   erOpphør: boolean;
+  data: NotatDto;
 }
 
 export const NotatContext = createContext<INotatContext | null>(null);
@@ -37,21 +48,37 @@ export function useNotat(): INotatContext {
 }
 export type NotatForskuddProps = { data: NotatDto };
 export default function NotatForskudd() {
-  const data = useActionData<NotatDto>();
-  if (data === undefined) {
+  const response = useActionData<NotatRequest>();
+  if (response === undefined) {
     return <div>Oops</div>;
   }
+
+  const renderTopBottomTextContent = () => (
+    <>
+      <div
+        className={"custom-top_bottom_content"}
+        data-content={`${tekster.titler.forskudd}. Saksnummer ${data.saksnummer}`}
+      ></div>
+      <div className={"custom-page-number"}></div>
+    </>
+  );
+  const data = response.data;
   return (
     <div id="forskudd_notat">
-      <Header title={"Forskudd, Saksbehandlingsnotat"} />
-      <div className="header custom-footer-page-number">
-        {/*<span style={{ textAlign: "left", display: "block" }}>*/}
-        {/*  Forskudd, Saksbehandlingsnotat. Saksnummer {data.saksnummer}*/}
-        {/*</span>*/}
-      </div>
-      <div className="footer custom-footer-page-number" />
+      <Header title={tekster.titler.forskudd} />
+      {response.renderForPdf && (
+        <div className="header top_bottom_text">
+          {renderTopBottomTextContent()}
+        </div>
+      )}
+      {response.renderForPdf && (
+        <div className="footer top_bottom_text">
+          {renderTopBottomTextContent()}
+        </div>
+      )}
       <NotatContext.Provider
         value={{
+          data: data,
           erAvslag: data.virkningstidspunkt.avslag != null,
           erOpphør: data.virkningstidspunkt.vedtakstype == Vedtakstype.OPPHOR,
         }}

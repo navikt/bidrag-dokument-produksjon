@@ -71,6 +71,7 @@ module.exports = {
             "rules": {
                 "no-unused-vars": "off", // or "@typescript-eslint/no-unused-vars": "off",
                 "unused-imports/no-unused-imports": "error",
+                "@typescript-eslint/no-non-null-asserted-optional-chain": "off",
                 "unused-imports/no-unused-vars": [
                     "warn",
                     {

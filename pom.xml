@@ -6,7 +6,7 @@
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>3.2.4</version>
+        <version>3.2.5</version>
         <relativePath/> <!-- lookup parent from repository -->
     </parent>
     <groupId>no.nav</groupId>
@@ -28,11 +28,11 @@
         <open.html.to.pdf.version>1.0.10</open.html.to.pdf.version>
         <prometheus.version>0.16.0</prometheus.version>
         <junit.jupiter.version>5.10.2</junit.jupiter.version>
-        <verapdf.version>1.24.1</verapdf.version>
+        <verapdf.version>1.24.2</verapdf.version>
         <ktfmt.version>0.44</ktfmt.version>
         <bidrag.felles.version>2024.05.21.133504
         </bidrag.felles.version>
-        <kotlin.logger.version>6.0.4</kotlin.logger.version>
+        <kotlin.logger.version>6.0.9</kotlin.logger.version>
         <snakeyaml.version>2.2</snakeyaml.version>
         <swagger.version>2.2.21</swagger.version>
     </properties>

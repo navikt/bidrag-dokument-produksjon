@@ -1,21 +1,22 @@
 import { NotatForskuddProps, useNotat } from "~/routes/notat.forskudd/route";
-import Datadisplay from "~/components/Datadisplay";
+import DataDescription from "~/components/DataDescription";
 import { BoforholdBarn } from "~/types/Api";
 import Person from "~/components/Person";
 import { SimpleTable } from "~/components/SimpleTable";
 import Sivilstand from "~/routes/notat.forskudd/Sivilstand";
 import Notat from "~/components/Notat";
 import elementIds from "~/utils/elementIds";
+import tekster from "~/tekster";
 
 export default function Boforhold({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
   if (erAvslag) return null;
   return (
-    <div className="soknad_parter">
+    <div className="soknad_parter section">
       <div className={"elements_inline"}>
-        <h2>Boforhold</h2>
+        <h2>{tekster.titler.boforhold.tittel}</h2>
         <a href={`#${elementIds.vedleggBoforhold}`}>
-          se vedlegg nr. 1 for opplysninger fra offentlige registre
+          {tekster.vedleggLenke.replace("{}", "1")}
         </a>
       </div>
       <div>
@@ -31,9 +32,13 @@ export default function Boforhold({ data }: NotatForskuddProps) {
 
 function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
   return (
-    <div style={{ marginBottom: "24px" }}>
-      <Datadisplay
-        label={data.medIBehandling ? "Søknadsbarn" : "Eget barn i husstanden"}
+    <div>
+      <DataDescription
+        label={
+          data.medIBehandling
+            ? tekster.titler.boforhold.søknadsbarn
+            : tekster.titler.boforhold.egetBarnIHusstanden
+        }
         value={
           <Person
             fødselsdato={data.gjelder.fødselsdato!}

@@ -1,5 +1,5 @@
 import { Notat as NotatData } from "~/types/Api";
-import Datadisplay from "~/components/Datadisplay";
+import DataDescription from "~/components/DataDescription";
 import xss from "xss";
 
 type NotatProps = {
@@ -10,11 +10,10 @@ export default function Notat({ data }: NotatProps) {
     <div
       style={{
         maxWidth: "44rem",
-        overflow: "none",
-        marginTop: "14px",
+        marginTop: "16px",
       }}
     >
-      <Datadisplay
+      <DataDescription
         label={"Begrunnelse"}
         value={<PurifiedHtml text={data.intern} />}
       />

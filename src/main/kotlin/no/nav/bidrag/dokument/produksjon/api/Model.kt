@@ -45,7 +45,7 @@ fun generateHTMLResponse2(
         )
     }
     val jsonPayload = payload ?: hotTemplateData(category, template)
-    return bidragDokumentmalConsumer.hentDokumentmal(category, template, jsonPayload)?.let {
+    return bidragDokumentmalConsumer.hentDokumentmal(category, template, jsonPayload, false)?.let {
         ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
     }
         ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
