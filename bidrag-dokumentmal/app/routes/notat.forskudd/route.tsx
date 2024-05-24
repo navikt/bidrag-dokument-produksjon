@@ -72,7 +72,9 @@ export default function NotatForskudd() {
         </div>
       )}
       {response.renderForPdf && (
-        <div className="footer">{renderTopBottomTextContent()}</div>
+        <div className="footer top_bottom_text">
+          {renderTopBottomTextContent()}
+        </div>
       )}
       <NotatContext.Provider
         value={{
