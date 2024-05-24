@@ -221,7 +221,7 @@ p {
 }
 div.top_bottom_text div {
     float: left;
-    width: 50%;
+    width: 49%;
 }
 div.footer {
     display: block; text-align: left;
@@ -232,12 +232,10 @@ div.header {
     position: running(header);
 }
 .custom-top_bottom_content:after {
-    text-align: left;
     font-size: 12px;
     content: attr(data-content);
 }
 .custom-page-number:after {
-    text-align: center;
     content: counter(page) ' av ' counter(pages);
 }
 
