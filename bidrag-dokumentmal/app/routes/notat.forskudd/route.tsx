@@ -11,6 +11,7 @@ import Inntekter from "~/routes/notat.forskudd/Inntekter";
 import Vedtak from "~/routes/notat.forskudd/Vedtak";
 import VedleggBoforhold from "~/routes/notat.forskudd/VedleggBoforhold";
 import VedleggInntekter from "~/routes/notat.forskudd/VedleggInntekter";
+import tekster from "~/tekster";
 
 type NotatRequest = {
   renderForPdf: boolean;
@@ -28,10 +29,10 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export function meta() {
   return [
-    { title: "Forskudd, saksbehandlingsnotat" },
-    { name: "description", content: "Forskudd, Saksbehandlingsnotat" },
+    { title: tekster.titler.forskudd },
+    { name: "description", content: tekster.titler.forskudd },
     { property: "author", content: "bidrag-dokument-produksjon" },
-    { property: "subject", content: "Forskudd, Saksbehandlingsnotat" },
+    { property: "subject", content: tekster.titler.forskudd },
   ];
 }
 
@@ -52,18 +53,26 @@ export default function NotatForskudd() {
     return <div>Oops</div>;
   }
 
+  const renderTopBottomTextContent = () => (
+    <>
+      <div
+        className={"custom-top_bottom_content"}
+        data-content={`${tekster.titler.forskudd}. Saksnummer ${data.saksnummer}`}
+      ></div>
+      <div className={"custom-page-number"}></div>
+    </>
+  );
   const data = response.data;
   return (
     <div id="forskudd_notat">
-      <Header title={"Forskudd, saksbehandlingsnotat"} />
+      <Header title={tekster.titler.forskudd} />
       {response.renderForPdf && (
-        <div
-          className="header custom-footer-page-number"
-          data-content={data.saksnummer}
-        />
+        <div className="header top_bottom_text">
+          {renderTopBottomTextContent()}
+        </div>
       )}
       {response.renderForPdf && (
-        <div className="footer custom-footer-page-number" />
+        <div className="footer">{renderTopBottomTextContent()}</div>
       )}
       <NotatContext.Provider
         value={{

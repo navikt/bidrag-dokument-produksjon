@@ -2,6 +2,7 @@ export default {
   fraOffentligeRegistre: "Hentet fra offentlige registre",
   vedleggLenke: "se vedlegg nr. {} for opplysninger fra offentlige registre",
   titler: {
+    forskudd: "Forskudd, saksbehandlingsnotat",
     boforhold: {
       tittel: "Boforhold",
       søknadsbarn: "Søknadsbarn",

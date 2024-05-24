@@ -4,7 +4,8 @@
     padding-bottom: 1cm;
     padding-top: 0cm;
 
-    @top-center { content: element(footer) }
+    @top-center { content: element(header) }
+    @top-center { content: element(header) }
     @bottom-center { content: element(footer) }
     /*@top-left { content: element(header) }*/
 }
@@ -218,16 +219,25 @@ p {
     counter-increment: page;
     content: counter(page);
 }
+div.top_bottom_text div {
+    float: left;
+    width: 50%;
+}
 div.footer {
-    display: block; text-align: center;
+    display: block; text-align: left;
     position: running(footer);
 }
 div.header {
-    display: block; text-align: center;
-    position: running(footer);
+    display: block; text-align: left;
+    position: running(header);
 }
-
-.custom-footer-page-number:after {
+.custom-top_bottom_content:after {
+    text-align: left;
+    font-size: 12px;
+    content: attr(data-content);
+}
+.custom-page-number:after {
+    text-align: center;
     content: counter(page) ' av ' counter(pages);
 }
 
