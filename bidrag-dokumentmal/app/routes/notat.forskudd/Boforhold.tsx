@@ -6,6 +6,7 @@ import { SimpleTable } from "~/components/SimpleTable";
 import Sivilstand from "~/routes/notat.forskudd/Sivilstand";
 import Notat from "~/components/Notat";
 import elementIds from "~/utils/elementIds";
+import tekster from "~/tekster";
 
 export default function Boforhold({ data }: NotatForskuddProps) {
   const { erAvslag } = useNotat();
@@ -13,9 +14,9 @@ export default function Boforhold({ data }: NotatForskuddProps) {
   return (
     <div className="soknad_parter section">
       <div className={"elements_inline"}>
-        <h2>Boforhold</h2>
+        <h2>{tekster.titler.boforhold.tittel}</h2>
         <a href={`#${elementIds.vedleggBoforhold}`}>
-          se vedlegg nr. 1 for opplysninger fra offentlige registre
+          {tekster.vedleggLenke.replace("{}", "1")}
         </a>
       </div>
       <div>
@@ -33,7 +34,11 @@ function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
   return (
     <div>
       <DataDescription
-        label={data.medIBehandling ? "Søknadsbarn" : "Eget barn i husstanden"}
+        label={
+          data.medIBehandling
+            ? tekster.titler.boforhold.søknadsbarn
+            : tekster.titler.boforhold.egetBarnIHusstanden
+        }
         value={
           <Person
             fødselsdato={data.gjelder.fødselsdato!}

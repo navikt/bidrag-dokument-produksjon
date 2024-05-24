@@ -12,14 +12,23 @@ import Vedtak from "~/routes/notat.forskudd/Vedtak";
 import VedleggBoforhold from "~/routes/notat.forskudd/VedleggBoforhold";
 import VedleggInntekter from "~/routes/notat.forskudd/VedleggInntekter";
 
+type NotatRequest = {
+  renderForPdf: boolean;
+  data: NotatDto;
+};
 export async function action({ request }: ActionFunctionArgs) {
   const body = await request.json();
-  return json(body);
+  return json({
+    data: body,
+    renderForPdf:
+      request.headers.get("renderforpdf") == "true" ||
+      request.headers.get("renderforpdf") == null,
+  });
 }
 
 export function meta() {
   return [
-    { title: "Forskudd, Saksbehandlingsnotat" },
+    { title: "Forskudd, saksbehandlingsnotat" },
     { name: "description", content: "Forskudd, Saksbehandlingsnotat" },
     { property: "author", content: "bidrag-dokument-produksjon" },
     { property: "subject", content: "Forskudd, Saksbehandlingsnotat" },
@@ -38,22 +47,24 @@ export function useNotat(): INotatContext {
 }
 export type NotatForskuddProps = { data: NotatDto };
 export default function NotatForskudd() {
-  const data = useActionData<NotatDto>();
-  if (data === undefined) {
+  const response = useActionData<NotatRequest>();
+  if (response === undefined) {
     return <div>Oops</div>;
   }
+
+  const data = response.data;
   return (
     <div id="forskudd_notat">
-      <Header title={"Forskudd, Saksbehandlingsnotat"} />
-      <div
-        className="header custom-footer-page-number"
-        data-content={data.saksnummer}
-      >
-        {/*<span style={{ textAlign: "left", display: "block" }}>*/}
-        {/*  Forskudd, Saksbehandlingsnotat. Saksnummer {data.saksnummer}*/}
-        {/*</span>*/}
-      </div>
-      <div className="footer custom-footer-page-number" />
+      <Header title={"Forskudd, saksbehandlingsnotat"} />
+      {response.renderForPdf && (
+        <div
+          className="header custom-footer-page-number"
+          data-content={data.saksnummer}
+        />
+      )}
+      {response.renderForPdf && (
+        <div className="footer custom-footer-page-number" />
+      )}
       <NotatContext.Provider
         value={{
           data: data,

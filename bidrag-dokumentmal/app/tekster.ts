@@ -1,6 +1,16 @@
 export default {
   fraOffentligeRegistre: "Hentet fra offentlige registre",
-  titler: {},
+  vedleggLenke: "se vedlegg nr. {} for opplysninger fra offentlige registre",
+  titler: {
+    boforhold: {
+      tittel: "Boforhold",
+      søknadsbarn: "Søknadsbarn",
+      egetBarnIHusstanden: "Eget barn i husstanden",
+    },
+    sivilstand: {
+      tittel: "Sivilstand",
+    },
+  },
   tabell: {
     felles: {
       periode: "Periode",

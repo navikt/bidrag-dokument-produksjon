@@ -18,12 +18,14 @@ class BidragDokumentmalConsumer(
         category: String,
         type: String,
         payload: String,
+        renderforpdf: Boolean = true,
     ): String? {
         return try {
             val malUrl = "$url/$category/$type"
             val restTemplate: RestTemplate =
                 RestTemplateBuilder()
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json; charset=utf-8")
+                    .defaultHeader("renderforpdf", renderforpdf.toString())
                     .build()
             restTemplate.postForEntity<String>(malUrl, payload).body!!
         } catch (e: Exception) {
