@@ -239,7 +239,6 @@ div.header {
     content: counter(page) ' av ' counter(pages);
 }
 
-
 .text-heading-small {
     font-size: 1.25rem;
 }
