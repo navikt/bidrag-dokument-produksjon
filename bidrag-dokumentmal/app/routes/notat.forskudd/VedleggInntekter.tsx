@@ -1,10 +1,5 @@
 import { NotatForskuddProps, useNotat } from "~/routes/notat.forskudd/route";
-import {
-  dateOrNull,
-  dateToDDMMYYYY,
-  formatPeriode,
-  isAfterEqualsDate,
-} from "~/utils/date-utils";
+import { dateOrNull, dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
 import {
   Arbeidsforhold,
   InntekterPerRolle,
@@ -40,7 +35,7 @@ export default function VedleggInntekter({ data }: NotatForskuddProps) {
       </h2>
       <OpplysningerBidragsmottaker
         virkningstidspunkt={virkningstidspunkt}
-        data={data.inntekter.inntekterPerRolle.find((d) =>
+        data={data.inntekter.offentligeInntekterPerRolle.find((d) =>
           erRolle(d.gjelder.rolle, Rolletype.BM),
         )}
       />
@@ -66,27 +61,22 @@ function OpplysningerBidragsmottaker({
         data={data.årsinntekter}
         tittel={"2.2 Skattepliktige og pensjonsgivende inntekter"}
         medInntektsposter
-        sorterEtterOpprinneligPeriode={false}
       />
       <OffentligeInntekter
         data={data.barnetillegg}
         tittel={"2.3 Barnetillegg"}
-        filtrerInntekterSomIkkeInkludererDato={virkningstidspunkt}
         medBarn
       />
       <OffentligeInntekter
         data={data.utvidetBarnetrygd}
-        filtrerInntekterSomIkkeInkludererDato={virkningstidspunkt}
         tittel={"2.4 Utvidet barnetrygd"}
       />
       <OffentligeInntekter
         data={data.småbarnstillegg}
-        filtrerInntekterSomIkkeInkludererDato={virkningstidspunkt}
         tittel={"2.5 Småbarnstillegg"}
       />
       <OffentligeInntekter
         data={data.kontantstøtte}
-        filtrerInntekterSomIkkeInkludererDato={virkningstidspunkt}
         tittel={"2.6 Kontantstøtte"}
         medBarn
       />
@@ -98,8 +88,6 @@ type OffentligeInntekterProps = {
   data: NotatInntektDto[];
   medBarn?: boolean;
   medInntektsposter?: boolean;
-  sorterEtterOpprinneligPeriode?: boolean;
-  filtrerInntekterSomIkkeInkludererDato?: Date | null;
 };
 
 function OffentligeInntekter({
@@ -107,30 +95,15 @@ function OffentligeInntekter({
   data,
   medBarn,
   medInntektsposter,
-  sorterEtterOpprinneligPeriode,
-  filtrerInntekterSomIkkeInkludererDato,
 }: OffentligeInntekterProps) {
-  const offentligeInntekter = data.filter(
-    (d) =>
-      d.kilde == Kilde.OFFENTLIG &&
-      (filtrerInntekterSomIkkeInkludererDato == null ||
-        isAfterEqualsDate(
-          d.opprinneligPeriode?.til,
-          filtrerInntekterSomIkkeInkludererDato,
-        )),
-  );
-  if (offentligeInntekter.length == 0) return null;
+  if (data.length == 0) return null;
   return (
     <div className={"subsection"}>
       <h4>{tittel}</h4>
       {medBarn ? (
-        <InntektPerBarnTable data={offentligeInntekter} />
+        <InntektPerBarnTable data={data} />
       ) : (
-        <InntektTable
-          data={offentligeInntekter}
-          sorterEtterOpprinneligPeriode={sorterEtterOpprinneligPeriode}
-          medInntektsposter={medInntektsposter}
-        />
+        <InntektTable data={data} medInntektsposter={medInntektsposter} />
       )}
     </div>
   );
@@ -140,13 +113,11 @@ type InntektTableProps = {
   data: NotatInntektDto[];
   inkluderBeskrivelse?: boolean;
   medInntektsposter?: boolean;
-  sorterEtterOpprinneligPeriode?: boolean;
 };
 
 function InntektTable({
   data,
   inkluderBeskrivelse = true,
-  sorterEtterOpprinneligPeriode = false,
   medInntektsposter,
 }: InntektTableProps) {
   return (
@@ -161,36 +132,24 @@ function InntektTable({
             },
             { name: tekster.tabell.inntekt.beløp },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
-          rows: data
-            .sort((a, b) =>
-              !sorterEtterOpprinneligPeriode ||
-              a.opprinneligPeriode == null ||
-              b.opprinneligPeriode == null
-                ? 0
-                : a.opprinneligPeriode.fom.localeCompare(
-                    b.opprinneligPeriode.fom,
-                  ),
-            )
-            .map((d) => {
-              const periode = d.opprinneligPeriode;
-              return {
-                columns: [
-                  { content: formatPeriode(periode!.fom, periode!.til) },
-                  inkluderBeskrivelse && { content: d.visningsnavn },
-                  { content: formatterBeløp(d.beløp) },
-                ].filter((d) => typeof d != "boolean") as TableColumn[],
-                expandableContent:
-                  medInntektsposter && d.inntektsposter.length > 0
-                    ? [
-                        {
-                          content: (
-                            <Inntektsposter data={d} periode={periode} />
-                          ),
-                        },
-                      ]
-                    : undefined,
-              };
-            }),
+          rows: data.map((d) => {
+            const periode = d.opprinneligPeriode;
+            return {
+              columns: [
+                { content: formatPeriode(periode!.fom, periode!.til) },
+                inkluderBeskrivelse && { content: d.visningsnavn },
+                { content: formatterBeløp(d.beløp) },
+              ].filter((d) => typeof d != "boolean") as TableColumn[],
+              expandableContent:
+                medInntektsposter && d.inntektsposter.length > 0
+                  ? [
+                      {
+                        content: <Inntektsposter data={d} periode={periode} />,
+                      },
+                    ]
+                  : undefined,
+            };
+          }),
         }}
       />
     </div>
