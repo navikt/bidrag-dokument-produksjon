@@ -53,6 +53,7 @@ export interface DelberegningSumInntekt {
 
 export interface Inntekter {
   inntekterPerRolle: InntekterPerRolle[];
+  offentligeInntekterPerRolle: InntekterPerRolle[];
   notat: Notat;
 }
 
@@ -202,6 +203,7 @@ export interface NotatResultatPeriodeDto {
   regel: string;
   sivilstand?: Sivilstandskode;
   inntekt: number;
+  vedtakstype?: Vedtakstype;
   /** @format int32 */
   antallBarnIHusstanden: number;
   resultatKodeVisningsnavn: string;
@@ -266,6 +268,9 @@ export enum Resultatkode {
   AVSLAG = "AVSLAG",
   AVSLAG2 = "AVSLAG2",
   PAGRUNNAVBARNEPENSJON = "PÅ_GRUNN_AV_BARNEPENSJON",
+  AVSLAGOVER18AR = "AVSLAG_OVER_18_ÅR",
+  AVSLAGIKKEREGISTRERTPAADRESSE = "AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE",
+  AVSLAGHOYINNTEKT = "AVSLAG_HØY_INNTEKT",
   BARNETS_EKTESKAP = "BARNETS_EKTESKAP",
   BARNETS_INNTEKT = "BARNETS_INNTEKT",
   PAGRUNNAVYTELSEFRAFOLKETRYGDEN = "PÅ_GRUNN_AV_YTELSE_FRA_FOLKETRYGDEN",
@@ -276,6 +281,8 @@ export enum Resultatkode {
   PAGRUNNAVSAMMENFLYTTING = "PÅ_GRUNN_AV_SAMMENFLYTTING",
   OPPHOLD_I_UTLANDET = "OPPHOLD_I_UTLANDET",
   UTENLANDSK_YTELSE = "UTENLANDSK_YTELSE",
+  AVSLAG_PRIVAT_AVTALE_BIDRAG = "AVSLAG_PRIVAT_AVTALE_BIDRAG",
+  IKKESOKTOMINNKREVINGAVBIDRAG = "IKKE_SØKT_OM_INNKREVING_AV_BIDRAG",
 }
 
 export enum Rolletype {
@@ -398,6 +405,7 @@ export enum TypeArsakstype {
   TIDLIGERE_FEILAKTIG_AVSLAG = "TIDLIGERE_FEILAKTIG_AVSLAG",
   TREMANEDERTILBAKE = "TRE_MÅNEDER_TILBAKE",
   TREARSREGELEN = "TRE_ÅRS_REGELEN",
+  FRAMANEDENETTERIPAVENTEAVBIDRAGSSAK = "FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK",
 }
 
 export interface MediaType {
@@ -406,9 +414,9 @@ export interface MediaType {
   parameters?: Record<string, string>;
   /** @format double */
   qualityValue?: number;
-  wildcardSubtype?: boolean;
-  subtypeSuffix?: string;
-  wildcardType?: boolean;
   concrete?: boolean;
   charset?: string;
+  wildcardType?: boolean;
+  subtypeSuffix?: string;
+  wildcardSubtype?: boolean;
 }

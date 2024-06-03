@@ -138,6 +138,7 @@ data class PersonNotatDto(
 
 data class Inntekter(
     val inntekterPerRolle: List<InntekterPerRolle>,
+    val offentligeInntekterPerRolle: List<InntekterPerRolle> = emptyList(),
     val notat: Notat,
 )
 
@@ -177,7 +178,7 @@ data class NotatInntektDto(
 ) {
     val visningsnavn get() =
         type.visningsnavnMedÅrstall(
-            periode?.fom?.year ?: opprinneligPeriode?.fom?.year,
+            opprinneligPeriode?.fom?.year ?: periode?.fom?.year,
         )
 }
 
