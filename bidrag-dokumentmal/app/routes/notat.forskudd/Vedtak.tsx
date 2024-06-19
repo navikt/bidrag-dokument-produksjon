@@ -4,7 +4,7 @@ import {
   NotatResultatBeregningBarnDto,
   Vedtak as VedtakDto,
 } from "~/types/Api";
-import { dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
+import { dateToDDMMYYYY, deductDays, formatPeriode } from "~/utils/date-utils";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
 import DataDescription from "~/components/DataDescription";
 import { formatterBeløp } from "~/utils/visningsnavn";
@@ -107,7 +107,12 @@ function VedtakTable({ data }: { data: NotatResultatBeregningBarnDto[] }) {
           ],
           rows: perioder.map((d) => ({
             columns: [
-              { content: formatPeriode(d.periode!.fom, d.periode!.til) },
+              {
+                content: formatPeriode(
+                  d.periode!.fom,
+                  deductDays(d.periode!.til, 1),
+                ),
+              },
               { content: formatterBeløp(d.inntekt) },
               { content: d.sivilstandVisningsnavn },
               { content: d.antallBarnIHusstanden },
