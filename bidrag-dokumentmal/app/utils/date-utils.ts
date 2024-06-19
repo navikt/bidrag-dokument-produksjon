@@ -1,4 +1,4 @@
-export const dateOrNull = (dateString?: string): Date | null =>
+export const dateOrNull = (dateString?: string | null): Date | null =>
   dateString ? new Date(dateString) : null;
 export const toISODateString = (date?: Date): string | null =>
   date?.toLocaleDateString("sv-SV", {
@@ -23,8 +23,10 @@ export const addDays = (date: Date, days: number) => {
   return newDate;
 };
 
-export const deductDays = (date: Date, days: number) => {
-  const newDate = new Date(date);
+export const deductDays = (date?: Date | string | null, days: number = 1) => {
+  const dateObject = date instanceof Date ? date : dateOrNull(date);
+  if (dateObject == null) return null;
+  const newDate = new Date(dateObject);
   newDate.setDate(newDate.getDate() - days);
   return newDate;
 };
@@ -205,7 +207,7 @@ export const dateToDDMMYYYY = (date?: Date | string): string | undefined => {
 };
 export const formatPeriode = (
   dateFom: Date | string,
-  dateTom: Date | string | undefined,
+  dateTom: Date | string | undefined | null,
 ): string | undefined => {
   if (dateTom == undefined) return dateToDDMMYYYY(dateFom);
   return `${dateToDDMMYYYY(dateFom)} - ${dateToDDMMYYYY(lastDayOfMonth(dateTom))}`;

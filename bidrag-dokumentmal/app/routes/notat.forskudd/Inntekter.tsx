@@ -7,7 +7,7 @@ import {
   PersonNotatDto,
   Rolletype,
 } from "~/types/Api";
-import { dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
+import { dateToDDMMYYYY, deductDays, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
 import { groupBy } from "~/utils/array-utils";
 import { erRolle, formatterBeløp } from "~/utils/visningsnavn";
@@ -251,7 +251,12 @@ function BeregnetInntektTable({ data }: BeregnetInntektTableProps) {
                 ],
                 rows: inntekter.map((d) => ({
                   columns: [
-                    { content: formatPeriode(d.periode!.fom, d.periode!.til) },
+                    {
+                      content: formatPeriode(
+                        d.periode!.fom,
+                        deductDays(d.periode!.til, 1),
+                      ),
+                    },
                     { content: formatterBeløp(d.skattepliktigInntekt ?? 0) },
                     { content: formatterBeløp(d.barnetillegg ?? 0) },
                     { content: formatterBeløp(d.utvidetBarnetrygd ?? 0) },
