@@ -9,7 +9,22 @@
     @bottom-center { content: element(footer) }
     /*@top-left { content: element(header) }*/
 }
-
+.footnote {
+    float: footnote;
+    footnote-style-position: inside; /* forces marker inside footnote area */
+}
+.footnote::footnote-call {
+    /* controls the footnote markers in the main page text */
+    content: counter(footnote, symbols('*', '†', '‡'));
+    font-size: 0.7em;
+    vertical-align: super;
+    line-height: 0;
+    color: red;
+}
+.footnote::footnote-marker {
+    /* controls the footnote markers in the footnote section */
+    content: counter(footnote, symbols('*', '†', '‡'));
+}
 @media print {
     div { break-inside: avoid; }
     .page {
@@ -31,6 +46,11 @@
 .two_column_view {
     float: left;
     width: 50%;
+}
+
+.three_column_view {
+    float: left;
+    width: 33%;
 }
 #footer {
     position: running(footer);
@@ -129,6 +149,16 @@ h4 {
     margin-bottom: 8px;
     margin-top: 8px;
     font-size: 1.25rem;
+}
+h5 {
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-size: 1.125rem;
+}
+h6 {
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-size: 1rem;
 }
 p {
     margin-top: 3px;

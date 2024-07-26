@@ -1,15 +1,18 @@
-import { NotatForskuddProps, useNotat } from "~/routes/notat.forskudd/route";
 import DataDescription from "~/components/DataDescription";
-import { BoforholdBarn } from "~/types/Api";
+import { BoforholdBarn, NotatAndreVoksneIHusstanden } from "~/types/Api";
 import Person from "~/components/Person";
 import { SimpleTable } from "~/components/SimpleTable";
-import Sivilstand from "~/routes/notat.forskudd/Sivilstand";
 import Notat from "~/components/Notat";
 import elementIds from "~/utils/elementIds";
 import tekster from "~/tekster";
+import {
+  NotatDataProps,
+  useNotatFelles,
+} from "~/components/notat_felles/NotatContext";
+import Sivilstand from "~/components/notat_felles/components/Sivilstand";
 
-export default function Boforhold({ data }: NotatForskuddProps) {
-  const { erAvslag } = useNotat();
+export default function Boforhold({ data }: NotatDataProps) {
+  const { erAvslag } = useNotatFelles();
   if (erAvslag) return null;
   return (
     <div className="soknad_parter section">
@@ -24,8 +27,28 @@ export default function Boforhold({ data }: NotatForskuddProps) {
           <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />
         ))}
         <Sivilstand data={data} />
+        <BoforholdAndreVoksneIHusstanden
+          data={data.boforhold.andreVoksneIHusstanden}
+        />
         <Notat data={data.boforhold.notat} />
       </div>
+    </div>
+  );
+}
+function BoforholdAndreVoksneIHusstanden({
+  data,
+}: {
+  data?: NotatAndreVoksneIHusstanden;
+}) {
+  if (!data) return;
+  return (
+    <div>
+      <h3 id={"linktilmeg"}>{tekster.titler.andreVoksneIHusstanden.tittel}</h3>
+      <SimpleTable data={data.opplysningerBruktTilBeregning} />
+      <div
+        className="horizontal-line"
+        style={{ pageBreakAfter: "avoid" }}
+      ></div>
     </div>
   );
 }

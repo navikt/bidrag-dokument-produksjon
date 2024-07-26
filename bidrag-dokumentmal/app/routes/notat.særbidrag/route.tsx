@@ -3,13 +3,13 @@ import { ActionFunctionArgs, json } from "@remix-run/node";
 import "../../style/style.css";
 import Header from "~/components/Header";
 import { NotatDto } from "~/types/Api";
-import Vedtak from "~/routes/notat.forskudd/Vedtak";
 import tekster from "~/tekster";
 import { NotatProvider } from "~/components/notat_felles/NotatContext";
-import Soknaddetaljer from "~/components/notat_felles/components/Soknaddetaljer";
-import Virkningstidspunkt from "~/routes/notat.forskudd/Virkningstidspunkt";
 import Boforhold from "~/components/notat_felles/components/Boforhold";
+import Soknaddetaljer from "~/components/notat_felles/components/Soknaddetaljer";
+import Utgifter from "~/routes/notat.særbidrag/Utgifter";
 import Inntekter from "~/components/notat_felles/components/Inntekter";
+import Vedtak from "~/routes/notat.særbidrag/Vedtak";
 import VedleggBoforhold from "~/components/notat_felles/components/VedleggBoforhold";
 import VedleggInntekter from "~/components/notat_felles/components/VedleggInntekter";
 
@@ -30,13 +30,13 @@ export async function action({ request }: ActionFunctionArgs) {
 export function meta() {
   return [
     { title: tekster.titler.forskudd },
-    { name: "description", content: tekster.titler.forskudd },
+    { name: "description", content: tekster.titler.særbidrag },
     { property: "author", content: "bidrag-dokument-produksjon" },
-    { property: "subject", content: tekster.titler.forskudd },
+    { property: "subject", content: tekster.titler.særbidrag },
   ];
 }
 
-export default function NotatForskudd() {
+export default function NotatSærbidrag() {
   const response = useActionData<NotatRequest>();
   if (response === undefined) {
     return <div>Oops</div>;
@@ -46,7 +46,7 @@ export default function NotatForskudd() {
     <>
       <div
         className={"custom-top_bottom_content"}
-        data-content={`${tekster.titler.forskudd}. Saksnummer ${data.saksnummer}`}
+        data-content={`${tekster.titler.særbidrag}. Saksnummer ${data.saksnummer}`}
       ></div>
       <div className={"custom-page-number"}></div>
     </>
@@ -68,9 +68,9 @@ export default function NotatForskudd() {
       <NotatProvider data={data}>
         <div className={"container page"}>
           <Soknaddetaljer data={data} />
-          <Virkningstidspunkt />
-          <Boforhold data={data} />
+          <Utgifter />
           <Inntekter />
+          <Boforhold data={data} />
           <Vedtak />
           <VedleggBoforhold />
           <VedleggInntekter />

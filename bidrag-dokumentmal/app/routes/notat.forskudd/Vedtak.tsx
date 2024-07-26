@@ -1,17 +1,14 @@
-import { NotatForskuddProps, useNotat } from "~/routes/notat.forskudd/route";
 import { groupBy } from "~/utils/array-utils";
-import {
-  NotatResultatBeregningBarnDto,
-  Vedtak as VedtakDto,
-} from "~/types/Api";
-import { dateToDDMMYYYY, deductDays, formatPeriode } from "~/utils/date-utils";
+import { deductDays, formatPeriode } from "~/utils/date-utils";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
-import DataDescription from "~/components/DataDescription";
 import { formatterBeløp } from "~/utils/visningsnavn";
 import { CommonTable, TableData } from "~/components/CommonTable";
+import { useNotatFelles } from "~/components/notat_felles/NotatContext";
+import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
+import { NotatResultatForskuddBeregningBarnDto } from "~/types/Api";
 
-export default function Vedtak({ data }: NotatForskuddProps) {
-  const { erAvslag } = useNotat();
+export default function Vedtak() {
+  const { erAvslag, data } = useNotatFelles();
   return (
     <div
       className={"section"}
@@ -19,37 +16,25 @@ export default function Vedtak({ data }: NotatForskuddProps) {
     >
       <h2>Vedtak</h2>
       {erAvslag ? (
-        <VedtakTableAvslag data={data.vedtak.resultat} />
+        <VedtakTableAvslag
+          data={data.vedtak.resultat as NotatResultatForskuddBeregningBarnDto[]}
+        />
       ) : (
-        <VedtakTable data={data.vedtak.resultat} />
+        <VedtakTable
+          data={data.vedtak.resultat as NotatResultatForskuddBeregningBarnDto[]}
+        />
       )}
       <VedtakFattetDetaljer data={data.vedtak} />
     </div>
   );
 }
 
-function VedtakFattetDetaljer({ data }: { data: VedtakDto }) {
-  if (!data.erFattet) return null;
-  return (
-    <div>
-      <h4 style={{ marginBottom: "0" }}>Ferdigstilt</h4>
-      <DataDescription
-        label={"Saksbehandler"}
-        value={data.fattetAvSaksbehandler}
-      />
-      <DataDescription
-        label={"Dato"}
-        value={dateToDDMMYYYY(data.fattetTidspunkt)}
-      />
-    </div>
-  );
-}
 function VedtakTableAvslag({
   data,
 }: {
-  data: NotatResultatBeregningBarnDto[];
+  data: NotatResultatForskuddBeregningBarnDto[];
 }) {
-  const { erOpphør } = useNotat();
+  const { erOpphør } = useNotatFelles();
 
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
@@ -89,7 +74,11 @@ function VedtakTableAvslag({
   );
 }
 
-function VedtakTable({ data }: { data: NotatResultatBeregningBarnDto[] }) {
+function VedtakTable({
+  data,
+}: {
+  data: NotatResultatForskuddBeregningBarnDto[];
+}) {
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
     <div style={{ paddingTop: "10px" }}>

@@ -1,16 +1,20 @@
-import { NotatForskuddProps, useNotat } from "~/routes/notat.forskudd/route";
 import {
-  InntekterPerRolle,
+  DelberegningSumInntekt,
   Inntektsrapportering,
   NotatBeregnetInntektDto,
   NotatInntektDto,
   PersonNotatDto,
   Rolletype,
+  NotatMalType,
 } from "~/types/Api";
 import { dateToDDMMYYYY, deductDays, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
-import { groupBy } from "~/utils/array-utils";
-import { erRolle, formatterBeløp } from "~/utils/visningsnavn";
+import { groupBy, hasValue } from "~/utils/array-utils";
+import {
+  formatterBeløp,
+  rolleTilVisningsnavn,
+  sammenlignRoller,
+} from "~/utils/visningsnavn";
 import Notat from "~/components/Notat";
 import elementIds from "~/utils/elementIds";
 import {
@@ -20,10 +24,18 @@ import {
 } from "~/components/CommonTable";
 import tekster from "~/tekster";
 import { getInntektTableHeaders } from "~/constants/tableHeaders";
-import Inntektsposter from "~/routes/notat.forskudd/Inntektsposter";
+import { useNotatFelles } from "~/components/notat_felles/NotatContext";
+import Inntektsposter from "~/components/notat_felles/components/Inntektsposter";
+import HorizontalLine from "~/components/HorizontalLine";
+import {
+  BehandlingRolletype,
+  inntekterTablesViewRules,
+  InntektTableType,
+} from "~/components/inntektTableHelpers";
 
-export default function Inntekter({ data }: NotatForskuddProps) {
-  const { erAvslag } = useNotat();
+export default function Inntekter() {
+  const { erAvslag, data, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
+    useNotatFelles();
   if (erAvslag) return null;
   return (
     <div className="soknad_parter section">
@@ -33,47 +45,72 @@ export default function Inntekter({ data }: NotatForskuddProps) {
           se vedlegg nr. 2 for opplysninger fra offentlige registre
         </a>
       </div>
-      <InntekterBidragsmottaker
-        data={data.inntekter.inntekterPerRolle.find((d) =>
-          erRolle(d.gjelder.rolle, Rolletype.BM),
-        )}
-      />
+      <InntekterForRolle rolle={bidragsmottaker} />
+      <HorizontalLine />
+      {type !== NotatMalType.FORSKUDD && bidragspliktig && (
+        <>
+          <InntekterForRolle rolle={bidragspliktig} />
+          <HorizontalLine />
+        </>
+      )}
+
+      {type !== NotatMalType.FORSKUDD &&
+        søknadsbarn.map((barn) => (
+          <div key={barn.ident}>
+            <InntekterForRolle rolle={barn} />
+            <HorizontalLine />
+          </div>
+        ))}
       <Notat data={data.inntekter.notat} />
     </div>
   );
 }
 
-function InntekterBidragsmottaker({ data }: { data?: InntekterPerRolle }) {
-  if (data == null) return null;
+function InntekterForRolle({ rolle }: { rolle: PersonNotatDto }) {
+  const { data } = useNotatFelles();
+
+  const inntekter = data.inntekter.inntekterPerRolle.find(
+    (d) =>
+      sammenlignRoller(d.gjelder.rolle, rolle.rolle) &&
+      d.gjelder.ident == rolle.ident,
+  );
+  if (inntekter == null) return null;
   return (
-    <div>
+    <div style={{ marginTop: "10px" }}>
+      <div className={"elements_inline"}>
+        <h5 style={{ marginRight: 5, paddingRight: 0 }}>
+          {rolleTilVisningsnavn(rolle.rolle!)}
+        </h5>
+        {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
+      </div>
       <div style={{ marginTop: "-10px" }}>
         <InntektTable
-          data={data.årsinntekter}
+          data={inntekter.årsinntekter}
           title={"Skattepliktige og pensjonsgivende inntekt"}
         />
-        <InntektPerBarnTable data={data.barnetillegg} title={"Barnetillegg"} />
+        <InntektPerBarnTable
+          data={inntekter.barnetillegg}
+          title={"Barnetillegg"}
+        />
         <InntektTable
-          data={data.utvidetBarnetrygd}
+          data={inntekter.utvidetBarnetrygd}
           title={"Utvidet barnetrygd"}
           inkluderBeskrivelse={false}
         />
         <InntektTable
-          data={data.småbarnstillegg}
+          data={inntekter.småbarnstillegg}
           title={"Småbarnstillegg"}
           inkluderBeskrivelse={false}
         />
         <InntektPerBarnTable
-          data={data.kontantstøtte}
+          data={inntekter.kontantstøtte}
           title={"Kontantstøtte"}
         />
-        <div
-          className="horizontal-line"
-          style={{
-            pageBreakAfter: "avoid",
-          }}
-        ></div>
-        <BeregnetInntektTable data={data.beregnetInntekter} />
+        <HorizontalLine />
+        <BeregnetInntektTable
+          data={inntekter.beregnetInntekter}
+          rolle={rolle}
+        />
       </div>
     </div>
   );
@@ -117,7 +154,7 @@ function InntektTable({
                   ? a.periode?.fom.localeCompare(b.periode?.fom)
                   : 1,
               )
-              .map((d) => {
+              .map((d, i) => {
                 const periode = d.periode ?? d.opprinneligPeriode;
                 return {
                   columns: [
@@ -131,7 +168,11 @@ function InntektTable({
                       ? [
                           {
                             content: (
-                              <Inntektsposter data={d} periode={periode} />
+                              <Inntektsposter
+                                data={d}
+                                periode={periode}
+                                withHorizontalLine={inntekter.length > i + 1}
+                              />
                             ),
                           },
                         ]
@@ -209,67 +250,106 @@ function InntektPerBarnTable({
 
 type BeregnetInntektTableProps = {
   data: NotatBeregnetInntektDto[];
+  rolle: PersonNotatDto;
 };
 
-function BeregnetInntektTable({ data }: BeregnetInntektTableProps) {
+function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
+  const { type, harFlereEnnEttSøknadsbarn } = useNotatFelles();
+  const inntektTableRules =
+    inntekterTablesViewRules[type][rolle.rolle as BehandlingRolletype];
+
+  function renderTable(
+    inntekter: DelberegningSumInntekt[],
+    gjelderBarn?: PersonNotatDto,
+  ) {
+    return (
+      <>
+        {harFlereEnnEttSøknadsbarn && gjelderBarn && (
+          <GjelderBarn gjelderBarn={gjelderBarn} />
+        )}
+        <CommonTable
+          width={"700px"}
+          data={{
+            headers: [
+              { name: tekster.tabell.felles.fraTilOgMed, width: "170px" },
+              {
+                name: tekster.tabell.beregnet.skattepliktigInntekt,
+                width: "100px",
+              },
+              hasValue(inntektTableRules, InntektTableType.BARNETILLEGG) && {
+                name: tekster.tabell.beregnet.barnetillegg,
+                width: "60px",
+              },
+              hasValue(
+                inntektTableRules,
+                InntektTableType.UTVIDET_BARNETRYGD,
+              ) && {
+                name: tekster.tabell.beregnet.utvidetBarnetrygd,
+                width: "80px",
+              },
+              hasValue(inntektTableRules, InntektTableType.SMÅBARNSTILLEGG) && {
+                name: tekster.tabell.beregnet.småbarnstillegg,
+                width: "80px",
+              },
+              hasValue(inntektTableRules, InntektTableType.KONTANTSTØTTE) && {
+                name: tekster.tabell.beregnet.kontantstøtte,
+                width: "60px",
+              },
+              { name: tekster.tabell.beregnet.total, width: "60px" },
+            ].filter((d) => typeof d != "boolean") as TableHeader[],
+            rows: inntekter.map((d) => ({
+              columns: [
+                {
+                  content: formatPeriode(
+                    d.periode!.fom,
+                    deductDays(d.periode!.til, 1),
+                  ),
+                },
+                { content: formatterBeløp(d.skattepliktigInntekt ?? 0) },
+                hasValue(inntektTableRules, InntektTableType.BARNETILLEGG) && {
+                  content: formatterBeløp(d.barnetillegg ?? 0),
+                },
+                hasValue(
+                  inntektTableRules,
+                  InntektTableType.UTVIDET_BARNETRYGD,
+                ) && { content: formatterBeløp(d.utvidetBarnetrygd ?? 0) },
+                hasValue(
+                  inntektTableRules,
+                  InntektTableType.SMÅBARNSTILLEGG,
+                ) && { content: formatterBeløp(d.småbarnstillegg ?? 0) },
+                hasValue(inntektTableRules, InntektTableType.KONTANTSTØTTE) && {
+                  content: formatterBeløp(d.kontantstøtte ?? 0),
+                },
+                { content: formatterBeløp(d.totalinntekt ?? 0) },
+              ].filter((d) => typeof d != "boolean") as TableColumn[],
+            })),
+          }}
+        />
+      </>
+    );
+  }
+
   return (
     <div className={"subsection"}>
       <TableTitle title={"Beregnet totalt"} />
-      {groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value], i) => {
-        const gjelderBarn = value[0].gjelderBarn!;
-        const inntekter = value[0].summertInntektListe;
-        return (
-          <div
-            key={gjelderBarn + key + i.toString()}
-            className="table_container"
-            style={{ paddingTop: "10px" }}
-          >
-            <GjelderBarn gjelderBarn={gjelderBarn} />
-            <CommonTable
-              width={"700px"}
-              data={{
-                headers: [
-                  { name: tekster.tabell.felles.fraTilOgMed, width: "170px" },
-                  {
-                    name: tekster.tabell.beregnet.skattepliktigInntekt,
-                    width: "100px",
-                  },
-                  { name: tekster.tabell.beregnet.barnetillegg, width: "60px" },
-                  {
-                    name: tekster.tabell.beregnet.utvidetBarnetrygd,
-                    width: "80px",
-                  },
-                  {
-                    name: tekster.tabell.beregnet.småbarnstillegg,
-                    width: "80px",
-                  },
-                  {
-                    name: tekster.tabell.beregnet.kontantstøtte,
-                    width: "60px",
-                  },
-                  { name: tekster.tabell.beregnet.total, width: "60px" },
-                ],
-                rows: inntekter.map((d) => ({
-                  columns: [
-                    {
-                      content: formatPeriode(
-                        d.periode!.fom,
-                        deductDays(d.periode!.til, 1),
-                      ),
-                    },
-                    { content: formatterBeløp(d.skattepliktigInntekt ?? 0) },
-                    { content: formatterBeløp(d.barnetillegg ?? 0) },
-                    { content: formatterBeløp(d.utvidetBarnetrygd ?? 0) },
-                    { content: formatterBeløp(d.småbarnstillegg ?? 0) },
-                    { content: formatterBeløp(d.kontantstøtte ?? 0) },
-                    { content: formatterBeløp(d.totalinntekt ?? 0) },
-                  ],
-                })),
-              }}
-            />
-          </div>
-        );
-      })}
+      {rolle.rolle === Rolletype.BA
+        ? renderTable(
+            data.find((d) => d.gjelderBarn.ident == rolle.ident)
+              ?.summertInntektListe ?? [],
+          )
+        : groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value], i) => {
+            const gjelderBarn = value[0].gjelderBarn!;
+            const inntekter = value[0].summertInntektListe;
+            return (
+              <div
+                key={gjelderBarn + key + i.toString()}
+                className="table_container"
+                style={{ paddingTop: "10px" }}
+              >
+                {renderTable(inntekter, gjelderBarn)}
+              </div>
+            );
+          })}
     </div>
   );
 }
