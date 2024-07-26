@@ -1,4 +1,4 @@
-import { Rolletype, NotatMalType } from "~/types/Api";
+import { Rolletype, NotatMalType, InntekterPerRolle } from "~/types/Api";
 
 export enum InntektTableType {
   SKATTEPLIKTIG = "SKATTEPLIKTIG",
@@ -66,3 +66,13 @@ export const inntekterTablesViewRules: {
     [Rolletype.BA]: [InntektTableType.SKATTEPLIKTIG],
   },
 };
+
+export function isHarInntekter(inntekter: InntekterPerRolle): boolean {
+  return (
+    inntekter.årsinntekter.length > 0 ||
+    inntekter.barnetillegg.length > 0 ||
+    inntekter.utvidetBarnetrygd.length > 0 ||
+    inntekter.småbarnstillegg.length > 0 ||
+    inntekter.kontantstøtte.length > 0
+  );
+}

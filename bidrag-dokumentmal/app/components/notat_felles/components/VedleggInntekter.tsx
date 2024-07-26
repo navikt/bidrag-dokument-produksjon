@@ -27,6 +27,7 @@ import { getInntektTableHeaders } from "~/constants/tableHeaders";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Inntektsposter from "~/components/notat_felles/components/Inntektsposter";
 import HorizontalLine from "~/components/HorizontalLine";
+import { isHarInntekter } from "~/components/inntektTableHelpers";
 
 export default function VedleggInntekter() {
   const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
@@ -75,6 +76,8 @@ function OpplysningerForRolle({
       d.gjelder.ident == rolle.ident,
   );
   if (!inntekter) return null;
+  const harInntekter = isHarInntekter(inntekter);
+
   return (
     <div className={"mt-medium"}>
       {showRole && (
@@ -85,33 +88,41 @@ function OpplysningerForRolle({
           {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
         </div>
       )}
-      <div>
-        <h4>2.1 Arbeidsforhold</h4>
-        <ArbeidsforholdTable data={inntekter.arbeidsforhold} />
-      </div>
-      <OffentligeInntekter
-        data={inntekter.årsinntekter}
-        tittel={"2.2 Skattepliktige og pensjonsgivende inntekter"}
-        medInntektsposter
-      />
-      <OffentligeInntekter
-        data={inntekter.barnetillegg}
-        tittel={"2.3 Barnetillegg"}
-        medBarn
-      />
-      <OffentligeInntekter
-        data={inntekter.utvidetBarnetrygd}
-        tittel={"2.4 Utvidet barnetrygd"}
-      />
-      <OffentligeInntekter
-        data={inntekter.småbarnstillegg}
-        tittel={"2.5 Småbarnstillegg"}
-      />
-      <OffentligeInntekter
-        data={inntekter.kontantstøtte}
-        tittel={"2.6 Kontantstøtte"}
-        medBarn
-      />
+      {inntekter.arbeidsforhold && inntekter.arbeidsforhold.length > 0 && (
+        <div>
+          <h4>2.1 Arbeidsforhold</h4>
+          <ArbeidsforholdTable data={inntekter.arbeidsforhold} />
+        </div>
+      )}
+      {!harInntekter ? (
+        <p>Ingen offentlige inntekter</p>
+      ) : (
+        <>
+          <OffentligeInntekter
+            data={inntekter.årsinntekter}
+            tittel={"2.2 Skattepliktige og pensjonsgivende inntekter"}
+            medInntektsposter
+          />
+          <OffentligeInntekter
+            data={inntekter.barnetillegg}
+            tittel={"2.3 Barnetillegg"}
+            medBarn
+          />
+          <OffentligeInntekter
+            data={inntekter.utvidetBarnetrygd}
+            tittel={"2.4 Utvidet barnetrygd"}
+          />
+          <OffentligeInntekter
+            data={inntekter.småbarnstillegg}
+            tittel={"2.5 Småbarnstillegg"}
+          />
+          <OffentligeInntekter
+            data={inntekter.kontantstøtte}
+            tittel={"2.6 Kontantstøtte"}
+            medBarn
+          />
+        </>
+      )}
     </div>
   );
 }

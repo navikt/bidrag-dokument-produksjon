@@ -31,6 +31,7 @@ import {
   BehandlingRolletype,
   inntekterTablesViewRules,
   InntektTableType,
+  isHarInntekter,
 } from "~/components/inntektTableHelpers";
 
 export default function Inntekter() {
@@ -84,6 +85,7 @@ function InntekterForRolle({
       d.gjelder.ident == rolle.ident,
   );
   if (inntekter == null) return null;
+  const harInntekter = isHarInntekter(inntekter);
   return (
     <div className={"mt-medium"}>
       {showRole && (
@@ -94,35 +96,39 @@ function InntekterForRolle({
           {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
         </div>
       )}
-      <div style={{ marginTop: "-10px" }}>
-        <InntektTable
-          data={inntekter.årsinntekter}
-          title={"Skattepliktige og pensjonsgivende inntekt"}
-        />
-        <InntektPerBarnTable
-          data={inntekter.barnetillegg}
-          title={"Barnetillegg"}
-        />
-        <InntektTable
-          data={inntekter.utvidetBarnetrygd}
-          title={"Utvidet barnetrygd"}
-          inkluderBeskrivelse={false}
-        />
-        <InntektTable
-          data={inntekter.småbarnstillegg}
-          title={"Småbarnstillegg"}
-          inkluderBeskrivelse={false}
-        />
-        <InntektPerBarnTable
-          data={inntekter.kontantstøtte}
-          title={"Kontantstøtte"}
-        />
-        <HorizontalLine />
-        <BeregnetInntektTable
-          data={inntekter.beregnetInntekter}
-          rolle={rolle}
-        />
-      </div>
+      {!harInntekter ? (
+        <p>Ingen inntekter</p>
+      ) : (
+        <div style={{ marginTop: "-10px" }}>
+          <InntektTable
+            data={inntekter.årsinntekter}
+            title={"Skattepliktige og pensjonsgivende inntekt"}
+          />
+          <InntektPerBarnTable
+            data={inntekter.barnetillegg}
+            title={"Barnetillegg"}
+          />
+          <InntektTable
+            data={inntekter.utvidetBarnetrygd}
+            title={"Utvidet barnetrygd"}
+            inkluderBeskrivelse={false}
+          />
+          <InntektTable
+            data={inntekter.småbarnstillegg}
+            title={"Småbarnstillegg"}
+            inkluderBeskrivelse={false}
+          />
+          <InntektPerBarnTable
+            data={inntekter.kontantstøtte}
+            title={"Kontantstøtte"}
+          />
+          <HorizontalLine />
+          <BeregnetInntektTable
+            data={inntekter.beregnetInntekter}
+            rolle={rolle}
+          />
+        </div>
+      )}
     </div>
   );
 }
