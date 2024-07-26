@@ -3,9 +3,9 @@ import {
   Inntektsrapportering,
   NotatBeregnetInntektDto,
   NotatInntektDto,
+  NotatMalType,
   PersonNotatDto,
   Rolletype,
-  NotatMalType,
 } from "~/types/Api";
 import { dateToDDMMYYYY, deductDays, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
@@ -45,7 +45,10 @@ export default function Inntekter() {
           se vedlegg nr. 2 for opplysninger fra offentlige registre
         </a>
       </div>
-      <InntekterForRolle rolle={bidragsmottaker} />
+      <InntekterForRolle
+        rolle={bidragsmottaker}
+        showRole={type !== NotatMalType.FORSKUDD}
+      />
       <HorizontalLine />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
         <>
@@ -66,7 +69,13 @@ export default function Inntekter() {
   );
 }
 
-function InntekterForRolle({ rolle }: { rolle: PersonNotatDto }) {
+function InntekterForRolle({
+  rolle,
+  showRole = true,
+}: {
+  rolle: PersonNotatDto;
+  showRole?: boolean;
+}) {
   const { data } = useNotatFelles();
 
   const inntekter = data.inntekter.inntekterPerRolle.find(
@@ -76,13 +85,15 @@ function InntekterForRolle({ rolle }: { rolle: PersonNotatDto }) {
   );
   if (inntekter == null) return null;
   return (
-    <div style={{ marginTop: "10px" }}>
-      <div className={"elements_inline"}>
-        <h5 style={{ marginRight: 5, paddingRight: 0 }}>
-          {rolleTilVisningsnavn(rolle.rolle!)}
-        </h5>
-        {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
-      </div>
+    <div className={"mt-medium"}>
+      {showRole && (
+        <div className={"elements_inline"}>
+          <h5 style={{ marginRight: 5, paddingRight: 0 }}>
+            {rolleTilVisningsnavn(rolle.rolle!)}
+          </h5>
+          {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
+        </div>
+      )}
       <div style={{ marginTop: "-10px" }}>
         <InntektTable
           data={inntekter.årsinntekter}
@@ -329,6 +340,9 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
     );
   }
 
+  const harInntekter = data.every((d) => d.summertInntektListe.length > 0);
+
+  if (!harInntekter) return;
   return (
     <div className={"subsection"}>
       <TableTitle title={"Beregnet totalt"} />

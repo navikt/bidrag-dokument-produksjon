@@ -278,3 +278,7 @@ div.header {
 .text-heading-large {
     font-size: 1.75rem;
 }
+
+.mt-medium {
+    margin-top: 16px;
+}

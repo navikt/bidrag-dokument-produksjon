@@ -38,7 +38,10 @@ export default function VedleggInntekter() {
       <h2 id={elementIds.vedleggInntekter}>
         Vedlegg nr. 2: Inntekt - {tekster.fraOffentligeRegistre}
       </h2>
-      <OpplysningerForRolle rolle={bidragsmottaker} />
+      <OpplysningerForRolle
+        rolle={bidragsmottaker}
+        showRole={type !== NotatMalType.FORSKUDD}
+      />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
         <>
           <HorizontalLine />
@@ -57,7 +60,13 @@ export default function VedleggInntekter() {
   );
 }
 
-function OpplysningerForRolle({ rolle }: { rolle: PersonNotatDto }) {
+function OpplysningerForRolle({
+  rolle,
+  showRole = true,
+}: {
+  rolle: PersonNotatDto;
+  showRole?: boolean;
+}) {
   const { data } = useNotatFelles();
 
   const inntekter = data.inntekter.offentligeInntekterPerRolle.find(
@@ -67,13 +76,15 @@ function OpplysningerForRolle({ rolle }: { rolle: PersonNotatDto }) {
   );
   if (!inntekter) return null;
   return (
-    <div>
-      <div className={"elements_inline"}>
-        <h5 style={{ marginRight: 5, paddingRight: 0 }}>
-          {rolleTilVisningsnavn(rolle.rolle!)}
-        </h5>
-        {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
-      </div>
+    <div className={"mt-medium"}>
+      {showRole && (
+        <div className={"elements_inline"}>
+          <h5 style={{ marginRight: 5, paddingRight: 0 }}>
+            {rolleTilVisningsnavn(rolle.rolle!)}
+          </h5>
+          {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
+        </div>
+      )}
       <div>
         <h4>2.1 Arbeidsforhold</h4>
         <ArbeidsforholdTable data={inntekter.arbeidsforhold} />
