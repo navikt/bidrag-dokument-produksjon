@@ -1,26 +1,16 @@
-import { capitalizeFirstLetter } from "~/utils/visningsnavn";
+import {
+  capitalizeFirstLetter,
+  søktAvTilVisningsnavn,
+} from "~/utils/visningsnavn";
 import DataDescription from "~/components/DataDescription";
-import { NotatDto, SoktAvType } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import Notat from "~/components/Notat";
+import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 
-function søktAvTilVisningsnavn(søktAv?: SoktAvType) {
-  switch (søktAv) {
-    case SoktAvType.NAV_INTERNASJONALT:
-    case SoktAvType.NAV_BIDRAG:
-      return "NAV";
-    case SoktAvType.BARN18AR:
-      return "Barn";
-    case SoktAvType.BM_I_ANNEN_SAK:
-      return "Bidragsmottaker i annen sak";
-    case SoktAvType.KLAGE_ANKE:
-      return "Klage";
-    default:
-      return capitalizeFirstLetter(søktAv);
-  }
-}
-export default function Virkningstidspunkt({ data }: { data: NotatDto }) {
+export default function Virkningstidspunkt() {
+  const { data } = useNotatFelles();
   const virkningstidspunkt = data.virkningstidspunkt;
+  const behandling = data.behandling;
   return (
     <div className={"virkningstidspunkt"}>
       <h2>Virkningstidspunkt</h2>
@@ -29,16 +19,16 @@ export default function Virkningstidspunkt({ data }: { data: NotatDto }) {
           <div className="two_column_view">
             <DataDescription
               label={"Søknadstype"}
-              value={capitalizeFirstLetter(virkningstidspunkt.søknadstype)}
+              value={capitalizeFirstLetter(behandling.søknadstype)}
             />
             <DataDescription
               label={"Søkt fra"}
-              value={søktAvTilVisningsnavn(virkningstidspunkt.søktAv)}
+              value={søktAvTilVisningsnavn(behandling.søktAv)}
             />
-            {virkningstidspunkt.avslag ? (
+            {behandling.avslag ? (
               <DataDescription
                 label={"Avslag"}
-                value={virkningstidspunkt.avslagVisningsnavn}
+                value={behandling.avslagVisningsnavn}
               />
             ) : (
               <DataDescription
@@ -50,15 +40,15 @@ export default function Virkningstidspunkt({ data }: { data: NotatDto }) {
           <div className="two_column_view">
             <DataDescription
               label={"Mottatt dato"}
-              value={dateToDDMMYYYY(virkningstidspunkt.mottattDato as string)}
+              value={dateToDDMMYYYY(behandling.mottattDato as string)}
             />
             <DataDescription
               label={"Søkt fra dato"}
-              value={dateToDDMMYYYY(virkningstidspunkt.søktFraDato as string)}
+              value={dateToDDMMYYYY(behandling.søktFraDato as string)}
             />
             <DataDescription
               label={"Virkningstidspunkt"}
-              value={dateToDDMMYYYY(virkningstidspunkt.virkningstidspunkt)}
+              value={dateToDDMMYYYY(behandling.virkningstidspunkt)}
             />
           </div>
         </div>

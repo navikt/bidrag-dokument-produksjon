@@ -6,8 +6,13 @@ import { NotatInntektDto, TypeArManedsperiode } from "~/types/Api";
 type InntektsposterProps = {
   periode?: TypeArManedsperiode;
   data: NotatInntektDto;
+  withHorizontalLine?: boolean;
 };
-export default function Inntektsposter({ periode, data }: InntektsposterProps) {
+export default function Inntektsposter({
+  periode,
+  data,
+  withHorizontalLine = true,
+}: InntektsposterProps) {
   return (
     <div
       style={{
@@ -25,7 +30,7 @@ export default function Inntektsposter({ periode, data }: InntektsposterProps) {
           value={formatterBeløp(d.beløp)}
         />
       ))}
-      <div className="horizontal-line"></div>
+      {withHorizontalLine && <div className="horizontal-line"></div>}
     </div>
   );
 }

@@ -1,14 +1,18 @@
-import { NotatForskuddProps, useNotat } from "~/routes/notat.forskudd/route";
-import { dateOrNull, dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
+import { dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
 import {
   Arbeidsforhold,
-  InntekterPerRolle,
   Inntektsrapportering,
   Kilde,
   NotatInntektDto,
+  PersonNotatDto,
   Rolletype,
+  NotatMalType,
 } from "~/types/Api";
-import { erRolle, formatterBeløp } from "~/utils/visningsnavn";
+import {
+  formatterBeløp,
+  rolleTilVisningsnavn,
+  sammenlignRoller,
+} from "~/utils/visningsnavn";
 import { groupBy } from "~/utils/array-utils";
 import KildeIcon from "~/components/KildeIcon";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
@@ -20,69 +24,109 @@ import {
   TableHeader,
 } from "~/components/CommonTable";
 import { getInntektTableHeaders } from "~/constants/tableHeaders";
-import Inntektsposter from "~/routes/notat.forskudd/Inntektsposter";
+import { useNotatFelles } from "~/components/notat_felles/NotatContext";
+import Inntektsposter from "~/components/notat_felles/components/Inntektsposter";
+import HorizontalLine from "~/components/HorizontalLine";
+import { isHarInntekter } from "~/components/inntektTableHelpers";
 
-export default function VedleggInntekter({ data }: NotatForskuddProps) {
-  const { erAvslag } = useNotat();
+export default function VedleggInntekter() {
+  const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
+    useNotatFelles();
   if (erAvslag) return null;
-  const virkningstidspunkt = dateOrNull(
-    data.virkningstidspunkt.virkningstidspunkt,
-  );
+
   return (
     <div style={{ pageBreakBefore: "always" }}>
       <h2 id={elementIds.vedleggInntekter}>
         Vedlegg nr. 2: Inntekt - {tekster.fraOffentligeRegistre}
       </h2>
-      <OpplysningerBidragsmottaker
-        virkningstidspunkt={virkningstidspunkt}
-        data={data.inntekter.offentligeInntekterPerRolle.find((d) =>
-          erRolle(d.gjelder.rolle, Rolletype.BM),
-        )}
+      <OpplysningerForRolle
+        rolle={bidragsmottaker}
+        showRole={type !== NotatMalType.FORSKUDD}
       />
+      {type !== NotatMalType.FORSKUDD && bidragspliktig && (
+        <>
+          <HorizontalLine />
+          <OpplysningerForRolle rolle={bidragspliktig} />
+          <HorizontalLine />
+        </>
+      )}
+      {type !== NotatMalType.FORSKUDD &&
+        søknadsbarn.map((barn) => (
+          <div key={barn.ident}>
+            <OpplysningerForRolle rolle={barn} />
+            <HorizontalLine />
+          </div>
+        ))}
     </div>
   );
 }
 
-function OpplysningerBidragsmottaker({
-  data,
-  virkningstidspunkt,
+function OpplysningerForRolle({
+  rolle,
+  showRole = true,
 }: {
-  data?: InntekterPerRolle;
-  virkningstidspunkt?: Date | null;
+  rolle: PersonNotatDto;
+  showRole?: boolean;
 }) {
-  if (!data) return null;
+  const { data } = useNotatFelles();
+
+  const inntekter = data.inntekter.offentligeInntekterPerRolle.find(
+    (d) =>
+      sammenlignRoller(d.gjelder.rolle, rolle.rolle) &&
+      d.gjelder.ident == rolle.ident,
+  );
+  if (!inntekter) return null;
+  const harInntekter = isHarInntekter(inntekter);
+
   return (
-    <div>
-      <div>
-        <h4>2.1 Arbeidsforhold</h4>
-        <ArbeidsforholdTable data={data.arbeidsforhold} />
-      </div>
-      <OffentligeInntekter
-        data={data.årsinntekter}
-        tittel={"2.2 Skattepliktige og pensjonsgivende inntekter"}
-        medInntektsposter
-      />
-      <OffentligeInntekter
-        data={data.barnetillegg}
-        tittel={"2.3 Barnetillegg"}
-        medBarn
-      />
-      <OffentligeInntekter
-        data={data.utvidetBarnetrygd}
-        tittel={"2.4 Utvidet barnetrygd"}
-      />
-      <OffentligeInntekter
-        data={data.småbarnstillegg}
-        tittel={"2.5 Småbarnstillegg"}
-      />
-      <OffentligeInntekter
-        data={data.kontantstøtte}
-        tittel={"2.6 Kontantstøtte"}
-        medBarn
-      />
+    <div className={"mt-medium"}>
+      {showRole && (
+        <div className={"elements_inline"}>
+          <h5 style={{ marginRight: 5, paddingRight: 0 }}>
+            {rolleTilVisningsnavn(rolle.rolle!)}
+          </h5>
+          {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
+        </div>
+      )}
+      {inntekter.arbeidsforhold && inntekter.arbeidsforhold.length > 0 && (
+        <div>
+          <h4>2.1 Arbeidsforhold</h4>
+          <ArbeidsforholdTable data={inntekter.arbeidsforhold} />
+        </div>
+      )}
+      {!harInntekter ? (
+        <p>Ingen offentlige inntekter</p>
+      ) : (
+        <>
+          <OffentligeInntekter
+            data={inntekter.årsinntekter}
+            tittel={"2.2 Skattepliktige og pensjonsgivende inntekter"}
+            medInntektsposter
+          />
+          <OffentligeInntekter
+            data={inntekter.barnetillegg}
+            tittel={"2.3 Barnetillegg"}
+            medBarn
+          />
+          <OffentligeInntekter
+            data={inntekter.utvidetBarnetrygd}
+            tittel={"2.4 Utvidet barnetrygd"}
+          />
+          <OffentligeInntekter
+            data={inntekter.småbarnstillegg}
+            tittel={"2.5 Småbarnstillegg"}
+          />
+          <OffentligeInntekter
+            data={inntekter.kontantstøtte}
+            tittel={"2.6 Kontantstøtte"}
+            medBarn
+          />
+        </>
+      )}
     </div>
   );
 }
+
 type OffentligeInntekterProps = {
   tittel: string;
   data: NotatInntektDto[];
@@ -132,7 +176,7 @@ function InntektTable({
             },
             { name: tekster.tabell.inntekt.beløp },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
-          rows: data.map((d) => {
+          rows: data.map((d, i) => {
             const periode = d.opprinneligPeriode;
             return {
               columns: [
@@ -144,7 +188,13 @@ function InntektTable({
                 medInntektsposter && d.inntektsposter.length > 0
                   ? [
                       {
-                        content: <Inntektsposter data={d} periode={periode} />,
+                        content: (
+                          <Inntektsposter
+                            data={d}
+                            periode={periode}
+                            withHorizontalLine={data.length > i + 1}
+                          />
+                        ),
                       },
                     ]
                   : undefined,
@@ -161,12 +211,12 @@ function ArbeidsforholdTable({ data }: { data: Arbeidsforhold[] }) {
 
   return (
     <CommonTable
-      width={"500px"}
+      width={"600px"}
       data={{
         headers: [
           { name: tekster.tabell.felles.periode, width: "100px" },
-          { name: tekster.tabell.arbeidsforhold.arbeidsgiver, width: "100px" },
-          { name: tekster.tabell.arbeidsforhold.stilling, width: "50px" },
+          { name: tekster.tabell.arbeidsforhold.arbeidsgiver, width: "170px" },
+          { name: tekster.tabell.arbeidsforhold.stilling, width: "70px" },
           { name: tekster.tabell.arbeidsforhold.lønnsendring, width: "100px" },
         ],
         rows: data.map((d) => ({

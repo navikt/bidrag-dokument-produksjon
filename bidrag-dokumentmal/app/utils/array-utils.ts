@@ -14,3 +14,6 @@ export function groupBy<T, K extends keyof never>(
     ),
   );
 }
+export const hasValue = <T>(array: T[], key: string): boolean => {
+  return array.some((item) => item === key);
+};

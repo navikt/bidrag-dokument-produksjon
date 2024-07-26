@@ -3,10 +3,14 @@ export default {
   vedleggLenke: "se vedlegg nr. {} for opplysninger fra offentlige registre",
   titler: {
     forskudd: "Forskudd, saksbehandlingsnotat",
+    særbidrag: "Særbidrag, saksbehandlingsnotat",
     boforhold: {
       tittel: "Boforhold",
       søknadsbarn: "Søknadsbarn",
       egetBarnIHusstanden: "Eget barn i husstanden",
+    },
+    andreVoksneIHusstanden: {
+      tittel: "Andre voksne i husstanden",
     },
     sivilstand: {
       tittel: "Sivilstand",
@@ -21,6 +25,14 @@ export default {
       beskrivelse: "Beskrivelse",
       type: "Type",
       status: "Status",
+    },
+    utgifter: {
+      betaltAvBp: "Betalt av BP",
+      dato: "Forfallsdato",
+      utgift: "Utgift",
+      kravbeløp: "Kravbeløp",
+      godkjentBeløp: "Godkjent beløp",
+      begrunnelse: "Begrunnelse",
     },
     inntekt: {
       beløp: "Beløp",

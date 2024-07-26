@@ -1,16 +1,36 @@
 import { Rolletype, SoktAvType } from "~/types/Api";
 
-export const erRolle = (rolle?: Rolletype, erLikRolle?: Rolletype) =>
+export const sammenlignRoller = (rolle?: Rolletype, erLikRolle?: Rolletype) =>
   rolle != undefined &&
   erLikRolle != undefined &&
   (rolle == erLikRolle || rolle == rolleTilType[erLikRolle]);
-export const rolleTilVisningsnavn = {
-  BIDRAGSMOTTAKER: "Bidragsmottaker",
-  BM: "Bidragsmottaker",
-  BP: "Bidragspliktig",
-  BIDRAGSPLIKTIG: "Bidragspliktig",
-  BA: "Barn",
-  BARN: "Barn",
+
+export function søktAvTilVisningsnavn(søktAv?: SoktAvType) {
+  switch (søktAv) {
+    case SoktAvType.NAV_INTERNASJONALT:
+    case SoktAvType.NAV_BIDRAG:
+      return "NAV";
+    case SoktAvType.BARN18AR:
+      return "Barn";
+    case SoktAvType.BM_I_ANNEN_SAK:
+      return "Bidragsmottaker i annen sak";
+    case SoktAvType.KLAGE_ANKE:
+      return "Klage";
+    default:
+      return capitalizeFirstLetter(søktAv);
+  }
+}
+export const rolleTilVisningsnavn = (rolle: Rolletype) => {
+  switch (rolle) {
+    case Rolletype.BM:
+      return "Bidragsmottaker";
+    case Rolletype.BP:
+      return "Bidragspliktig";
+    case Rolletype.BA:
+      return "Søknadsbarn";
+    default:
+      return capitalizeFirstLetter(rolle);
+  }
 };
 
 export const rolleTilType = {
@@ -21,16 +41,32 @@ export const rolleTilType = {
   [Rolletype.RM]: "REELMOTTAKER",
 };
 
-export const søktAvTilVisningsnavn = (søktAv?: SoktAvType) => {
-  return capitalizeFirstLetter(søktAv);
-};
-
 export function capitalizeFirstLetter(str?: string) {
   if (!str) return str;
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
 
-export function formatterBeløp(beløp: number | string | undefined): string {
-  if (!beløp) return "0";
-  return beløp.toLocaleString("nb-NO");
-}
+export const formatterBeløp = (
+  beløp: number | string | undefined,
+  visSymbol = false,
+): string => {
+  return (beløp ?? 0).toLocaleString("nb-NO", {
+    style: visSymbol ? "currency" : undefined,
+    currency: "NOK",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+    currencyDisplay: visSymbol ? "symbol" : undefined,
+  });
+};
+export const formatterProsent = (
+  value: number | string | undefined,
+): string => {
+  if (!value) return "0%";
+  const asNumber = typeof value == "string" ? parseInt(value) : value;
+  const percentageAsFraction = asNumber > 1 ? asNumber / 100 : asNumber;
+  return percentageAsFraction.toLocaleString("nb-NO", {
+    style: "percent",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 2,
+  });
+};

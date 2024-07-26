@@ -1,14 +1,15 @@
-import { capitalizeFirstLetter, erRolle } from "~/utils/visningsnavn";
-import { NotatDto, PersonNotatDto, Rolletype } from "~/types/Api";
+import { sammenlignRoller, rolleTilVisningsnavn } from "~/utils/visningsnavn";
+import { PersonNotatDto, Rolletype } from "~/types/Api";
 import DataDescription from "~/components/DataDescription";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
+import { NotatDataProps } from "~/components/notat_felles/NotatContext";
 
-export default function Soknaddetaljer({ data }: { data: NotatDto }) {
+export default function Soknaddetaljer({ data }: NotatDataProps) {
   const rollerIkkeBarn = data.roller.filter(
-    (rolle) => !erRolle(rolle.rolle, Rolletype.BA),
+    (rolle) => !sammenlignRoller(rolle.rolle, Rolletype.BA),
   );
   const rollerBarn = data.roller.filter((rolle) =>
-    erRolle(rolle.rolle, Rolletype.BA),
+    sammenlignRoller(rolle.rolle, Rolletype.BA),
   );
   return (
     <div className={"soknad_detaljer"}>
@@ -17,7 +18,7 @@ export default function Soknaddetaljer({ data }: { data: NotatDto }) {
         {rollerIkkeBarn.map((rolle) => (
           <DataDescription
             key={rolle.ident}
-            label={capitalizeFirstLetter(rolle.rolle)!}
+            label={rolleTilVisningsnavn(rolle.rolle!)!}
             value={rolle.navn + " / " + dateToDDMMYYYY(rolle.fødselsdato)}
           />
         ))}
