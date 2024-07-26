@@ -1,5 +1,9 @@
 import DataDescription from "~/components/DataDescription";
-import { BoforholdBarn, NotatAndreVoksneIHusstanden } from "~/types/Api";
+import {
+  BoforholdBarn,
+  NotatAndreVoksneIHusstanden,
+  NotatMalType,
+} from "~/types/Api";
 import Person from "~/components/Person";
 import { SimpleTable } from "~/components/SimpleTable";
 import Notat from "~/components/Notat";
@@ -26,10 +30,12 @@ export default function Boforhold({ data }: NotatDataProps) {
         {data.boforhold.barn.map((b, i) => (
           <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />
         ))}
-        <Sivilstand data={data} />
-        <BoforholdAndreVoksneIHusstanden
-          data={data.boforhold.andreVoksneIHusstanden}
-        />
+        {data.type === NotatMalType.FORSKUDD && <Sivilstand data={data} />}
+        {data.type !== NotatMalType.FORSKUDD && (
+          <BoforholdAndreVoksneIHusstanden
+            data={data.boforhold.andreVoksneIHusstanden}
+          />
+        )}
         <Notat data={data.boforhold.notat} />
       </div>
     </div>
