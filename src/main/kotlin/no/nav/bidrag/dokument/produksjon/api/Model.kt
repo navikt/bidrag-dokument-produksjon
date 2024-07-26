@@ -100,7 +100,8 @@ fun generatePDFResponse2(
     }
     val jsonPayload = payload ?: hotTemplateData(category, template)
     val startTime = System.currentTimeMillis()
-    return bidragDokumentmalConsumer.hentDokumentmal(category, template, jsonPayload)?.let { document ->
+    return bidragDokumentmalConsumer.hentDokumentmal(category, template, jsonPayload)?.let {
+            document ->
         val bytes = PdfContent(document.fjernKontrollTegn()).generate()
         log.info {
             "Done generating PDF for category $category and template $template in ${System.currentTimeMillis() - startTime}ms"
