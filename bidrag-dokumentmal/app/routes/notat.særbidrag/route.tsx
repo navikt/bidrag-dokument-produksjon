@@ -54,7 +54,7 @@ export default function NotatSærbidrag() {
   const data = response.data;
   return (
     <div id="forskudd_notat">
-      <Header title={tekster.titler.forskudd} />
+      <Header title={tekster.titler.særbidrag} />
       {response.renderForPdf && (
         <div className="header top_bottom_text">
           {renderTopBottomTextContent()}
