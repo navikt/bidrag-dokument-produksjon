@@ -247,7 +247,7 @@ function InntektPerBarnTable({
                               { content: visningsnavnInntektstype },
                               {
                                 content: formatterBeløp(
-                                  Math.round(d.beløp / 12),
+                                  formatterBeløp(d.beløp / 12),
                                 ),
                               },
                               { content: formatterBeløp(d.beløp) },
