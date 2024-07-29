@@ -76,7 +76,6 @@ function OpplysningerForRolle({
       d.gjelder.ident == rolle.ident,
   );
   if (!inntekter) return null;
-  const harInntekter = isHarInntekter(inntekter);
 
   return (
     <div className={"mt-medium"}>
@@ -94,7 +93,7 @@ function OpplysningerForRolle({
           <ArbeidsforholdTable data={inntekter.arbeidsforhold} />
         </div>
       )}
-      {!harInntekter ? (
+      {!isHarInntekter(inntekter) ? (
         <p>Ingen offentlige inntekter</p>
       ) : (
         <>

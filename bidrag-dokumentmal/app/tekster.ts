@@ -45,8 +45,10 @@ export default {
       arbeidsgiver: "Arbeidsgiver",
     },
     beregnet: {
-      skattepliktigInntekt: "Skattepliktige- inntekter",
-      barnetillegg: "Barne- tillegg",
+      skattepliktigInntektSplittet: "Skattepliktige- inntekter",
+      skattepliktigInntekt: "Skattepliktige inntekter",
+      barnetilleggSplittet: "Barne- tillegg",
+      barnetillegg: "Barnetillegg",
       utvidetBarnetrygd: "Utvidet- barnetrygd",
       småbarnstillegg: "Småbarns- tillegg",
       kontantstøtte: "Kontant- støtte",
