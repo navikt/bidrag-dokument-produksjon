@@ -20,7 +20,7 @@ private val log = KotlinLogging.logger {}
 
 @RestController
 @RequestMapping("/api/v2/notat")
-class ProduserNotatApiV2(
+class ProduserNotatApi(
     val bidragDokumentmalConsumer: BidragDokumentmalConsumer,
 ) {
     @Bean
