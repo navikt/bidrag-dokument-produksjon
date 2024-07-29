@@ -148,7 +148,7 @@ function AndreVoksneiHusstandenDetaljer({
 }) {
   return (
     <>
-      <h6>Hvem bor på adresse?</h6>
+      <h3>Hvem bor på adresse?</h3>
       <ul
         style={{
           listStyleType: "decimal",
@@ -162,7 +162,8 @@ function AndreVoksneiHusstandenDetaljer({
             return (
               <li key={husstandsmedlem.navn + "-" + index}>
                 {DateToDDMMYYYYString(dateOrNull(husstandsmedlem.fødselsdato)!)}
-                {husstandsmedlem.harRelasjonTilBp && " (Relasjon til BP)"}
+                {husstandsmedlem.harRelasjonTilBp &&
+                  " (Relasjon til Bidragspliktig)"}
               </li>
             );
           },
