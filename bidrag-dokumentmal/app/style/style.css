@@ -63,6 +63,11 @@ body {
     width: 210mm;
     height: 100%;
     color:black;
+    font-size: 12px;
+    font-family: "Source Sans Pro", serif;
+}
+table {
+    font-size: 12px;
 }
 :root {
     --test: "123123";
@@ -79,7 +84,6 @@ dt:before {
 }
 dl {
     margin: 0 0 8px 0;
-    font-size: 1rem;
 }
 dt, dd {
     display: inline;
@@ -100,12 +104,18 @@ dd {
     margin-left: 3px;
 }
 dt {
-    font-weight: bold;
+    /*font-weight: bold;*/
     display: inline-block;
 }
 #header {
     position: relative;
     height: 80px;
+}
+.title2 {
+    display: inline-block;
+    top: 0rem;
+    left: 0;
+    font-weight: bold;
 }
 
 .title {
@@ -115,6 +125,17 @@ dt {
     left: 0.5cm;
     font-size: 32px;
 }
+
+.navlogo2 {
+    position: absolute;
+    right: 0;
+    top: 0;
+    margin-right: 90px;
+    margin-bottom: 44px;
+    width: 80px;
+    height: 80px;
+}
+
 .navlogo {
     position: absolute;
     right: 0;
@@ -129,43 +150,6 @@ dt {
     font-family: "Source Sans Pro";
 }
 
-h1 {
-    font-weight: 700;
-    font-style: normal;
-    font-size: 1.75rem;
-    font-family: "Source Sans Pro";
-}
-h2 {
-    margin-top: 32px;
-    margin-bottom: 8px;
-    font-size: 1.5rem;
-}
-h3 {
-    margin-bottom: 8px;
-    margin-top: 8px;
-    font-size: 1.25rem;
-}
-h4 {
-    margin-bottom: 8px;
-    margin-top: 8px;
-    font-size: 1.25rem;
-}
-h5 {
-    margin-bottom: 8px;
-    margin-top: 8px;
-    font-size: 1.125rem;
-}
-h6 {
-    margin-bottom: 8px;
-    margin-top: 8px;
-    font-size: 1rem;
-}
-p {
-    margin-top: 3px;
-    margin-bottom: 3px;
-    font-size: 	0.875rem;
-    font-family: "Source Sans Pro";
-}
 
 .container {
     margin: 0cm 0.5cm;
@@ -254,18 +238,21 @@ div.top_bottom_text div {
     width: 49%;
 }
 div.footer {
-    display: block; text-align: left;
+    display: block; text-align: right;
     position: running(footer);
 }
 div.header {
-    display: block; text-align: left;
+    display: block; text-align: right;
     position: running(header);
 }
 .custom-top_bottom_content:after {
+    text-align: left;
+    float: left;
     font-size: 12px;
     content: attr(data-content);
 }
 .custom-page-number:after {
+    text-align: right;
     content: counter(page) ' av ' counter(pages);
 }
 
@@ -281,4 +268,52 @@ div.header {
 
 .mt-medium {
     margin-top: 16px;
+}
+
+
+
+h1 {
+    font-weight: 700;
+    font-style: normal;
+    font-size: 18px;
+    font-family: "Source Sans Pro";
+}
+h2 {
+    margin-top: 16px;
+    margin-bottom: 8px;
+    font-size: 16px;
+}
+h3 {
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-size: 14px;
+}
+h4 {
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-size: 12px;
+}
+h5 {
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-size: 10px;
+}
+h6 {
+    margin-bottom: 8px;
+    margin-top: 8px;
+    font-size: 8px;
+}
+p {
+    margin-top: 3px;
+    margin-bottom: 3px;
+    font-size: 	12px;
+    font-family: "Source Sans Pro";
+}
+
+/*
+Custom components
+ */
+
+.soknad_detaljer {
+ margin-bottom: 52px;
 }

@@ -90,9 +90,9 @@ function InntekterForRolle({
     <div className={"mt-medium"}>
       {showRole && (
         <div className={"elements_inline"}>
-          <h5 style={{ marginRight: 5, paddingRight: 0 }}>
+          <h2 style={{ marginRight: 5, paddingRight: 0 }}>
             {rolleTilVisningsnavn(rolle.rolle!)}
-          </h5>
+          </h2>
           {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
         </div>
       )}
@@ -397,9 +397,9 @@ function TableTitle({
   if (!title) return null;
   return (
     <div style={{ display: "inline-block", verticalAlign: "middle" }}>
-      <h4 style={{ padding: 0, margin: "0 0 5px 0", display: "inline" }}>
+      <h3 style={{ padding: 0, margin: "0 0 5px 0", display: "inline" }}>
         {title}
-      </h4>
+      </h3>
       {subtitle && <span>{subtitle}</span>}
     </div>
   );

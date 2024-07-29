@@ -4,7 +4,7 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.models.examples.Example
 import no.nav.bidrag.dokument.produksjon.SIKKER_LOGG
-import no.nav.bidrag.dokument.produksjon.consumer.BidragDokumentmalConsumer
+import no.nav.bidrag.dokument.produksjon.service.PdfProducerService
 import no.nav.bidrag.dokument.produksjon.util.getObjectmapper
 import no.nav.bidrag.transport.felles.commonObjectmapper
 import no.nav.bidrag.transport.notat.NotatDto
@@ -21,7 +21,7 @@ private val log = KotlinLogging.logger {}
 @RestController
 @RequestMapping("/api/v2/notat")
 class ProduserNotatApi(
-    val bidragDokumentmalConsumer: BidragDokumentmalConsumer,
+    val pdfProducerService: PdfProducerService,
 ) {
     @Bean
     fun notatForskuddExampleV2(): Example {
@@ -36,8 +36,7 @@ class ProduserNotatApi(
         @org.springframework.web.bind.annotation.RequestBody payload: NotatDto,
     ): ResponseEntity<ByteArray> {
         log.info { "Produserer notat PDF 2 for dokumentmal ${payload.type}" }
-        return generatePDFResponseV2(
-            bidragDokumentmalConsumer,
+        return pdfProducerService.generatePDFResponseV2(
             "notat",
             payload.type,
             commonObjectmapper.writeValueAsString(payload),
@@ -53,8 +52,7 @@ class ProduserNotatApi(
             "Produserer notat HTML for dokumentmal ${payload.type} for input $payload"
         }
         log.info { "Produserer notat HTML for dokumentmal ${payload.type}" }
-        return generateHTMLResponseV2(
-            bidragDokumentmalConsumer,
+        return pdfProducerService.generateHTMLResponseV2(
             "notat",
             payload.type,
             getObjectmapper().writeValueAsString(payload),

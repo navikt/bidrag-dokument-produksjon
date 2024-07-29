@@ -1,11 +1,13 @@
 import { useActionData } from "@remix-run/react";
 import { ActionFunctionArgs, json } from "@remix-run/node";
 import "../../style/style.css";
-import Header from "~/components/Header";
 import { NotatDto } from "~/types/Api";
 import Vedtak from "~/routes/notat.forskudd/Vedtak";
 import tekster from "~/tekster";
-import { NotatProvider } from "~/components/notat_felles/NotatContext";
+import {
+  NotatProvider,
+  RenderMode,
+} from "~/components/notat_felles/NotatContext";
 import Soknaddetaljer from "~/components/notat_felles/components/Soknaddetaljer";
 import Virkningstidspunkt from "~/routes/notat.forskudd/Virkningstidspunkt";
 import Boforhold from "~/components/notat_felles/components/Boforhold";
@@ -54,7 +56,6 @@ export default function NotatForskudd() {
   const data = response.data;
   return (
     <div id="forskudd_notat">
-      <Header title={tekster.titler.forskudd} />
       {response.renderForPdf && (
         <div className="header top_bottom_text">
           {renderTopBottomTextContent()}
@@ -65,11 +66,14 @@ export default function NotatForskudd() {
           {renderTopBottomTextContent()}
         </div>
       )}
-      <NotatProvider data={data}>
+      <NotatProvider
+        data={data}
+        renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
+      >
         <div className={"container page"}>
-          <Soknaddetaljer data={data} />
+          <Soknaddetaljer />
           <Virkningstidspunkt />
-          <Boforhold data={data} />
+          <Boforhold />
           <Inntekter />
           <Vedtak />
           <VedleggBoforhold />

@@ -2,9 +2,11 @@ import { sammenlignRoller, rolleTilVisningsnavn } from "~/utils/visningsnavn";
 import { PersonNotatDto, Rolletype } from "~/types/Api";
 import DataDescription from "~/components/DataDescription";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
-import { NotatDataProps } from "~/components/notat_felles/NotatContext";
+import NavLogo from "~/components/NavLogo";
+import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 
-export default function Soknaddetaljer({ data }: NotatDataProps) {
+export default function Soknaddetaljer() {
+  const { data } = useNotatFelles();
   const rollerIkkeBarn = data.roller.filter(
     (rolle) => !sammenlignRoller(rolle.rolle, Rolletype.BA),
   );
@@ -14,6 +16,7 @@ export default function Soknaddetaljer({ data }: NotatDataProps) {
   return (
     <div className={"soknad_detaljer"}>
       <div>
+        <NavLogo />
         <DataDescription label={"Saksnummer"} value={data.saksnummer} />
         {rollerIkkeBarn.map((rolle) => (
           <DataDescription

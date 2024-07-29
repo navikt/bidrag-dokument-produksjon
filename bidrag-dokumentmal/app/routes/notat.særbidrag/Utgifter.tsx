@@ -58,7 +58,7 @@ function Utgiftsposter() {
           }),
         }}
       />
-      <div style={{ marginTop: "10px" }}>
+      <div style={{ marginTop: "8px" }}>
         <DataDescription
           label={"Godkjent beløp"}
           value={formatterBeløp(data.utgift?.beregning?.totalGodkjentBeløp)}

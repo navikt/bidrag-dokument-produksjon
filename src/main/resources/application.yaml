@@ -5,6 +5,8 @@ management:
         include: "prometheus,health"
 bidrag-dokumentmal:
   url:  ${BIDRAG_DOKUMENTMAL_URL:http://bidrag-dokumentmal}
+bidrag-pdfgen:
+  url: ${BIDRAG_PDFGEN_URL:http://bidrag-pdfgen}
 spring:
   devtools:
     livereload:
