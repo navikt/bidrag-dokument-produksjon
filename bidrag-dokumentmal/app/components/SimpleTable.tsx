@@ -1,6 +1,7 @@
 import { Kilde, TypeArManedsperiode } from "~/types/Api";
 import { formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
+import tekster from "~/tekster";
 
 type TableData = {
   periode: TypeArManedsperiode;
@@ -16,8 +17,8 @@ export function SimpleTable({ data }: SimpleTableProps) {
   return (
     <table className="table" style={{ breakBefore: "recto" }}>
       <tr>
-        <th style={{ width: "190px" }}>Fra og med - Til og med</th>
-        <th style={{ width: "200px" }}>Status</th>
+        <th style={{ width: "190px" }}>{tekster.tabell.felles.fraTilOgMed}</th>
+        <th style={{ width: "200px" }}>{tekster.tabell.felles.status}</th>
         <th>Kilde</th>
       </tr>
       {data.map((d, i) => (

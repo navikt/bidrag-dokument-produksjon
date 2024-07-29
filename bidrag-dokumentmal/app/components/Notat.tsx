@@ -1,9 +1,9 @@
-import { Notat as NotatData } from "~/types/Api";
 import DataDescription from "~/components/DataDescription";
 import xss from "xss";
+import { SaksbehandlerNotat } from "~/types/Api";
 
 type NotatProps = {
-  data: NotatData;
+  data: SaksbehandlerNotat;
 };
 export default function Notat({ data }: NotatProps) {
   return (
