@@ -14,6 +14,8 @@ import Boforhold from "~/components/notat_felles/components/Boforhold";
 import Inntekter from "~/components/notat_felles/components/Inntekter";
 import VedleggBoforhold from "~/components/notat_felles/components/VedleggBoforhold";
 import VedleggInntekter from "~/components/notat_felles/components/VedleggInntekter";
+import DagensDato from "~/components/DagensDato";
+import NotatTittel from "~/components/NotatTittel";
 
 type NotatRequest = {
   renderForPdf: boolean;
@@ -48,7 +50,7 @@ export default function NotatForskudd() {
     <>
       <div
         className={"custom-top_bottom_content"}
-        data-content={`${tekster.titler.forskudd}. Saksnummer ${data.saksnummer}`}
+        data-content={`Saksnummer ${data.saksnummer}`}
       ></div>
       <div className={"custom-page-number"}></div>
     </>
@@ -56,11 +58,11 @@ export default function NotatForskudd() {
   const data = response.data;
   return (
     <div id="forskudd_notat">
-      {response.renderForPdf && (
-        <div className="header top_bottom_text">
-          {renderTopBottomTextContent()}
-        </div>
-      )}
+      {/*{response.renderForPdf && (*/}
+      {/*  <div className="header top_bottom_text">*/}
+      {/*    {renderTopBottomTextContent()}*/}
+      {/*  </div>*/}
+      {/*)}*/}
       {response.renderForPdf && (
         <div className="footer top_bottom_text">
           {renderTopBottomTextContent()}
@@ -72,6 +74,8 @@ export default function NotatForskudd() {
       >
         <div className={"container page"}>
           <Soknaddetaljer />
+          <DagensDato />
+          <NotatTittel title={tekster.titler.forskudd} />
           <Virkningstidspunkt />
           <Boforhold />
           <Inntekter />
