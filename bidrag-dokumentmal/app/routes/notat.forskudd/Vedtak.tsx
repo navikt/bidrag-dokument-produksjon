@@ -92,7 +92,7 @@ function VedtakTable({
             { name: "Sivilstand", width: "130px" },
             { name: "Antall barn i husstand", width: "80px" },
             { name: "Forskudd", width: "70px" },
-            { name: "Resultat", width: "200px" },
+            { name: "Resultat", width: "150px" },
           ],
           rows: perioder.map((d) => ({
             columns: [
@@ -113,7 +113,7 @@ function VedtakTable({
         return (
           <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            <CommonTable data={tableData} width={"710px"} />
+            <CommonTable data={tableData} width={"610px"} />
             <div
               className="horizontal-line"
               style={{
