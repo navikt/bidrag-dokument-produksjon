@@ -285,7 +285,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
           width={"580px"}
           data={{
             headers: [
-              { name: tekster.tabell.felles.fraTilOgMed, width: "120px" },
+              { name: tekster.tabell.felles.fraTilOgMed, width: "130px" },
               {
                 name: columnNames.SKATTEPLIKTIG,
                 width: "85px",
