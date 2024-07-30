@@ -7,14 +7,10 @@ import {
   PersonNotatDto,
   Rolletype,
 } from "~/types/Api";
-import { dateToDDMMYYYY, deductDays, formatPeriode } from "~/utils/date-utils";
+import { deductDays, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
 import { groupBy, hasValue } from "~/utils/array-utils";
-import {
-  formatterBeløp,
-  rolleTilVisningsnavn,
-  sammenlignRoller,
-} from "~/utils/visningsnavn";
+import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
 import Notat from "~/components/Notat";
 import elementIds from "~/utils/elementIds";
 import {
@@ -34,6 +30,9 @@ import {
   isHarInntekter,
   beregnetInntekterColumnNames,
 } from "~/components/inntektTableHelpers";
+import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
+import InntektRolle from "~/components/inntekt/InntektRolle";
+import TableGjelderBarn from "~/components/TableGjelderBarn";
 
 export default function Inntekter() {
   const { erAvslag, data, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
@@ -88,18 +87,7 @@ function InntekterForRolle({
   if (inntekter == null) return null;
   return (
     <div>
-      {showRole && (
-        <div
-          className={"elements_inline text-heading-small"}
-          style={{ marginRight: 5, paddingRight: 0 }}
-        >
-          {rolle.rolle === Rolletype.BA ? (
-            <p>{rolleTilVisningsnavn(rolle.rolle!) + ": " + rolle.navn}</p>
-          ) : (
-            <p>{rolleTilVisningsnavn(rolle.rolle!)}</p>
-          )}
-        </div>
-      )}
+      {showRole && <InntektRolle rolle={rolle} />}
       {!isHarInntekter(inntekter) ? (
         <p>Ingen inntekter</p>
       ) : (
@@ -156,7 +144,7 @@ function InntektTable({
   if (inntekter.length == 0) return null;
   return (
     <div className={"subsection"}>
-      <TableTitle title={title} subtitle={subtitle} />
+      <InntektTableTitle title={title} subtitle={subtitle} />
       <CommonTable
         data={{
           headers: [
@@ -217,7 +205,7 @@ function InntektPerBarnTable({
   const inntekterBarn = groupBy(data, (d) => d.gjelderBarn?.ident!);
   return (
     <div style={{ marginTop: "16px" }}>
-      <TableTitle title={title} subtitle={subtitle} />
+      <InntektTableTitle title={title} subtitle={subtitle} />
       {inntekterBarn.map(([key, value], i) => {
         const gjelderBarn = value[0].gjelderBarn!;
         const erBarnetillegg =
@@ -231,7 +219,7 @@ function InntektPerBarnTable({
               marginBottom: addMargin ? "16px" : "0px",
             }}
           >
-            <GjelderBarn gjelderBarn={gjelderBarn} />
+            <TableGjelderBarn gjelderBarn={gjelderBarn} />
             <CommonTable
               width={"580px"}
               data={{
@@ -291,7 +279,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
     return (
       <>
         {harFlereEnnEttSøknadsbarn && gjelderBarn && (
-          <GjelderBarn gjelderBarn={gjelderBarn} />
+          <TableGjelderBarn gjelderBarn={gjelderBarn} />
         )}
         <CommonTable
           width={"700px"}
@@ -378,42 +366,13 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
   if (!harInntekter) return;
   return (
     <div className={"subsection"}>
-      <TableTitle title={"Beregnet totalt"} />
+      <InntektTableTitle title={"Beregnet totalt"} />
       {rolle.rolle === Rolletype.BA
         ? renderTable(
             data.find((d) => d.gjelderBarn.ident == rolle.ident)
               ?.summertInntektListe ?? [],
           )
         : renderForAllChildren()}
-    </div>
-  );
-}
-
-function GjelderBarn({ gjelderBarn }: { gjelderBarn: PersonNotatDto }) {
-  return (
-    <dl style={{ marginBottom: 0 }}>
-      <dt>{gjelderBarn.navn}</dt>
-      <dd style={{ display: "inline-table" }}>
-        / {dateToDDMMYYYY(gjelderBarn.fødselsdato)}
-      </dd>
-    </dl>
-  );
-}
-
-function TableTitle({
-  title,
-  subtitle,
-}: {
-  title?: string;
-  subtitle?: string;
-}) {
-  if (!title) return null;
-  return (
-    <div style={{ display: "inline-block", verticalAlign: "middle" }}>
-      <h3 style={{ padding: 0, margin: "0 0 5px 0", display: "inline" }}>
-        {title}
-      </h3>
-      {subtitle && <span>{subtitle}</span>}
     </div>
   );
 }

@@ -38,6 +38,7 @@ export default function VedleggBoforhold() {
         return (
           <div key={key} className="table_container">
             <DataDescription
+              style={{ marginBottom: "0px" }}
               label={
                 barn.medIBehandling ? "Søknadsbarn" : "Eget barn i husstanden"
               }

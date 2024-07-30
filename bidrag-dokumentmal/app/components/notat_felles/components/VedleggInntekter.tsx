@@ -5,17 +5,11 @@ import {
   Kilde,
   NotatInntektDto,
   PersonNotatDto,
-  Rolletype,
   NotatMalType,
 } from "~/types/Api";
-import {
-  formatterBeløp,
-  rolleTilVisningsnavn,
-  sammenlignRoller,
-} from "~/utils/visningsnavn";
+import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
 import { groupBy } from "~/utils/array-utils";
 import KildeIcon from "~/components/KildeIcon";
-import TableGjelderBarn from "~/components/TableGjelderBarn";
 import elementIds from "~/utils/elementIds";
 import tekster from "~/tekster";
 import {
@@ -28,6 +22,9 @@ import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Inntektsposter from "~/components/notat_felles/components/Inntektsposter";
 import HorizontalLine from "~/components/HorizontalLine";
 import { isHarInntekter } from "~/components/inntektTableHelpers";
+import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
+import InntektRolle from "~/components/inntekt/InntektRolle";
+import TableGjelderBarn from "~/components/TableGjelderBarn";
 
 export default function VedleggInntekter() {
   const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
@@ -44,15 +41,15 @@ export default function VedleggInntekter() {
         showRole={type !== NotatMalType.FORSKUDD}
       />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
-        <>
+        <div className={"mt-medium"}>
           <HorizontalLine />
           <OpplysningerForRolle rolle={bidragspliktig} />
           <HorizontalLine />
-        </>
+        </div>
       )}
       {type !== NotatMalType.FORSKUDD &&
         søknadsbarn.map((barn) => (
-          <div key={barn.ident}>
+          <div key={barn.ident} className={"mt-medium"}>
             <OpplysningerForRolle rolle={barn} />
             <HorizontalLine />
           </div>
@@ -78,19 +75,8 @@ function OpplysningerForRolle({
   if (!inntekter) return null;
 
   return (
-    <div className={"mt-medium"}>
-      {showRole && (
-        <div
-          className={"elements_inline text-heading-small"}
-          style={{ marginRight: 5, paddingRight: 0 }}
-        >
-          {rolle.rolle === Rolletype.BA ? (
-            <p>{rolleTilVisningsnavn(rolle.rolle!) + ": " + rolle.navn}</p>
-          ) : (
-            <p>{rolleTilVisningsnavn(rolle.rolle!)}</p>
-          )}
-        </div>
-      )}
+    <div>
+      {showRole && <InntektRolle rolle={rolle} />}
       {inntekter.arbeidsforhold && inntekter.arbeidsforhold.length > 0 && (
         <div>
           <h4>2.1 Arbeidsforhold</h4>
@@ -146,7 +132,7 @@ function OffentligeInntekter({
   if (data.length == 0) return null;
   return (
     <div className={"subsection"}>
-      <h4>{tittel}</h4>
+      <InntektTableTitle title={tittel} />
       {medBarn ? (
         <InntektPerBarnTable data={data} />
       ) : (

@@ -93,6 +93,7 @@ export interface InntekterPerRolle {
   småbarnstillegg: NotatInntektDto[];
   kontantstøtte: NotatInntektDto[];
   beregnetInntekter: NotatBeregnetInntektDto[];
+  harInntekter: boolean;
 }
 
 export enum Inntektsrapportering {
@@ -210,8 +211,10 @@ export interface NotatBehandlingDetaljer {
   /** @format date */
   virkningstidspunkt?: string;
   avslag?: Resultatkode;
-  avslagVisningsnavn?: string;
+  /** @format date */
+  datoNotat: string;
   kategoriVisningsnavn?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatBeregnetInntektDto {
@@ -289,8 +292,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   voksenIHusstanden?: boolean;
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
-  beløpSomInnkreves: number;
   resultatVisningsnavn: string;
+  beløpSomInnkreves: number;
 };
 
 export interface NotatSivilstand {
@@ -599,17 +602,4 @@ export enum TypeArsakstype {
   TREMANEDERTILBAKE = "TRE_MÅNEDER_TILBAKE",
   TREARSREGELEN = "TRE_ÅRS_REGELEN",
   FRAMANEDENETTERIPAVENTEAVBIDRAGSSAK = "FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK",
-}
-
-export interface MediaType {
-  type?: string;
-  subtype?: string;
-  parameters?: Record<string, string>;
-  /** @format double */
-  qualityValue?: number;
-  wildcardSubtype?: boolean;
-  subtypeSuffix?: string;
-  charset?: string;
-  wildcardType?: boolean;
-  concrete?: boolean;
 }

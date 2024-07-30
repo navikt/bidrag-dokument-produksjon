@@ -8,7 +8,9 @@ export default function Sivilstand() {
   if (data.type != NotatMalType.FORSKUDD) return;
   return (
     <div style={{ pageBreakBefore: "auto" }}>
-      <h3 id={"linktilmeg"}>{tekster.titler.sivilstand.tittel}</h3>
+      <h3 style={{ marginBottom: 0 }} id={"linktilmeg"}>
+        {tekster.titler.sivilstand.tittel}
+      </h3>
       <div>
         <SimpleTable
           data={data.boforhold.sivilstand.opplysningerBruktTilBeregning}
