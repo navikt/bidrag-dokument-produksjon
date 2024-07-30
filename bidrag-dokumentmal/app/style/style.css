@@ -1,6 +1,6 @@
 @page {
     size: A4 portrait;
-    margin: 1.5cm 1.5cm 2.5cm 1cm;
+    margin: 1.5cm 1.5cm 2.5cm 0.5cm;
     padding-bottom: 0cm;
     padding-top: 0cm;
 
@@ -187,7 +187,8 @@ dt {
 .table thead tr th {
     display: table-cell;
     text-align: left;
-    padding: 2px;
+    padding: 2px 2px 2px 0;
+
 }
 
 .table tbody {
@@ -196,13 +197,13 @@ dt {
 .table tbody tr th {
     display: table-cell;
     text-align: left;
-    padding: 2px;
+    padding: 2px 2px 2px 0;
     font-weight: bold;
 }
 .table tbody tr td {
     display: table-cell;
     text-align: left;
-    padding: 2px 2px 0px 2px;
+    padding: 2px 2px 0 0;
 }
 
 .table_head_periode {
