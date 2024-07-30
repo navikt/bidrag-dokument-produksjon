@@ -353,7 +353,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
         <div
           key={gjelderBarn + key + i.toString()}
           className="table_container"
-          style={{ marginTop: addMargin ? "10px" : "0px" }}
+          style={{ marginTop: addMargin ? "16px" : "0px" }}
         >
           {renderTable(inntekter, gjelderBarn)}
         </div>
