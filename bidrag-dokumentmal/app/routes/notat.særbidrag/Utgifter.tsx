@@ -3,7 +3,6 @@ import {
   formatterBeløp,
   søktAvTilVisningsnavn,
 } from "~/utils/visningsnavn";
-import DataDescription from "~/components/DataDescription";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import Notat from "~/components/Notat";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
@@ -62,13 +61,25 @@ function Utgiftsposter() {
         }}
       />
       <div style={{ marginTop: "8px" }}>
-        <DataDescription
-          label={"Godkjent beløp"}
-          value={formatterBeløp(data.utgift?.beregning?.totalGodkjentBeløp)}
-        />
-        <DataDescription
-          label={"Direkte betalt av BP"}
-          value={formatterBeløp(data.utgift?.beregning?.beløpDirekteBetaltAvBp)}
+        <DataViewTable
+          width={"40%"}
+          labelColWidth={"160px"}
+          data={
+            [
+              {
+                label: "Godkjent beløp",
+                value: formatterBeløp(
+                  data.utgift?.beregning?.totalGodkjentBeløp,
+                ),
+              },
+              {
+                label: "Direkte betalt av Bidragspliktig",
+                value: formatterBeløp(
+                  data.utgift?.beregning?.beløpDirekteBetaltAvBp,
+                ),
+              },
+            ].filter((d) => d != null) as DataViewTableData[]
+          }
         />
       </div>
     </div>
