@@ -52,7 +52,7 @@ export default function Inntekter() {
       />
       <HorizontalLine />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
-        <div className={"mt-medium"}>
+        <div className={"mt-large"}>
           <InntekterForRolle rolle={bidragspliktig} />
           <HorizontalLine />
         </div>
@@ -60,7 +60,7 @@ export default function Inntekter() {
 
       {type !== NotatMalType.FORSKUDD &&
         søknadsbarn.map((barn) => (
-          <div key={barn.ident} className={"mt-medium"}>
+          <div key={barn.ident} className={"mt-large"}>
             <InntekterForRolle rolle={barn} />
             <HorizontalLine />
           </div>
