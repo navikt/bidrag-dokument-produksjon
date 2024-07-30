@@ -285,21 +285,21 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
           width={"700px"}
           data={{
             headers: [
-              { name: tekster.tabell.felles.fraTilOgMed, width: "170px" },
+              { name: tekster.tabell.felles.fraTilOgMed, width: "120px" },
               {
                 name: columnNames.SKATTEPLIKTIG,
-                width: "100px",
+                width: "70px",
               },
               hasValue(inntektTableRules, InntektTableType.BARNETILLEGG) && {
                 name: columnNames.BARNETILLEGG,
-                width: "60px",
+                width: "55px",
               },
               hasValue(
                 inntektTableRules,
                 InntektTableType.UTVIDET_BARNETRYGD,
               ) && {
                 name: columnNames.UTVIDET_BARNETRYGD,
-                width: "80px",
+                width: "90px",
               },
               hasValue(inntektTableRules, InntektTableType.SMÅBARNSTILLEGG) && {
                 name: columnNames.SMÅBARNSTILLEGG,
