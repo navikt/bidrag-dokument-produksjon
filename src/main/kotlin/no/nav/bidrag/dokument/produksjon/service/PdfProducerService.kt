@@ -55,7 +55,8 @@ class PdfProducerService(
         val type = dokumentmal.name.lowercase()
         val jsonPayload = payload ?: hotTemplateData(category, type)
         val startTime = System.currentTimeMillis()
-        return bidragDokumentmalConsumer.hentDokumentmal(category, type, jsonPayload)?.let { document ->
+        return bidragDokumentmalConsumer.hentDokumentmal(category, type, jsonPayload)?.let {
+                document ->
             val bytes = PdfContent(document.fjernKontrollTegn()).generate()
             log.info {
                 "Done generating PDF for category $category and template $type in ${System.currentTimeMillis() - startTime}ms"

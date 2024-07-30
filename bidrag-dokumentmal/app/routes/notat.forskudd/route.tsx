@@ -16,6 +16,7 @@ import VedleggBoforhold from "~/components/notat_felles/components/VedleggBoforh
 import VedleggInntekter from "~/components/notat_felles/components/VedleggInntekter";
 import DagensDato from "~/components/DagensDato";
 import NotatTittel from "~/components/NotatTittel";
+import HeaderFooter from "~/components/notat_felles/HeaderFooter";
 
 type NotatRequest = {
   renderForPdf: boolean;
@@ -46,27 +47,14 @@ export default function NotatForskudd() {
     return <div>Oops</div>;
   }
 
-  const renderTopBottomTextContent = () => (
-    <>
-      <div
-        className={"custom-top_bottom_content"}
-        data-content={`Saksnummer ${data.saksnummer}`}
-      ></div>
-      <div className={"custom-page-number"}></div>
-    </>
-  );
   const data = response.data;
   return (
     <div id="forskudd_notat">
-      {response.renderForPdf && (
-        <div className="footer top_bottom_text">
-          {renderTopBottomTextContent()}
-        </div>
-      )}
       <NotatProvider
         data={data}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >
+        <HeaderFooter />
         <div className={"container page"}>
           <Soknaddetaljer />
           <DagensDato />
@@ -77,7 +65,6 @@ export default function NotatForskudd() {
           <Vedtak />
           <VedleggBoforhold />
           <VedleggInntekter />
-          <div className="last-page"></div>
         </div>
       </NotatProvider>
     </div>
