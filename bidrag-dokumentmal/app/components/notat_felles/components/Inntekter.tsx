@@ -148,12 +148,15 @@ function InntektTable({
       <CommonTable
         data={{
           headers: [
-            { name: tekster.tabell.felles.fraTilOgMed, width: "200px" },
+            { name: tekster.tabell.felles.fraTilOgMed, width: "170px" },
             inkluderBeskrivelse && {
               name: tekster.tabell.felles.beskrivelse,
-              width: "250px",
+              width: "230px",
             },
-            { name: tekster.tabell.felles.kilde, width: "70px" },
+            {
+              name: tekster.tabell.felles.kilde,
+              width: inkluderBeskrivelse ? "80px" : "230px",
+            },
             { name: tekster.tabell.inntekt.beløp },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
           rows: inntekter
