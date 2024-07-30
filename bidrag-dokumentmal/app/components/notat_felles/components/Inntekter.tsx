@@ -89,11 +89,15 @@ function InntekterForRolle({
   return (
     <div className={"mt-medium"}>
       {showRole && (
-        <div className={"elements_inline"}>
-          <h2 style={{ marginRight: 5, paddingRight: 0 }}>
-            {rolleTilVisningsnavn(rolle.rolle!)}
-          </h2>
-          {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
+        <div
+          className={"elements_inline text-heading-small"}
+          style={{ marginRight: 5, paddingRight: 0 }}
+        >
+          {rolle.rolle === Rolletype.BA ? (
+            <p>{rolleTilVisningsnavn(rolle.rolle!) + ": " + rolle.navn}</p>
+          ) : (
+            <p>{rolleTilVisningsnavn(rolle.rolle!)}</p>
+          )}
         </div>
       )}
       {!isHarInntekter(inntekter) ? (
