@@ -216,17 +216,22 @@ function InntektPerBarnTable({
   const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
   if (inntekter.length == 0) return null;
 
+  const inntekterBarn = groupBy(data, (d) => d.gjelderBarn?.ident!);
   return (
-    <div style={{ paddingTop: "10px" }}>
+    <div style={{ marginTop: "16px" }}>
       <TableTitle title={title} subtitle={subtitle} />
-      {groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value], i) => {
+      {inntekterBarn.map(([key, value], i) => {
         const gjelderBarn = value[0].gjelderBarn!;
         const erBarnetillegg =
           value[0].type == Inntektsrapportering.BARNETILLEGG;
+        const addMargin = inntekterBarn.length > i + 1;
         return (
           <div
             key={gjelderBarn + key + i.toString()}
             className="table_container"
+            style={{
+              marginBottom: addMargin ? "16px" : "0px",
+            }}
           >
             <GjelderBarn gjelderBarn={gjelderBarn} />
             <CommonTable
@@ -382,7 +387,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
 
 function GjelderBarn({ gjelderBarn }: { gjelderBarn: PersonNotatDto }) {
   return (
-    <dl>
+    <dl style={{ marginBottom: 0 }}>
       <dt>{gjelderBarn.navn}</dt>
       <dd style={{ display: "inline-table" }}>
         / {dateToDDMMYYYY(gjelderBarn.fødselsdato)}

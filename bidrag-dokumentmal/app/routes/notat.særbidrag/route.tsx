@@ -47,13 +47,15 @@ export default function NotatSærbidrag() {
   }
 
   const renderTopBottomTextContent = () => (
-    <>
-      <div
-        className={"custom-top_bottom_content"}
-        data-content={`Saksnummer ${data.saksnummer}`}
-      ></div>
-      <div className={"custom-page-number"}></div>
-    </>
+    <div>
+      <div>
+        <div
+          className={"custom-top_bottom_content"}
+          data-content={`Saksnummer ${data.saksnummer}`}
+        ></div>
+        <div className={"custom-page-number"}></div>
+      </div>
+    </div>
   );
   const data = response.data;
   return (
@@ -65,9 +67,19 @@ export default function NotatSærbidrag() {
       {/*)}*/}
       {response.renderForPdf && (
         <div className="footer top_bottom_text">
+          {/*<div*/}
+          {/*  className={"custom-next-page-info next-page-info"}*/}
+          {/*  data-content={`Fortsettelse på neste side`}*/}
+          {/*></div>*/}
           {renderTopBottomTextContent()}
         </div>
       )}
+      {/*{response.renderForPdf && (*/}
+      {/*  <div className="footer_last_page top_bottom_text">*/}
+      {/*    {renderTopBottomTextContent()}*/}
+      {/*  </div>*/}
+      {/*)}*/}
+
       <NotatProvider
         data={data}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}

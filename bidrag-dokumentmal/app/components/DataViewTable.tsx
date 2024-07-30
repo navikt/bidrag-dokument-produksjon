@@ -21,7 +21,6 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
   width,
   className,
 }) => {
-  console.log(data);
   return (
     <div className={className} style={{ width: width }}>
       {title && <h4>{title}</h4>}
