@@ -9,14 +9,14 @@
     @bottom-center { content: element(footer) }
     /*@top-left { content: element(header) }*/
 }
-.last-page {
-    page: last_page;
-}
+/*.last-page {*/
+/*    page: last_page;*/
+/*}*/
 
-@page:last {
-    @bottom-center { content: element(footer_last_page) }
+/*@page last_page {*/
+/*    @bottom-center { content: element(footer_last_page)!important; }*/
 
-}
+/*}*/
 
 .footnote {
     float: footnote;

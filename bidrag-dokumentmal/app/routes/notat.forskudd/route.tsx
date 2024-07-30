@@ -58,11 +58,6 @@ export default function NotatForskudd() {
   const data = response.data;
   return (
     <div id="forskudd_notat">
-      {/*{response.renderForPdf && (*/}
-      {/*  <div className="header top_bottom_text">*/}
-      {/*    {renderTopBottomTextContent()}*/}
-      {/*  </div>*/}
-      {/*)}*/}
       {response.renderForPdf && (
         <div className="footer top_bottom_text">
           {renderTopBottomTextContent()}
@@ -82,6 +77,7 @@ export default function NotatForskudd() {
           <Vedtak />
           <VedleggBoforhold />
           <VedleggInntekter />
+          <div className="last-page"></div>
         </div>
       </NotatProvider>
     </div>

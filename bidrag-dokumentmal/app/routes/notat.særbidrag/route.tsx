@@ -60,11 +60,6 @@ export default function NotatSærbidrag() {
   const data = response.data;
   return (
     <div id="forskudd_notat">
-      {/*{response.renderForPdf && (*/}
-      {/*  <div className="header top_bottom_text">*/}
-      {/*    {renderTopBottomTextContent()}*/}
-      {/*  </div>*/}
-      {/*)}*/}
       {response.renderForPdf && (
         <div className="footer top_bottom_text">
           {/*<div*/}
