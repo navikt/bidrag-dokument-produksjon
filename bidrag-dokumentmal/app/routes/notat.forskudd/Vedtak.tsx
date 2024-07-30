@@ -87,9 +87,9 @@ function VedtakTable({
         const perioder = value[0].perioder;
         const tableData: TableData = {
           headers: [
-            { name: "Periode", width: "140px" },
-            { name: "Inntekt", width: "90px" },
-            { name: "Sivilstand", width: "130px" },
+            { name: "Periode", width: "130px" },
+            { name: "Inntekt", width: "80px" },
+            { name: "Sivilstand", width: "120px" },
             { name: "Antall barn i husstand", width: "80px" },
             { name: "Forskudd", width: "70px" },
             { name: "Resultat", width: "150px" },
@@ -113,7 +113,7 @@ function VedtakTable({
         return (
           <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            <CommonTable data={tableData} width={"610px"} />
+            <CommonTable data={tableData} width={"550px"} />
             <div
               className="horizontal-line"
               style={{

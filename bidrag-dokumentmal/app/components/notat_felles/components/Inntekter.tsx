@@ -282,13 +282,13 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
           <TableGjelderBarn gjelderBarn={gjelderBarn} />
         )}
         <CommonTable
-          width={"650px"}
+          width={"580px"}
           data={{
             headers: [
               { name: tekster.tabell.felles.fraTilOgMed, width: "120px" },
               {
                 name: columnNames.SKATTEPLIKTIG,
-                width: "70px",
+                width: "85px",
               },
               hasValue(inntektTableRules, InntektTableType.BARNETILLEGG) && {
                 name: columnNames.BARNETILLEGG,
@@ -307,7 +307,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
               },
               hasValue(inntektTableRules, InntektTableType.KONTANTSTØTTE) && {
                 name: columnNames.KONTANTSTØTTE,
-                width: "70px",
+                width: "80px",
               },
               { name: columnNames.TOTAL_INNTEKTER, width: "60px" },
             ].filter((d) => typeof d != "boolean") as TableHeader[],
