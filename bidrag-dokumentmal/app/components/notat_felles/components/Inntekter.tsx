@@ -53,15 +53,15 @@ export default function Inntekter() {
       />
       <HorizontalLine />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
-        <>
+        <div className={"mt-medium"}>
           <InntekterForRolle rolle={bidragspliktig} />
           <HorizontalLine />
-        </>
+        </div>
       )}
 
       {type !== NotatMalType.FORSKUDD &&
         søknadsbarn.map((barn) => (
-          <div key={barn.ident}>
+          <div key={barn.ident} className={"mt-medium"}>
             <InntekterForRolle rolle={barn} />
             <HorizontalLine />
           </div>
@@ -87,7 +87,7 @@ function InntekterForRolle({
   );
   if (inntekter == null) return null;
   return (
-    <div className={"mt-medium"}>
+    <div>
       {showRole && (
         <div
           className={"elements_inline text-heading-small"}
@@ -157,52 +157,50 @@ function InntektTable({
   return (
     <div className={"subsection"}>
       <TableTitle title={title} subtitle={subtitle} />
-      <div className={"table_container"}>
-        <CommonTable
-          data={{
-            headers: [
-              { name: tekster.tabell.felles.fraTilOgMed, width: "200px" },
-              inkluderBeskrivelse && {
-                name: tekster.tabell.felles.beskrivelse,
-                width: "250px",
-              },
-              { name: tekster.tabell.felles.kilde, width: "70px" },
-              { name: tekster.tabell.inntekt.beløp },
-            ].filter((d) => typeof d != "boolean") as TableHeader[],
-            rows: inntekter
-              .sort((a, b) =>
-                a.periode?.fom && b.periode?.fom
-                  ? a.periode?.fom.localeCompare(b.periode?.fom)
-                  : 1,
-              )
-              .map((d, i) => {
-                const periode = d.periode ?? d.opprinneligPeriode;
-                return {
-                  columns: [
-                    { content: formatPeriode(periode!.fom, periode!.til) },
-                    inkluderBeskrivelse && { content: d.visningsnavn },
-                    { content: <KildeIcon kilde={d.kilde} /> },
-                    { content: formatterBeløp(d.beløp) },
-                  ].filter((d) => typeof d != "boolean") as TableColumn[],
-                  expandableContent:
-                    d.inntektsposter.length > 0
-                      ? [
-                          {
-                            content: (
-                              <Inntektsposter
-                                data={d}
-                                periode={periode}
-                                withHorizontalLine={inntekter.length > i + 1}
-                              />
-                            ),
-                          },
-                        ]
-                      : undefined,
-                };
-              }),
-          }}
-        />
-      </div>
+      <CommonTable
+        data={{
+          headers: [
+            { name: tekster.tabell.felles.fraTilOgMed, width: "200px" },
+            inkluderBeskrivelse && {
+              name: tekster.tabell.felles.beskrivelse,
+              width: "250px",
+            },
+            { name: tekster.tabell.felles.kilde, width: "70px" },
+            { name: tekster.tabell.inntekt.beløp },
+          ].filter((d) => typeof d != "boolean") as TableHeader[],
+          rows: inntekter
+            .sort((a, b) =>
+              a.periode?.fom && b.periode?.fom
+                ? a.periode?.fom.localeCompare(b.periode?.fom)
+                : 1,
+            )
+            .map((d, i) => {
+              const periode = d.periode ?? d.opprinneligPeriode;
+              return {
+                columns: [
+                  { content: formatPeriode(periode!.fom, periode!.til) },
+                  inkluderBeskrivelse && { content: d.visningsnavn },
+                  { content: <KildeIcon kilde={d.kilde} /> },
+                  { content: formatterBeløp(d.beløp) },
+                ].filter((d) => typeof d != "boolean") as TableColumn[],
+                expandableContent:
+                  d.inntektsposter.length > 0
+                    ? [
+                        {
+                          content: (
+                            <Inntektsposter
+                              data={d}
+                              periode={periode}
+                              withHorizontalLine={inntekter.length > i + 1}
+                            />
+                          ),
+                        },
+                      ]
+                    : undefined,
+              };
+            }),
+        }}
+      />
     </div>
   );
 }
@@ -357,6 +355,24 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
     );
   }
 
+  function renderForAllChildren() {
+    const inntekterBarn = groupBy(data, (d) => d.gjelderBarn?.ident!);
+    return inntekterBarn.map(([key, value], i) => {
+      const gjelderBarn = value[0].gjelderBarn!;
+      const inntekter = value[0].summertInntektListe;
+      const addMargin = i != 0;
+      return (
+        <div
+          key={gjelderBarn + key + i.toString()}
+          className="table_container"
+          style={{ marginTop: addMargin ? "10px" : "0px" }}
+        >
+          {renderTable(inntekter, gjelderBarn)}
+        </div>
+      );
+    });
+  }
+
   const harInntekter = data.every((d) => d.summertInntektListe.length > 0);
 
   if (!harInntekter) return;
@@ -368,19 +384,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
             data.find((d) => d.gjelderBarn.ident == rolle.ident)
               ?.summertInntektListe ?? [],
           )
-        : groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value], i) => {
-            const gjelderBarn = value[0].gjelderBarn!;
-            const inntekter = value[0].summertInntektListe;
-            return (
-              <div
-                key={gjelderBarn + key + i.toString()}
-                className="table_container"
-                style={{ paddingTop: "10px" }}
-              >
-                {renderTable(inntekter, gjelderBarn)}
-              </div>
-            );
-          })}
+        : renderForAllChildren()}
     </div>
   );
 }
