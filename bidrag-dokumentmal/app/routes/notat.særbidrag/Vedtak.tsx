@@ -78,7 +78,8 @@ function VedtakTable({
       <div>
         <DataViewTable
           title="Inntekter"
-          labelColWidth={"85px"}
+          className={"three_column_view"}
+          labelColWidth={"75px"}
           width={"34%"}
           key={"inntekter"}
           data={[
@@ -99,8 +100,9 @@ function VedtakTable({
 
         <DataViewTable
           title="Boforhold"
+          className={"three_column_view"}
           width={"45%"}
-          labelColWidth={"175px"}
+          labelColWidth={"145px"}
           key={"Boforhold"}
           data={[
             {
@@ -119,7 +121,8 @@ function VedtakTable({
         />
         <DataViewTable
           title="Beregning"
-          labelColWidth={"150px"}
+          className={"three_column_view"}
+          labelColWidth={"130px"}
           width={"100%"}
           key={"Beregning"}
           data={[

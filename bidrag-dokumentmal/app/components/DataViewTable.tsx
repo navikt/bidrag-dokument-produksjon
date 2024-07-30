@@ -2,7 +2,7 @@ import React from "react";
 
 export interface DataViewTableData {
   label: string;
-  value?: string | number;
+  value?: string | number | React.ReactNode;
   additionalInfo?: string | number;
 }
 
@@ -11,6 +11,7 @@ interface DataViewTableProps {
   title?: string;
   width?: string;
   labelColWidth?: string;
+  className?: string;
 }
 
 export const DataViewTable: React.FC<DataViewTableProps> = ({
@@ -18,9 +19,11 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
   title,
   labelColWidth,
   width,
+  className,
 }) => {
+  console.log(data);
   return (
-    <div className={"three_column_view"} style={{ width: width }}>
+    <div className={className} style={{ width: width }}>
       {title && <h4>{title}</h4>}
       <table>
         <thead>
@@ -35,7 +38,7 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
           {data.map((row, rowIndex) => (
             <>
               <tr key={rowIndex + "-" + row.value}>
-                <td>{row.label}: </td>
+                <td style={{ verticalAlign: "text-top" }}>{row.label}: </td>
                 <td>
                   <>
                     {row.value}

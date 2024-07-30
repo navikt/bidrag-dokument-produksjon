@@ -13,6 +13,7 @@ import {
   TableColumn,
 } from "~/components/CommonTable";
 import tekster from "~/tekster";
+import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 
 export default function Utgifter() {
   const { data } = useNotatFelles();
@@ -37,13 +38,15 @@ function Utgiftsposter() {
     <div>
       <h3>Oversikt over utgifter</h3>
       <CommonTable
+        layoutAuto
+        width={"700px"}
         data={{
           headers: [
-            { name: tekster.tabell.utgifter.dato, width: "70px" },
-            { name: tekster.tabell.utgifter.utgift, width: "100px" },
-            { name: tekster.tabell.utgifter.kravbeløp, width: "80px" },
-            { name: tekster.tabell.utgifter.godkjentBeløp, width: "80px" },
-            { name: tekster.tabell.utgifter.begrunnelse, width: "150px" },
+            { name: tekster.tabell.utgifter.dato, width: "80px" },
+            { name: tekster.tabell.utgifter.utgift },
+            { name: tekster.tabell.utgifter.kravbeløp, width: "100px" },
+            { name: tekster.tabell.utgifter.godkjentBeløp, width: "100px" },
+            { name: tekster.tabell.utgifter.begrunnelse, width: "auto" },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
           rows: utgifter.map((d) => {
             return {
@@ -78,32 +81,42 @@ function SøknadsDetaljer() {
   return (
     <div>
       <div style={{ width: "600px", height: "80px", marginBottom: 0 }}>
-        <div className="two_column_view">
-          <DataDescription
-            label={"Søknadstype"}
-            value={capitalizeFirstLetter(behandling.søknadstype)}
-          />
-          <DataDescription
-            label={"Søkt fra"}
-            value={søktAvTilVisningsnavn(behandling.søktAv)}
-          />
-          <DataDescription
-            label={"Mottatt dato"}
-            value={dateToDDMMYYYY(behandling.mottattDato as string)}
-          />
-        </div>
-        <div className="two_column_view">
-          <DataDescription
-            label={"Kategori"}
-            value={`${behandling.kategoriVisningsnavn}`}
-          />
-          {behandling.avslag && (
-            <DataDescription
-              label={"Avslag"}
-              value={behandling.avslagVisningsnavn}
-            />
-          )}
-        </div>
+        <DataViewTable
+          className={"two_column_view"}
+          width={"40%"}
+          labelColWidth={"80px"}
+          data={[
+            {
+              label: "Søknadstype",
+              value: capitalizeFirstLetter(behandling.søknadstype),
+            },
+            {
+              label: "Kategori",
+              value: behandling.kategoriVisningsnavn,
+            },
+            {
+              label: "Søkt fra",
+              value: søktAvTilVisningsnavn(behandling.søktAv),
+            },
+          ]}
+        />
+        <DataViewTable
+          className={"two_column_view"}
+          width={"40%"}
+          labelColWidth={"80px"}
+          data={
+            [
+              {
+                label: "Mottatt dato",
+                value: dateToDDMMYYYY(behandling.mottattDato as string),
+              },
+              behandling.avslag && {
+                label: "Avslag",
+                value: `${behandling.avslagVisningsnavn}`,
+              },
+            ].filter((d) => d != null) as DataViewTableData[]
+          }
+        />
       </div>
     </div>
   );

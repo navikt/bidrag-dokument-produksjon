@@ -20,7 +20,7 @@ export function søktAvTilVisningsnavn(søktAv?: SoktAvType) {
       return capitalizeFirstLetter(søktAv);
   }
 }
-export const rolleTilVisningsnavn = (rolle: Rolletype) => {
+export const rolleTilVisningsnavn = (rolle: Rolletype): string => {
   switch (rolle) {
     case Rolletype.BM:
       return "Bidragsmottaker";
@@ -29,7 +29,7 @@ export const rolleTilVisningsnavn = (rolle: Rolletype) => {
     case Rolletype.BA:
       return "Søknadsbarn";
     default:
-      return capitalizeFirstLetter(rolle);
+      return capitalizeFirstLetter(rolle) ?? "";
   }
 };
 

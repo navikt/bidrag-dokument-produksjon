@@ -9,6 +9,10 @@
     @bottom-center { content: element(footer) }
     /*@top-left { content: element(header) }*/
 }
+@page :last {
+    @bottom-center { content: element(footer) }
+}
+
 .footnote {
     float: footnote;
     footnote-style-position: inside; /* forces marker inside footnote area */
@@ -83,7 +87,7 @@ dt:before {
     margin: 0
 }
 dl {
-    margin: 0 0 8px 0;
+    margin: 0 0 16px 0;
 }
 dt, dd {
     display: inline;
