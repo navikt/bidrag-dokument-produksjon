@@ -53,7 +53,7 @@ export default function Inntekter() {
       />
       <HorizontalLine />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
-        <div className={"mt-large"}>
+        <div className={"mt-medium"}>
           <InntekterForRolle rolle={bidragspliktig} />
           <HorizontalLine />
         </div>
@@ -61,7 +61,7 @@ export default function Inntekter() {
 
       {type !== NotatMalType.FORSKUDD &&
         søknadsbarn.map((barn) => (
-          <div key={barn.ident} className={"mt-large"}>
+          <div key={barn.ident} className={"mt-medium"}>
             <InntekterForRolle rolle={barn} />
             <HorizontalLine />
           </div>
@@ -92,10 +92,11 @@ function InntekterForRolle({
       {!isHarInntekter(inntekter) ? (
         <p>Ingen inntekter</p>
       ) : (
-        <div style={{ marginTop: "-10px" }}>
+        <div>
           <InntektTable
             data={inntekter.årsinntekter}
             title={"Skattepliktige og pensjonsgivende inntekt"}
+            subsection={false}
           />
           <InntektPerBarnTable
             data={inntekter.barnetillegg}
@@ -132,6 +133,7 @@ type InntektTableProps = {
   subtitle?: string;
   inkluderBeskrivelse?: boolean;
   bareMedIBeregning?: boolean;
+  subsection?: boolean;
 };
 
 function InntektTable({
@@ -140,11 +142,12 @@ function InntektTable({
   subtitle,
   bareMedIBeregning = true,
   inkluderBeskrivelse = true,
+  subsection = true,
 }: InntektTableProps) {
   const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
   if (inntekter.length == 0) return null;
   return (
-    <div className={"subsection"}>
+    <div className={subsection ? "subsection" : ""}>
       <InntektTableTitle title={title} subtitle={subtitle} />
       <CommonTable
         data={{
@@ -208,7 +211,7 @@ function InntektPerBarnTable({
 
   const inntekterBarn = groupBy(data, (d) => d.gjelderBarn?.ident!);
   return (
-    <div style={{ marginTop: "16px" }}>
+    <div className={"mt-medium"}>
       <InntektTableTitle title={title} subtitle={subtitle} />
       {inntekterBarn.map(([key, value], i) => {
         const gjelderBarn = value[0].gjelderBarn!;
@@ -378,7 +381,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
 
   if (!harInntekter) return;
   return (
-    <div className={"subsection"}>
+    <div className={""}>
       <InntektTableTitle title={"Beregnet totalt"} />
       {rolle.rolle === Rolletype.BA
         ? renderTable(

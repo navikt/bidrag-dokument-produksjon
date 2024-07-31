@@ -54,7 +54,6 @@ export default function VedleggBoforhold() {
               className="horizontal-line"
               style={{
                 pageBreakAfter: "avoid",
-                marginBottom: "24px",
               }}
             ></div>
           </div>

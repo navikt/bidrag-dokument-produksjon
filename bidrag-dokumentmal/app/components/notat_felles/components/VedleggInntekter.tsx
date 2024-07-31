@@ -121,6 +121,7 @@ type OffentligeInntekterProps = {
   data: NotatInntektDto[];
   medBarn?: boolean;
   medInntektsposter?: boolean;
+  subsection?: boolean;
 };
 
 function OffentligeInntekter({
@@ -128,10 +129,11 @@ function OffentligeInntekter({
   data,
   medBarn,
   medInntektsposter,
+  subsection = true,
 }: OffentligeInntekterProps) {
   if (data.length == 0) return null;
   return (
-    <div className={"subsection"}>
+    <div className={subsection ? "subsection" : ""}>
       <InntektTableTitle title={tittel} />
       {medBarn ? (
         <InntektPerBarnTable data={data} />
