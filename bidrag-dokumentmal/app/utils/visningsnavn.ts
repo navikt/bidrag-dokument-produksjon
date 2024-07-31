@@ -63,7 +63,7 @@ export const formatterProsent = (
 ): string => {
   if (!value) return "0%";
   const asNumber = typeof value == "string" ? parseInt(value) : value;
-  const percentageAsFraction = asNumber > 1 ? asNumber / 100 : asNumber;
+  const percentageAsFraction = asNumber / 100;
   return percentageAsFraction.toLocaleString("nb-NO", {
     style: "percent",
     minimumFractionDigits: 0,

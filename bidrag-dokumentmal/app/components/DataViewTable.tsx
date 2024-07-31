@@ -23,7 +23,7 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
 }) => {
   return (
     <div className={className} style={{ width: width }}>
-      {title && <h3>{title}</h3>}
+      {title && <h4>{title}</h4>}
       <table style={{ borderSpacing: 0 }}>
         <thead>
           <tr>
@@ -39,12 +39,7 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
               <tr key={rowIndex + "-" + row.value}>
                 <td style={{ verticalAlign: "text-top" }}>{row.label}: </td>
                 <td>
-                  <>
-                    {row.value}
-                    {/*{row.additionalInfo && (*/}
-                    {/*  <span className={"footnote"}>{row.additionalInfo}</span>*/}
-                    {/*)}*/}
-                  </>
+                  <>{row.value}</>
                 </td>
               </tr>
               {row.additionalInfo && (

@@ -58,7 +58,7 @@ function VedtakTable({
   if (erDirekteAvslag) {
     return (
       <div>
-        <h2>Avslag</h2>
+        <h3 style={{ marginTop: 0 }}>Avslag</h3>
         <p>
           <dl className="bd_datadisplay">
             <dt>Årsak</dt>
@@ -69,11 +69,13 @@ function VedtakTable({
     );
   }
   return (
-    <div style={{ paddingTop: "10px" }}>
+    <div style={{ paddingTop: "0px" }}>
       {erBeregningeAvslag ? (
-        <h3>Avslag: {resultat.resultatVisningsnavn}</h3>
+        <h3 style={{ marginTop: 0 }}>
+          Avslag: {resultat.resultatVisningsnavn}
+        </h3>
       ) : (
-        <h3>Særbidrag innvilget</h3>
+        <h3 style={{ marginTop: 0 }}>Særbidrag innvilget</h3>
       )}
       <div>
         <DataViewTable
@@ -121,7 +123,7 @@ function VedtakTable({
         />
         <DataViewTable
           title="Beregning"
-          className={"three_column_view"}
+          className={"three_column_view mt-medium"}
           labelColWidth={"130px"}
           width={"100%"}
           key={"Beregning"}
