@@ -252,8 +252,8 @@ dt {
 .horizontal-line {
   border-top: 0.8px solid black;
   width: 100%;
-  margin-top: 24px;
-  margin-bottom: 5px;
+  margin-top: 16px;
+  margin-bottom: 8px;
 }
 
 #pagenumber:before {
