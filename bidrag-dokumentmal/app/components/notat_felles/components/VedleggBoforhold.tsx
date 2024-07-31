@@ -108,7 +108,7 @@ export function BoforholdTable({
             name: erSivilstand
               ? tekster.tabell.felles.fraDato
               : tekster.tabell.felles.periode,
-            width: "190px",
+            width: "80px",
           },
           { name: tekster.tabell.felles.status },
         ],
@@ -149,7 +149,7 @@ function AndreVoksneiHusstandenDetaljer({
 }) {
   return (
     <>
-      <h3>Hvem bor på adresse?</h3>
+      <h3 style={{ width: "200px" }}>Hvem bor på adresse?</h3>
       <ul
         style={{
           listStyleType: "decimal",

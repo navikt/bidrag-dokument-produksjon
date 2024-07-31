@@ -67,7 +67,54 @@ export const inntekterTablesViewRules: {
     [Rolletype.BA]: [InntektTableType.SKATTEPLIKTIG],
   },
 };
-
+export const beregnetInntekterColumnWidth: {
+  [key in NotatMalType]: {
+    [key in BehandlingRolletype]: {
+      [key in string]?: string;
+    };
+  };
+} = {
+  [NotatMalType.BIDRAG]: {
+    [Rolletype.BM]: {},
+    [Rolletype.BP]: {},
+    [Rolletype.BA]: {},
+  },
+  [NotatMalType.SAeRBIDRAG]: {
+    [Rolletype.BM]: {
+      [tekster.tabell.felles.fraTilOgMed]: "130px",
+      [tekster.tabell.beregnet.skattepliktigInntektSplittet]: "85px",
+      [tekster.tabell.beregnet.barnetilleggSplittet]: "75px",
+      [tekster.tabell.beregnet.utvidetBarnetrygd]: "70px",
+      [tekster.tabell.beregnet.småbarnstillegg]: "70px",
+      [tekster.tabell.beregnet.kontantstøtte]: "80px",
+      [tekster.tabell.beregnet.total]: "60px",
+    },
+    [Rolletype.BP]: {
+      [tekster.tabell.felles.fraTilOgMed]: "120px",
+      [tekster.tabell.beregnet.skattepliktigInntekt]: "125px",
+      [tekster.tabell.beregnet.barnetillegg]: "75px",
+      [tekster.tabell.beregnet.total]: "150px",
+    },
+    [Rolletype.BA]: {
+      [tekster.tabell.felles.fraTilOgMed]: "152px",
+      [tekster.tabell.beregnet.skattepliktigInntekt]: "155px",
+      [tekster.tabell.beregnet.total]: "300px",
+    },
+  },
+  [NotatMalType.FORSKUDD]: {
+    [Rolletype.BM]: {
+      [tekster.tabell.felles.fraTilOgMed]: "130px",
+      [tekster.tabell.beregnet.skattepliktigInntektSplittet]: "85px",
+      [tekster.tabell.beregnet.barnetilleggSplittet]: "75px",
+      [tekster.tabell.beregnet.utvidetBarnetrygd]: "70px",
+      [tekster.tabell.beregnet.småbarnstillegg]: "70px",
+      [tekster.tabell.beregnet.kontantstøtte]: "80px",
+      [tekster.tabell.beregnet.total]: "60px",
+    },
+    [Rolletype.BP]: {},
+    [Rolletype.BA]: {},
+  },
+};
 export const beregnetInntekterColumnNames: {
   [key in NotatMalType]: {
     [key in BehandlingRolletype]: {

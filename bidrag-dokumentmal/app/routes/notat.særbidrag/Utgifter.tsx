@@ -41,10 +41,10 @@ function Utgiftsposter() {
         width={"700px"}
         data={{
           headers: [
-            { name: tekster.tabell.utgifter.dato, width: "80px" },
-            { name: tekster.tabell.utgifter.utgift },
-            { name: tekster.tabell.utgifter.kravbeløp, width: "100px" },
-            { name: tekster.tabell.utgifter.godkjentBeløp, width: "100px" },
+            { name: tekster.tabell.utgifter.dato, width: "70px" },
+            { name: tekster.tabell.utgifter.utgift, width: "130px" },
+            { name: tekster.tabell.utgifter.kravbeløp, width: "80px" },
+            { name: tekster.tabell.utgifter.godkjentBeløp, width: "110px" },
             { name: tekster.tabell.utgifter.begrunnelse, width: "auto" },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
           rows: utgifter.map((d) => {
@@ -94,7 +94,7 @@ function SøknadsDetaljer() {
       <div style={{ width: "600px", height: "80px", marginBottom: 0 }}>
         <DataViewTable
           className={"two_column_view"}
-          width={"40%"}
+          width={"45%"}
           labelColWidth={"80px"}
           data={[
             {

@@ -158,10 +158,10 @@ function InntektTable({
       <CommonTable
         data={{
           headers: [
-            { name: tekster.tabell.felles.fraTilOgMed, width: "200px" },
+            { name: tekster.tabell.felles.fraTilOgMed, width: "155px" },
             inkluderBeskrivelse && {
               name: tekster.tabell.felles.beskrivelse,
-              width: "200px",
+              width: "160px",
             },
             { name: tekster.tabell.inntekt.beløp },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
@@ -200,13 +200,13 @@ function ArbeidsforholdTable({ data }: { data: Arbeidsforhold[] }) {
 
   return (
     <CommonTable
-      width={"600px"}
+      width={"450px"}
       data={{
         headers: [
           { name: tekster.tabell.felles.periode, width: "100px" },
-          { name: tekster.tabell.arbeidsforhold.arbeidsgiver, width: "170px" },
-          { name: tekster.tabell.arbeidsforhold.stilling, width: "70px" },
-          { name: tekster.tabell.arbeidsforhold.lønnsendring, width: "100px" },
+          { name: tekster.tabell.arbeidsforhold.arbeidsgiver, width: "140px" },
+          { name: tekster.tabell.arbeidsforhold.stilling, width: "40px" },
+          { name: tekster.tabell.arbeidsforhold.lønnsendring, width: "40px" },
         ],
         rows: data.map((d) => ({
           columns: [

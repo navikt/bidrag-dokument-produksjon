@@ -75,6 +75,7 @@ body {
   width: 210mm;
   height: 100%;
   color: black;
+  line-height: 20px;
   font-size: 12px;
   font-family: "Source Sans Pro", serif;
 }

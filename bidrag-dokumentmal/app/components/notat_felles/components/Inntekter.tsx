@@ -29,6 +29,7 @@ import {
   InntektTableType,
   isHarInntekter,
   beregnetInntekterColumnNames,
+  beregnetInntekterColumnWidth,
 } from "~/components/inntektTableHelpers";
 import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
 import InntektRolle from "~/components/inntekt/InntektRolle";
@@ -275,6 +276,9 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
 
   const columnNames =
     beregnetInntekterColumnNames[type][rolle.rolle as BehandlingRolletype];
+
+  const columnWidth =
+    beregnetInntekterColumnWidth[type][rolle.rolle as BehandlingRolletype];
   function renderTable(
     inntekter: DelberegningSumInntekt[],
     gjelderBarn?: PersonNotatDto,
@@ -288,31 +292,37 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
           width={"580px"}
           data={{
             headers: [
-              { name: tekster.tabell.felles.fraTilOgMed, width: "130px" },
+              {
+                name: tekster.tabell.felles.fraTilOgMed,
+                width: columnWidth[tekster.tabell.felles.fraTilOgMed],
+              },
               {
                 name: columnNames.SKATTEPLIKTIG,
-                width: "85px",
+                width: columnWidth[columnNames.SKATTEPLIKTIG as string],
               },
               hasValue(inntektTableRules, InntektTableType.BARNETILLEGG) && {
                 name: columnNames.BARNETILLEGG,
-                width: "75px",
+                width: columnWidth[columnNames.BARNETILLEGG as string],
               },
               hasValue(
                 inntektTableRules,
                 InntektTableType.UTVIDET_BARNETRYGD,
               ) && {
                 name: columnNames.UTVIDET_BARNETRYGD,
-                width: "70px",
+                width: columnWidth[columnNames.UTVIDET_BARNETRYGD as string],
               },
               hasValue(inntektTableRules, InntektTableType.SMÅBARNSTILLEGG) && {
                 name: columnNames.SMÅBARNSTILLEGG,
-                width: "70px",
+                width: columnWidth[columnNames.SMÅBARNSTILLEGG as string],
               },
               hasValue(inntektTableRules, InntektTableType.KONTANTSTØTTE) && {
                 name: columnNames.KONTANTSTØTTE,
-                width: "80px",
+                width: columnWidth[columnNames.KONTANTSTØTTE as string],
               },
-              { name: columnNames.TOTAL_INNTEKTER, width: "60px" },
+              {
+                name: columnNames.TOTAL_INNTEKTER,
+                width: columnWidth[columnNames.TOTAL_INNTEKTER as string],
+              },
             ].filter((d) => typeof d != "boolean") as TableHeader[],
             rows: inntekter.map((d) => ({
               columns: [

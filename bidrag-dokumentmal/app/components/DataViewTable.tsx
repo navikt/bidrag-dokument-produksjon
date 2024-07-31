@@ -23,7 +23,7 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
 }) => {
   return (
     <div className={className} style={{ width: width }}>
-      {title && <h4>{title}</h4>}
+      {title && <h3>{title}</h3>}
       <table>
         <thead>
           <tr>
