@@ -13,7 +13,6 @@ export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
   return (
     <div
-      className={"section"}
       style={{
         pageBreakBefore: erAvslag ? "auto" : "always",
         display: "inline-block",

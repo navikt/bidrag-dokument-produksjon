@@ -10,10 +10,7 @@ import { NotatResultatForskuddBeregningBarnDto } from "~/types/Api";
 export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
   return (
-    <div
-      className={"section"}
-      style={{ pageBreakBefore: erAvslag ? "auto" : "always" }}
-    >
+    <div style={{ pageBreakBefore: erAvslag ? "auto" : "always" }}>
       <h2>Vedtak</h2>
       {erAvslag ? (
         <VedtakTableAvslag
