@@ -60,6 +60,7 @@ function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
   return (
     <div>
       <DataDescription
+        style={{ paddingBottom: 0, marginBottom: 0 }}
         label={
           data.medIBehandling
             ? tekster.titler.boforhold.søknadsbarn
