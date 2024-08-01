@@ -6,7 +6,7 @@ export function VedtakFattetDetaljer({ data }: { data: VedtakDto }) {
   if (!data.erFattet) return null;
   return (
     <div>
-      <h4 style={{ marginBottom: "0" }}>Ferdigstilt</h4>
+      <h2 style={{ marginBottom: "0" }}>Ferdigstilt</h2>
       <DataViewTable
         labelColWidth={"90px"}
         data={[
