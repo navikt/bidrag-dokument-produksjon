@@ -5,7 +5,7 @@ import { DataViewTable } from "~/components/DataViewTable";
 export function VedtakFattetDetaljer({ data }: { data: VedtakDto }) {
   if (!data.erFattet) return null;
   return (
-    <div>
+    <div className={"mt-medium"}>
       <h2 style={{ marginBottom: "0" }}>Ferdigstilt</h2>
       <DataViewTable
         labelColWidth={"90px"}
