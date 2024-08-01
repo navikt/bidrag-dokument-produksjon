@@ -7,7 +7,6 @@ export type TableColumn = {
 export type TableHeader = {
   name: string;
   width?: string;
-  alignment?: "left" | "right" | "center";
 };
 export type TableData = {
   headers: TableHeader[];
