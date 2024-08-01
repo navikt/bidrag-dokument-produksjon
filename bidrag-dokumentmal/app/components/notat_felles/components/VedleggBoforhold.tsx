@@ -107,7 +107,7 @@ export function BoforholdTable({
             name: erSivilstand
               ? tekster.tabell.felles.fraDato
               : tekster.tabell.felles.periode,
-            width: "80px",
+            width: "140px",
           },
           { name: tekster.tabell.felles.status },
         ],
