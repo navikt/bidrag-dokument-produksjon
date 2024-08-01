@@ -36,7 +36,7 @@ export default function VedleggBoforhold() {
         const gjelderBarn = value[0].gjelder!;
         const barn = value[0];
         return (
-          <div key={key} className="table_container">
+          <div key={key} className="table_container mb-medium">
             <DataDescription
               style={{ marginBottom: "0px" }}
               label={
@@ -50,12 +50,6 @@ export default function VedleggBoforhold() {
               }
             />
             <BoforholdTable data={barn.opplysningerFraFolkeregisteret} />
-            <div
-              className="horizontal-line"
-              style={{
-                pageBreakAfter: "avoid",
-              }}
-            ></div>
           </div>
         );
       })}

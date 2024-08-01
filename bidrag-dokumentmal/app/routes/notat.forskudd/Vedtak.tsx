@@ -108,15 +108,9 @@ function VedtakTable({
           })),
         };
         return (
-          <div key={key} className="table_container">
+          <div key={key} className="table_container mb-medium">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
             <CommonTable data={tableData} width={"550px"} />
-            <div
-              className="horizontal-line"
-              style={{
-                pageBreakAfter: "avoid",
-              }}
-            ></div>
           </div>
         );
       })}

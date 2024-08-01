@@ -51,19 +51,19 @@ export default function Inntekter() {
         rolle={bidragsmottaker}
         showRole={type !== NotatMalType.FORSKUDD}
       />
-      <HorizontalLine />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
-        <div className={"mt-medium"}>
-          <InntekterForRolle rolle={bidragspliktig} />
-          <HorizontalLine />
-        </div>
+        <>
+          <div className={"mt-medium"}>
+            <InntekterForRolle rolle={bidragspliktig} />
+          </div>
+        </>
       )}
 
       {type !== NotatMalType.FORSKUDD &&
-        søknadsbarn.map((barn) => (
+        søknadsbarn.map((barn, i) => (
           <div key={barn.ident} className={"mt-medium"}>
             <InntekterForRolle rolle={barn} />
-            <HorizontalLine />
+            {søknadsbarn.length != i + 1 && <HorizontalLine />}
           </div>
         ))}
       <Notat data={data.inntekter.notat} />
@@ -116,7 +116,6 @@ function InntekterForRolle({
             data={inntekter.kontantstøtte}
             title={"Kontantstøtte"}
           />
-          <HorizontalLine />
           <BeregnetInntektTable
             data={inntekter.beregnetInntekter}
             rolle={rolle}
@@ -381,7 +380,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
 
   if (!harInntekter) return;
   return (
-    <div className={""}>
+    <div className={"mt-medium"}>
       <InntektTableTitle title={"Beregnet totalt"} />
       {rolle.rolle === Rolletype.BA
         ? renderTable(

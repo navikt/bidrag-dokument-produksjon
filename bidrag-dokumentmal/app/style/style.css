@@ -291,6 +291,10 @@ dt {
   margin-top: 16px;
 }
 
+.mb-medium {
+  margin-bottom: 16px;
+}
+
 .mt-large {
   margin-top: 32px;
 }

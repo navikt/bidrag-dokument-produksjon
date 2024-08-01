@@ -45,20 +45,16 @@ function BoforholdAndreVoksneIHusstanden({
 }) {
   if (!data) return;
   return (
-    <div>
+    <div className={"mb-medium"}>
       <h3 id={"linktilmeg"}>{tekster.titler.andreVoksneIHusstanden.tittel}</h3>
       <SimpleTable data={data.opplysningerBruktTilBeregning} />
-      <div
-        className="horizontal-line"
-        style={{ pageBreakAfter: "avoid" }}
-      ></div>
     </div>
   );
 }
 
 function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
   return (
-    <div>
+    <div className={"mb-medium"}>
       <DataDescription
         style={{ paddingBottom: 0, marginBottom: 0 }}
         label={
@@ -74,10 +70,6 @@ function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
         }
       />
       <SimpleTable data={data.opplysningerBruktTilBeregning} />
-      <div
-        className="horizontal-line"
-        style={{ pageBreakAfter: "avoid" }}
-      ></div>
     </div>
   );
 }
