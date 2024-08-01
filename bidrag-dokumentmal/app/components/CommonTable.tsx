@@ -7,6 +7,7 @@ export type TableColumn = {
 export type TableHeader = {
   name: string;
   width?: string;
+  alignment?: "left" | "right" | "center";
 };
 export type TableData = {
   headers: TableHeader[];
@@ -45,6 +46,7 @@ export function CommonTable({
               key={header.name + i}
               style={{
                 width: header.width,
+                verticalAlign: "top",
               }}
             >
               {header.name}

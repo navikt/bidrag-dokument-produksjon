@@ -63,7 +63,6 @@ export default function Inntekter() {
         søknadsbarn.map((barn, i) => (
           <div key={barn.ident} className={"mt-medium"}>
             <InntekterForRolle rolle={barn} />
-            {søknadsbarn.length != i + 1 && <HorizontalLine />}
           </div>
         ))}
       <Notat data={data.inntekter.notat} />
