@@ -114,12 +114,16 @@ function SøknadsDetaljer() {
         <DataViewTable
           className={"two_column_view"}
           width={"40%"}
-          labelColWidth={"80px"}
+          labelColWidth={behandling.klageMottattDato ? "110px" : "80px"}
           data={
             [
               {
                 label: "Mottatt dato",
                 value: dateToDDMMYYYY(behandling.mottattDato as string),
+              },
+              behandling.klageMottattDato && {
+                label: "Klage mottatt dato",
+                value: dateToDDMMYYYY(behandling.klageMottattDato as string),
               },
               behandling.avslag && {
                 label: "Avslag",
