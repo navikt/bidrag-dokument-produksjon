@@ -8,45 +8,35 @@ import DataDescription from "~/components/DataDescription";
 import { formatterBeløp, formatterProsent } from "~/utils/visningsnavn";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable } from "~/components/DataViewTable";
+import React from "react";
+import {VedtakFattetDetaljer} from "~/components/notat_felles/components/VedtakFattetDetaljer";
 
 export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
   return (
-    <div
-      style={{
-        pageBreakBefore: erAvslag ? "auto" : "always",
-        display: "inline-block",
-      }}
-    >
-      <h2>Vedtak</h2>
-      <VedtakTable
-        data={data.vedtak.resultat as NotatResultatSaerbidragsberegningDto[]}
-      />
-      <VedtakFattetDetaljer data={data.vedtak} />
-    </div>
+      <div>
+        <div
+            style={{
+              pageBreakBefore: erAvslag ? "auto" : "always",
+              display: "inline-block",
+            }}
+        >
+          <h2>Vedtak</h2>
+          <VedtakTable
+              data={data.vedtak.resultat as NotatResultatSaerbidragsberegningDto[]}
+          />
+        </div>
+        <VedtakFattetDetaljer data={data.vedtak}/>
+
+      </div>
+
   );
 }
 
-function VedtakFattetDetaljer({ data }: { data: VedtakDto }) {
-  if (!data.erFattet) return null;
-  return (
-    <div>
-      <h4 style={{ marginBottom: "0" }}>Ferdigstilt</h4>
-      <DataDescription
-        label={"Saksbehandler"}
-        value={data.fattetAvSaksbehandler}
-      />
-      <DataDescription
-        label={"Dato"}
-        value={dateToDDMMYYYY(data.fattetTidspunkt)}
-      />
-    </div>
-  );
-}
 
 function VedtakTable({
-  data,
-}: {
+                       data,
+                     }: {
   data: NotatResultatSaerbidragsberegningDto[];
 }) {
   if (data.length == 0) return <div>Mangler resultat</div>;
