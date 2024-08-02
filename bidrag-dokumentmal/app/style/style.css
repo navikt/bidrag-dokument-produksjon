@@ -1,284 +1,410 @@
 @page {
-    size: A4 portrait;
-    margin: 1.5cm 1cm 1.5cm 0.5cm;
-    padding-bottom: 1cm;
-    padding-top: 0cm;
+  size: A4 portrait;
+  margin: 2.5cm 2.5cm 2.5cm 1.5cm;
+  padding-bottom: 0cm;
+  padding-top: 0cm;
 
-    @top-center { content: element(header) }
-    @top-center { content: element(header) }
-    @bottom-center { content: element(footer) }
-    /*@top-left { content: element(header) }*/
+  @top-center {
+    content: element(header)
+  }
+  @bottom-center {
+    content: element(footer)
+  }
+  /*@top-left { content: element(header) }*/
 }
+
 .footnote {
-    float: footnote;
-    footnote-style-position: inside; /* forces marker inside footnote area */
+  float: footnote;
+  footnote-style-position: inside; /* forces marker inside footnote area */
 }
+
 .footnote::footnote-call {
-    /* controls the footnote markers in the main page text */
-    content: counter(footnote, symbols('*', '†', '‡'));
-    font-size: 0.7em;
-    vertical-align: super;
-    line-height: 0;
-    color: red;
+  /* controls the footnote markers in the main page text */
+  content: counter(footnote, symbols('*', '†', '‡'));
+  font-size: 0.7em;
+  vertical-align: super;
+  line-height: 0;
+  color: red;
 }
+
 .footnote::footnote-marker {
-    /* controls the footnote markers in the footnote section */
-    content: counter(footnote, symbols('*', '†', '‡'));
+  /* controls the footnote markers in the footnote section */
+  content: counter(footnote, symbols('*', '†', '‡'));
 }
+
 @media print {
-    div { break-inside: avoid; }
-    .page {
-        margin: 0;
-        border: initial;
-        border-radius: initial;
-        width: initial;
-        min-height: initial;
-        box-shadow: initial;
-        background: initial;
-    }
+  div {
+    break-inside: avoid;
+  }
+
+  .page {
+    margin: 0;
+    border: initial;
+    border-radius: initial;
+    width: initial;
+    min-height: initial;
+    box-shadow: initial;
+    background: initial;
+  }
 }
 
 .table_container {
-    margin: 0;
-    padding: 0;
+  margin: 0;
+  padding: 0;
 }
 
 .two_column_view {
-    float: left;
-    width: 50%;
+  float: left;
+  width: 50%;
 }
 
 .three_column_view {
-    float: left;
-    width: 33%;
+  float: left;
+  width: 33%;
 }
+
 #footer {
-    position: running(footer);
-    font-size: 12px;
-    margin-top: -25px;
-    padding-left: 0.6cm;
+  position: running(footer);
+  font-size: 12px;
+  margin-top: -25px;
+  padding-left: 0.6cm;
 }
+
 body {
-    background-color: white;
-    width: 210mm;
-    height: 100%;
-    color:black;
+  background-color: white;
+  width: 210mm;
+  height: 100%;
+  color: black;
+  line-height: 20px;
+  font-size: 12px;
+  font-family: "Source Sans Pro", serif;
 }
+
+table {
+  font-size: 12px;
+}
+
 :root {
-    --test: "123123";
+  --test: "123123";
 }
+
 dt:before {
-    content: "";
-    display: block;
+  content: "";
+  display: block;
 }
+
 .datarow dt:after {
-    content: ":  ";
+  content: ":  ";
 }
+
 .table_row_details dl {
-    margin: 0
+  margin: 0
 }
+
 dl {
-    margin: 0 0 8px 0;
-    font-size: 1rem;
+  margin: 0 0 16px 0;
 }
+
 dt, dd {
-    display: inline;
+  display: inline;
 }
 
 .elements_inline :first-child {
-    display: inline;
-    margin-right: 16px;
+  display: inline;
+  margin-right: 16px;
 
 }
+
 .elements_inline :last-child {
-    display: inline;
-    vertical-align: middle;
+  display: inline;
+  vertical-align: middle;
 }
+
 dd {
-    margin-inline-start: 0px;
-    margin: 0;
-    margin-left: 3px;
+  margin-inline-start: 0px;
+  margin: 0;
+  margin-left: 3px;
 }
+
 dt {
-    font-weight: bold;
-    display: inline-block;
+  /*font-weight: bold;*/
+  display: inline-block;
 }
+
 #header {
-    position: relative;
-    height: 80px;
+  position: relative;
+  height: 80px;
+}
+
+.title2 {
+  display: inline-block;
+  top: 0rem;
+  left: 0;
+  font-weight: bold;
 }
 
 .title {
-    display: inline-block;
-    position: absolute;
-    top: 0rem;
-    left: 0.5cm;
-    font-size: 32px;
+  display: inline-block;
+  position: absolute;
+  top: 0rem;
+  left: 0.5cm;
+  font-size: 32px;
 }
+
+.navlogo2 {
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: -15px;
+  margin-right: 90px;
+  margin-bottom: 44px;
+  width: 80px;
+  height: 80px;
+}
+
 .navlogo {
-    position: absolute;
-    right: 0;
-    top: 0;
-    margin-top: -30px;
-    margin-right: 90px;
-    width: 180px;
-    height: 180px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  margin-top: -30px;
+  margin-right: 90px;
+  width: 180px;
+  height: 180px;
 }
 
 * {
-    font-family: "Source Sans Pro";
+  font-family: "Source Sans Pro";
 }
 
-h1 {
-    font-weight: 700;
-    font-style: normal;
-    font-size: 1.75rem;
-    font-family: "Source Sans Pro";
-}
-h2 {
-    margin-top: 32px;
-    margin-bottom: 8px;
-    font-size: 1.5rem;
-}
-h3 {
-    margin-bottom: 8px;
-    margin-top: 8px;
-    font-size: 1.25rem;
-}
-h4 {
-    margin-bottom: 8px;
-    margin-top: 8px;
-    font-size: 1.25rem;
-}
-h5 {
-    margin-bottom: 8px;
-    margin-top: 8px;
-    font-size: 1.125rem;
-}
-h6 {
-    margin-bottom: 8px;
-    margin-top: 8px;
-    font-size: 1rem;
-}
-p {
-    margin-top: 3px;
-    margin-bottom: 3px;
-    font-size: 	0.875rem;
-    font-family: "Source Sans Pro";
-}
 
 .container {
-    margin: 0cm 0.5cm;
-    height: 100%;
+  margin: 0cm 0.5cm;
+  height: 100%;
 }
 
 .flex-inline {
-    display: inline-flex;
+  display: inline-flex;
 }
+
 .flex-col {
-    flex-direction: column;
+  flex-direction: column;
 }
 
 .table {
-    display: table;
-    width: 100%;
-    border-collapse: collapse;
-    table-layout: fixed;
+  display: table;
+  width: 100%;
+  border-collapse: collapse;
+  table-layout: fixed;
 }
+
 .table thead {
-    display: table-header-group;
+  display: table-header-group;
 }
+
 .table tr {
-    display: table-row;
+  display: table-row;
 }
+
 .table thead tr th {
-    display: table-cell;
-    text-align: left;
-    padding: 2px;
+  display: table-cell;
+  text-align: left;
+  padding: 2px 2px 2px 0;
+
 }
 
 .table tbody {
-    display: table-row-group;
+  display: table-row-group;
 }
+
 .table tbody tr th {
-    display: table-cell;
-    text-align: left;
-    padding: 2px;
-    font-weight: bold;
+  display: table-cell;
+  text-align: left;
+  padding: 2px 2px 2px 0;
+  font-weight: bold;
 }
+
 .table tbody tr td {
-    display: table-cell;
-    text-align: left;
-    padding: 2px 2px 0px 2px;
+  display: table-cell;
+  text-align: left;
+  padding: 2px 2px 0 0;
 }
 
 .table_head_periode {
-    width: 150px;
+  width: 150px;
 }
 
 .table_head_beskrivelse {
-    width: 200px;
+  width: 200px;
 }
 
 .table_head_belop {
-    width: 20px;
+  width: 20px;
 }
+
 .section {
-    margin-top: 40px;
+  margin-top: 0px;
 }
+
 .subsection {
-    margin-top: 16px;
+  margin-top: 16px;
 }
+
 .horizontal-line {
-    border-top: 0.8px solid black;
-    width: 100%;
-    margin-top: 24px;
-    margin-bottom: 5px;
+  border-top: 0.8px solid black;
+  width: 100%;
+  margin-top: 13px;
+  margin-bottom: 8px;
 }
+
 #pagenumber:before {
-    content: counter(page);
+  content: counter(page);
 }
+
 #pagecount:before {
-    content: counter(pages)
+  content: counter(pages)
 }
+
 #pageFooter {
-    display: table-footer-group;
+  display: table-footer-group;
 }
 
 #pageFooter:after {
-    counter-increment: page;
-    content: counter(page);
-}
-div.top_bottom_text div {
-    float: left;
-    width: 49%;
-}
-div.footer {
-    display: block; text-align: left;
-    position: running(footer);
-}
-div.header {
-    display: block; text-align: left;
-    position: running(header);
-}
-.custom-top_bottom_content:after {
-    font-size: 12px;
-    content: attr(data-content);
-}
-.custom-page-number:after {
-    content: counter(page) ' av ' counter(pages);
+  counter-increment: page;
+  content: counter(page);
 }
 
+
+.text-heading-small p,
 .text-heading-small {
-    font-size: 1.25rem;
+  font-size: 14px;
 }
+
 .text-heading-medium {
-    font-size: 1.5rem;
+  font-size: 16px;
 }
+
 .text-heading-large {
-    font-size: 1.75rem;
+  font-size: 18px;
 }
 
 .mt-medium {
-    margin-top: 16px;
+  margin-top: 16px;
+}
+
+.mb-medium {
+  margin-bottom: 16px;
+}
+
+.mt-large {
+  margin-top: 32px;
+}
+
+
+h1 {
+  font-weight: 700;
+  font-style: normal;
+  font-size: 18px;
+  font-family: "Source Sans Pro";
+}
+
+h2 {
+  margin-top: 16px;
+  margin-bottom: 0px;
+  font-size: 16px;
+}
+
+
+h3 {
+  margin-bottom: 0;
+  margin-top: 8px;
+  font-size: 14px;
+}
+
+h4 {
+  margin-bottom: 0px;
+  margin-top: 0px;
+  font-size: 12px;
+}
+
+h5 {
+  margin-bottom: 8px;
+  margin-top: 8px;
+  font-size: 10px;
+}
+
+h6 {
+  margin-bottom: 8px;
+  margin-top: 8px;
+  font-size: 8px;
+}
+
+p {
+  margin-top: 3px;
+  margin-bottom: 3px;
+  font-size: 12px;
+  font-family: "Source Sans Pro";
+}
+
+/**
+
+Topp og bunntekst
+ */
+
+.custom-next-page-info:after {
+  text-align: left;
+  float: left;
+  font-size: 12px;
+
+  content: attr(data-content);
+}
+
+
+div.top_bottom_text div {
+  float: left;
+  width: 100%;
+}
+
+div.footer {
+  display: block;
+  text-align: right;
+  position: running(footer);
+}
+
+div.footer_last_page {
+  display: block;
+  text-align: right;
+  position: running(footer_last_page);
+}
+
+div.header {
+  display: block;
+  text-align: right;
+  position: running(header);
+}
+
+
+.custom-top_bottom_content:after {
+  text-align: left;
+  float: left;
+  font-size: 12px;
+  position: absolute;
+  padding-left: 0.7cm;
+  content: attr(data-content);
+}
+
+.custom-page-number:after {
+  text-align: right;
+  content: counter(page) ' av ' counter(pages);
+}
+
+/**
+###########
+ */
+
+/*
+Custom components
+ */
+
+.soknad_detaljer {
+  margin-bottom: 52px;
 }

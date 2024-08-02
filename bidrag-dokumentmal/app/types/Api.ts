@@ -210,8 +210,8 @@ export interface NotatBehandlingDetaljer {
   /** @format date */
   virkningstidspunkt?: string;
   avslag?: Resultatkode;
-  avslagVisningsnavn?: string;
   kategoriVisningsnavn?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatBeregnetInntektDto {
@@ -289,8 +289,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   voksenIHusstanden?: boolean;
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
-  beløpSomInnkreves: number;
   resultatVisningsnavn: string;
+  beløpSomInnkreves: number;
 };
 
 export interface NotatSivilstand {
@@ -556,8 +556,8 @@ export interface Virkningstidspunkt {
   avslag?: Resultatkode;
   årsak?: TypeArsakstype;
   notat: SaksbehandlerNotat;
-  avslagVisningsnavn?: string;
   årsakVisningsnavn?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface VoksenIHusstandenDetaljerDto {
@@ -599,17 +599,4 @@ export enum TypeArsakstype {
   TREMANEDERTILBAKE = "TRE_MÅNEDER_TILBAKE",
   TREARSREGELEN = "TRE_ÅRS_REGELEN",
   FRAMANEDENETTERIPAVENTEAVBIDRAGSSAK = "FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK",
-}
-
-export interface MediaType {
-  type?: string;
-  subtype?: string;
-  parameters?: Record<string, string>;
-  /** @format double */
-  qualityValue?: number;
-  wildcardSubtype?: boolean;
-  subtypeSuffix?: string;
-  charset?: string;
-  wildcardType?: boolean;
-  concrete?: boolean;
 }

@@ -28,7 +28,7 @@ export default {
     },
     utgifter: {
       betaltAvBp: "Betalt av BP",
-      dato: "Forfallsdato",
+      dato: "Dato",
       utgift: "Utgift",
       kravbeløp: "Kravbeløp",
       godkjentBeløp: "Godkjent beløp",
@@ -47,11 +47,11 @@ export default {
     beregnet: {
       skattepliktigInntektSplittet: "Skattepliktige- inntekter",
       skattepliktigInntekt: "Skattepliktige inntekter",
-      barnetilleggSplittet: "Barne- tillegg",
+      barnetilleggSplittet: "Barnetillegg",
       barnetillegg: "Barnetillegg",
       utvidetBarnetrygd: "Utvidet- barnetrygd",
       småbarnstillegg: "Småbarns- tillegg",
-      kontantstøtte: "Kontant- støtte",
+      kontantstøtte: "Kontantstøtte",
       total: "Totalt",
     },
     vedtak: {},

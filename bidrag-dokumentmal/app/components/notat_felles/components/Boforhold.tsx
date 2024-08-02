@@ -9,14 +9,11 @@ import { SimpleTable } from "~/components/SimpleTable";
 import Notat from "~/components/Notat";
 import elementIds from "~/utils/elementIds";
 import tekster from "~/tekster";
-import {
-  NotatDataProps,
-  useNotatFelles,
-} from "~/components/notat_felles/NotatContext";
+import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Sivilstand from "~/components/notat_felles/components/Sivilstand";
 
-export default function Boforhold({ data }: NotatDataProps) {
-  const { erAvslag } = useNotatFelles();
+export default function Boforhold() {
+  const { erAvslag, data } = useNotatFelles();
   if (erAvslag) return null;
   return (
     <div className="soknad_parter section">
@@ -30,7 +27,7 @@ export default function Boforhold({ data }: NotatDataProps) {
         {data.boforhold.barn.map((b, i) => (
           <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />
         ))}
-        {data.type === NotatMalType.FORSKUDD && <Sivilstand data={data} />}
+        {data.type === NotatMalType.FORSKUDD && <Sivilstand />}
         {data.type !== NotatMalType.FORSKUDD && (
           <BoforholdAndreVoksneIHusstanden
             data={data.boforhold.andreVoksneIHusstanden}
@@ -48,21 +45,18 @@ function BoforholdAndreVoksneIHusstanden({
 }) {
   if (!data) return;
   return (
-    <div>
+    <div className={"mb-medium"}>
       <h3 id={"linktilmeg"}>{tekster.titler.andreVoksneIHusstanden.tittel}</h3>
       <SimpleTable data={data.opplysningerBruktTilBeregning} />
-      <div
-        className="horizontal-line"
-        style={{ pageBreakAfter: "avoid" }}
-      ></div>
     </div>
   );
 }
 
 function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
   return (
-    <div>
+    <div className={"mb-medium"}>
       <DataDescription
+        style={{ paddingBottom: 0, marginBottom: 0 }}
         label={
           data.medIBehandling
             ? tekster.titler.boforhold.søknadsbarn
@@ -76,10 +70,6 @@ function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
         }
       />
       <SimpleTable data={data.opplysningerBruktTilBeregning} />
-      <div
-        className="horizontal-line"
-        style={{ pageBreakAfter: "avoid" }}
-      ></div>
     </div>
   );
 }

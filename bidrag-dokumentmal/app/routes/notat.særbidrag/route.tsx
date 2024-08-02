@@ -1,10 +1,12 @@
 import { useActionData } from "@remix-run/react";
 import { ActionFunctionArgs, json } from "@remix-run/node";
 import "../../style/style.css";
-import Header from "~/components/Header";
 import { NotatDto } from "~/types/Api";
 import tekster from "~/tekster";
-import { NotatProvider } from "~/components/notat_felles/NotatContext";
+import {
+  NotatProvider,
+  RenderMode,
+} from "~/components/notat_felles/NotatContext";
 import Boforhold from "~/components/notat_felles/components/Boforhold";
 import Soknaddetaljer from "~/components/notat_felles/components/Soknaddetaljer";
 import Utgifter from "~/routes/notat.særbidrag/Utgifter";
@@ -12,6 +14,9 @@ import Inntekter from "~/components/notat_felles/components/Inntekter";
 import Vedtak from "~/routes/notat.særbidrag/Vedtak";
 import VedleggBoforhold from "~/components/notat_felles/components/VedleggBoforhold";
 import VedleggInntekter from "~/components/notat_felles/components/VedleggInntekter";
+import NotatTittel from "~/components/NotatTittel";
+import DagensDato from "~/components/DagensDato";
+import HeaderFooter from "~/components/notat_felles/HeaderFooter";
 
 type NotatRequest = {
   renderForPdf: boolean;
@@ -42,35 +47,21 @@ export default function NotatSærbidrag() {
     return <div>Oops</div>;
   }
 
-  const renderTopBottomTextContent = () => (
-    <>
-      <div
-        className={"custom-top_bottom_content"}
-        data-content={`${tekster.titler.særbidrag}. Saksnummer ${data.saksnummer}`}
-      ></div>
-      <div className={"custom-page-number"}></div>
-    </>
-  );
   const data = response.data;
   return (
     <div id="forskudd_notat">
-      <Header title={tekster.titler.særbidrag} />
-      {response.renderForPdf && (
-        <div className="header top_bottom_text">
-          {renderTopBottomTextContent()}
-        </div>
-      )}
-      {response.renderForPdf && (
-        <div className="footer top_bottom_text">
-          {renderTopBottomTextContent()}
-        </div>
-      )}
-      <NotatProvider data={data}>
+      <NotatProvider
+        data={data}
+        renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
+      >
+        <HeaderFooter />
         <div className={"container page"}>
-          <Soknaddetaljer data={data} />
+          <Soknaddetaljer />
+          <DagensDato />
+          <NotatTittel title={tekster.titler.særbidrag} />
           <Utgifter />
           <Inntekter />
-          <Boforhold data={data} />
+          <Boforhold />
           <Vedtak />
           <VedleggBoforhold />
           <VedleggInntekter />

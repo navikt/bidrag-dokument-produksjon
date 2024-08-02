@@ -68,7 +68,12 @@ export const DDMMYYYYStringToDate = (dateString: string) => {
 
   return new Date(year, month, day);
 };
-
+export const DateToDDNameYYYYString = (date: Date) =>
+  date?.toLocaleDateString("nb-NO", {
+    year: "numeric",
+    month: "long",
+    day: "2-digit",
+  });
 export const DateToDDMMYYYYString = (date: Date) =>
   date?.toLocaleDateString("nb-NO", {
     year: "numeric",

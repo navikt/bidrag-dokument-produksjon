@@ -36,8 +36,9 @@ export default function VedleggBoforhold() {
         const gjelderBarn = value[0].gjelder!;
         const barn = value[0];
         return (
-          <div key={key} className="table_container">
+          <div key={key} className="table_container mb-medium">
             <DataDescription
+              style={{ marginBottom: "0px" }}
               label={
                 barn.medIBehandling ? "Søknadsbarn" : "Eget barn i husstanden"
               }
@@ -49,13 +50,6 @@ export default function VedleggBoforhold() {
               }
             />
             <BoforholdTable data={barn.opplysningerFraFolkeregisteret} />
-            <div
-              className="horizontal-line"
-              style={{
-                pageBreakAfter: "avoid",
-                marginBottom: "24px",
-              }}
-            ></div>
           </div>
         );
       })}
@@ -107,7 +101,7 @@ export function BoforholdTable({
             name: erSivilstand
               ? tekster.tabell.felles.fraDato
               : tekster.tabell.felles.periode,
-            width: "190px",
+            width: "140px",
           },
           { name: tekster.tabell.felles.status },
         ],
@@ -148,7 +142,7 @@ function AndreVoksneiHusstandenDetaljer({
 }) {
   return (
     <>
-      <h6>Hvem bor på adresse?</h6>
+      <h3 style={{ width: "200px" }}>Hvem bor på adresse?</h3>
       <ul
         style={{
           listStyleType: "decimal",
@@ -162,7 +156,8 @@ function AndreVoksneiHusstandenDetaljer({
             return (
               <li key={husstandsmedlem.navn + "-" + index}>
                 {DateToDDMMYYYYString(dateOrNull(husstandsmedlem.fødselsdato)!)}
-                {husstandsmedlem.harRelasjonTilBp && " (Relasjon til BP)"}
+                {husstandsmedlem.harRelasjonTilBp &&
+                  " (Relasjon til Bidragspliktig)"}
               </li>
             );
           },

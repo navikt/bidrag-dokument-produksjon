@@ -10,10 +10,7 @@ import { NotatResultatForskuddBeregningBarnDto } from "~/types/Api";
 export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
   return (
-    <div
-      className={"section"}
-      style={{ pageBreakBefore: erAvslag ? "auto" : "always" }}
-    >
+    <div style={{ pageBreakBefore: erAvslag ? "auto" : "always" }}>
       <h2>Vedtak</h2>
       {erAvslag ? (
         <VedtakTableAvslag
@@ -38,7 +35,7 @@ function VedtakTableAvslag({
 
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
-    <div style={{ paddingTop: "10px" }}>
+    <div style={{ paddingTop: "0px" }}>
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
@@ -81,17 +78,17 @@ function VedtakTable({
 }) {
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
-    <div style={{ paddingTop: "10px" }}>
+    <div style={{ paddingTop: "0px" }}>
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
         const tableData: TableData = {
           headers: [
-            { name: "Periode", width: "170px" },
-            { name: "Inntekt" },
-            { name: "Sivilstand", width: "140px" },
+            { name: "Periode", width: "130px" },
+            { name: "Inntekt", width: "80px" },
+            { name: "Sivilstand", width: "120px" },
             { name: "Antall barn i husstand", width: "80px" },
-            { name: "Forskudd", width: "80px" },
+            { name: "Forskudd", width: "70px" },
             { name: "Resultat", width: "150px" },
           ],
           rows: perioder.map((d) => ({
@@ -111,15 +108,9 @@ function VedtakTable({
           })),
         };
         return (
-          <div key={key} className="table_container">
+          <div key={key} className="table_container mb-medium">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            <CommonTable data={tableData} width={"710px"} />
-            <div
-              className="horizontal-line"
-              style={{
-                pageBreakAfter: "avoid",
-              }}
-            ></div>
+            <CommonTable data={tableData} width={"550px"} />
           </div>
         );
       })}

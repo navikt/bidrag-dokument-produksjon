@@ -17,8 +17,8 @@ export function SimpleTable({ data }: SimpleTableProps) {
   return (
     <table className="table" style={{ breakBefore: "recto" }}>
       <tr>
-        <th style={{ width: "190px" }}>{tekster.tabell.felles.fraTilOgMed}</th>
-        <th style={{ width: "200px" }}>{tekster.tabell.felles.status}</th>
+        <th style={{ width: "150px" }}>{tekster.tabell.felles.fraTilOgMed}</th>
+        <th style={{ width: "150px" }}>{tekster.tabell.felles.status}</th>
         <th>Kilde</th>
       </tr>
       {data.map((d, i) => (

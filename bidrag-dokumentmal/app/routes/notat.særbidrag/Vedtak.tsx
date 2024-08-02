@@ -13,7 +13,6 @@ export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
   return (
     <div
-      className={"section"}
       style={{
         pageBreakBefore: erAvslag ? "auto" : "always",
         display: "inline-block",
@@ -58,7 +57,7 @@ function VedtakTable({
   if (erDirekteAvslag) {
     return (
       <div>
-        <h2>Avslag</h2>
+        <h3 style={{ marginTop: 0 }}>Avslag</h3>
         <p>
           <dl className="bd_datadisplay">
             <dt>Årsak</dt>
@@ -69,16 +68,19 @@ function VedtakTable({
     );
   }
   return (
-    <div style={{ paddingTop: "10px" }}>
+    <div style={{ paddingTop: "0px" }}>
       {erBeregningeAvslag ? (
-        <h3>Avslag: {resultat.resultatVisningsnavn}</h3>
+        <h3 style={{ marginTop: 0 }}>
+          Avslag: {resultat.resultatVisningsnavn}
+        </h3>
       ) : (
-        <h3>Særbidrag innvilget</h3>
+        <h3 style={{ marginTop: 0 }}>Særbidrag innvilget</h3>
       )}
       <div>
         <DataViewTable
           title="Inntekter"
-          labelColWidth={"85px"}
+          className={"three_column_view"}
+          labelColWidth={"75px"}
           width={"34%"}
           key={"inntekter"}
           data={[
@@ -99,8 +101,9 @@ function VedtakTable({
 
         <DataViewTable
           title="Boforhold"
+          className={"three_column_view"}
           width={"45%"}
-          labelColWidth={"175px"}
+          labelColWidth={"145px"}
           key={"Boforhold"}
           data={[
             {
@@ -119,7 +122,8 @@ function VedtakTable({
         />
         <DataViewTable
           title="Beregning"
-          labelColWidth={"150px"}
+          className={"three_column_view mt-medium"}
+          labelColWidth={"130px"}
           width={"100%"}
           key={"Beregning"}
           data={[

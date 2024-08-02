@@ -1,19 +1,24 @@
 import { Vedtak as VedtakDto } from "~/types/Api";
-import DataDescription from "~/components/DataDescription";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
+import { DataViewTable } from "~/components/DataViewTable";
 
 export function VedtakFattetDetaljer({ data }: { data: VedtakDto }) {
   if (!data.erFattet) return null;
   return (
-    <div>
-      <h4 style={{ marginBottom: "0" }}>Ferdigstilt</h4>
-      <DataDescription
-        label={"Saksbehandler"}
-        value={data.fattetAvSaksbehandler}
-      />
-      <DataDescription
-        label={"Dato"}
-        value={dateToDDMMYYYY(data.fattetTidspunkt)}
+    <div className={"mt-medium"}>
+      <h2 style={{ marginBottom: "0" }}>Ferdigstilt</h2>
+      <DataViewTable
+        labelColWidth={"90px"}
+        data={[
+          {
+            label: "Saksbehandler",
+            value: data.fattetAvSaksbehandler,
+          },
+          {
+            label: "Dato",
+            value: dateToDDMMYYYY(data.fattetTidspunkt),
+          },
+        ]}
       />
     </div>
   );

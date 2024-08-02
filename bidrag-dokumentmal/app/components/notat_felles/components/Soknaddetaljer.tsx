@@ -1,10 +1,12 @@
 import { sammenlignRoller, rolleTilVisningsnavn } from "~/utils/visningsnavn";
-import { PersonNotatDto, Rolletype } from "~/types/Api";
-import DataDescription from "~/components/DataDescription";
+import { Rolletype } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
-import { NotatDataProps } from "~/components/notat_felles/NotatContext";
+import NavLogo from "~/components/NavLogo";
+import { useNotatFelles } from "~/components/notat_felles/NotatContext";
+import { DataViewTable } from "~/components/DataViewTable";
 
-export default function Soknaddetaljer({ data }: NotatDataProps) {
+export default function Soknaddetaljer() {
+  const { data } = useNotatFelles();
   const rollerIkkeBarn = data.roller.filter(
     (rolle) => !sammenlignRoller(rolle.rolle, Rolletype.BA),
   );
@@ -14,37 +16,51 @@ export default function Soknaddetaljer({ data }: NotatDataProps) {
   return (
     <div className={"soknad_detaljer"}>
       <div>
-        <DataDescription label={"Saksnummer"} value={data.saksnummer} />
-        {rollerIkkeBarn.map((rolle) => (
-          <DataDescription
-            key={rolle.ident}
-            label={rolleTilVisningsnavn(rolle.rolle!)!}
-            value={rolle.navn + " / " + dateToDDMMYYYY(rolle.fødselsdato)}
-          />
-        ))}
-        <RollerBarn rollerBarn={rollerBarn} />
+        <NavLogo />
+        <DataViewTable
+          labelColWidth={"98px"}
+          width={"100%"}
+          data={[
+            {
+              label: "Saksnummer",
+              value: data.saksnummer,
+            },
+
+            ...rollerIkkeBarn
+              .sort((a, b) => {
+                const rolleA = rolleTilVisningsnavn(a.rolle!);
+                const rolleB = rolleTilVisningsnavn(b.rolle!);
+                if (rolleA === "BM" && rolleB !== "BM") return -1;
+                if (rolleA !== "BM" && rolleB === "BM") return 1;
+                if (rolleA === "BP" && rolleB !== "BP") return -1;
+                if (rolleA !== "BP" && rolleB === "BP") return 1;
+                return rolleA.localeCompare(rolleB);
+              })
+              .map((rolle) => ({
+                label: rolleTilVisningsnavn(rolle.rolle!)!,
+                value: rolle.navn + " / " + dateToDDMMYYYY(rolle.fødselsdato),
+              })),
+            {
+              label: "Søknadsbarn",
+              value: (
+                <div style={{ display: "inline-table" }}>
+                  {rollerBarn.map((rolle) => (
+                    <span
+                      key={rolle.ident}
+                      style={{
+                        width: "100%",
+                        display: "block",
+                      }}
+                    >
+                      {rolle.navn + " / " + dateToDDMMYYYY(rolle.fødselsdato)}
+                    </span>
+                  ))}
+                </div>
+              ),
+            },
+          ]}
+        />
       </div>
     </div>
-  );
-}
-
-function RollerBarn({ rollerBarn }: { rollerBarn: PersonNotatDto[] }) {
-  return (
-    <dl className="datarow">
-      <dt>{"Søknadsbarn"}</dt>
-      <dd style={{ display: "inline-table" }}>
-        {rollerBarn.map((rolle) => (
-          <span
-            key={rolle.ident}
-            style={{
-              width: "100%",
-              display: "block",
-            }}
-          >
-            {rolle.navn + " / " + dateToDDMMYYYY(rolle.fødselsdato)}
-          </span>
-        ))}
-      </dd>
-    </dl>
   );
 }

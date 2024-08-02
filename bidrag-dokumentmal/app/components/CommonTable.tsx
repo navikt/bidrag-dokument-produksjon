@@ -17,14 +17,19 @@ export type TableData = {
 };
 type CommonTableProps = {
   width?: string;
+  layoutAuto?: boolean;
   data: TableData;
 };
 export function CommonTable({
+  layoutAuto,
   data: { headers, rows },
   width,
 }: CommonTableProps) {
   return (
-    <table className="table" style={{ width: width }}>
+    <table
+      className="table"
+      style={{ width: width, tableLayout: layoutAuto ? "auto" : "fixed" }}
+    >
       <colgroup>
         {headers.map((header, i) => (
           <col
@@ -36,7 +41,13 @@ export function CommonTable({
       <thead>
         <tr>
           {headers.map((header, i) => (
-            <th key={header.name + i} style={{ width: header.width }}>
+            <th
+              key={header.name + i}
+              style={{
+                width: header.width,
+                verticalAlign: "top",
+              }}
+            >
               {header.name}
             </th>
           ))}

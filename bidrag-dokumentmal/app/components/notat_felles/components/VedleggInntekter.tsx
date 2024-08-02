@@ -5,17 +5,11 @@ import {
   Kilde,
   NotatInntektDto,
   PersonNotatDto,
-  Rolletype,
   NotatMalType,
 } from "~/types/Api";
-import {
-  formatterBeløp,
-  rolleTilVisningsnavn,
-  sammenlignRoller,
-} from "~/utils/visningsnavn";
+import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
 import { groupBy } from "~/utils/array-utils";
 import KildeIcon from "~/components/KildeIcon";
-import TableGjelderBarn from "~/components/TableGjelderBarn";
 import elementIds from "~/utils/elementIds";
 import tekster from "~/tekster";
 import {
@@ -28,6 +22,9 @@ import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Inntektsposter from "~/components/notat_felles/components/Inntektsposter";
 import HorizontalLine from "~/components/HorizontalLine";
 import { isHarInntekter } from "~/components/inntektTableHelpers";
+import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
+import InntektRolle from "~/components/inntekt/InntektRolle";
+import TableGjelderBarn from "~/components/TableGjelderBarn";
 
 export default function VedleggInntekter() {
   const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
@@ -44,17 +41,14 @@ export default function VedleggInntekter() {
         showRole={type !== NotatMalType.FORSKUDD}
       />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
-        <>
-          <HorizontalLine />
+        <div className={"mt-medium"}>
           <OpplysningerForRolle rolle={bidragspliktig} />
-          <HorizontalLine />
-        </>
+        </div>
       )}
       {type !== NotatMalType.FORSKUDD &&
         søknadsbarn.map((barn) => (
-          <div key={barn.ident}>
+          <div key={barn.ident} className={"mt-medium"}>
             <OpplysningerForRolle rolle={barn} />
-            <HorizontalLine />
           </div>
         ))}
     </div>
@@ -78,15 +72,8 @@ function OpplysningerForRolle({
   if (!inntekter) return null;
 
   return (
-    <div className={"mt-medium"}>
-      {showRole && (
-        <div className={"elements_inline"}>
-          <h5 style={{ marginRight: 5, paddingRight: 0 }}>
-            {rolleTilVisningsnavn(rolle.rolle!)}
-          </h5>
-          {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
-        </div>
-      )}
+    <div>
+      {showRole && <InntektRolle rolle={rolle} />}
       {inntekter.arbeidsforhold && inntekter.arbeidsforhold.length > 0 && (
         <div>
           <h4>2.1 Arbeidsforhold</h4>
@@ -131,6 +118,7 @@ type OffentligeInntekterProps = {
   data: NotatInntektDto[];
   medBarn?: boolean;
   medInntektsposter?: boolean;
+  subsection?: boolean;
 };
 
 function OffentligeInntekter({
@@ -138,11 +126,12 @@ function OffentligeInntekter({
   data,
   medBarn,
   medInntektsposter,
+  subsection = true,
 }: OffentligeInntekterProps) {
   if (data.length == 0) return null;
   return (
-    <div className={"subsection"}>
-      <h4>{tittel}</h4>
+    <div className={subsection ? "subsection" : ""}>
+      <InntektTableTitle title={tittel} />
       {medBarn ? (
         <InntektPerBarnTable data={data} />
       ) : (
@@ -168,10 +157,10 @@ function InntektTable({
       <CommonTable
         data={{
           headers: [
-            { name: tekster.tabell.felles.fraTilOgMed, width: "200px" },
+            { name: tekster.tabell.felles.fraTilOgMed, width: "170px" },
             inkluderBeskrivelse && {
               name: tekster.tabell.felles.beskrivelse,
-              width: "200px",
+              width: "175px",
             },
             { name: tekster.tabell.inntekt.beløp },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
@@ -210,13 +199,13 @@ function ArbeidsforholdTable({ data }: { data: Arbeidsforhold[] }) {
 
   return (
     <CommonTable
-      width={"600px"}
+      width={"450px"}
       data={{
         headers: [
           { name: tekster.tabell.felles.periode, width: "100px" },
-          { name: tekster.tabell.arbeidsforhold.arbeidsgiver, width: "170px" },
-          { name: tekster.tabell.arbeidsforhold.stilling, width: "70px" },
-          { name: tekster.tabell.arbeidsforhold.lønnsendring, width: "100px" },
+          { name: tekster.tabell.arbeidsforhold.arbeidsgiver, width: "140px" },
+          { name: tekster.tabell.arbeidsforhold.stilling, width: "40px" },
+          { name: tekster.tabell.arbeidsforhold.lønnsendring, width: "40px" },
         ],
         rows: data.map((d) => ({
           columns: [
@@ -241,13 +230,16 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
         const gjelderBarn = value[0].gjelderBarn!;
         const erBarnetillegg =
           value[0].type == Inntektsrapportering.BARNETILLEGG;
+        const addMargin = data.length > i + 1;
         return (
-          <div key={key + i.toString()} className="table_container">
+          <div key={key + i.toString()} className="table_container"  style={{
+            marginBottom: addMargin ? "16px" : "0px",
+          }}>
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
             <CommonTable
-              width={"580px"}
+                width={"580px"}
               data={{
-                headers: getInntektTableHeaders(erBarnetillegg),
+                headers: getInntektTableHeaders(erBarnetillegg, false),
                 rows: data
                   .filter((d) => d.kilde == Kilde.OFFENTLIG)
                   .map((d) => {
@@ -259,7 +251,6 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
                     return {
                       columns: [
                         { content: formatPeriode(periode!.fom, periode!.til) },
-                        { content: <KildeIcon kilde={d.kilde} /> },
                         erBarnetillegg
                           ? [
                               { content: visningsnavnInntektstype },

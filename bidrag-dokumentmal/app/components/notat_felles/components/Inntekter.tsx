@@ -7,14 +7,10 @@ import {
   PersonNotatDto,
   Rolletype,
 } from "~/types/Api";
-import { dateToDDMMYYYY, deductDays, formatPeriode } from "~/utils/date-utils";
+import { deductDays, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
 import { groupBy, hasValue } from "~/utils/array-utils";
-import {
-  formatterBeløp,
-  rolleTilVisningsnavn,
-  sammenlignRoller,
-} from "~/utils/visningsnavn";
+import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
 import Notat from "~/components/Notat";
 import elementIds from "~/utils/elementIds";
 import {
@@ -33,7 +29,11 @@ import {
   InntektTableType,
   isHarInntekter,
   beregnetInntekterColumnNames,
+  beregnetInntekterColumnWidth,
 } from "~/components/inntektTableHelpers";
+import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
+import InntektRolle from "~/components/inntekt/InntektRolle";
+import TableGjelderBarn from "~/components/TableGjelderBarn";
 
 export default function Inntekter() {
   const { erAvslag, data, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
@@ -51,19 +51,18 @@ export default function Inntekter() {
         rolle={bidragsmottaker}
         showRole={type !== NotatMalType.FORSKUDD}
       />
-      <HorizontalLine />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
         <>
-          <InntekterForRolle rolle={bidragspliktig} />
-          <HorizontalLine />
+          <div className={"mt-medium"}>
+            <InntekterForRolle rolle={bidragspliktig} />
+          </div>
         </>
       )}
 
       {type !== NotatMalType.FORSKUDD &&
-        søknadsbarn.map((barn) => (
-          <div key={barn.ident}>
+        søknadsbarn.map((barn, i) => (
+          <div key={barn.ident} className={"mt-medium"}>
             <InntekterForRolle rolle={barn} />
-            <HorizontalLine />
           </div>
         ))}
       <Notat data={data.inntekter.notat} />
@@ -87,22 +86,16 @@ function InntekterForRolle({
   );
   if (inntekter == null) return null;
   return (
-    <div className={"mt-medium"}>
-      {showRole && (
-        <div className={"elements_inline"}>
-          <h5 style={{ marginRight: 5, paddingRight: 0 }}>
-            {rolleTilVisningsnavn(rolle.rolle!)}
-          </h5>
-          {rolle.rolle === Rolletype.BA && <p>{rolle.navn}</p>}
-        </div>
-      )}
+    <div>
+      {showRole && <InntektRolle rolle={rolle} />}
       {!isHarInntekter(inntekter) ? (
         <p>Ingen inntekter</p>
       ) : (
-        <div style={{ marginTop: "-10px" }}>
+        <div>
           <InntektTable
             data={inntekter.årsinntekter}
             title={"Skattepliktige og pensjonsgivende inntekt"}
+            subsection={false}
           />
           <InntektPerBarnTable
             data={inntekter.barnetillegg}
@@ -122,7 +115,6 @@ function InntekterForRolle({
             data={inntekter.kontantstøtte}
             title={"Kontantstøtte"}
           />
-          <HorizontalLine />
           <BeregnetInntektTable
             data={inntekter.beregnetInntekter}
             rolle={rolle}
@@ -139,6 +131,7 @@ type InntektTableProps = {
   subtitle?: string;
   inkluderBeskrivelse?: boolean;
   bareMedIBeregning?: boolean;
+  subsection?: boolean;
 };
 
 function InntektTable({
@@ -147,58 +140,60 @@ function InntektTable({
   subtitle,
   bareMedIBeregning = true,
   inkluderBeskrivelse = true,
+  subsection = true,
 }: InntektTableProps) {
   const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
   if (inntekter.length == 0) return null;
   return (
-    <div className={"subsection"}>
-      <TableTitle title={title} subtitle={subtitle} />
-      <div className={"table_container"}>
-        <CommonTable
-          data={{
-            headers: [
-              { name: tekster.tabell.felles.fraTilOgMed, width: "200px" },
-              inkluderBeskrivelse && {
-                name: tekster.tabell.felles.beskrivelse,
-                width: "250px",
-              },
-              { name: tekster.tabell.felles.kilde, width: "70px" },
-              { name: tekster.tabell.inntekt.beløp },
-            ].filter((d) => typeof d != "boolean") as TableHeader[],
-            rows: inntekter
-              .sort((a, b) =>
-                a.periode?.fom && b.periode?.fom
-                  ? a.periode?.fom.localeCompare(b.periode?.fom)
-                  : 1,
-              )
-              .map((d, i) => {
-                const periode = d.periode ?? d.opprinneligPeriode;
-                return {
-                  columns: [
-                    { content: formatPeriode(periode!.fom, periode!.til) },
-                    inkluderBeskrivelse && { content: d.visningsnavn },
-                    { content: <KildeIcon kilde={d.kilde} /> },
-                    { content: formatterBeløp(d.beløp) },
-                  ].filter((d) => typeof d != "boolean") as TableColumn[],
-                  expandableContent:
-                    d.inntektsposter.length > 0
-                      ? [
-                          {
-                            content: (
-                              <Inntektsposter
-                                data={d}
-                                periode={periode}
-                                withHorizontalLine={inntekter.length > i + 1}
-                              />
-                            ),
-                          },
-                        ]
-                      : undefined,
-                };
-              }),
-          }}
-        />
-      </div>
+    <div className={subsection ? "subsection" : ""}>
+      <InntektTableTitle title={title} subtitle={subtitle} />
+      <CommonTable
+        data={{
+          headers: [
+            { name: tekster.tabell.felles.fraTilOgMed, width: "170px" },
+            inkluderBeskrivelse && {
+              name: tekster.tabell.felles.beskrivelse,
+              width: "230px",
+            },
+            {
+              name: tekster.tabell.felles.kilde,
+              width: inkluderBeskrivelse ? "80px" : "230px",
+            },
+            { name: tekster.tabell.inntekt.beløp },
+          ].filter((d) => typeof d != "boolean") as TableHeader[],
+          rows: inntekter
+            .sort((a, b) =>
+              a.periode?.fom && b.periode?.fom
+                ? a.periode?.fom.localeCompare(b.periode?.fom)
+                : 1,
+            )
+            .map((d, i) => {
+              const periode = d.periode ?? d.opprinneligPeriode;
+              return {
+                columns: [
+                  { content: formatPeriode(periode!.fom, periode!.til) },
+                  inkluderBeskrivelse && { content: d.visningsnavn },
+                  { content: <KildeIcon kilde={d.kilde} /> },
+                  { content: formatterBeløp(d.beløp) },
+                ].filter((d) => typeof d != "boolean") as TableColumn[],
+                expandableContent:
+                  d.inntektsposter.length > 0
+                    ? [
+                        {
+                          content: (
+                            <Inntektsposter
+                              data={d}
+                              periode={periode}
+                              withHorizontalLine={inntekter.length > i + 1}
+                            />
+                          ),
+                        },
+                      ]
+                    : undefined,
+              };
+            }),
+        }}
+      />
     </div>
   );
 }
@@ -212,23 +207,28 @@ function InntektPerBarnTable({
   const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
   if (inntekter.length == 0) return null;
 
+  const inntekterBarn = groupBy(data, (d) => d.gjelderBarn?.ident!);
   return (
-    <div style={{ paddingTop: "10px" }}>
-      <TableTitle title={title} subtitle={subtitle} />
-      {groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value], i) => {
+    <div className={"mt-medium"}>
+      <InntektTableTitle title={title} subtitle={subtitle} />
+      {inntekterBarn.map(([key, value], i) => {
         const gjelderBarn = value[0].gjelderBarn!;
         const erBarnetillegg =
           value[0].type == Inntektsrapportering.BARNETILLEGG;
+        const addMargin = inntekterBarn.length > i + 1;
         return (
           <div
             key={gjelderBarn + key + i.toString()}
             className="table_container"
+            style={{
+              marginBottom: addMargin ? "16px" : "0px",
+            }}
           >
-            <GjelderBarn gjelderBarn={gjelderBarn} />
+            <TableGjelderBarn gjelderBarn={gjelderBarn} />
             <CommonTable
               width={"580px"}
               data={{
-                headers: getInntektTableHeaders(erBarnetillegg),
+                headers: getInntektTableHeaders(erBarnetillegg, true),
                 rows: value
                   .filter((d) => !bareMedIBeregning || d.medIBeregning)
                   .map((d) => {
@@ -277,6 +277,9 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
 
   const columnNames =
     beregnetInntekterColumnNames[type][rolle.rolle as BehandlingRolletype];
+
+  const columnWidth =
+    beregnetInntekterColumnWidth[type][rolle.rolle as BehandlingRolletype];
   function renderTable(
     inntekter: DelberegningSumInntekt[],
     gjelderBarn?: PersonNotatDto,
@@ -284,37 +287,43 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
     return (
       <>
         {harFlereEnnEttSøknadsbarn && gjelderBarn && (
-          <GjelderBarn gjelderBarn={gjelderBarn} />
+          <TableGjelderBarn gjelderBarn={gjelderBarn} />
         )}
         <CommonTable
-          width={"700px"}
+          width={"580px"}
           data={{
             headers: [
-              { name: tekster.tabell.felles.fraTilOgMed, width: "170px" },
+              {
+                name: tekster.tabell.felles.fraTilOgMed,
+                width: columnWidth[tekster.tabell.felles.fraTilOgMed],
+              },
               {
                 name: columnNames.SKATTEPLIKTIG,
-                width: "100px",
+                width: columnWidth[columnNames.SKATTEPLIKTIG as string],
               },
               hasValue(inntektTableRules, InntektTableType.BARNETILLEGG) && {
                 name: columnNames.BARNETILLEGG,
-                width: "60px",
+                width: columnWidth[columnNames.BARNETILLEGG as string],
               },
               hasValue(
                 inntektTableRules,
                 InntektTableType.UTVIDET_BARNETRYGD,
               ) && {
                 name: columnNames.UTVIDET_BARNETRYGD,
-                width: "80px",
+                width: columnWidth[columnNames.UTVIDET_BARNETRYGD as string],
               },
               hasValue(inntektTableRules, InntektTableType.SMÅBARNSTILLEGG) && {
                 name: columnNames.SMÅBARNSTILLEGG,
-                width: "80px",
+                width: columnWidth[columnNames.SMÅBARNSTILLEGG as string],
               },
               hasValue(inntektTableRules, InntektTableType.KONTANTSTØTTE) && {
                 name: columnNames.KONTANTSTØTTE,
-                width: "60px",
+                width: columnWidth[columnNames.KONTANTSTØTTE as string],
               },
-              { name: columnNames.TOTAL_INNTEKTER, width: "60px" },
+              {
+                name: columnNames.TOTAL_INNTEKTER,
+                width: columnWidth[columnNames.TOTAL_INNTEKTER as string],
+              },
             ].filter((d) => typeof d != "boolean") as TableHeader[],
             rows: inntekter.map((d) => ({
               columns: [
@@ -348,59 +357,36 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
     );
   }
 
+  function renderForAllChildren() {
+    const inntekterBarn = groupBy(data, (d) => d.gjelderBarn?.ident!);
+    return inntekterBarn.map(([key, value], i) => {
+      const gjelderBarn = value[0].gjelderBarn!;
+      const inntekter = value[0].summertInntektListe;
+      const addMargin = i != 0;
+      return (
+        <div
+          key={gjelderBarn + key + i.toString()}
+          className="table_container"
+          style={{ marginTop: addMargin ? "16px" : "0px" }}
+        >
+          {renderTable(inntekter, gjelderBarn)}
+        </div>
+      );
+    });
+  }
+
   const harInntekter = data.every((d) => d.summertInntektListe.length > 0);
 
   if (!harInntekter) return;
   return (
-    <div className={"subsection"}>
-      <TableTitle title={"Beregnet totalt"} />
+    <div className={"mt-medium"}>
+      <InntektTableTitle title={"Beregnet totalt"} />
       {rolle.rolle === Rolletype.BA
         ? renderTable(
             data.find((d) => d.gjelderBarn.ident == rolle.ident)
               ?.summertInntektListe ?? [],
           )
-        : groupBy(data, (d) => d.gjelderBarn?.ident!).map(([key, value], i) => {
-            const gjelderBarn = value[0].gjelderBarn!;
-            const inntekter = value[0].summertInntektListe;
-            return (
-              <div
-                key={gjelderBarn + key + i.toString()}
-                className="table_container"
-                style={{ paddingTop: "10px" }}
-              >
-                {renderTable(inntekter, gjelderBarn)}
-              </div>
-            );
-          })}
-    </div>
-  );
-}
-
-function GjelderBarn({ gjelderBarn }: { gjelderBarn: PersonNotatDto }) {
-  return (
-    <dl>
-      <dt>{gjelderBarn.navn}</dt>
-      <dd style={{ display: "inline-table" }}>
-        / {dateToDDMMYYYY(gjelderBarn.fødselsdato)}
-      </dd>
-    </dl>
-  );
-}
-
-function TableTitle({
-  title,
-  subtitle,
-}: {
-  title?: string;
-  subtitle?: string;
-}) {
-  if (!title) return null;
-  return (
-    <div style={{ display: "inline-block", verticalAlign: "middle" }}>
-      <h4 style={{ padding: 0, margin: "0 0 5px 0", display: "inline" }}>
-        {title}
-      </h4>
-      {subtitle && <span>{subtitle}</span>}
+        : renderForAllChildren()}
     </div>
   );
 }

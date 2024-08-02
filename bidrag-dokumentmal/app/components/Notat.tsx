@@ -3,7 +3,7 @@ import xss from "xss";
 import { SaksbehandlerNotat } from "~/types/Api";
 
 type NotatProps = {
-  data: SaksbehandlerNotat;
+  data?: SaksbehandlerNotat;
 };
 export default function Notat({ data }: NotatProps) {
   return (
@@ -15,7 +15,7 @@ export default function Notat({ data }: NotatProps) {
     >
       <DataDescription
         label={"Begrunnelse"}
-        value={<PurifiedHtml text={data.intern} />}
+        value={<PurifiedHtml text={data?.intern} />}
       />
     </div>
   );
