@@ -42,16 +42,13 @@ export default function VedleggInntekter() {
       />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
         <div className={"mt-medium"}>
-          <HorizontalLine />
           <OpplysningerForRolle rolle={bidragspliktig} />
-          <HorizontalLine />
         </div>
       )}
       {type !== NotatMalType.FORSKUDD &&
         søknadsbarn.map((barn) => (
           <div key={barn.ident} className={"mt-medium"}>
             <OpplysningerForRolle rolle={barn} />
-            <HorizontalLine />
           </div>
         ))}
     </div>
@@ -160,10 +157,10 @@ function InntektTable({
       <CommonTable
         data={{
           headers: [
-            { name: tekster.tabell.felles.fraTilOgMed, width: "155px" },
+            { name: tekster.tabell.felles.fraTilOgMed, width: "170px" },
             inkluderBeskrivelse && {
               name: tekster.tabell.felles.beskrivelse,
-              width: "160px",
+              width: "175px",
             },
             { name: tekster.tabell.inntekt.beløp },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
@@ -233,13 +230,16 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
         const gjelderBarn = value[0].gjelderBarn!;
         const erBarnetillegg =
           value[0].type == Inntektsrapportering.BARNETILLEGG;
+        const addMargin = data.length > i + 1;
         return (
-          <div key={key + i.toString()} className="table_container">
+          <div key={key + i.toString()} className="table_container"  style={{
+            marginBottom: addMargin ? "16px" : "0px",
+          }}>
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
             <CommonTable
-              width={"580px"}
+                width={"580px"}
               data={{
-                headers: getInntektTableHeaders(erBarnetillegg),
+                headers: getInntektTableHeaders(erBarnetillegg, false),
                 rows: data
                   .filter((d) => d.kilde == Kilde.OFFENTLIG)
                   .map((d) => {
@@ -251,7 +251,6 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
                     return {
                       columns: [
                         { content: formatPeriode(periode!.fom, periode!.til) },
-                        { content: <KildeIcon kilde={d.kilde} /> },
                         erBarnetillegg
                           ? [
                               { content: visningsnavnInntektstype },

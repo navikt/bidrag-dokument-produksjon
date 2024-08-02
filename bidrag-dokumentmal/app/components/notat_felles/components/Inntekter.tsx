@@ -228,7 +228,7 @@ function InntektPerBarnTable({
             <CommonTable
               width={"580px"}
               data={{
-                headers: getInntektTableHeaders(erBarnetillegg),
+                headers: getInntektTableHeaders(erBarnetillegg, true),
                 rows: value
                   .filter((d) => !bareMedIBeregning || d.medIBeregning)
                   .map((d) => {
