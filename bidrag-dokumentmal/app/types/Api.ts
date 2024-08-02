@@ -93,6 +93,7 @@ export interface InntekterPerRolle {
   småbarnstillegg: NotatInntektDto[];
   kontantstøtte: NotatInntektDto[];
   beregnetInntekter: NotatBeregnetInntektDto[];
+  harInntekter: boolean;
 }
 
 export enum Inntektsrapportering {
@@ -210,8 +211,10 @@ export interface NotatBehandlingDetaljer {
   /** @format date */
   virkningstidspunkt?: string;
   avslag?: Resultatkode;
-  kategoriVisningsnavn?: string;
+  /** @format date */
+  klageMottattDato?: string;
   avslagVisningsnavn?: string;
+  kategoriVisningsnavn?: string;
 }
 
 export interface NotatBeregnetInntektDto {
@@ -289,8 +292,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   voksenIHusstanden?: boolean;
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
-  resultatVisningsnavn: string;
   beløpSomInnkreves: number;
+  resultatVisningsnavn: string;
 };
 
 export interface NotatSivilstand {
@@ -556,8 +559,8 @@ export interface Virkningstidspunkt {
   avslag?: Resultatkode;
   årsak?: TypeArsakstype;
   notat: SaksbehandlerNotat;
-  årsakVisningsnavn?: string;
   avslagVisningsnavn?: string;
+  årsakVisningsnavn?: string;
 }
 
 export interface VoksenIHusstandenDetaljerDto {
