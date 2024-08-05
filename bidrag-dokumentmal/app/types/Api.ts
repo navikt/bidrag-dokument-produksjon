@@ -213,8 +213,8 @@ export interface NotatBehandlingDetaljer {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
-  avslagVisningsnavn?: string;
   kategoriVisningsnavn?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatBeregnetInntektDto {
@@ -292,8 +292,9 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   voksenIHusstanden?: boolean;
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
-  beløpSomInnkreves: number;
+  bpHarEvne: boolean;
   resultatVisningsnavn: string;
+  beløpSomInnkreves: number;
 };
 
 export interface NotatSivilstand {
@@ -410,6 +411,7 @@ export enum Resultatkode {
   ORDINAeRTFORSKUDD75PROSENT = "ORDINÆRT_FORSKUDD_75_PROSENT",
   FORHOYETFORSKUDD100PROSENT = "FORHØYET_FORSKUDD_100_PROSENT",
   FORHOYETFORSKUDD11AR125PROSENT = "FORHØYET_FORSKUDD_11_ÅR_125_PROSENT",
+  RESULTAT_MINDRE_ENN_FORSKUDD = "RESULTAT_MINDRE_ENN_FORSKUDD",
   SAeRTILSKUDDINNVILGET = "SÆRTILSKUDD_INNVILGET",
   SAeRBIDRAGINNVILGET = "SÆRBIDRAG_INNVILGET",
   SAeRTILSKUDDIKKEFULLBIDRAGSEVNE = "SÆRTILSKUDD_IKKE_FULL_BIDRAGSEVNE",
