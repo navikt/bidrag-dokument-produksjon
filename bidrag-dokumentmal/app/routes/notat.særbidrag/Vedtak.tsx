@@ -43,7 +43,7 @@ function VedtakTable({
   const resultat = data[0]!;
   const erDirekteAvslag = resultat?.erDirekteAvslag;
   const erGodkjentBeløpLavereEnnForskuddssats =
-      resultat.resultatKode === Resultatkode.RESULTAT_MINDRE_ENN_FORSKUDD;
+      resultat.resultatKode === Resultatkode.GODKJENTBELOPLAVEREENNFORSKUDDSSATS;
   const erBeregningeAvslag =
     resultat?.resultatKode !== Resultatkode.SAeRBIDRAGINNVILGET;
   if (erDirekteAvslag) {
@@ -69,7 +69,7 @@ function VedtakTable({
               data={[
                 {
                   label: "Årsak",
-                  value: "Godkjent beløp lavere enn forskuddssats",
+                  value: resultat.resultatVisningsnavn,
                 },
                 {
                   label: "Godkjent beløp",
