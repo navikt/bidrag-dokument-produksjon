@@ -63,7 +63,8 @@ function Utgiftsposter() {
       <div style={{ marginTop: "8px" }}>
         <DataViewTable
           width={"40%"}
-          labelColWidth={"160px"}
+          labelColWidth={"90px"}
+          // labelColWidth={"160px"}
           data={
             [
               {
@@ -72,12 +73,12 @@ function Utgiftsposter() {
                   data.utgift?.beregning?.totalGodkjentBeløp,
                 ),
               },
-              {
-                label: "Direkte betalt av Bidragspliktig",
-                value: formatterBeløp(
-                  data.utgift?.beregning?.beløpDirekteBetaltAvBp,
-                ),
-              },
+              // {
+              //   label: "Direkte betalt av Bidragspliktig",
+              //   value: formatterBeløp(
+              //     data.utgift?.beregning?.beløpDirekteBetaltAvBp,
+              //   ),
+              // },
             ].filter((d) => d != null) as DataViewTableData[]
           }
         />
