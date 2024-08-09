@@ -138,13 +138,13 @@ function VedtakTable({
               label: "BP har evne",
               value: !resultat.bpHarEvne ? "Nei" : "Ja"
             },
-            {
+         /*   {
               label: "Direkte betalt av BP",
               value: formatterBeløp(
                 resultat.beregning?.beløpDirekteBetaltAvBp,
                 true,
               ),
-            },
+            },*/
             {
               label: "Beløp som innkreves",
               value: erBeregningeAvslag
