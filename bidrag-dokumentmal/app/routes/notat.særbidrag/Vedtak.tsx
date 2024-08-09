@@ -43,7 +43,7 @@ function VedtakTable({
   const resultat = data[0]!;
   const erDirekteAvslag = resultat?.erDirekteAvslag;
   const erGodkjentBeløpLavereEnnForskuddssats =
-      resultat.resultatKode === Resultatkode.GODKJENTBELOPLAVEREENNFORSKUDDSSATS;
+      resultat.resultatKode === Resultatkode.GODKJENTBELOPERLAVEREENNFORSKUDDSSATS;
   const erBeregningeAvslag =
     resultat?.resultatKode !== Resultatkode.SAeRBIDRAGINNVILGET;
   if (erDirekteAvslag) {
