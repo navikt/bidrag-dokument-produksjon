@@ -3,7 +3,7 @@ import {
   søktAvTilVisningsnavn,
 } from "~/utils/visningsnavn";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
-import Notat from "~/components/Notat";
+import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable } from "~/components/DataViewTable";
 
@@ -62,7 +62,7 @@ export default function Virkningstidspunkt() {
             ]}
           />
         </div>
-        <Notat data={virkningstidspunkt.notat} />
+        <NotatBegrunnelse data={virkningstidspunkt.begrunnelse} />
       </div>
     </div>
   );

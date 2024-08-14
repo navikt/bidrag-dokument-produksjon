@@ -1,7 +1,7 @@
 import { useActionData } from "@remix-run/react";
 import { ActionFunctionArgs, json } from "@remix-run/node";
 import "../../style/style.css";
-import { NotatDto } from "~/types/Api";
+import { VedtakNotatDto } from "~/types/Api";
 import Vedtak from "~/routes/notat.forskudd/Vedtak";
 import tekster from "~/tekster";
 import {
@@ -20,7 +20,7 @@ import HeaderFooter from "~/components/notat_felles/HeaderFooter";
 
 type NotatRequest = {
   renderForPdf: boolean;
-  data: NotatDto;
+  data: VedtakNotatDto;
 };
 export async function action({ request }: ActionFunctionArgs) {
   const body = await request.json();

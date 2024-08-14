@@ -7,7 +7,7 @@ import no.nav.bidrag.dokument.produksjon.SIKKER_LOGG
 import no.nav.bidrag.dokument.produksjon.service.PdfProducerService
 import no.nav.bidrag.dokument.produksjon.util.getObjectmapper
 import no.nav.bidrag.transport.felles.commonObjectmapper
-import no.nav.bidrag.transport.notat.NotatDto
+import no.nav.bidrag.transport.notat.VedtakNotatDto
 import org.springframework.context.annotation.Bean
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping
@@ -33,7 +33,7 @@ class ProduserNotatApi(
 
     @PostMapping("/pdf")
     fun generatePDF(
-        @org.springframework.web.bind.annotation.RequestBody payload: NotatDto,
+        @org.springframework.web.bind.annotation.RequestBody payload: VedtakNotatDto,
     ): ResponseEntity<ByteArray> {
         log.info { "Produserer notat PDF 2 for dokumentmal ${payload.type}" }
         return pdfProducerService.generatePDFResponseV2(
@@ -46,7 +46,7 @@ class ProduserNotatApi(
     @PostMapping("/html")
     fun generateHTML(
         @Parameter(name = "dokumentmal", example = "forskudd")
-        @org.springframework.web.bind.annotation.RequestBody payload: NotatDto,
+        @org.springframework.web.bind.annotation.RequestBody payload: VedtakNotatDto,
     ): ResponseEntity<String> {
         SIKKER_LOGG.info {
             "Produserer notat HTML for dokumentmal ${payload.type} for input $payload"

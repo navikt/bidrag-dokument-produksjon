@@ -1,11 +1,11 @@
 import DataDescription from "~/components/DataDescription";
 import xss from "xss";
-import { SaksbehandlerNotat } from "~/types/Api";
+import { NotatBegrunnelseDto } from "~/types/Api";
 
 type NotatProps = {
-  data?: SaksbehandlerNotat;
+  data?: NotatBegrunnelseDto;
 };
-export default function Notat({ data }: NotatProps) {
+export default function NotatBegrunnelse({ data }: NotatProps) {
   return (
     <div
       style={{
@@ -15,7 +15,7 @@ export default function Notat({ data }: NotatProps) {
     >
       <DataDescription
         label={"Begrunnelse"}
-        value={<PurifiedHtml text={data?.intern} />}
+        value={<PurifiedHtml text={data?.innhold} />}
       />
     </div>
   );

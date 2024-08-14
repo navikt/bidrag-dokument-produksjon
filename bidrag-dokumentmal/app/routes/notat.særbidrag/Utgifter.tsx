@@ -4,7 +4,7 @@ import {
   søktAvTilVisningsnavn,
 } from "~/utils/visningsnavn";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
-import Notat from "~/components/Notat";
+import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import {
   CommonTable,
@@ -23,7 +23,7 @@ export default function Utgifter() {
       <div>
         <SøknadsDetaljer />
         <Utgiftsposter />
-        <Notat data={utgifter?.notat} />
+        <NotatBegrunnelse data={utgifter?.begrunnelse} />
       </div>
     </div>
   );
@@ -69,6 +69,12 @@ function Utgiftsposter() {
             [
               {
                 label: "Godkjent beløp",
+                value: formatterBeløp(
+                  data.utgift?.beregning?.totalGodkjentBeløp,
+                ),
+              },
+              {
+                label: "Kravbeløp",
                 value: formatterBeløp(
                   data.utgift?.beregning?.totalGodkjentBeløp,
                 ),

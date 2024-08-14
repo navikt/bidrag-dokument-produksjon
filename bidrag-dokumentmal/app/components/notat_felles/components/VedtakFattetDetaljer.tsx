@@ -1,8 +1,12 @@
-import { Vedtak as VedtakDto } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import { DataViewTable } from "~/components/DataViewTable";
+import { NotatVedtakDetaljerDto } from "~/types/Api";
 
-export function VedtakFattetDetaljer({ data }: { data: VedtakDto }) {
+export function VedtakFattetDetaljer({
+  data,
+}: {
+  data: NotatVedtakDetaljerDto;
+}) {
   if (!data.erFattet) return null;
   return (
     <div className={"mt-medium"}>

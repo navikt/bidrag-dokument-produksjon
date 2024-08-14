@@ -4,12 +4,11 @@ import {
   Inntektsrapportering,
   Kilde,
   NotatInntektDto,
-  PersonNotatDto,
   NotatMalType,
+  NotatRolleDto,
 } from "~/types/Api";
 import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
 import { groupBy } from "~/utils/array-utils";
-import KildeIcon from "~/components/KildeIcon";
 import elementIds from "~/utils/elementIds";
 import tekster from "~/tekster";
 import {
@@ -59,7 +58,7 @@ function OpplysningerForRolle({
   rolle,
   showRole = true,
 }: {
-  rolle: PersonNotatDto;
+  rolle: NotatRolleDto;
   showRole?: boolean;
 }) {
   const { data } = useNotatFelles();
@@ -232,12 +231,16 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
           value[0].type == Inntektsrapportering.BARNETILLEGG;
         const addMargin = data.length > i + 1;
         return (
-          <div key={key + i.toString()} className="table_container"  style={{
-            marginBottom: addMargin ? "16px" : "0px",
-          }}>
+          <div
+            key={key + i.toString()}
+            className="table_container"
+            style={{
+              marginBottom: addMargin ? "16px" : "0px",
+            }}
+          >
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
             <CommonTable
-                width={"580px"}
+              width={"580px"}
               data={{
                 headers: getInntektTableHeaders(erBarnetillegg, false),
                 rows: data

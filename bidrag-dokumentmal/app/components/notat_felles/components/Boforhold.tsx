@@ -6,7 +6,7 @@ import {
 } from "~/types/Api";
 import Person from "~/components/Person";
 import { SimpleTable } from "~/components/SimpleTable";
-import Notat from "~/components/Notat";
+import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import elementIds from "~/utils/elementIds";
 import tekster from "~/tekster";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
@@ -33,7 +33,7 @@ export default function Boforhold() {
             data={data.boforhold.andreVoksneIHusstanden}
           />
         )}
-        <Notat data={data.boforhold.notat} />
+        <NotatBegrunnelse data={data.boforhold.begrunnelse} />
       </div>
     </div>
   );

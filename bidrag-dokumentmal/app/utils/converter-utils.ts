@@ -1,4 +1,4 @@
-import { Rolletype, PersonNotatDto } from "~/types/Api";
+import { Rolletype, NotatRolleDto } from "~/types/Api";
 
 export const konverterRolletype = (
   rolle?: Rolletype,
@@ -18,5 +18,5 @@ export const konverterRolletype = (
       return rolle;
   }
 };
-export const erRolle = (rolletype: Rolletype) => (person: PersonNotatDto) =>
+export const erRolle = (rolletype: Rolletype) => (person: NotatRolleDto) =>
   konverterRolletype(person.rolle) == rolletype;
