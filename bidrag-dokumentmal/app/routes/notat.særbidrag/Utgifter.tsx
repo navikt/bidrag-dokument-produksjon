@@ -60,21 +60,14 @@ function Utgiftsposter() {
           }),
         }}
       />
-      <div style={{ marginTop: "8px" }}>
+      <div style={{ marginTop: "8px", width: "280px" }}>
         <DataViewTable
-          width={"40%"}
+          className={"two_column_view_v2"}
           labelColWidth={"90px"}
-          // labelColWidth={"160px"}
           data={
             [
               {
                 label: "Godkjent beløp",
-                value: formatterBeløp(
-                  data.utgift?.beregning?.totalGodkjentBeløp,
-                ),
-              },
-              {
-                label: "Kravbeløp",
                 value: formatterBeløp(
                   data.utgift?.beregning?.totalGodkjentBeløp,
                 ),
@@ -85,6 +78,18 @@ function Utgiftsposter() {
               //     data.utgift?.beregning?.beløpDirekteBetaltAvBp,
               //   ),
               // },
+            ].filter((d) => d != null) as DataViewTableData[]
+          }
+        />
+        <DataViewTable
+          className={"two_column_view_v2"}
+          labelColWidth={"70px"}
+          data={
+            [
+              {
+                label: "Kravbeløp",
+                value: formatterBeløp(data.utgift?.beregning?.totalKravbeløp),
+              },
             ].filter((d) => d != null) as DataViewTableData[]
           }
         />

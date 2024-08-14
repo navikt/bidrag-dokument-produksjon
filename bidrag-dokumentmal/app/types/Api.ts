@@ -168,10 +168,7 @@ export interface NotatAndreVoksneIHusstanden {
   opplysningerBruktTilBeregning: OpplysningerBruktTilBeregningBostatuskode[];
 }
 
-/**
- * Notat begrunnelse skrevet av saksbehandler
- * @deprecated
- */
+/** Notat begrunnelse skrevet av saksbehandler */
 export interface NotatBegrunnelseDto {
   innhold?: string;
   /** @deprecated */
@@ -179,7 +176,7 @@ export interface NotatBegrunnelseDto {
   gjelder?: NotatRolleDto;
 }
 
-export interface NotatBehandlingDetaljer {
+export interface NotatBehandlingDetaljerDto {
   søknadstype?: string;
   vedtakstype?: Vedtakstype;
   kategori?: NotatSaerbidragKategoriDto;
@@ -211,8 +208,8 @@ export interface NotatBehandlingDetaljer {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
-  kategoriVisningsnavn?: string;
   avslagVisningsnavn?: string;
+  kategoriVisningsnavn?: string;
 }
 
 export interface NotatBeregnetInntektDto {
@@ -220,7 +217,7 @@ export interface NotatBeregnetInntektDto {
   summertInntektListe: DelberegningSumInntekt[];
 }
 
-export interface NotatBoforhold {
+export interface NotatBoforholdDto {
   barn: BoforholdBarn[];
   andreVoksneIHusstanden?: NotatAndreVoksneIHusstanden;
   sivilstand: NotatSivilstand;
@@ -242,7 +239,7 @@ export interface NotatInntektDto {
   visningsnavn: string;
 }
 
-export interface NotatInntekter {
+export interface NotatInntekterDto {
   inntekterPerRolle: InntekterPerRolle[];
   offentligeInntekterPerRolle: InntekterPerRolle[];
   /** Notat begrunnelse skrevet av saksbehandler */
@@ -299,8 +296,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
   bpHarEvne: boolean;
-  resultatVisningsnavn: string;
   beløpSomInnkreves: number;
+  resultatVisningsnavn: string;
 };
 
 export interface NotatRolleDto {
@@ -335,6 +332,8 @@ export interface NotatUtgiftBeregningDto {
   beløpDirekteBetaltAvBp: number;
   /** Summen av godkjente beløp som brukes for beregningen */
   totalGodkjentBeløp: number;
+  /** Summen av kravbeløp */
+  totalKravbeløp: number;
   /** Summen av godkjente beløp som brukes for beregningen */
   totalGodkjentBeløpBp?: number;
   /** Summen av godkjent beløp for utgifter BP har betalt plus beløp som er direkte betalt av BP */
@@ -368,7 +367,7 @@ export interface NotatVedtakDetaljerDto {
   resultat: (NotatResultatForskuddBeregningBarnDto | NotatResultatSaerbidragsberegningDto)[];
 }
 
-export interface NotatVirkningstidspunkt {
+export interface NotatVirkningstidspunktDto {
   søknadstype?: string;
   vedtakstype?: Vedtakstype;
   søktAv?: SoktAvType;
@@ -558,13 +557,13 @@ export enum Utgiftstype {
 export interface VedtakNotatDto {
   type: NotatMalType;
   saksnummer: string;
-  behandling: NotatBehandlingDetaljer;
+  behandling: NotatBehandlingDetaljerDto;
   saksbehandlerNavn?: string;
-  virkningstidspunkt: NotatVirkningstidspunkt;
+  virkningstidspunkt: NotatVirkningstidspunktDto;
   utgift?: NotatSaerbidragUtgifterDto;
-  boforhold: NotatBoforhold;
+  boforhold: NotatBoforholdDto;
   roller: NotatRolleDto[];
-  inntekter: NotatInntekter;
+  inntekter: NotatInntekterDto;
   vedtak: NotatVedtakDetaljerDto;
 }
 
