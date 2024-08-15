@@ -1,10 +1,11 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import {
-  NotatDto,
   NotatMalType,
   Vedtakstype,
   Rolletype,
-  PersonNotatDto,
+  VedtakNotatDto,
+  NotatBegrunnelse,
+  NotatRolleDto,
 } from "~/types/Api";
 import { konverterRolletype, erRolle } from "~/utils/converter-utils";
 
@@ -16,10 +17,10 @@ interface INotatContext {
   erAvslag: boolean;
   erOpphør: boolean;
   harFlereEnnEttSøknadsbarn: boolean;
-  bidragsmottaker: PersonNotatDto;
-  bidragspliktig?: PersonNotatDto;
-  søknadsbarn: PersonNotatDto[];
-  data: NotatDto;
+  bidragsmottaker: NotatRolleDto;
+  bidragspliktig?: NotatRolleDto;
+  søknadsbarn: NotatRolleDto[];
+  data: VedtakNotatDto;
   type: NotatMalType;
   renderMode: RenderMode;
 }
@@ -27,7 +28,7 @@ export const NotatContext = createContext<INotatContext | null>(null);
 export function useNotatFelles(): INotatContext {
   return useContext(NotatContext) as INotatContext;
 }
-export type NotatDataProps = { data: NotatDto; renderMode: RenderMode };
+export type NotatDataProps = { data: VedtakNotatDto; renderMode: RenderMode };
 
 export function NotatProvider({
   children,

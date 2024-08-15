@@ -68,7 +68,9 @@ export function CommonTable({
                 <tr>
                   {d.expandableContent?.map((column, j) => (
                     <td
-                      key={"expandlable" + column.content?.toString() ?? "" + j}
+                      key={
+                        "expandable" + (column.content?.toString() ?? "") + j
+                      }
                       colSpan={headers.length}
                       className={"table_row_details"}
                       style={{ paddingTop: "8px" }}

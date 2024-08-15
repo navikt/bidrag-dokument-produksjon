@@ -1,7 +1,7 @@
-import { Rolletype, PersonNotatDto } from "~/types/Api";
+import { Rolletype, NotatRolleDto } from "~/types/Api";
 import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
 
-export default function InntektRolle({ rolle }: { rolle: PersonNotatDto }) {
+export default function InntektRolle({ rolle }: { rolle: NotatRolleDto }) {
   return (
     <div
       className={"elements_inline text-heading-small"}

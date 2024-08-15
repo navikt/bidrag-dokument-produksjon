@@ -4,14 +4,14 @@ import {
   NotatBeregnetInntektDto,
   NotatInntektDto,
   NotatMalType,
-  PersonNotatDto,
   Rolletype,
+  NotatRolleDto,
 } from "~/types/Api";
 import { deductDays, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
 import { groupBy, hasValue } from "~/utils/array-utils";
 import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
-import Notat from "~/components/Notat";
+import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import elementIds from "~/utils/elementIds";
 import {
   CommonTable,
@@ -22,7 +22,6 @@ import tekster from "~/tekster";
 import { getInntektTableHeaders } from "~/constants/tableHeaders";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Inntektsposter from "~/components/notat_felles/components/Inntektsposter";
-import HorizontalLine from "~/components/HorizontalLine";
 import {
   BehandlingRolletype,
   inntekterTablesViewRules,
@@ -65,7 +64,6 @@ export default function Inntekter() {
             <InntekterForRolle rolle={barn} />
           </div>
         ))}
-      <Notat data={data.inntekter.notat} />
     </div>
   );
 }
@@ -74,7 +72,7 @@ function InntekterForRolle({
   rolle,
   showRole = true,
 }: {
-  rolle: PersonNotatDto;
+  rolle: NotatRolleDto;
   showRole?: boolean;
 }) {
   const { data } = useNotatFelles();
@@ -85,42 +83,49 @@ function InntekterForRolle({
       d.gjelder.ident == rolle.ident,
   );
   if (inntekter == null) return null;
+  function renderInntekter() {
+    if (!isHarInntekter(inntekter!)) return <p>Ingen inntekter</p>;
+    return (
+      <div>
+        <InntektTable
+          data={inntekter!.årsinntekter}
+          title={"Skattepliktige og pensjonsgivende inntekt"}
+          subsection={false}
+        />
+        <InntektPerBarnTable
+          data={inntekter!.barnetillegg}
+          title={"Barnetillegg"}
+        />
+        <InntektTable
+          data={inntekter!.utvidetBarnetrygd}
+          title={"Utvidet barnetrygd"}
+          inkluderBeskrivelse={false}
+        />
+        <InntektTable
+          data={inntekter!.småbarnstillegg}
+          title={"Småbarnstillegg"}
+          inkluderBeskrivelse={false}
+        />
+        <InntektPerBarnTable
+          data={inntekter!.kontantstøtte}
+          title={"Kontantstøtte"}
+        />
+        <BeregnetInntektTable
+          data={inntekter!.beregnetInntekter}
+          rolle={rolle}
+        />
+      </div>
+    );
+  }
   return (
     <div>
       {showRole && <InntektRolle rolle={rolle} />}
-      {!isHarInntekter(inntekter) ? (
-        <p>Ingen inntekter</p>
-      ) : (
-        <div>
-          <InntektTable
-            data={inntekter.årsinntekter}
-            title={"Skattepliktige og pensjonsgivende inntekt"}
-            subsection={false}
-          />
-          <InntektPerBarnTable
-            data={inntekter.barnetillegg}
-            title={"Barnetillegg"}
-          />
-          <InntektTable
-            data={inntekter.utvidetBarnetrygd}
-            title={"Utvidet barnetrygd"}
-            inkluderBeskrivelse={false}
-          />
-          <InntektTable
-            data={inntekter.småbarnstillegg}
-            title={"Småbarnstillegg"}
-            inkluderBeskrivelse={false}
-          />
-          <InntektPerBarnTable
-            data={inntekter.kontantstøtte}
-            title={"Kontantstøtte"}
-          />
-          <BeregnetInntektTable
-            data={inntekter.beregnetInntekter}
-            rolle={rolle}
-          />
-        </div>
-      )}
+      {renderInntekter()}
+      <NotatBegrunnelse
+        data={data.inntekter.notatPerRolle.find(
+          (d) => d.gjelder?.ident == rolle?.ident,
+        )}
+      />
     </div>
   );
 }
@@ -267,7 +272,7 @@ function InntektPerBarnTable({
 
 type BeregnetInntektTableProps = {
   data: NotatBeregnetInntektDto[];
-  rolle: PersonNotatDto;
+  rolle: NotatRolleDto;
 };
 
 function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
@@ -282,7 +287,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
     beregnetInntekterColumnWidth[type][rolle.rolle as BehandlingRolletype];
   function renderTable(
     inntekter: DelberegningSumInntekt[],
-    gjelderBarn?: PersonNotatDto,
+    gjelderBarn?: NotatRolleDto,
   ) {
     return (
       <>

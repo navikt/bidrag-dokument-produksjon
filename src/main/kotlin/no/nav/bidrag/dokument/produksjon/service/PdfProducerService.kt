@@ -4,8 +4,8 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.dokument.produksjon.consumer.BidragDokumentmalConsumer
 import no.nav.bidrag.dokument.produksjon.consumer.BidragPdfGenConsumer
 import no.nav.bidrag.transport.felles.commonObjectmapper
-import no.nav.bidrag.transport.notat.NotatDto
 import no.nav.bidrag.transport.notat.NotatMalType
+import no.nav.bidrag.transport.notat.VedtakNotatDto
 import no.nav.pdfgen.core.PDFGenCore.Companion.environment
 import no.nav.pdfgen.core.pdf.createPDFA
 import org.springframework.http.HttpHeaders
@@ -90,7 +90,7 @@ fun hotTemplateData(
             } else {
                 "{}".toByteArray(Charsets.UTF_8)
             },
-            NotatDto::class.java,
+            VedtakNotatDto::class.java,
         )
     return commonObjectmapper.writeValueAsString(data)
 }

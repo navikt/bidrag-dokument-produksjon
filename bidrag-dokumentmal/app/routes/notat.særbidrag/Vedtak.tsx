@@ -1,49 +1,43 @@
 import {
-  Vedtak as VedtakDto,
   NotatResultatSaerbidragsberegningDto,
   Resultatkode,
 } from "~/types/Api";
-import { dateToDDMMYYYY } from "~/utils/date-utils";
-import DataDescription from "~/components/DataDescription";
 import { formatterBeløp, formatterProsent } from "~/utils/visningsnavn";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable } from "~/components/DataViewTable";
-import React from "react";
-import {VedtakFattetDetaljer} from "~/components/notat_felles/components/VedtakFattetDetaljer";
+import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
 
 export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
   return (
-      <div>
-        <div
-            style={{
-              pageBreakBefore: erAvslag ? "auto" : "always",
-              display: "inline-block",
-            }}
-        >
-          <h2>Vedtak</h2>
-          <VedtakTable
-              data={data.vedtak.resultat as NotatResultatSaerbidragsberegningDto[]}
-          />
-        </div>
-        <VedtakFattetDetaljer data={data.vedtak}/>
-
+    <div>
+      <div
+        style={{
+          pageBreakBefore: erAvslag ? "auto" : "always",
+          display: "inline-block",
+        }}
+      >
+        <h2>Vedtak</h2>
+        <VedtakTable
+          data={data.vedtak.resultat as NotatResultatSaerbidragsberegningDto[]}
+        />
       </div>
-
+      <VedtakFattetDetaljer data={data.vedtak} />
+    </div>
   );
 }
 
-
 function VedtakTable({
-                       data,
-                     }: {
+  data,
+}: {
   data: NotatResultatSaerbidragsberegningDto[];
 }) {
   if (data.length == 0) return <div>Mangler resultat</div>;
   const resultat = data[0]!;
   const erDirekteAvslag = resultat?.erDirekteAvslag;
   const erGodkjentBeløpLavereEnnForskuddssats =
-      resultat.resultatKode === Resultatkode.GODKJENTBELOPERLAVEREENNFORSKUDDSSATS;
+    resultat.resultatKode ===
+    Resultatkode.GODKJENTBELOPERLAVEREENNFORSKUDDSSATS;
   const erBeregningeAvslag =
     resultat?.resultatKode !== Resultatkode.SAeRBIDRAGINNVILGET;
   if (erDirekteAvslag) {
@@ -61,24 +55,26 @@ function VedtakTable({
   }
   if (erGodkjentBeløpLavereEnnForskuddssats) {
     return (
-        <div>
-          <h3 style={{marginTop: 0}}>Avslag</h3>
-          <DataViewTable
-              labelColWidth={"90px"}
-              key={"inntekter"}
-              data={[
-                {
-                  label: "Årsak",
-                  value: resultat.resultatVisningsnavn,
-                },
-                {
-                  label: "Godkjent beløp",
-                  value: formatterBeløp(resultat.beregning?.totalGodkjentBeløp, true),
-                },
-
-              ]}
-          />
-        </div>
+      <div>
+        <h3 style={{ marginTop: 0 }}>Avslag</h3>
+        <DataViewTable
+          labelColWidth={"90px"}
+          key={"inntekter"}
+          data={[
+            {
+              label: "Årsak",
+              value: resultat.resultatVisningsnavn,
+            },
+            {
+              label: "Godkjent beløp",
+              value: formatterBeløp(
+                resultat.beregning?.totalGodkjentBeløp,
+                true,
+              ),
+            },
+          ]}
+        />
+      </div>
     );
   }
   return (
@@ -160,9 +156,9 @@ function VedtakTable({
             },
             {
               label: "BP har evne",
-              value: !resultat.bpHarEvne ? "Nei" : "Ja"
+              value: !resultat.bpHarEvne ? "Nei" : "Ja",
             },
-         /*   {
+            /*   {
               label: "Direkte betalt av BP",
               value: formatterBeløp(
                 resultat.beregning?.beløpDirekteBetaltAvBp,

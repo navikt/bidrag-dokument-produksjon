@@ -4,7 +4,7 @@ import {
   søktAvTilVisningsnavn,
 } from "~/utils/visningsnavn";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
-import Notat from "~/components/Notat";
+import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import {
   CommonTable,
@@ -23,7 +23,7 @@ export default function Utgifter() {
       <div>
         <SøknadsDetaljer />
         <Utgiftsposter />
-        <Notat data={utgifter?.notat} />
+        <NotatBegrunnelse data={utgifter?.begrunnelse} />
       </div>
     </div>
   );
@@ -60,11 +60,10 @@ function Utgiftsposter() {
           }),
         }}
       />
-      <div style={{ marginTop: "8px" }}>
+      <div style={{ marginTop: "8px", width: "280px" }}>
         <DataViewTable
-          width={"40%"}
+          className={"two_column_view_v2"}
           labelColWidth={"90px"}
-          // labelColWidth={"160px"}
           data={
             [
               {
@@ -79,6 +78,18 @@ function Utgiftsposter() {
               //     data.utgift?.beregning?.beløpDirekteBetaltAvBp,
               //   ),
               // },
+            ].filter((d) => d != null) as DataViewTableData[]
+          }
+        />
+        <DataViewTable
+          className={"two_column_view_v2"}
+          labelColWidth={"65px"}
+          data={
+            [
+              {
+                label: "Kravbeløp",
+                value: formatterBeløp(data.utgift?.beregning?.totalKravbeløp),
+              },
             ].filter((d) => d != null) as DataViewTableData[]
           }
         />

@@ -58,6 +58,12 @@
   width: 50%;
 }
 
+.two_column_view_v2 {
+  display: inline-block;
+  vertical-align: top;
+  margin-right: 16px;
+}
+
 .three_column_view {
   float: left;
   width: 33%;
