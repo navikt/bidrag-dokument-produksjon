@@ -83,7 +83,7 @@ function Utgiftsposter() {
         />
         <DataViewTable
           className={"two_column_view_v2"}
-          labelColWidth={"70px"}
+          labelColWidth={"65px"}
           data={
             [
               {
