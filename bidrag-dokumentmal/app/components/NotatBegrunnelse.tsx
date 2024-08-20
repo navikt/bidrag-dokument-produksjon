@@ -9,7 +9,7 @@ export default function NotatBegrunnelse({ data }: NotatProps) {
   return (
     <div
       style={{
-        maxWidth: "44rem",
+        maxWidth: "35rem",
         marginTop: "16px",
       }}
     >
