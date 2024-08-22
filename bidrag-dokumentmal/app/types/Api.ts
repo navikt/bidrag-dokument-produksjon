@@ -50,7 +50,7 @@ export enum Bostatuskode {
 
 export interface DelberegningBidragspliktigesAndelSaerbidrag {
   periode: TypeArManedsperiode;
-  andelProsent: number;
+  andelFaktor: number;
   andelBeløp: number;
   barnetErSelvforsørget: boolean;
 }
@@ -179,6 +179,7 @@ export interface NotatBegrunnelseDto {
 export interface NotatBehandlingDetaljerDto {
   søknadstype?: string;
   vedtakstype?: Vedtakstype;
+  opprinneligVedtakstype?: Vedtakstype;
   kategori?: NotatSaerbidragKategoriDto;
   søktAv?: SoktAvType;
   /** @format date */
@@ -210,6 +211,7 @@ export interface NotatBehandlingDetaljerDto {
   klageMottattDato?: string;
   avslagVisningsnavn?: string;
   kategoriVisningsnavn?: string;
+  vedtakstypeVisningsnavn?: string;
 }
 
 export interface NotatBeregnetInntektDto {
@@ -537,6 +539,8 @@ export interface UtgiftBeregningDto {
   beløpDirekteBetaltAvBp: number;
   /** Summen av godkjente beløp som brukes for beregningen */
   totalGodkjentBeløp: number;
+  /** Summen av kravbeløp */
+  totalKravbeløp: number;
   /** Summen av godkjente beløp som brukes for beregningen */
   totalGodkjentBeløpBp?: number;
   /** Summen av godkjent beløp for utgifter BP har betalt plus beløp som er direkte betalt av BP */

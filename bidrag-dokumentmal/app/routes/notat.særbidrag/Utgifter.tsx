@@ -61,23 +61,27 @@ function Utgiftsposter() {
         }}
       />
       <div style={{ marginTop: "8px", width: "280px" }}>
+        {/*<DataViewTable*/}
+        {/*  className={"two_column_view_v2"}*/}
+        {/*  labelColWidth={"65px"}*/}
+        {/*  data={*/}
+        {/*    [*/}
+        {/*      {*/}
+        {/*        label: "Kravbeløp",*/}
+        {/*        value: formatterBeløp(data.utgift?.beregning?.totalKravbeløp),*/}
+        {/*      },*/}
+        {/*    ].filter((d) => d != null) as DataViewTableData[]*/}
+        {/*  }*/}
+        {/*/>*/}
         <DataViewTable
           className={"two_column_view_v2"}
-          labelColWidth={"65px"}
+          labelColWidth={"100px"}
           data={
             [
               {
                 label: "Kravbeløp",
                 value: formatterBeløp(data.utgift?.beregning?.totalKravbeløp),
               },
-            ].filter((d) => d != null) as DataViewTableData[]
-          }
-        />
-        <DataViewTable
-          className={"two_column_view_v2"}
-          labelColWidth={"90px"}
-          data={
-            [
               {
                 label: "Godkjent beløp",
                 value: formatterBeløp(

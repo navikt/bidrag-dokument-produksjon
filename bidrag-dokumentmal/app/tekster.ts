@@ -28,7 +28,7 @@ export default {
     },
     utgifter: {
       betaltAvBp: "Betalt av BP",
-      dato: "Dato",
+      dato: "Forfallsdato",
       utgift: "Utgift",
       kravbeløp: "Kravbeløp",
       godkjentBeløp: "Godkjent beløp",
