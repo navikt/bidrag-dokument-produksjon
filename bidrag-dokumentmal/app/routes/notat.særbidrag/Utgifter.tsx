@@ -143,7 +143,7 @@ function SøknadsDetaljer() {
               },
               behandling.avslag && {
                 label: "Avslag",
-                value: `${behandling.avslagVisningsnavn}`,
+                value: `${behandling.avslagVisningsnavnUtenPrefiks}`,
               },
             ].filter((d) => d != null) as DataViewTableData[]
           }

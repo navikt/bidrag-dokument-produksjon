@@ -43,7 +43,7 @@ function VedtakTableAvslag({
           headers: [
             { name: "Periode", width: "170px" },
             { name: "Resultat", width: "150px" },
-            { name: "Årsak", width: "150px" },
+            { name: "Årsak", width: "250px" },
           ],
           rows: perioder.map((d) => ({
             columns: [
@@ -89,7 +89,7 @@ function VedtakTable({
             { name: "Sivilstand", width: "120px" },
             { name: "Antall barn i husstand", width: "80px" },
             { name: "Forskudd", width: "70px" },
-            { name: "Resultat", width: "150px" },
+            { name: "Resultat", width: "120px" },
           ],
           rows: perioder.map((d) => ({
             columns: [
