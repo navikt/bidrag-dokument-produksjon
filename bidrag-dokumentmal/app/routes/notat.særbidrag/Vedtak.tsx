@@ -49,7 +49,7 @@ function VedtakTable({
         <h3 style={{ marginTop: 0 }}>Avslag</h3>
         <p>
           <dl className="bd_datadisplay">
-            <dt>Årsak</dt>
+            <dt>Årsak: </dt>
             <dd>{resultat.resultatVisningsnavn}</dd>
           </dl>
         </p>
