@@ -42,12 +42,12 @@ function Utgiftsposter() {
         width={"630px"}
         data={{
           headers: [
-            { name: tekster.tabell.utgifter.betaltAvBp, width: "50px" },
+            { name: tekster.tabell.utgifter.betaltAvBp, width: "80px" },
             { name: tekster.tabell.utgifter.dato, width: "70px" },
             { name: tekster.tabell.utgifter.utgift, width: "130px" },
             { name: tekster.tabell.utgifter.kravbeløp, width: "80px" },
             { name: tekster.tabell.utgifter.godkjentBeløp, width: "110px" },
-            { name: tekster.tabell.utgifter.begrunnelse, width: "200px" },
+            { name: tekster.tabell.utgifter.begrunnelse, width: "180px" },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
           rows: utgifter.map((d) => {
             return {
@@ -63,10 +63,42 @@ function Utgiftsposter() {
           }),
         }}
       />
+
+      {beregnetUtgifter.length > 0 && (
+        <div className={"mt-medium mb-medium"}>
+          <h3>Beregnet totalt</h3>
+          <CommonTable
+            layoutAuto
+            width={"450px"}
+            data={{
+              headers: [
+                { name: tekster.tabell.utgifter.betaltAvBp, width: "80px" },
+                {
+                  name: tekster.tabell.utgifter.utgiftskategori,
+                  width: "180px",
+                },
+                { name: tekster.tabell.utgifter.kravbeløp, width: "80px" },
+                { name: tekster.tabell.utgifter.godkjentBeløp, width: "80px" },
+              ].filter((d) => typeof d != "boolean") as TableHeader[],
+              rows: beregnetUtgifter.map((d) => {
+                return {
+                  columns: [
+                    { content: d.betaltAvBp ? "Ja" : "Nei" },
+                    { content: d.utgiftstypeVisningsnavn },
+                    { content: d.totalKravbeløp },
+                    { content: d.totalGodkjentBeløp },
+                  ].filter((d) => typeof d != "boolean") as TableColumn[],
+                };
+              }),
+            }}
+          />
+        </div>
+      )}
+      <h3>Totalt</h3>
       <div style={{ marginTop: "8px", width: "280px" }}>
         <DataViewTable
           className={"two_column_view_v2"}
-          labelColWidth={"170px"}
+          labelColWidth={"200px"}
           data={
             [
               {
@@ -89,57 +121,19 @@ function Utgiftsposter() {
           }
         />
       </div>
-
-      {beregnetUtgifter.length > 0 && (
-        <div className={"mt-medium mb-medium"}>
-          <CommonTable
-            layoutAuto
-            width={"630px"}
-            data={{
-              headers: [
-                { name: tekster.tabell.utgifter.betaltAvBp, width: "50px" },
-                {
-                  name: tekster.tabell.utgifter.utgiftskategori,
-                  width: "200px",
-                },
-                { name: tekster.tabell.utgifter.kravbeløp, width: "80px" },
-                { name: tekster.tabell.utgifter.godkjentBeløp, width: "110px" },
-              ].filter((d) => typeof d != "boolean") as TableHeader[],
-              rows: beregnetUtgifter.map((d) => {
-                return {
-                  columns: [
-                    { content: d.betaltAvBp ? "Ja" : "Nei" },
-                    { content: d.utgiftstypeVisningsnavn },
-                    { content: d.totalKravbeløp },
-                    { content: d.totalGodkjentBeløp },
-                  ].filter((d) => typeof d != "boolean") as TableColumn[],
-                };
-              }),
-            }}
-          />
-        </div>
-      )}
       {data.utgift?.maksGodkjentBeløp?.taMed && (
         <div>
           <DataViewTable
             className={"two_column_view_v2"}
-            labelColWidth={"120px"}
+            labelColWidth={"200px"}
             data={
               [
                 {
                   label: "Maks godkjent beløp",
                   value: formatterBeløp(data.utgift?.maksGodkjentBeløp?.beløp),
                 },
-              ].filter((d) => d != null) as DataViewTableData[]
-            }
-          />
-          <DataViewTable
-            className={"two_column_view_v2"}
-            labelColWidth={"80px"}
-            data={
-              [
                 {
-                  label: "Begrunnelse",
+                  label: "Begrunnelse for maks godkjent beløp",
                   value: data.utgift?.maksGodkjentBeløp?.begrunnelse,
                 },
               ].filter((d) => d != null) as DataViewTableData[]
