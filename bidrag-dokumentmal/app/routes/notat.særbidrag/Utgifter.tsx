@@ -42,9 +42,9 @@ function Utgiftsposter() {
         width={"630px"}
         data={{
           headers: [
-            { name: tekster.tabell.utgifter.betaltAvBp, width: "80px" },
+            { name: tekster.tabell.utgifter.betaltAvBp, width: "100px" },
             { name: tekster.tabell.utgifter.dato, width: "70px" },
-            { name: tekster.tabell.utgifter.utgift, width: "130px" },
+            { name: tekster.tabell.utgifter.utgift, width: "120px" },
             { name: tekster.tabell.utgifter.kravbeløp, width: "80px" },
             { name: tekster.tabell.utgifter.godkjentBeløp, width: "110px" },
             { name: tekster.tabell.utgifter.begrunnelse, width: "180px" },
@@ -72,13 +72,13 @@ function Utgiftsposter() {
             width={"450px"}
             data={{
               headers: [
-                { name: tekster.tabell.utgifter.betaltAvBp, width: "80px" },
+                { name: tekster.tabell.utgifter.betaltAvBp, width: "100px" },
                 {
                   name: tekster.tabell.utgifter.utgiftskategori,
-                  width: "180px",
+                  width: "220px",
                 },
                 { name: tekster.tabell.utgifter.kravbeløp, width: "80px" },
-                { name: tekster.tabell.utgifter.godkjentBeløp, width: "80px" },
+                { name: tekster.tabell.utgifter.godkjentBeløp, width: "110px" },
               ].filter((d) => typeof d != "boolean") as TableHeader[],
               rows: beregnetUtgifter.map((d) => {
                 return {
