@@ -209,9 +209,9 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
   avslagVisningsnavn?: string;
 }
 
@@ -258,6 +258,12 @@ export interface NotatInntektspostDto {
   inntektstype?: Inntektstype;
   beløp: number;
   visningsnavn?: string;
+}
+
+export interface NotatMaksGodkjentBelopDto {
+  taMed: boolean;
+  beløp?: number;
+  begrunnelse?: string;
 }
 
 export enum NotatMalType {
@@ -323,11 +329,21 @@ export interface NotatSaerbidragKategoriDto {
 
 export interface NotatSaerbidragUtgifterDto {
   beregning?: NotatUtgiftBeregningDto;
+  maksGodkjentBeløp?: NotatMaksGodkjentBelopDto;
   /** Notat begrunnelse skrevet av saksbehandler */
   begrunnelse: NotatBegrunnelseDto;
   /** Notat begrunnelse skrevet av saksbehandler */
   notat: NotatBegrunnelseDto;
   utgifter: NotatUtgiftspostDto[];
+  totalBeregning: NotatTotalBeregningUtgifterDto[];
+}
+
+export interface NotatTotalBeregningUtgifterDto {
+  betaltAvBp: boolean;
+  utgiftstype: string;
+  totalKravbeløp: number;
+  totalGodkjentBeløp: number;
+  utgiftstypeVisningsnavn: string;
 }
 
 export interface NotatUtgiftBeregningDto {
@@ -477,6 +493,7 @@ export enum Resultatkode {
   UTGIFTER_DEKKES_AV_BARNEBIDRAGET = "UTGIFTER_DEKKES_AV_BARNEBIDRAGET",
   IKKENODVENDIGEUTGIFTER = "IKKE_NØDVENDIGE_UTGIFTER",
   PRIVAT_AVTALE = "PRIVAT_AVTALE",
+  AVSLAGPRIVATAVTALEOMSAeRBIDRAG = "AVSLAG_PRIVAT_AVTALE_OM_SÆRBIDRAG",
   ALLE_UTGIFTER_ER_FORELDET = "ALLE_UTGIFTER_ER_FORELDET",
   GODKJENTBELOPERLAVEREENNFORSKUDDSSATS = "GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS",
 }

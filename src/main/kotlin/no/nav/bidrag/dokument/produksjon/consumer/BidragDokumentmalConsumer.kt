@@ -19,8 +19,8 @@ class BidragDokumentmalConsumer(
         type: String,
         payload: String,
         renderforpdf: Boolean = true,
-    ): String? {
-        return try {
+    ): String? =
+        try {
             val malUrl = "$url/$category/$type"
             val restTemplate: RestTemplate =
                 RestTemplateBuilder()
@@ -32,5 +32,4 @@ class BidragDokumentmalConsumer(
             log.error(e) { "Det skjedde en feil ved henting av dokumentmal fra url $url" }
             null
         }
-    }
 }

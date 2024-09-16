@@ -33,23 +33,26 @@ function Utgiftsposter() {
   const { data, erAvslag } = useNotatFelles();
   if (erAvslag) return;
   const utgifter = data.utgift?.utgifter ?? [];
+  const beregnetUtgifter = data.utgift?.totalBeregning ?? [];
   return (
     <div>
       <h3>Oversikt over utgifter</h3>
       <CommonTable
         layoutAuto
-        width={"700px"}
+        width={"630px"}
         data={{
           headers: [
+            { name: tekster.tabell.utgifter.betaltAvBp, width: "100px" },
             { name: tekster.tabell.utgifter.dato, width: "70px" },
-            { name: tekster.tabell.utgifter.utgift, width: "130px" },
+            { name: tekster.tabell.utgifter.utgift, width: "120px" },
             { name: tekster.tabell.utgifter.kravbeløp, width: "80px" },
             { name: tekster.tabell.utgifter.godkjentBeløp, width: "110px" },
-            { name: tekster.tabell.utgifter.begrunnelse, width: "auto" },
+            { name: tekster.tabell.utgifter.begrunnelse, width: "180px" },
           ].filter((d) => typeof d != "boolean") as TableHeader[],
           rows: utgifter.map((d) => {
             return {
               columns: [
+                { content: d.betaltAvBp ? "Ja" : "Nei" },
                 { content: dateToDDMMYYYY(d.dato) },
                 { content: d.utgiftstypeVisningsnavn },
                 { content: formatterBeløp(d.kravbeløp) },
@@ -60,22 +63,42 @@ function Utgiftsposter() {
           }),
         }}
       />
+
+      {beregnetUtgifter.length > 0 && (
+        <div className={"mt-medium mb-medium"}>
+          <h3>Beregnet totalt</h3>
+          <CommonTable
+            layoutAuto
+            width={"450px"}
+            data={{
+              headers: [
+                { name: tekster.tabell.utgifter.betaltAvBp, width: "100px" },
+                {
+                  name: tekster.tabell.utgifter.utgiftskategori,
+                  width: "220px",
+                },
+                { name: tekster.tabell.utgifter.kravbeløp, width: "80px" },
+                { name: tekster.tabell.utgifter.godkjentBeløp, width: "110px" },
+              ].filter((d) => typeof d != "boolean") as TableHeader[],
+              rows: beregnetUtgifter.map((d) => {
+                return {
+                  columns: [
+                    { content: d.betaltAvBp ? "Ja" : "Nei" },
+                    { content: d.utgiftstypeVisningsnavn },
+                    { content: d.totalKravbeløp },
+                    { content: d.totalGodkjentBeløp },
+                  ].filter((d) => typeof d != "boolean") as TableColumn[],
+                };
+              }),
+            }}
+          />
+        </div>
+      )}
+      <h3>Totalt</h3>
       <div style={{ marginTop: "8px", width: "280px" }}>
-        {/*<DataViewTable*/}
-        {/*  className={"two_column_view_v2"}*/}
-        {/*  labelColWidth={"65px"}*/}
-        {/*  data={*/}
-        {/*    [*/}
-        {/*      {*/}
-        {/*        label: "Kravbeløp",*/}
-        {/*        value: formatterBeløp(data.utgift?.beregning?.totalKravbeløp),*/}
-        {/*      },*/}
-        {/*    ].filter((d) => d != null) as DataViewTableData[]*/}
-        {/*  }*/}
-        {/*/>*/}
         <DataViewTable
           className={"two_column_view_v2"}
-          labelColWidth={"100px"}
+          labelColWidth={"200px"}
           data={
             [
               {
@@ -88,16 +111,36 @@ function Utgiftsposter() {
                   data.utgift?.beregning?.totalGodkjentBeløp,
                 ),
               },
-              // {
-              //   label: "Direkte betalt av Bidragspliktig",
-              //   value: formatterBeløp(
-              //     data.utgift?.beregning?.beløpDirekteBetaltAvBp,
-              //   ),
-              // },
+              {
+                label: "Direkte betalt av Bidragspliktig",
+                value: formatterBeløp(
+                  data.utgift?.beregning?.beløpDirekteBetaltAvBp,
+                ),
+              },
             ].filter((d) => d != null) as DataViewTableData[]
           }
         />
       </div>
+      {data.utgift?.maksGodkjentBeløp?.taMed && (
+        <div>
+          <DataViewTable
+            className={"two_column_view_v2"}
+            labelColWidth={"200px"}
+            data={
+              [
+                {
+                  label: "Maks godkjent beløp",
+                  value: formatterBeløp(data.utgift?.maksGodkjentBeløp?.beløp),
+                },
+                {
+                  label: "Begrunnelse for maks godkjent beløp",
+                  value: data.utgift?.maksGodkjentBeløp?.begrunnelse,
+                },
+              ].filter((d) => d != null) as DataViewTableData[]
+            }
+          />
+        </div>
+      )}
     </div>
   );
 }

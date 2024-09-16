@@ -30,7 +30,9 @@ fun getObjectmapper(): ObjectMapper {
     return mapper
 }
 
-class YearMontDeserializer(t: Class<YearMonth>? = null) : StdDeserializer<YearMonth?>(t) {
+class YearMontDeserializer(
+    t: Class<YearMonth>? = null,
+) : StdDeserializer<YearMonth?>(t) {
     @Throws(IOException::class, JsonProcessingException::class)
     override fun deserialize(
         jp: JsonParser,
@@ -41,7 +43,9 @@ class YearMontDeserializer(t: Class<YearMonth>? = null) : StdDeserializer<YearMo
     }
 }
 
-class YearMonthSerializer(t: Class<YearMonth>? = null) : StdSerializer<YearMonth>(t) {
+class YearMonthSerializer(
+    t: Class<YearMonth>? = null,
+) : StdSerializer<YearMonth>(t) {
     override fun serialize(
         value: YearMonth,
         gen: JsonGenerator,
@@ -51,7 +55,9 @@ class YearMonthSerializer(t: Class<YearMonth>? = null) : StdSerializer<YearMonth
     }
 }
 
-class RolletypeSerializer(t: Class<Enum<Rolletype>>? = null) : StdSerializer<Enum<Rolletype>>(t) {
+class RolletypeSerializer(
+    t: Class<Enum<Rolletype>>? = null,
+) : StdSerializer<Enum<Rolletype>>(t) {
     override fun serialize(
         value: Enum<Rolletype>,
         gen: JsonGenerator,

@@ -47,8 +47,7 @@ class DefaultRestControllerAdvice {
             .header(
                 HttpHeaders.WARNING,
                 "Forespørselen inneholder ugyldig verdi: ${valideringsFeil ?: exception.message}",
-            )
-            .build<Any>()
+            ).build<Any>()
     }
 
     private fun createMissingKotlinParameterViolation(ex: MismatchedInputException): String {

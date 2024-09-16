@@ -27,9 +27,10 @@ export default {
       status: "Status",
     },
     utgifter: {
-      betaltAvBp: "Betalt av BP",
+      betaltAvBp: "Betalt av Bidragspliktig",
       dato: "Forfallsdato",
       utgift: "Utgift",
+      utgiftskategori: "Utgiftskategori",
       kravbeløp: "Kravbeløp",
       godkjentBeløp: "Godkjent beløp",
       begrunnelse: "Begrunnelse",
