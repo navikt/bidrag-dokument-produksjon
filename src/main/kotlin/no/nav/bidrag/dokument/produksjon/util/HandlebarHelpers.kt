@@ -37,31 +37,33 @@ fun groupBy(): Pair<String, Helper<Iterable<Any>>> =
             val groupByField = options.param(0, null as String?)
             val context: MutableList<Pair<Any, List<Any>>> = mutableListOf()
             if (list is JsonNode) {
-                list.groupBy { node ->
-                    getParameterValue(
-                        node,
-                        groupByField,
-                    )
-                }.forEach {
-                    context.add(
-                        getParameterValueAsObject(
-                            it.value.first(),
+                list
+                    .groupBy { node ->
+                        getParameterValue(
+                            node,
                             groupByField,
-                        ) to it.value,
-                    )
-                }
+                        )
+                    }.forEach {
+                        context.add(
+                            getParameterValueAsObject(
+                                it.value.first(),
+                                groupByField,
+                            ) to it.value,
+                        )
+                    }
             } else {
                 return@Helper options.inverse()
             }
 
-            context.map { (key, value) ->
-                options.fn(
-                    mutableMapOf<Any, Any>().apply {
-                        put("key", key)
-                        put("value", value)
-                    },
-                )
-            }.joinToString("")
+            context
+                .map { (key, value) ->
+                    options.fn(
+                        mutableMapOf<Any, Any>().apply {
+                            put("key", key)
+                            put("value", value)
+                        },
+                    )
+                }.joinToString("")
         }
 
 private fun getParameterValue(
@@ -117,10 +119,9 @@ val Any.toEnum
             null
         }
 
-inline fun <reified T : Enum<T>> toEnum(enumStr: String): T? {
-    return try {
+inline fun <reified T : Enum<T>> toEnum(enumStr: String): T? =
+    try {
         enumValueOf<T>(enumStr)
     } catch (e: Exception) {
         null
     }
-}

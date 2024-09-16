@@ -2,7 +2,6 @@ package no.nav.bidrag.dokument.produksjon.service
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.dokument.produksjon.consumer.BidragDokumentmalConsumer
-import no.nav.bidrag.dokument.produksjon.consumer.BidragPdfGenConsumer
 import no.nav.bidrag.transport.felles.commonObjectmapper
 import no.nav.bidrag.transport.notat.NotatMalType
 import no.nav.bidrag.transport.notat.VedtakNotatDto
@@ -19,7 +18,6 @@ private val log = KotlinLogging.logger {}
 
 @Service
 class PdfProducerService(
-    private val bidragPdfGenConsumer: BidragPdfGenConsumer,
     private val bidragDokumentmalConsumer: BidragDokumentmalConsumer,
 ) {
     fun generateHTMLResponseV2(
@@ -55,20 +53,21 @@ class PdfProducerService(
         val type = dokumentmal.name.lowercase()
         val jsonPayload = payload ?: hotTemplateData(category, type)
         val startTime = System.currentTimeMillis()
-        return bidragDokumentmalConsumer.hentDokumentmal(category, type, jsonPayload)?.let {
-                document ->
-            val bytes = PdfContent(document.fjernKontrollTegn()).generate()
-            log.info {
-                "Done generating PDF for category $category and template $type in ${System.currentTimeMillis() - startTime}ms"
+        return bidragDokumentmalConsumer
+            .hentDokumentmal(category, type, jsonPayload)
+            ?.let { document ->
+                val bytes = PdfContent(document.fjernKontrollTegn()).generate()
+                log.info {
+                    "Done generating PDF for category $category and template $type in ${System.currentTimeMillis() - startTime}ms"
+                }
+                ResponseEntity
+                    .ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=dokumenter_sammenslatt.pdf",
+                    ).body(bytes)
             }
-            ResponseEntity
-                .ok()
-                .contentType(MediaType.APPLICATION_PDF)
-                .header(
-                    HttpHeaders.CONTENT_DISPOSITION,
-                    "inline; filename=dokumenter_sammenslatt.pdf",
-                ).body(bytes)
-        }
             ?: ResponseEntity
                 .status(
                     HttpStatus.NOT_FOUND,
