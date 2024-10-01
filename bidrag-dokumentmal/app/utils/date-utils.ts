@@ -74,6 +74,11 @@ export const DateToDDNameYYYYString = (date: Date) =>
     month: "long",
     day: "2-digit",
   });
+
+export const DateToYearString = (date: Date) =>
+  date?.toLocaleDateString("nb-NO", {
+    year: "numeric",
+  });
 export const DateToDDMMYYYYString = (date: Date) =>
   date?.toLocaleDateString("nb-NO", {
     year: "numeric",
