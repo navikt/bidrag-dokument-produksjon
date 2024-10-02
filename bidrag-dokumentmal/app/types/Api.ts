@@ -11,12 +11,6 @@
 
 type UtilRequiredKeys<T, K extends keyof T> = Omit<T, K> & Required<Pick<T, K>>;
 
-export interface AndreVoksneIHusstandenDetaljerDto {
-  /** @format int32 */
-  totalAntallHusstandsmedlemmer: number;
-  husstandsmedlemmer: VoksenIHusstandenDetaljerDto[];
-}
-
 export interface Arbeidsforhold {
   periode: TypeArManedsperiode;
   arbeidsgiver: string;
@@ -164,8 +158,14 @@ export enum Kilde {
 }
 
 export interface NotatAndreVoksneIHusstanden {
-  opplysningerFraFolkeregisteret: OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeAndreVoksneIHusstandenDetaljerDto[];
+  opplysningerFraFolkeregisteret: OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndreVoksneIHusstandenDetaljerDto[];
   opplysningerBruktTilBeregning: OpplysningerBruktTilBeregningBostatuskode[];
+}
+
+export interface NotatAndreVoksneIHusstandenDetaljerDto {
+  /** @format int32 */
+  totalAntallHusstandsmedlemmer: number;
+  husstandsmedlemmer: NotatVoksenIHusstandenDetaljerDto[];
 }
 
 /** Notat begrunnelse skrevet av saksbehandler */
@@ -209,10 +209,10 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
+  avslagVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavn?: string;
 }
 
 export interface NotatBeregnetInntektDto {
@@ -305,8 +305,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
   bpHarEvne: boolean;
-  resultatVisningsnavn: string;
   beløpSomInnkreves: number;
+  resultatVisningsnavn: string;
 };
 
 export interface NotatRolleDto {
@@ -315,6 +315,7 @@ export interface NotatRolleDto {
   /** @format date */
   fødselsdato?: string;
   ident?: string;
+  erBeskyttet: boolean;
 }
 
 export interface NotatSivilstand {
@@ -406,6 +407,14 @@ export interface NotatVirkningstidspunktDto {
   årsakVisningsnavn?: string;
 }
 
+export interface NotatVoksenIHusstandenDetaljerDto {
+  navn: string;
+  /** @format date */
+  fødselsdato?: string;
+  erBeskyttet: boolean;
+  harRelasjonTilBp: boolean;
+}
+
 export interface OpplysningerBruktTilBeregningBostatuskode {
   periode: TypeArManedsperiode;
   status: Bostatuskode;
@@ -420,10 +429,10 @@ export interface OpplysningerBruktTilBeregningSivilstandskode {
   statusVisningsnavn?: string;
 }
 
-export interface OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeAndreVoksneIHusstandenDetaljerDto {
+export interface OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndreVoksneIHusstandenDetaljerDto {
   periode: TypeArManedsperiode;
   status?: Bostatuskode;
-  detaljer?: AndreVoksneIHusstandenDetaljerDto;
+  detaljer?: NotatAndreVoksneIHusstandenDetaljerDto;
   statusVisningsnavn?: string;
 }
 
@@ -605,13 +614,6 @@ export enum Vedtakstype {
   KLAGE = "KLAGE",
   ENDRING = "ENDRING",
   ENDRING_MOTTAKER = "ENDRING_MOTTAKER",
-}
-
-export interface VoksenIHusstandenDetaljerDto {
-  navn: string;
-  /** @format date */
-  fødselsdato?: string;
-  harRelasjonTilBp: boolean;
 }
 
 export interface TypeArManedsperiode {

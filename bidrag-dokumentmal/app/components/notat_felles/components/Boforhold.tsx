@@ -66,6 +66,7 @@ function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
           <Person
             fødselsdato={data.gjelder.fødselsdato!}
             navn={data.gjelder.navn!}
+            erBeskyttet={data.gjelder.erBeskyttet}
           />
         }
       />

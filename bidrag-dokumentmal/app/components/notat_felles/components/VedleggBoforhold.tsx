@@ -4,12 +4,12 @@ import {
   formatPeriode,
 } from "~/utils/date-utils";
 import {
-  AndreVoksneIHusstandenDetaljerDto,
   Bostatuskode,
   NotatMalType,
   OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeUnit,
   OpplysningerFraFolkeregisteretMedDetaljerSivilstandskodePDLUnit,
-  OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeAndreVoksneIHusstandenDetaljerDto,
+  NotatAndreVoksneIHusstandenDetaljerDto,
+  OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndreVoksneIHusstandenDetaljerDto,
 } from "~/types/Api";
 import { groupBy } from "~/utils/array-utils";
 import DataDescription from "~/components/DataDescription";
@@ -46,6 +46,7 @@ export default function VedleggBoforhold() {
                 <Person
                   fødselsdato={gjelderBarn.fødselsdato!}
                   navn={gjelderBarn.navn!}
+                  erBeskyttet={gjelderBarn.erBeskyttet}
                 />
               }
             />
@@ -87,7 +88,7 @@ export function BoforholdTable({
 }: {
   data:
     | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeUnit[]
-    | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeAndreVoksneIHusstandenDetaljerDto[]
+    | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndreVoksneIHusstandenDetaljerDto[]
     | OpplysningerFraFolkeregisteretMedDetaljerSivilstandskodePDLUnit[];
 }) {
   if (data.length === 0) return null;
@@ -138,7 +139,7 @@ export function BoforholdTable({
 function AndreVoksneiHusstandenDetaljer({
   andreVoksneIHusstandenDetaljer,
 }: {
-  andreVoksneIHusstandenDetaljer: AndreVoksneIHusstandenDetaljerDto;
+  andreVoksneIHusstandenDetaljer: NotatAndreVoksneIHusstandenDetaljerDto;
 }) {
   return (
     <>
@@ -155,7 +156,11 @@ function AndreVoksneiHusstandenDetaljer({
           (husstandsmedlem, index) => {
             return (
               <li key={husstandsmedlem.navn + "-" + index}>
-                {DateToDDMMYYYYString(dateOrNull(husstandsmedlem.fødselsdato)!)}
+                {husstandsmedlem.erBeskyttet
+                  ? husstandsmedlem.navn
+                  : DateToDDMMYYYYString(
+                      dateOrNull(husstandsmedlem.fødselsdato)!,
+                    )}
                 {husstandsmedlem.harRelasjonTilBp &&
                   " (Relasjon til Bidragspliktig)"}
               </li>
@@ -169,7 +174,7 @@ function AndreVoksneiHusstandenDetaljer({
 function isSivilstand(
   data:
     | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeUnit[]
-    | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeAndreVoksneIHusstandenDetaljerDto[]
+    | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndreVoksneIHusstandenDetaljerDto[]
     | OpplysningerFraFolkeregisteretMedDetaljerSivilstandskodePDLUnit[],
 ): data is OpplysningerFraFolkeregisteretMedDetaljerSivilstandskodePDLUnit[] {
   return data && data.length > 0 && data[0].periode !== undefined;
@@ -177,10 +182,10 @@ function isSivilstand(
 function isAndreVoksneIHusstandenListe(
   data: (
     | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeUnit
-    | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeAndreVoksneIHusstandenDetaljerDto
+    | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndreVoksneIHusstandenDetaljerDto
     | OpplysningerFraFolkeregisteretMedDetaljerSivilstandskodePDLUnit
   )[],
-): data is OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeAndreVoksneIHusstandenDetaljerDto[] {
+): data is OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndreVoksneIHusstandenDetaljerDto[] {
   return (
     data &&
     data.length > 0 &&
@@ -194,8 +199,8 @@ function isAndreVoksneIHusstandenListe(
 function isAndreVoksneIHusstanden(
   data:
     | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeUnit
-    | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeAndreVoksneIHusstandenDetaljerDto
+    | OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndreVoksneIHusstandenDetaljerDto
     | OpplysningerFraFolkeregisteretMedDetaljerSivilstandskodePDLUnit,
-): data is OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeAndreVoksneIHusstandenDetaljerDto {
+): data is OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndreVoksneIHusstandenDetaljerDto {
   return isAndreVoksneIHusstandenListe([data]);
 }
