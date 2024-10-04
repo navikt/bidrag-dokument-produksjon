@@ -42,10 +42,12 @@ export enum Bostatuskode {
   ALENE = "ALENE",
 }
 
-export interface DelberegningBidragspliktigesAndelSaerbidrag {
+export interface DelberegningBidragspliktigesAndel {
   periode: TypeArManedsperiode;
-  andelFaktor: number;
+  endeligAndelFaktor: number;
   andelBeløp: number;
+  beregnetAndelFaktor: number;
+  barnEndeligInntekt: number;
   barnetErSelvforsørget: boolean;
 }
 
@@ -210,9 +212,9 @@ export interface NotatBehandlingDetaljerDto {
   /** @format date */
   klageMottattDato?: string;
   avslagVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetInntektDto {
@@ -238,6 +240,7 @@ export interface NotatInntektDto {
   type: Inntektsrapportering;
   medIBeregning: boolean;
   gjelderBarn?: NotatRolleDto;
+  historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
   visningsnavn: string;
 }
@@ -287,13 +290,13 @@ export interface NotatResultatPeriodeDto {
   vedtakstype?: Vedtakstype;
   /** @format int32 */
   antallBarnIHusstanden: number;
-  resultatKodeVisningsnavn: string;
   sivilstandVisningsnavn?: string;
+  resultatKodeVisningsnavn: string;
 }
 
 export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResultatInnhold, "type"> & {
   periode: TypeArManedsperiode;
-  bpsAndel?: DelberegningBidragspliktigesAndelSaerbidrag;
+  bpsAndel?: DelberegningBidragspliktigesAndel;
   beregning?: UtgiftBeregningDto;
   inntekter?: ResultatSaerbidragsberegningInntekterDto;
   delberegningUtgift?: DelberegningUtgift;

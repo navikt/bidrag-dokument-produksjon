@@ -158,7 +158,7 @@ function VedtakTable({
             },
             {
               label: "BP's andel",
-              value: formatterProsent(resultat.bpsAndel?.andelFaktor),
+              value: formatterProsent(resultat.bpsAndel?.endeligAndelFaktor),
             },
             {
               label: "BP har evne",
