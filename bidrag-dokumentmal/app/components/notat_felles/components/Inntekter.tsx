@@ -177,7 +177,9 @@ function InntektTable({
               return {
                 columns: [
                   { content: formatPeriode(periode!.fom, periode!.til) },
-                  inkluderBeskrivelse && { content: d.visningsnavn },
+                  inkluderBeskrivelse && {
+                    content: `${d.visningsnavn}${d.historisk ? " (historisk)" : ""}`,
+                  },
                   { content: <KildeIcon kilde={d.kilde} /> },
                   { content: formatterBeløp(d.beløp) },
                 ].filter((d) => typeof d != "boolean") as TableColumn[],

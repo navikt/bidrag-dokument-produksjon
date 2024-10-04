@@ -19,7 +19,6 @@ import {
 import { getInntektTableHeaders } from "~/constants/tableHeaders";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Inntektsposter from "~/components/notat_felles/components/Inntektsposter";
-import HorizontalLine from "~/components/HorizontalLine";
 import { isHarInntekter } from "~/components/inntektTableHelpers";
 import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
 import InntektRolle from "~/components/inntekt/InntektRolle";
@@ -168,7 +167,9 @@ function InntektTable({
             return {
               columns: [
                 { content: formatPeriode(periode!.fom, periode!.til) },
-                inkluderBeskrivelse && { content: d.visningsnavn },
+                inkluderBeskrivelse && {
+                  content: `${d.visningsnavn}${d.historisk ? " (historisk)" : ""}`,
+                },
                 { content: formatterBeløp(d.beløp) },
               ].filter((d) => typeof d != "boolean") as TableColumn[],
               expandableContent:
