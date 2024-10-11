@@ -168,10 +168,10 @@ function VedtakTable({
                 true,
               ),
             },
-            // {
-            //   label: "Maks godkjent beløp",
-            //   value: formatterBeløp(data?, true),
-            // },
+            {
+              label: "Maks godkjent beløp",
+              value: formatterBeløp(resultat.maksGodkjentBeløp, true),
+            },
             {
               label: "BP's andel",
               value: formatterProsent(resultat.bpsAndel?.endeligAndelFaktor),

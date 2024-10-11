@@ -228,9 +228,9 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
   avslagVisningsnavn?: string;
 }
 
@@ -329,6 +329,7 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   bpsAndel?: DelberegningBidragspliktigesAndel;
   beregning?: UtgiftBeregningDto;
   forskuddssats?: number;
+  maksGodkjentBeløp?: number;
   inntekter?: ResultatSaerbidragsberegningInntekterDto;
   delberegningSumLøpendeBidrag?: DelberegningSumLopendeBidrag;
   delberegningBidragsevne?: NotatDelberegningBidragsevneDto;
@@ -364,8 +365,8 @@ export interface NotatSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  trygdeavgiftResultat: number;
   skattAlminneligInntektResultat: number;
+  trygdeavgiftResultat: number;
   skattResultat: number;
   trinnskattResultat: number;
 }
