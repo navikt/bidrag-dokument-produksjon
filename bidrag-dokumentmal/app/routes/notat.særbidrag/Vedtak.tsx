@@ -8,6 +8,8 @@ import { DataViewTable } from "~/components/DataViewTable";
 import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
 import tekster from "~/tekster";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
+import elementIds from "~/utils/elementIds";
+import { erResutlatMedBeregning } from "~/routes/notat.særbidrag/SærbidragHelpers";
 
 export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
@@ -19,7 +21,17 @@ export default function Vedtak() {
           display: "inline-block",
         }}
       >
-        <h2>Vedtak</h2>
+        <div className={"elements_inline"}>
+          <h2>Vedtak</h2>
+          {erResutlatMedBeregning(
+            (data.vedtak?.resultat as NotatResultatSaerbidragsberegningDto[]) ??
+              [],
+          ) && (
+            <a href={`#${elementIds.vedleggBeregningsdetaljer}`}>
+              se vedlegg nr. 3 for beregningsdetaljer
+            </a>
+          )}
+        </div>
         <VedtakTable
           data={data.vedtak.resultat as NotatResultatSaerbidragsberegningDto[]}
         />
@@ -156,6 +168,10 @@ function VedtakTable({
                 true,
               ),
             },
+            // {
+            //   label: "Maks godkjent beløp",
+            //   value: formatterBeløp(data?, true),
+            // },
             {
               label: "BP's andel",
               value: formatterProsent(resultat.bpsAndel?.endeligAndelFaktor),
@@ -200,12 +216,15 @@ function UtgifsposterTabell() {
         style={{
           textAlign: "left",
           tableLayout: "auto",
-          width: "350px",
+          width: "450px",
           marginLeft: "-2px",
         }}
       >
         <thead>
           <tr>
+            <th style={{ width: "100px" }}>
+              {tekster.tabell.utgifter.betaltAvBp}
+            </th>
             <th>{tekster.tabell.utgifter.dato}</th>
             <th>{tekster.tabell.utgifter.utgift}</th>
             <th style={{ textAlign: "right" }}>
@@ -219,6 +238,9 @@ function UtgifsposterTabell() {
         <tbody>
           {utgifstposter.map((utgifspost, rowIndex) => (
             <tr key={rowIndex}>
+              <td style={{ width: "100px" }}>
+                {utgifspost.betaltAvBp ? "Ja" : "Nei"}
+              </td>
               <td style={{}}>{dateToDDMMYYYY(utgifspost.dato)}</td>
               <td style={{}}>{utgifspost.utgiftstypeVisningsnavn}</td>
               <td style={{ textAlign: "right" }}>

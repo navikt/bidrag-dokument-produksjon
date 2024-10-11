@@ -17,6 +17,7 @@ import VedleggInntekter from "~/components/notat_felles/components/VedleggInntek
 import NotatTittel from "~/components/NotatTittel";
 import DagensDato from "~/components/DagensDato";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";
+import VedleggBeregningsDetaljer from "~/routes/notat.særbidrag/VedleggBeregningsDetaljer";
 
 type NotatRequest = {
   renderForPdf: boolean;
@@ -65,6 +66,7 @@ export default function NotatSærbidrag() {
           <Vedtak />
           <VedleggBoforhold />
           <VedleggInntekter />
+          <VedleggBeregningsDetaljer />
         </div>
       </NotatProvider>
     </div>
