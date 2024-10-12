@@ -1,6 +1,8 @@
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { NotatResultatSaerbidragsberegningDto } from "~/types/Api";
 import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
+import { calculationTableBottomBorder } from "~/utils/stylingUtils";
+import tekster from "~/tekster";
 
 export const SumLøpendeBidragTable = () => {
   const { data } = useNotatFelles();
@@ -10,11 +12,9 @@ export const SumLøpendeBidragTable = () => {
 
   const delberegning = beregnetSærbidrag.delberegningSumLøpendeBidrag!;
   const colPaddingClassname = "px-1";
-  const bottomRowBorder =
-    "border-t border-solid border-black border-b-2 border-l-0 border-r-0";
   return (
     <div>
-      <h4>{"BPs løpende bidrag"}</h4>
+      <h4>{`${tekster.begreper.bidragspliktiges} løpende bidrag`}</h4>
       <table
         className="table-auto border-collapse text-left border-spacing-2"
         style={{ paddingBottom: "5px", width: "600px" }}
@@ -64,16 +64,16 @@ export const SumLøpendeBidragTable = () => {
             </tr>
           ))}
           <tr>
-            <td className={`text-right ${bottomRowBorder}`}></td>
-            <td className={`text-right ${bottomRowBorder}`}></td>
-            <td className={`text-right ${bottomRowBorder}`}></td>
-            <td className={`text-right ${bottomRowBorder}`}></td>
-            <td className={`text-right ${bottomRowBorder}`}></td>
-            <td className={`text-right ${bottomRowBorder}`}>
+            <td className={`text-right ${calculationTableBottomBorder}`}></td>
+            <td className={`text-right ${calculationTableBottomBorder}`}></td>
+            <td className={`text-right ${calculationTableBottomBorder}`}></td>
+            <td className={`text-right ${calculationTableBottomBorder}`}></td>
+            <td className={`text-right ${calculationTableBottomBorder}`}></td>
+            <td className={`text-right ${calculationTableBottomBorder}`}>
               {"Sum løpende bidrag:"}
             </td>
             <td
-              className={`${colPaddingClassname} text-right ${bottomRowBorder}`}
+              className={`${colPaddingClassname} text-right ${calculationTableBottomBorder}`}
             >
               {formatterBeløpForBeregning(delberegning.sumLøpendeBidrag, true)}
             </td>

@@ -7,6 +7,7 @@ import {
 import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { NotatResultatSaerbidragsberegningDto } from "~/types/Api";
+import tekster from "~/tekster";
 
 export const BPsEvneTable = () => {
   const { data } = useNotatFelles();
@@ -17,7 +18,7 @@ export const BPsEvneTable = () => {
   const inntekter = beregnetSærbidrag.inntekter!;
   return (
     <CalculationTabell
-      title="BPs evne"
+      title={`${tekster.begreper.bidragspliktiges} evne`}
       tableWidth={"600px"}
       data={[
         {

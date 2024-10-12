@@ -1,6 +1,14 @@
 export default {
   fraOffentligeRegistre: "Hentet fra offentlige registre",
   vedleggLenke: "se vedlegg nr. {} for opplysninger fra offentlige registre",
+  begreper: {
+    bidragspliktiges: "Bidragspliktiges",
+    bidragspliktig: "Bidragspliktig",
+    bidragsmottakerens: "Bidragsmottakerens",
+    bidragsmottaker: "Bidragsmottaker",
+    barnets: "Barnets",
+    barn: "Barn",
+  },
   titler: {
     forskudd: "Forskudd, saksbehandlingsnotat",
     særbidrag: "Særbidrag, saksbehandlingsnotat",

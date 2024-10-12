@@ -9,6 +9,7 @@ import {
   formatterBeløpForBeregning,
   formatterProsent,
 } from "~/utils/visningsnavn";
+import tekster from "~/tekster";
 
 export const BPsAndel = () => {
   const { data } = useNotatFelles();
@@ -20,22 +21,25 @@ export const BPsAndel = () => {
   const utgifter = beregnetSærbidrag.delberegningUtgift!;
   return (
     <div style={{ width: "600px" }}>
-      <h3>{"BPs andel"}</h3>
+      <h4>{`${tekster.begreper.bidragspliktiges} andel`}</h4>
       <div>
         <CalculationTabell
-          width={"46%"}
-          className={"two_column_view_v2 pb-2"}
+          width={"55%"}
+          title={"Beregning av total inntekt"}
+          labelColWidth={"270px"}
+          valueColWidth={"240px"}
+          className={"pb-2 "}
           data={[
             {
-              label: "BPs inntekt",
+              label: `${tekster.begreper.bidragspliktiges} inntekt`,
               result: formatterBeløpForBeregning(inntekter.inntektBP, true),
             },
             {
-              label: "BMs inntekt",
+              label: `${tekster.begreper.bidragsmottakerens} inntekt`,
               result: formatterBeløpForBeregning(inntekter.inntektBM, true),
             },
             {
-              label: "BAs inntekt",
+              label: `${tekster.begreper.barnets} inntekt`,
               value:
                 inntekter.inntektBarn! > 0 ? (
                   <div>
@@ -61,18 +65,26 @@ export const BPsAndel = () => {
           }}
         />
         <CalculationTabell
-          width={"50%"}
+          width={"400px"}
+          title={"Beregning av andel prosent"}
           style={{ marginRight: "0" }}
-          className={"two_column_view_v2"}
+          valueColWidth={"0px"}
+          className={"pb-2"}
           data={[
             {
-              label: "BPs inntekt",
+              label: `${tekster.begreper.bidragspliktiges} inntekt`,
               result: formatterBeløpForBeregning(inntekter.inntektBP, true),
             },
             {
               label: "Total inntekt",
               result: (
-                <div>
+                <div
+                  style={{
+                    textWrap: "nowrap",
+                    whiteSpace: "nowrap",
+                    whiteSpaceTrim: "discard-after",
+                  }}
+                >
                   &#247;{" "}
                   {formatterBeløpForBeregning(
                     inntekter.totalEndeligInntekt,
@@ -83,7 +95,7 @@ export const BPsAndel = () => {
             },
           ]}
           result={{
-            label: "BPs andel",
+            label: `${tekster.begreper.bidragspliktiges} andel`,
             value: formatterProsent(delberegningBpsAndel.beregnetAndelFaktor),
           }}
           message={

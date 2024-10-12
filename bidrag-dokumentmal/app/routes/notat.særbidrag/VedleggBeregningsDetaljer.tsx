@@ -10,6 +10,7 @@ import {
 } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { erResutlatMedBeregning } from "~/routes/notat.særbidrag/SærbidragHelpers";
+import tekster from "~/tekster";
 
 export default function VedleggBeregningsDetaljer() {
   const { data } = useNotatFelles();
@@ -21,7 +22,7 @@ export default function VedleggBeregningsDetaljer() {
     return null;
   return (
     <div style={{ pageBreakBefore: "always" }}>
-      <h2 id={elementIds.vedleggBeregningsdetaljer}>
+      <h2 id={elementIds.vedleggBeregningsdetaljer} className={"pb-2"}>
         Vedlegg nr. 3: Beregningsdetaljer
       </h2>
       <VedleggBeregningsDetaljerInnhold />
@@ -53,7 +54,7 @@ function VedleggBeregningsDetaljerInnhold() {
         labelColWidth={"150px"}
         data={[
           {
-            label: "BP har evne",
+            label: `${tekster.begreper.bidragspliktig} har evne`,
             textRight: false,
             value: !resultat.bpHarEvne
               ? "Nei, sum løpende bidrag er høyere enn BPs bidragsevne"
@@ -66,7 +67,7 @@ function VedleggBeregningsDetaljerInnhold() {
               : formatterBeløp(resultat.resultat, true),
           },
           {
-            label: "Betalt av BP",
+            label: `Betalt av ${tekster.begreper.bidragspliktig}`,
             value: formatterBeløp(
               resultat.beregning?.totalBeløpBetaltAvBp,
               true,

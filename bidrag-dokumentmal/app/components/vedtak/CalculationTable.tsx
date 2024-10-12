@@ -17,6 +17,8 @@ interface CalculationTableProps {
   width?: string;
   tableWidth?: string;
   labelColWidth?: string;
+  valueColWidth?: string;
+  resultColWidth?: string;
   className?: string;
   style?: CSSProperties;
 }
@@ -28,6 +30,9 @@ export const CalculationTabell: React.FC<CalculationTableProps> = ({
   message,
   width,
   tableWidth,
+  labelColWidth,
+  resultColWidth,
+  valueColWidth,
   style,
   className,
 }) => {
@@ -43,15 +48,21 @@ export const CalculationTabell: React.FC<CalculationTableProps> = ({
         <tbody>
           {data.map((row, rowIndex) => (
             <tr key={rowIndex}>
-              <td style={{ width: "180px" }}>{row.label}</td>
+              <td style={{ width: labelColWidth ?? "180px" }}>{row.label}</td>
               {row.value ? (
-                <td className={"text-right"} style={{ width: "200px" }}>
+                <td
+                  className={"text-right"}
+                  style={{ width: valueColWidth ?? "200px" }}
+                >
                   {row.value}
                 </td>
               ) : (
-                <td style={{ width: "200px" }}></td>
+                <td style={{ width: valueColWidth ?? "200px" }}></td>
               )}
-              <td className={"text-right"} style={{ width: "100px" }}>
+              <td
+                className={"text-right"}
+                style={{ width: resultColWidth ?? "100px" }}
+              >
                 {row.result}
               </td>
             </tr>
@@ -60,17 +71,17 @@ export const CalculationTabell: React.FC<CalculationTableProps> = ({
             <tr className={`${bottomRowBorder}`}>
               <td
                 className={`border-t ${bottomRowBorder}`}
-                style={{ width: "180px" }}
+                style={{ width: labelColWidth ?? "180px" }}
               >
                 {result.label}
               </td>
               <td
                 className={`text-right ${bottomRowBorder}`}
-                style={{ width: "200px" }}
+                style={{ width: valueColWidth ?? "200px" }}
               ></td>
               <td
                 className={`text-right ${bottomRowBorder}`}
-                style={{ width: "100px" }}
+                style={{ width: resultColWidth ?? "100px" }}
               >
                 {result.value}
               </td>
