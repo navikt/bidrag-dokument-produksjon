@@ -365,10 +365,10 @@ export interface NotatSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattAlminneligInntektResultat: number;
-  trygdeavgiftResultat: number;
-  skattResultat: number;
-  trinnskattResultat: number;
+  skattAlminneligInntektMånedsbeløp: number;
+  trygdeavgiftMånedsbeløp: number;
+  trinnskattMånedsbeløp: number;
+  skattMånedsbeløp: number;
 }
 
 export interface NotatSaerbidragKategoriDto {
@@ -396,10 +396,11 @@ export interface NotatTotalBeregningUtgifterDto {
 }
 
 export interface NotatUnderholdEgneBarnIHusstand {
-  resultat: number;
+  getårsbeløp: number;
   sjablon: number;
   /** @format double */
   antallBarnIHusstanden: number;
+  måndesbeløp: number;
 }
 
 export interface NotatUtgiftBeregningDto {

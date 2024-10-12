@@ -51,7 +51,7 @@ export const BPsEvneTable = () => {
             <MathValue
               negativeValue
               value={formatterBeløpForBeregning(
-                delberegningBidragsevne.skatt.skattAlminneligInntektResultat,
+                delberegningBidragsevne.skatt.skattAlminneligInntektMånedsbeløp,
                 true,
               )}
             />
@@ -70,7 +70,7 @@ export const BPsEvneTable = () => {
             <MathValue
               negativeValue
               value={formatterBeløpForBeregning(
-                delberegningBidragsevne.skatt.trygdeavgiftResultat,
+                delberegningBidragsevne.skatt.trygdeavgiftMånedsbeløp,
                 true,
               )}
             />
@@ -89,7 +89,7 @@ export const BPsEvneTable = () => {
             <MathValue
               negativeValue
               value={formatterBeløpForBeregning(
-                delberegningBidragsevne.skatt.trinnskattResultat,
+                delberegningBidragsevne.skatt.trinnskattMånedsbeløp,
                 true,
               )}
             />
@@ -111,7 +111,7 @@ export const BPsEvneTable = () => {
             <MathValue
               negativeValue
               value={formatterBeløpForBeregning(
-                delberegningBidragsevne.underholdEgneBarnIHusstand.resultat,
+                delberegningBidragsevne.underholdEgneBarnIHusstand.måndesbeløp,
                 true,
               )}
             />

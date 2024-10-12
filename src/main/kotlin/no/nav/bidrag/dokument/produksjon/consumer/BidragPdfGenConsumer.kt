@@ -36,6 +36,10 @@ class BidragPdfGenConsumer(
                 }
             val formParams: MultiValueMap<String, Any> = LinkedMultiValueMap()
             formParams.add("files", contentsAsResource)
+            formParams.add("pdfa", "PDF/A-1b")
+            formParams.add("pdfua", "true")
+            formParams.add("paperWidth", "595px")
+            formParams.add("paperHeight", "842px")
 
             val requestEntity = HttpEntity(formParams, headers)
             restTemplate.postForEntity<ByteArray>(url, requestEntity).body

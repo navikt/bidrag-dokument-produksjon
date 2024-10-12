@@ -2,6 +2,7 @@ package no.nav.bidrag.dokument.produksjon.service
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.dokument.produksjon.consumer.BidragDokumentmalConsumer
+import no.nav.bidrag.dokument.produksjon.consumer.BidragPdfGenConsumer
 import no.nav.bidrag.transport.felles.commonObjectmapper
 import no.nav.bidrag.transport.notat.NotatMalType
 import no.nav.bidrag.transport.notat.VedtakNotatDto
@@ -19,6 +20,7 @@ private val log = KotlinLogging.logger {}
 @Service
 class PdfProducerService(
     private val bidragDokumentmalConsumer: BidragDokumentmalConsumer,
+    private val bidragPdfGenConsumer: BidragPdfGenConsumer,
 ) {
     fun generateHTMLResponseV2(
         category: String,
@@ -56,7 +58,8 @@ class PdfProducerService(
         return bidragDokumentmalConsumer
             .hentDokumentmal(category, type, jsonPayload)
             ?.let { document ->
-                val bytes = PdfContent(document.fjernKontrollTegn()).generate()
+//                val bytes = PdfContent(document.fjernKontrollTegn()).generate()
+                val bytes = bidragPdfGenConsumer.produserPdf(document.fjernKontrollTegn())
                 log.info {
                     "Done generating PDF for category $category and template $type in ${System.currentTimeMillis() - startTime}ms"
                 }
