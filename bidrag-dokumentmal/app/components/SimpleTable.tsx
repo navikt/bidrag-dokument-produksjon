@@ -15,7 +15,7 @@ type SimpleTableProps = {
 
 export function SimpleTable({ data }: SimpleTableProps) {
   return (
-    <table className="table" style={{ breakBefore: "recto" }}>
+    <table className="table" style={{ breakBefore: "region" }}>
       <tr>
         <th style={{ width: "150px" }}>{tekster.tabell.felles.fraTilOgMed}</th>
         <th style={{ width: "150px" }}>{tekster.tabell.felles.status}</th>
