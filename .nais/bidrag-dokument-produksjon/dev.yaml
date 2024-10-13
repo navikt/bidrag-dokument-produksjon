@@ -7,3 +7,4 @@ azure_access_inbound:
   - application: bidrag-behandling-feature
 outbound-access-apps:
   - bidrag-dokumentmal
+  - bidrag-pdfgen

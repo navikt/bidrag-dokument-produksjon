@@ -58,8 +58,8 @@ class PdfProducerService(
         return bidragDokumentmalConsumer
             .hentDokumentmal(category, type, jsonPayload)
             ?.let { document ->
-                val bytes = PdfContent(document.fjernKontrollTegn()).generate()
-//                val bytes = bidragPdfGenConsumer.produserPdf(document.fjernKontrollTegn())
+//                val bytes = PdfContent(document.fjernKontrollTegn()).generate()
+                val bytes = bidragPdfGenConsumer.produserPdf(document.fjernKontrollTegn())
                 log.info {
                     "Done generating PDF for category $category and template $type in ${System.currentTimeMillis() - startTime}ms"
                 }
