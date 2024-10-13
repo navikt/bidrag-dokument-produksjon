@@ -41,6 +41,6 @@ spec:
      - {{url}}
   {{/each}}
   command:
-    gotenberg
-    --pdfengines-engines=libreoffice-pdfengine
-    --api-port=8080
+   - gotenberg
+   - --pdfengines-engines=libreoffice-pdfengine
+   - --api-port=8080
