@@ -8,7 +8,7 @@ import {
   formatterBeløpForBeregning,
 } from "~/utils/visningsnavn";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
-import { DataViewTable } from "~/components/DataViewTable";
+import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
 import tekster from "~/tekster";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
@@ -77,28 +77,37 @@ function VedtakTable({
     return (
       <div>
         <h3 style={{ marginTop: 0 }}>Avslag</h3>
+        <UtgifsposterTabell />
         <DataViewTable
           labelColWidth={"90px"}
           key={"inntekter"}
-          data={[
-            {
-              label: "Årsak",
-              value: resultat.resultatVisningsnavn,
-            },
-            {
-              label: "Kravbeløp",
-              value: formatterBeløp(resultat.beregning?.totalKravbeløp, true),
-            },
-            {
-              label: "Godkjent beløp",
-              value: formatterBeløp(
-                resultat.beregning?.totalGodkjentBeløp,
-                true,
-              ),
-            },
-          ]}
+          data={
+            [
+              {
+                label: "Årsak",
+                value: resultat.resultatVisningsnavn,
+              },
+              resultat.resultatKode ==
+              Resultatkode.GODKJENTBELOPERLAVEREENNFORSKUDDSSATS
+                ? {
+                    label: "Forskuddssaats",
+                    value: formatterBeløp(resultat.forskuddssats, true),
+                  }
+                : null,
+              {
+                label: "Kravbeløp",
+                value: formatterBeløp(resultat.beregning?.totalKravbeløp, true),
+              },
+              {
+                label: "Godkjent beløp",
+                value: formatterBeløp(
+                  resultat.beregning?.totalGodkjentBeløp,
+                  true,
+                ),
+              },
+            ].filter((d) => d != null) as DataViewTableData[]
+          }
         />
-        <UtgifsposterTabell />
       </div>
     );
   }
