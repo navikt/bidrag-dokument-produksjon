@@ -35,6 +35,7 @@ jobs:
           build_args: |
             gotenberg
             --pdfengines-engines=libreoffice-pdfengine
+            --api-port=8080
       - name: Deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v2
         env:
