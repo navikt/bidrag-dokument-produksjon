@@ -32,10 +32,6 @@ jobs:
           tag: bidrag-pdfgen
           docker_context: ./bidrag-pdfgen
           dockerfile: ./bidrag-pdfgen/DockerfileGotenberg
-          build_args: |
-            gotenberg
-            --pdfengines-engines=libreoffice-pdfengine
-            --api-port=8080
       - name: Deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v2
         env:
