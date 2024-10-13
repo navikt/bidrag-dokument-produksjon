@@ -5,15 +5,16 @@ import {
 
 export default function HeaderFooter() {
   const { renderMode, data } = useNotatFelles();
-  const renderTopBottomTextContent = () => (
+  const renderTopBottomTextContent = (isHeader: boolean) => (
     <>
-      <div id="headerfooter">
+      <div id={isHeader ? "header" : "footer"}>
         <span
           style={{
             fontSize: "12px",
             position: "absolute",
-            left: "85px",
-            top: "40px",
+            left: "80px",
+            top: isHeader ? "40px" : "auto",
+            bottom: isHeader ? "auto" : "40px",
             fontFamily: "Source Sans Pro",
           }}
         >
@@ -23,8 +24,9 @@ export default function HeaderFooter() {
           style={{
             fontSize: "12px",
             position: "absolute",
-            right: "85px",
-            top: "40px",
+            right: "80px",
+            top: isHeader ? "40px" : "auto",
+            bottom: isHeader ? "auto" : "40px",
             fontFamily: "Source Sans Pro",
           }}
         >
@@ -39,27 +41,10 @@ export default function HeaderFooter() {
     <>
       {renderMode == RenderMode.PDF && (
         <>
-          {/*<div*/}
-          {/*  className={"custom-next-page-info next-page-info"}*/}
-          {/*  data-content={`Fortsettelse på neste side`}*/}
-          {/*></div>*/}
-          {renderTopBottomTextContent()}
+          {renderTopBottomTextContent(true)}
+          {renderTopBottomTextContent(false)}
         </>
       )}
-      {renderMode == RenderMode.PDF && (
-        <>
-          {/*<div*/}
-          {/*  className={"custom-next-page-info next-page-info"}*/}
-          {/*  data-content={`Fortsettelse på neste side`}*/}
-          {/*></div>*/}
-          {renderTopBottomTextContent()}
-        </>
-      )}
-      {/*{response.renderForPdf && (*/}
-      {/*  <div className="footer_last_page top_bottom_text">*/}
-      {/*    {renderTopBottomTextContent()}*/}
-      {/*  </div>*/}
-      {/*)}*/}
     </>
   );
 }

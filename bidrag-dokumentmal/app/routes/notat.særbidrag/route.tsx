@@ -35,7 +35,7 @@ export async function action({ request }: ActionFunctionArgs) {
 
 export function meta() {
   return [
-    { title: tekster.titler.forskudd },
+    { title: tekster.titler.særbidrag },
     { name: "description", content: tekster.titler.særbidrag },
     { property: "author", content: "bidrag-dokument-produksjon" },
     { property: "subject", content: tekster.titler.særbidrag },
@@ -50,7 +50,7 @@ export default function NotatSærbidrag() {
 
   const data = response.data;
   return (
-    <div id="forskudd_notat">
+    <div id="særbidrag_notat">
       <NotatProvider
         data={data}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
