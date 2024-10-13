@@ -1,0 +1,42 @@
+apiVersion: "nais.io/v1alpha1"
+kind: "Application"
+metadata:
+  name: "bidrag-pdfgen"
+  namespace: "bidrag"
+  labels:
+    team: bidrag
+spec:
+  image: {{ image }}
+  port: 8080
+  accessPolicy:
+    inbound:
+      rules:
+      {{#each azure_access_inbound}}
+         - application: {{this.application}}
+      {{/each}}
+    outbound:
+      rules:
+      {{#each outbound-access-apps}}
+         - application: {{this}}
+      {{/each}}
+  liveness:
+    path: /health
+    initialDelay: 10
+    timeout: 1
+    periodSeconds: 10
+    failureThreshold: 10
+  readiness:
+    path: /health
+    initialDelay: 10
+    timeout: 1
+  resources:
+    limits:
+      cpu: 1000m
+      memory: 1000Mi
+    requests:
+      cpu: 300m
+      memory: 200Mi
+  ingresses:
+  {{#each ingresses as |url|}}
+     - {{url}}
+  {{/each}}
