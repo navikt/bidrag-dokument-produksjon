@@ -4,11 +4,13 @@ import {
   Vedtakstype,
   Rolletype,
   VedtakNotatDto,
-  NotatBegrunnelse,
   NotatRolleDto,
 } from "~/types/Api";
 import { konverterRolletype, erRolle } from "~/utils/converter-utils";
-
+export enum RenderPDFVersion {
+  V1 = "V1",
+  V2 = "V2",
+}
 export enum RenderMode {
   PDF,
   HTML,
@@ -23,17 +25,23 @@ interface INotatContext {
   data: VedtakNotatDto;
   type: NotatMalType;
   renderMode: RenderMode;
+  renderPDFVersion: RenderPDFVersion;
 }
 export const NotatContext = createContext<INotatContext | null>(null);
 export function useNotatFelles(): INotatContext {
   return useContext(NotatContext) as INotatContext;
 }
-export type NotatDataProps = { data: VedtakNotatDto; renderMode: RenderMode };
+export type NotatDataProps = {
+  data: VedtakNotatDto;
+  renderMode: RenderMode;
+  renderPDFVersion: RenderPDFVersion;
+};
 
 export function NotatProvider({
   children,
   data,
   renderMode,
+  renderPDFVersion,
 }: PropsWithChildren<NotatDataProps>) {
   const dataCorrected = {
     ...data,
@@ -46,6 +54,7 @@ export function NotatProvider({
     <NotatContext.Provider
       value={{
         renderMode,
+        renderPDFVersion,
         data: dataCorrected,
         type: dataCorrected.type,
         bidragsmottaker: dataCorrected.roller.find(erRolle(Rolletype.BM))!,

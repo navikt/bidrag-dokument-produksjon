@@ -1,4 +1,7 @@
 module.exports = {
+    future: {
+        v2_dev: true,
+    },
     browserNodeBuiltinsPolyfill: {
         modules: {
             buffer: true, // Provide a JSPM polyfill

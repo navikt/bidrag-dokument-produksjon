@@ -1,11 +1,12 @@
 import {
-  useNotatFelles,
   RenderMode,
+  useNotatFelles,
+  RenderPDFVersion,
 } from "~/components/notat_felles/NotatContext";
 
 export default function HeaderFooter() {
-  const { renderMode, data } = useNotatFelles();
-  const renderTopBottomTextContent = () => (
+  const { renderMode, data, renderPDFVersion } = useNotatFelles();
+  const renderHeaderFooterV1 = () => (
     <div>
       <div
         className={"custom-top_bottom_content"}
@@ -14,31 +15,58 @@ export default function HeaderFooter() {
       <div className={"custom-page-number"}></div>
     </div>
   );
+  const renderHeaderFooterV2 = (isHeader: boolean) => (
+    <>
+      <div id={isHeader ? "header" : "footer"}>
+        <span
+          style={{
+            fontSize: "12px",
+            position: "absolute",
+            left: "80px",
+            top: isHeader ? "40px" : "auto",
+            bottom: isHeader ? "auto" : "40px",
+            fontFamily: "Source Sans Pro",
+          }}
+        >
+          Saksnummer {data.saksnummer}
+        </span>
+        <span
+          style={{
+            fontSize: "12px",
+            position: "absolute",
+            right: "80px",
+            top: isHeader ? "40px" : "auto",
+            bottom: isHeader ? "auto" : "40px",
+            fontFamily: "Source Sans Pro",
+          }}
+        >
+          <span className="pageNumber"></span>
+          <span style={{ marginRight: "5px", marginLeft: "5px" }}>av</span>
+          <span className="totalPages"></span>
+        </span>
+      </div>
+    </>
+  );
   return (
     <>
-      {renderMode == RenderMode.PDF && (
-        <div className="header top_bottom_text">
-          {/*<div*/}
-          {/*  className={"custom-next-page-info next-page-info"}*/}
-          {/*  data-content={`Fortsettelse på neste side`}*/}
-          {/*></div>*/}
-          {renderTopBottomTextContent()}
-        </div>
-      )}
-      {renderMode == RenderMode.PDF && (
-        <div className="footer top_bottom_text">
-          {/*<div*/}
-          {/*  className={"custom-next-page-info next-page-info"}*/}
-          {/*  data-content={`Fortsettelse på neste side`}*/}
-          {/*></div>*/}
-          {renderTopBottomTextContent()}
-        </div>
-      )}
-      {/*{response.renderForPdf && (*/}
-      {/*  <div className="footer_last_page top_bottom_text">*/}
-      {/*    {renderTopBottomTextContent()}*/}
-      {/*  </div>*/}
-      {/*)}*/}
+      {renderMode == RenderMode.PDF &&
+        renderPDFVersion == RenderPDFVersion.V1 && (
+          <>
+            <div className="header top_bottom_text">
+              {renderHeaderFooterV1()}
+            </div>
+            <div className="footer top_bottom_text">
+              {renderHeaderFooterV1()}
+            </div>
+          </>
+        )}
+      {renderMode == RenderMode.PDF &&
+        renderPDFVersion == RenderPDFVersion.V2 && (
+          <>
+            {renderHeaderFooterV2(true)}
+            {renderHeaderFooterV2(false)}
+          </>
+        )}
     </>
   );
 }

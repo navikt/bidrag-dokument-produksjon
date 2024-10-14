@@ -1,7 +1,6 @@
 import { useActionData } from "@remix-run/react";
-import { ActionFunctionArgs, json } from "@remix-run/node";
+import { ActionFunctionArgs } from "@remix-run/node";
 import "../../style/style.css";
-import { VedtakNotatDto } from "~/types/Api";
 import tekster from "~/tekster";
 import {
   NotatProvider,
@@ -18,24 +17,15 @@ import NotatTittel from "~/components/NotatTittel";
 import DagensDato from "~/components/DagensDato";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";
 import VedleggBeregningsDetaljer from "~/routes/notat.særbidrag/VedleggBeregningsDetaljer";
+import { parseRequestAction, NotatRequest } from "~/routes/common";
 
-type NotatRequest = {
-  renderForPdf: boolean;
-  data: VedtakNotatDto;
-};
-export async function action({ request }: ActionFunctionArgs) {
-  const body = await request.json();
-  return json({
-    data: body,
-    renderForPdf:
-      request.headers.get("renderforpdf") == "true" ||
-      request.headers.get("renderforpdf") == null,
-  });
+export async function action(args: ActionFunctionArgs) {
+  return await parseRequestAction(args);
 }
 
 export function meta() {
   return [
-    { title: tekster.titler.forskudd },
+    { title: tekster.titler.særbidrag },
     { name: "description", content: tekster.titler.særbidrag },
     { property: "author", content: "bidrag-dokument-produksjon" },
     { property: "subject", content: tekster.titler.særbidrag },
@@ -50,9 +40,10 @@ export default function NotatSærbidrag() {
 
   const data = response.data;
   return (
-    <div id="forskudd_notat">
+    <div id="særbidrag_notat">
       <NotatProvider
         data={data}
+        renderPDFVersion={response.renderPDFVersion}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >
         <HeaderFooter />

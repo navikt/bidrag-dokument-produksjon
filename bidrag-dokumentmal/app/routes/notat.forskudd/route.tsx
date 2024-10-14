@@ -1,7 +1,5 @@
 import { useActionData } from "@remix-run/react";
-import { ActionFunctionArgs, json } from "@remix-run/node";
 import "../../style/style.css";
-import { VedtakNotatDto } from "~/types/Api";
 import Vedtak from "~/routes/notat.forskudd/Vedtak";
 import tekster from "~/tekster";
 import {
@@ -17,19 +15,11 @@ import VedleggInntekter from "~/components/notat_felles/components/VedleggInntek
 import DagensDato from "~/components/DagensDato";
 import NotatTittel from "~/components/NotatTittel";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";
+import { parseRequestAction, NotatRequest } from "~/routes/common";
+import { ActionFunctionArgs } from "@remix-run/node";
 
-type NotatRequest = {
-  renderForPdf: boolean;
-  data: VedtakNotatDto;
-};
-export async function action({ request }: ActionFunctionArgs) {
-  const body = await request.json();
-  return json({
-    data: body,
-    renderForPdf:
-      request.headers.get("renderforpdf") == "true" ||
-      request.headers.get("renderforpdf") == null,
-  });
+export async function action(args: ActionFunctionArgs) {
+  return await parseRequestAction(args);
 }
 
 export function meta() {
@@ -52,6 +42,7 @@ export default function NotatForskudd() {
     <div id="forskudd_notat">
       <NotatProvider
         data={data}
+        renderPDFVersion={response.renderPDFVersion}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >
         <HeaderFooter />

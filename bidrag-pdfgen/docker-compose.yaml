@@ -1,0 +1,10 @@
+services:
+  gotenberg:
+    build:
+      context: .
+      dockerfile: DockerfileGotenberg
+    ports:
+      - "3054:3000"
+    command:
+      - "gotenberg"
+      - "--pdfengines-engines=libreoffice-pdfengine"

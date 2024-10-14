@@ -47,27 +47,29 @@ export function capitalizeFirstLetter(str?: string) {
 }
 export const formatterBeløpForBeregning = (
   beløp: number | string | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   visSymbol = false,
 ): string => {
   return (beløp ?? 0).toLocaleString("nb-NO", {
-    style: visSymbol ? "currency" : undefined,
+    // style: visSymbol ? "currency" : undefined,
     currency: "NOK",
     currencySign: "accounting",
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-    currencyDisplay: visSymbol ? "symbol" : undefined,
+    // currencyDisplay: visSymbol ? "symbol" : undefined,
   });
 };
 export const formatterBeløp = (
   beløp: number | string | undefined,
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   visSymbol = false,
 ): string => {
   return (beløp ?? 0).toLocaleString("nb-NO", {
-    style: visSymbol ? "currency" : undefined,
+    // style: visSymbol ? "currency" : undefined,
     currency: "NOK",
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
-    currencyDisplay: visSymbol ? "symbol" : undefined,
+    // currencyDisplay: visSymbol ? "symbol" : undefined,
   });
 };
 export const formatterProsent = (
