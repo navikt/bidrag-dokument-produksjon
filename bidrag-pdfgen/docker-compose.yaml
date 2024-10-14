@@ -8,3 +8,4 @@ services:
     command:
       - "gotenberg"
       - "--pdfengines-engines=libreoffice-pdfengine"
+      - "--api-port=3000"

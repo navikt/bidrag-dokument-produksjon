@@ -1,4 +1,4 @@
-name: bidrag-pdfgen - Build and deploy dev
+name: bidrag-pdfgen - Build and deploy prod
 on:
   push:
     branches:
