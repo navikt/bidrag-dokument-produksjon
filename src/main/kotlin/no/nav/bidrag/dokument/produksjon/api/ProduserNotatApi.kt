@@ -58,4 +58,15 @@ class ProduserNotatApi(
             getObjectmapper().writeValueAsString(payload),
         )
     }
+
+    @PostMapping("/convert/html")
+    fun htmlToPdf(
+        @org.springframework.web.bind.annotation.RequestBody payload: ByteArray,
+    ): ResponseEntity<ByteArray> {
+        SIKKER_LOGG.info {
+            "Konverterer HTML til PDF"
+        }
+        log.info { "Produserer notat HTML for dokumentmal" }
+        return pdfProducerService.htmlToPDF(payload)
+    }
 }

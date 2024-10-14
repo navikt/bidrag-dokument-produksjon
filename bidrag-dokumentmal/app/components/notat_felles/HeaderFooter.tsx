@@ -1,11 +1,21 @@
 import {
-  useNotatFelles,
   RenderMode,
+  useNotatFelles,
+  RenderPDFVersion,
 } from "~/components/notat_felles/NotatContext";
 
 export default function HeaderFooter() {
-  const { renderMode, data } = useNotatFelles();
-  const renderTopBottomTextContent = (isHeader: boolean) => (
+  const { renderMode, data, renderPDFVersion } = useNotatFelles();
+  const renderHeaderFooterV1 = () => (
+    <div>
+      <div
+        className={"custom-top_bottom_content"}
+        data-content={`Saksnummer ${data.saksnummer}`}
+      ></div>
+      <div className={"custom-page-number"}></div>
+    </div>
+  );
+  const renderHeaderFooterV2 = (isHeader: boolean) => (
     <>
       <div id={isHeader ? "header" : "footer"}>
         <span
@@ -39,12 +49,24 @@ export default function HeaderFooter() {
   );
   return (
     <>
-      {renderMode == RenderMode.PDF && (
-        <>
-          {renderTopBottomTextContent(true)}
-          {renderTopBottomTextContent(false)}
-        </>
-      )}
+      {renderMode == RenderMode.PDF &&
+        renderPDFVersion == RenderPDFVersion.V1 && (
+          <>
+            <div className="header top_bottom_text">
+              {renderHeaderFooterV1()}
+            </div>
+            <div className="footer top_bottom_text">
+              {renderHeaderFooterV1()}
+            </div>
+          </>
+        )}
+      {renderMode == RenderMode.PDF &&
+        renderPDFVersion == RenderPDFVersion.V2 && (
+          <>
+            {renderHeaderFooterV2(true)}
+            {renderHeaderFooterV2(false)}
+          </>
+        )}
     </>
   );
 }

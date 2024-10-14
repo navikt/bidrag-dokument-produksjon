@@ -15,14 +15,26 @@ import org.springframework.util.LinkedMultiValueMap
 import org.springframework.util.MultiValueMap
 import org.springframework.web.client.RestTemplate
 import org.springframework.web.client.postForEntity
+import java.math.BigDecimal
 
 private val log = KotlinLogging.logger {}
+
+data class Configuration(
+    val scale: BigDecimal = BigDecimal.ONE,
+    val convertToPDFA: Boolean = false,
+)
 
 @Component
 class BidragPdfGenConsumer(
     @Value("\${bidrag-pdfgen.url}") private val url: String,
 ) {
-    fun produserPdf(html: String): ByteArray? =
+    private final val headerId = "header"
+    private final val footerId = "footer"
+
+    fun produserPdf(
+        html: String,
+        configuration: Configuration = Configuration(),
+    ): ByteArray? =
         try {
             val url = "$url/forms/chromium/convert/html"
             val restTemplate: RestTemplate = RestTemplateBuilder().build()
@@ -33,7 +45,7 @@ class BidragPdfGenConsumer(
             val requestEntity =
                 HttpEntity(
                     LinkedMultiValueMap<String, Any>()
-                        .configure()
+                        .configure(configuration)
                         .addFiles(html),
                     headers,
                 )
@@ -48,12 +60,16 @@ class BidragPdfGenConsumer(
             override fun getFilename(): String = "$name.html"
         }
 
-    private fun MultiValueMap<String, Any>.configure(): MultiValueMap<String, Any> {
-        add("pdfa", "PDF/A-3b")
-        add("pdfua", "true")
+    private fun MultiValueMap<String, Any>.configure(
+        configuration: Configuration,
+    ): MultiValueMap<String, Any> {
+        if (configuration.convertToPDFA) {
+            add("pdfa", "PDF/A-3b")
+            add("pdfua", "true")
+        }
         add("emulatedMediaType", "print")
         add("preferCssPageSize", "true")
-        add("scale", "1.5")
+        add("scale", configuration.scale.toString())
         return this
     }
 
@@ -61,22 +77,22 @@ class BidragPdfGenConsumer(
         val htmlContent =
             removeElementByIdFromString(
                 html,
-                "header",
-                "footer",
+                headerId,
+                footerId,
             ).html().toHtmlResource("index")
         val header =
             getElementByIdFromString(
                 html,
-                "header",
-            )!!.html().toHtmlResource("header")
+                headerId,
+            )?.html()?.toHtmlResource("header")
         val footer =
             getElementByIdFromString(
                 html,
-                "footer",
-            )!!.html().toHtmlResource("footer")
+                headerId,
+            )?.html()?.toHtmlResource("footer")
         add("files", htmlContent)
-        add("files", header)
-        add("files", footer)
+        header?.let { add("files", header) }
+        footer?.let { add("files", footer) }
         return this
     }
 

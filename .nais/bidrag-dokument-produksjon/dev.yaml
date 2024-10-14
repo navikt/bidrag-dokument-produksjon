@@ -8,3 +8,5 @@ azure_access_inbound:
 outbound-access-apps:
   - bidrag-dokumentmal
   - bidrag-pdfgen
+env:
+  PDFGEN_VERSION: V2

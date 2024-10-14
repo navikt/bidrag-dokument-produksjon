@@ -10,6 +10,8 @@ import org.springframework.web.client.postForEntity
 
 private val log = KotlinLogging.logger {}
 
+enum class RenderPDFVersion { V1, V2 }
+
 @Component
 class BidragDokumentmalConsumer(
     @Value("\${bidrag-dokumentmal.url}") private val url: String,
@@ -19,6 +21,7 @@ class BidragDokumentmalConsumer(
         type: String,
         payload: String,
         renderforpdf: Boolean = true,
+        renderPDFVersion: RenderPDFVersion = RenderPDFVersion.V1,
     ): String? =
         try {
             val malUrl = "$url/$category/$type"
@@ -26,6 +29,7 @@ class BidragDokumentmalConsumer(
                 RestTemplateBuilder()
                     .defaultHeader(HttpHeaders.CONTENT_TYPE, "application/json; charset=utf-8")
                     .defaultHeader("renderforpdf", renderforpdf.toString())
+                    .defaultHeader("renderPDFVersion", renderPDFVersion.name)
                     .build()
             restTemplate.postForEntity<String>(malUrl, payload).body!!
         } catch (e: Exception) {

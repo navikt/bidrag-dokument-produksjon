@@ -3,16 +3,20 @@ package no.nav.bidrag.dokument.produksjon.service
 import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.dokument.produksjon.consumer.BidragDokumentmalConsumer
 import no.nav.bidrag.dokument.produksjon.consumer.BidragPdfGenConsumer
+import no.nav.bidrag.dokument.produksjon.consumer.Configuration
+import no.nav.bidrag.dokument.produksjon.consumer.RenderPDFVersion
 import no.nav.bidrag.transport.felles.commonObjectmapper
 import no.nav.bidrag.transport.notat.NotatMalType
 import no.nav.bidrag.transport.notat.VedtakNotatDto
 import no.nav.pdfgen.core.PDFGenCore.Companion.environment
 import no.nav.pdfgen.core.pdf.createPDFA
+import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
 import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
+import java.math.BigDecimal
 import java.nio.file.Files
 
 private val log = KotlinLogging.logger {}
@@ -21,6 +25,7 @@ private val log = KotlinLogging.logger {}
 class PdfProducerService(
     private val bidragDokumentmalConsumer: BidragDokumentmalConsumer,
     private val bidragPdfGenConsumer: BidragPdfGenConsumer,
+    @Value("\${PDFGEN_VERSION:V1}") private val pdfgenVersion: RenderPDFVersion,
 ) {
     fun generateHTMLResponseV2(
         category: String,
@@ -56,10 +61,17 @@ class PdfProducerService(
         val jsonPayload = payload ?: hotTemplateData(category, type)
         val startTime = System.currentTimeMillis()
         return bidragDokumentmalConsumer
-            .hentDokumentmal(category, type, jsonPayload)
+            .hentDokumentmal(category, type, jsonPayload, renderPDFVersion = pdfgenVersion)
             ?.let { document ->
-//                val bytes = PdfContent(document.fjernKontrollTegn()).generate()
-                val bytes = bidragPdfGenConsumer.produserPdf(document.fjernKontrollTegn())
+                val bytes =
+                    if (pdfgenVersion == RenderPDFVersion.V2) {
+                        bidragPdfGenConsumer.produserPdf(
+                            document.fjernKontrollTegn(),
+                            Configuration(BigDecimal(1.5), false),
+                        )
+                    } else {
+                        PdfContent(document.fjernKontrollTegn()).generate()
+                    }
                 log.info {
                     "Done generating PDF for category $category and template $type in ${System.currentTimeMillis() - startTime}ms"
                 }
@@ -75,6 +87,22 @@ class PdfProducerService(
                 .status(
                     HttpStatus.NOT_FOUND,
                 ).body("Template or category not found".toByteArray())
+    }
+
+    fun htmlToPDF(payload: ByteArray): ResponseEntity<ByteArray> {
+        val bytes =
+            bidragPdfGenConsumer.produserPdf(
+                payload.toString(Charsets.UTF_8),
+                Configuration(BigDecimal(1), false),
+            )
+
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.APPLICATION_PDF)
+            .header(
+                HttpHeaders.CONTENT_DISPOSITION,
+                "inline; filename=dokumenter_sammenslatt.pdf",
+            ).body(bytes)
     }
 }
 
