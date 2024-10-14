@@ -1,0 +1,38 @@
+name: bidrag-pdfgen - Build and deploy dev
+on:
+  push:
+    branches:
+      - 'main'
+    paths:
+      - '.nais/bidrag-pdfgen/**.yaml'
+      - '**/bidrag-pdfgen/**'
+
+jobs:
+
+  deploy_feature:
+    permissions:
+      contents: "read"
+      id-token: "write"
+    runs-on: ubuntu-latest
+    name: Deploy
+
+    steps:
+      - uses: actions/checkout@v4
+      - uses: nais/docker-build-push@v0
+        id: docker-push
+        with:
+          team: bidrag
+          identity_provider: ${{ secrets.NAIS_WORKLOAD_IDENTITY_PROVIDER }}
+          project_id: ${{ vars.NAIS_MANAGEMENT_PROJECT_ID }}
+          image_suffix: bidrag-pdfgen
+          tag: bidrag-pdfgen
+          docker_context: ./bidrag-pdfgen
+          dockerfile: ./bidrag-pdfgen/DockerfileGotenberg
+      - name: Deploy to prod-gcp
+        uses: nais/deploy/actions/deploy@v2
+        env:
+          CLUSTER: prod-gcp
+          RESOURCE: .nais/bidrag-pdfgen/nais.yaml
+          VARS: .nais/bidrag-pdfgen/prod.yaml
+          IMAGE: ${{ steps.docker-push.outputs.image }}
+      - run: echo ${{ steps.docker-push.outputs.image }}
