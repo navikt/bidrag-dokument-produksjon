@@ -70,6 +70,7 @@ class PdfProducerService(
         return bidragDokumentmalConsumer
             .hentDokumentmal(category, type, jsonPayload, renderPDFVersion = pdfgenVersion)
             ?.let { document ->
+                log.info { "Produserer PDF med pdfgenerator versjon $pdfgenVersion" }
                 val bytes =
                     if (pdfgenVersion == RenderPDFVersion.V2) {
                         bidragPdfGenConsumer.produserPdf(
