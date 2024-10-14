@@ -40,9 +40,16 @@ class PdfProducerService(
         }
         val type = dokumentmal.name.lowercase()
         val jsonPayload = payload ?: hotTemplateData(category, type)
-        return bidragDokumentmalConsumer.hentDokumentmal(category, type, jsonPayload, false)?.let {
-            ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
-        }
+        return bidragDokumentmalConsumer
+            .hentDokumentmal(
+                category,
+                type,
+                jsonPayload,
+                false,
+                renderPDFVersion = pdfgenVersion,
+            )?.let {
+                ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
+            }
             ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
     }
 
