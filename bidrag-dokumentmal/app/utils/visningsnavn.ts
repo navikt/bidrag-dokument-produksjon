@@ -45,7 +45,19 @@ export function capitalizeFirstLetter(str?: string) {
   if (!str) return str;
   return str.charAt(0).toUpperCase() + str.slice(1).toLowerCase();
 }
-
+export const formatterBeløpForBeregning = (
+  beløp: number | string | undefined,
+  visSymbol = false,
+): string => {
+  return (beløp ?? 0).toLocaleString("nb-NO", {
+    style: visSymbol ? "currency" : undefined,
+    currency: "NOK",
+    currencySign: "accounting",
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+    currencyDisplay: visSymbol ? "symbol" : undefined,
+  });
+};
 export const formatterBeløp = (
   beløp: number | string | undefined,
   visSymbol = false,

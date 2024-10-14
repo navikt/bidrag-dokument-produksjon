@@ -2,12 +2,19 @@ import {
   NotatResultatSaerbidragsberegningDto,
   Resultatkode,
 } from "~/types/Api";
-import { formatterBeløp, formatterProsent } from "~/utils/visningsnavn";
+import {
+  formatterBeløp,
+  formatterProsent,
+  formatterBeløpForBeregning,
+} from "~/utils/visningsnavn";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
-import { DataViewTable } from "~/components/DataViewTable";
+import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
 import tekster from "~/tekster";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
+import elementIds from "~/utils/elementIds";
+import { erResutlatMedBeregning } from "~/routes/notat.særbidrag/SærbidragHelpers";
+import { calculationTableBottomBorder } from "~/utils/stylingUtils";
 
 export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
@@ -19,7 +26,17 @@ export default function Vedtak() {
           display: "inline-block",
         }}
       >
-        <h2>Vedtak</h2>
+        <div className={"elements_inline"}>
+          <h2>Vedtak</h2>
+          {erResutlatMedBeregning(
+            (data.vedtak?.resultat as NotatResultatSaerbidragsberegningDto[]) ??
+              [],
+          ) && (
+            <a href={`#${elementIds.vedleggBeregningsdetaljer}`}>
+              se vedlegg nr. 3 for beregningsdetaljer
+            </a>
+          )}
+        </div>
         <VedtakTable
           data={data.vedtak.resultat as NotatResultatSaerbidragsberegningDto[]}
         />
@@ -60,28 +77,37 @@ function VedtakTable({
     return (
       <div>
         <h3 style={{ marginTop: 0 }}>Avslag</h3>
+        <UtgifsposterTabell />
         <DataViewTable
           labelColWidth={"90px"}
           key={"inntekter"}
-          data={[
-            {
-              label: "Årsak",
-              value: resultat.resultatVisningsnavn,
-            },
-            {
-              label: "Kravbeløp",
-              value: formatterBeløp(resultat.beregning?.totalKravbeløp, true),
-            },
-            {
-              label: "Godkjent beløp",
-              value: formatterBeløp(
-                resultat.beregning?.totalGodkjentBeløp,
-                true,
-              ),
-            },
-          ]}
+          data={
+            [
+              {
+                label: "Årsak",
+                value: resultat.resultatVisningsnavn,
+              },
+              resultat.resultatKode ==
+              Resultatkode.GODKJENTBELOPERLAVEREENNFORSKUDDSSATS
+                ? {
+                    label: "Forskuddssaats",
+                    value: formatterBeløp(resultat.forskuddssats, true),
+                  }
+                : null,
+              {
+                label: "Kravbeløp",
+                value: formatterBeløp(resultat.beregning?.totalKravbeløp, true),
+              },
+              {
+                label: "Godkjent beløp",
+                value: formatterBeløp(
+                  resultat.beregning?.totalGodkjentBeløp,
+                  true,
+                ),
+              },
+            ].filter((d) => d != null) as DataViewTableData[]
+          }
         />
-        <UtgifsposterTabell />
       </div>
     );
   }
@@ -95,23 +121,24 @@ function VedtakTable({
         <h3 style={{ marginTop: 0 }}>Særbidrag innvilget</h3>
       )}
       <div>
+        <UtgifsposterTabell />
         <DataViewTable
           title="Inntekter"
           className={"two_column_view_v2"}
-          labelColWidth={"75px"}
-          width={"28%"}
+          labelColWidth={"140px"}
+          width={"35%"}
           key={"inntekter"}
           data={[
             {
-              label: "Inntekt BM",
+              label: `Inntekt ${tekster.begreper.bidragsmottaker}`,
               value: formatterBeløp(resultat.inntekter!.inntektBM, true),
             },
             {
-              label: "Inntekt BP",
+              label: `Inntekt ${tekster.begreper.bidragspliktig}`,
               value: formatterBeløp(resultat.inntekter!.inntektBP, true),
             },
             {
-              label: "Inntekt BA",
+              label: `Inntekt ${tekster.begreper.barn}`,
               value: formatterBeløp(resultat.inntekter!.inntektBarn, true),
             },
           ]}
@@ -157,11 +184,15 @@ function VedtakTable({
               ),
             },
             {
-              label: "BP's andel",
+              label: "Maks godkjent beløp",
+              value: formatterBeløp(resultat.maksGodkjentBeløp, true),
+            },
+            {
+              label: `${tekster.begreper.bidragspliktiges} andel`,
               value: formatterProsent(resultat.bpsAndel?.endeligAndelFaktor),
             },
             {
-              label: "BP har evne",
+              label: `${tekster.begreper.bidragspliktig} har evne`,
               value: !resultat.bpHarEvne ? "Nei" : "Ja",
             },
             {
@@ -171,9 +202,9 @@ function VedtakTable({
                 : formatterBeløp(resultat.resultat, true),
             },
             {
-              label: "Betalt av BP",
+              label: `Betalt av ${tekster.begreper.bidragspliktig}`,
               value: formatterBeløp(
-                resultat.beregning?.beløpDirekteBetaltAvBp,
+                resultat.beregning?.totalBeløpBetaltAvBp,
                 true,
               ),
             },
@@ -186,26 +217,30 @@ function VedtakTable({
           ]}
         />
       </div>
-      <UtgifsposterTabell />
     </div>
   );
 }
 function UtgifsposterTabell() {
   const { data } = useNotatFelles();
   const utgifstposter = data.utgift?.utgifter ?? [];
+  const beregnetSærbidrag = data.utgift?.beregning!;
   return (
-    <div className={"mt-medium"}>
+    <div className={"mb-medium"}>
       <h4>{"Utgiftene lagt til grunn"}</h4>
       <table
+        className={"border-collapse"}
         style={{
           textAlign: "left",
           tableLayout: "auto",
-          width: "350px",
+          width: "450px",
           marginLeft: "-2px",
         }}
       >
         <thead>
           <tr>
+            <th style={{ width: "50px" }}>
+              {tekster.tabell.utgifter.betaltAvBp}
+            </th>
             <th>{tekster.tabell.utgifter.dato}</th>
             <th>{tekster.tabell.utgifter.utgift}</th>
             <th style={{ textAlign: "right" }}>
@@ -219,16 +254,36 @@ function UtgifsposterTabell() {
         <tbody>
           {utgifstposter.map((utgifspost, rowIndex) => (
             <tr key={rowIndex}>
+              <td style={{ width: "100px" }}>
+                {utgifspost.betaltAvBp ? "Ja" : "Nei"}
+              </td>
               <td style={{}}>{dateToDDMMYYYY(utgifspost.dato)}</td>
               <td style={{}}>{utgifspost.utgiftstypeVisningsnavn}</td>
               <td style={{ textAlign: "right" }}>
-                {formatterBeløp(utgifspost.kravbeløp, true)}
+                {formatterBeløpForBeregning(utgifspost.kravbeløp, true)}
               </td>
               <td style={{ textAlign: "right" }}>
-                {formatterBeløp(utgifspost.godkjentBeløp, true)}
+                {formatterBeløpForBeregning(utgifspost.godkjentBeløp, true)}
               </td>
             </tr>
           ))}
+          <tr>
+            <td className={`text-left ${calculationTableBottomBorder}`}>Sum</td>
+            <td className={`text-right ${calculationTableBottomBorder}`} />
+            <td className={`text-right ${calculationTableBottomBorder}`} />
+            <td className={`text-right ${calculationTableBottomBorder}`}>
+              {formatterBeløpForBeregning(
+                beregnetSærbidrag.totalKravbeløp,
+                true,
+              )}
+            </td>
+            <td className={`text-right ${calculationTableBottomBorder}`}>
+              {formatterBeløpForBeregning(
+                beregnetSærbidrag.totalGodkjentBeløp,
+                true,
+              )}
+            </td>
+          </tr>
         </tbody>
       </table>
     </div>
