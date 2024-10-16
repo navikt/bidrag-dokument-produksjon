@@ -19,7 +19,7 @@ export interface Arbeidsforhold {
   lønnsendringDato?: string;
 }
 
-export interface BeregningSumLopendeBidragPerBarn {
+export interface BeregnetBidragPerBarn {
   personidentBarn: string;
   saksnummer: string;
   løpendeBeløp: number;
@@ -27,7 +27,8 @@ export interface BeregningSumLopendeBidragPerBarn {
   samværsfradrag: number;
   beregnetBeløp: number;
   faktiskBeløp: number;
-  resultat: number;
+  reduksjonUnderholdskostnad: number;
+  beregnetBidrag: number;
 }
 
 export interface BoforholdBarn {
@@ -53,6 +54,13 @@ export enum Bostatuskode {
   ALENE = "ALENE",
 }
 
+export interface DelberegningBPsBeregnedeTotalbidrag {
+  periode: TypeArManedsperiode;
+  bBPsBeregnedeTotalbidrag?: number;
+  beregnetBidragPerBarnListe: BeregnetBidragPerBarn[];
+  bbpsBeregnedeTotalbidrag: number;
+}
+
 export interface DelberegningBidragspliktigesAndel {
   periode: TypeArManedsperiode;
   endeligAndelFaktor: number;
@@ -70,12 +78,6 @@ export interface DelberegningSumInntekt {
   barnetillegg?: number;
   utvidetBarnetrygd?: number;
   småbarnstillegg?: number;
-}
-
-export interface DelberegningSumLopendeBidrag {
-  periode: TypeArManedsperiode;
-  sumLøpendeBidrag: number;
-  beregningPerBarn: BeregningSumLopendeBidragPerBarn[];
 }
 
 export interface DelberegningUtgift {
@@ -331,7 +333,7 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   forskuddssats?: number;
   maksGodkjentBeløp?: number;
   inntekter?: ResultatSaerbidragsberegningInntekterDto;
-  delberegningSumLøpendeBidrag?: DelberegningSumLopendeBidrag;
+  delberegningBPsBeregnedeTotalbidrag?: DelberegningBPsBeregnedeTotalbidrag;
   delberegningBidragsevne?: NotatDelberegningBidragsevneDto;
   delberegningUtgift?: DelberegningUtgift;
   resultat: number;
@@ -366,8 +368,8 @@ export interface NotatSkattBeregning {
   trinnskatt: number;
   trygdeavgift: number;
   skattAlminneligInntektMånedsbeløp: number;
-  trygdeavgiftMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
+  trygdeavgiftMånedsbeløp: number;
   skattMånedsbeløp: number;
 }
 

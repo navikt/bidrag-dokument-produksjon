@@ -4,17 +4,17 @@ import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import { calculationTableBottomBorder } from "~/utils/stylingUtils";
 import tekster from "~/tekster";
 
-export const SumLøpendeBidragTable = () => {
+export const BPsBeregnedeTotalbidrag = () => {
   const { data } = useNotatFelles();
 
   const beregnetSærbidrag = data.vedtak!
     .resultat[0] as NotatResultatSaerbidragsberegningDto;
 
-  const delberegning = beregnetSærbidrag.delberegningSumLøpendeBidrag!;
+  const delberegning = beregnetSærbidrag.delberegningBPsBeregnedeTotalbidrag!;
   const colPaddingClassname = "px-1";
   return (
     <div>
-      <h4>{`${tekster.begreper.bidragspliktiges} løpende bidrag`}</h4>
+      <h4>{`${tekster.begreper.bidragspliktiges} beregnede totalbidrag`}</h4>
       <table
         className="table-auto border-collapse text-left border-spacing-2"
         style={{ paddingBottom: "5px", width: "600px" }}
@@ -26,14 +26,9 @@ export const SumLøpendeBidragTable = () => {
             <th className={`${colPaddingClassname} text-right`}>
               {"Løpende bidrag"}
             </th>
+            <th className={`${colPaddingClassname} text-right`}>{"Samvær"}</th>
             <th className={`${colPaddingClassname} text-right`}>
-              {"Samværsfradrag"}
-            </th>
-            <th className={`${colPaddingClassname} text-right`}>
-              {"Beregnet bidrag"}
-            </th>
-            <th className={`${colPaddingClassname} text-right`}>
-              {"Faktisk bidrag"}
+              {"Reduksjon av underhold"}
             </th>
             <th className={`${colPaddingClassname} text-right`}>
               {"Resultat"}
@@ -41,7 +36,7 @@ export const SumLøpendeBidragTable = () => {
           </tr>
         </thead>
         <tbody>
-          {delberegning.beregningPerBarn.map((row, rowIndex) => (
+          {delberegning.beregnetBidragPerBarnListe.map((row, rowIndex) => (
             <tr key={rowIndex}>
               <td className="pr-4">{row.personidentBarn}</td>
               <td className={`${colPaddingClassname}`}>{row.saksnummer}</td>
@@ -52,14 +47,14 @@ export const SumLøpendeBidragTable = () => {
                 {formatterBeløpForBeregning(row.samværsfradrag, true)}
               </td>
               <td className={`${colPaddingClassname} text-right`}>
-                {formatterBeløpForBeregning(row.beregnetBeløp, true)}
-              </td>
-              <td className={`${colPaddingClassname} text-right`}>
-                {formatterBeløpForBeregning(row.faktiskBeløp, true)}
+                {formatterBeløpForBeregning(
+                  row.reduksjonUnderholdskostnad,
+                  true,
+                )}
               </td>
 
               <td className={`${colPaddingClassname} text-right`}>
-                {formatterBeløpForBeregning(row.resultat, true)}
+                {formatterBeløpForBeregning(row.beregnetBeløp, true)}
               </td>
             </tr>
           ))}
@@ -70,12 +65,15 @@ export const SumLøpendeBidragTable = () => {
             <td className={`text-right ${calculationTableBottomBorder}`}></td>
             <td className={`text-right ${calculationTableBottomBorder}`}></td>
             <td className={`text-right ${calculationTableBottomBorder}`}>
-              {"Sum løpende bidrag:"}
+              {"Beregnet totalbidrag:"}
             </td>
             <td
               className={`${colPaddingClassname} text-right ${calculationTableBottomBorder}`}
             >
-              {formatterBeløpForBeregning(delberegning.sumLøpendeBidrag, true)}
+              {formatterBeløpForBeregning(
+                delberegning.bbpsBeregnedeTotalbidrag,
+                true,
+              )}
             </td>
           </tr>
         </tbody>
