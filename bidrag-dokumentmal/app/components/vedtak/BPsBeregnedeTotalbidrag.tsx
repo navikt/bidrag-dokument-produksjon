@@ -33,9 +33,7 @@ export const BPsBeregnedeTotalbidrag = () => {
             <th className={`${colPaddingClassname} text-right`}>
               {"Reduksjon av underhold"}
             </th>
-            <th className={`${colPaddingClassname} text-right`}>
-              {"Resultat"}
-            </th>
+            <th className={`${colPaddingClassname} text-right`}>{"Sum"}</th>
           </tr>
         </thead>
         <tbody>
