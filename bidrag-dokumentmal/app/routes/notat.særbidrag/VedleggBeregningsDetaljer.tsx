@@ -1,7 +1,7 @@
 import elementIds from "~/utils/elementIds";
 import { BPsAndel } from "~/components/vedtak/BPAndelTable";
 import { BPsEvneTable } from "~/components/vedtak/BPsEvneTable";
-import { SumLøpendeBidragTable } from "~/components/vedtak/SumLøpendeBidragTable";
+import { BPsBeregnedeTotalbidrag } from "~/components/vedtak/BPsBeregnedeTotalbidrag";
 import { DataViewTable } from "~/components/DataViewTable";
 import { formatterBeløp } from "~/utils/visningsnavn";
 import {
@@ -46,7 +46,7 @@ function VedleggBeregningsDetaljerInnhold() {
       <div className={"mb-medium"} />
       <BPsEvneTable />
       <div className={"mb-medium"} />
-      <SumLøpendeBidragTable />
+      <BPsBeregnedeTotalbidrag />
       <div className={"mb-medium"} />
 
       <DataViewTable

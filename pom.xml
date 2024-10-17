@@ -30,7 +30,7 @@
         <junit.jupiter.version>5.11.0</junit.jupiter.version>
         <verapdf.version>1.26.1</verapdf.version>
         <ktfmt.version>0.44</ktfmt.version>
-        <bidrag.felles.version>2024.10.12.143049</bidrag.felles.version>
+        <bidrag.felles.version>2024.10.17.124311</bidrag.felles.version>
         <kotlin.logger.version>7.0.0</kotlin.logger.version>
         <snakeyaml.version>2.2</snakeyaml.version>
         <swagger.version>2.2.22</swagger.version>
@@ -196,6 +196,11 @@
             <groupId>no.nav.bidrag</groupId>
             <artifactId>bidrag-commons-felles</artifactId>
             <version>${bidrag.felles.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>com.github.bbottema</groupId>
+            <artifactId>rtf-to-html</artifactId>
+            <version>1.1.1</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.boot</groupId>

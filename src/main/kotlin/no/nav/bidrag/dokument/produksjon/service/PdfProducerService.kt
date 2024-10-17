@@ -10,6 +10,7 @@ import no.nav.bidrag.transport.notat.NotatMalType
 import no.nav.bidrag.transport.notat.VedtakNotatDto
 import no.nav.pdfgen.core.PDFGenCore.Companion.environment
 import no.nav.pdfgen.core.pdf.createPDFA
+import org.bbottema.rtftohtml.impl.RTF2HTMLConverterJEditorPane
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -95,6 +96,16 @@ class PdfProducerService(
                 .status(
                     HttpStatus.NOT_FOUND,
                 ).body("Template or category not found".toByteArray())
+    }
+
+    fun rtfToHTML(payload: ByteArray): ResponseEntity<String> {
+        val converter = RTF2HTMLConverterJEditorPane.INSTANCE
+        val html = converter.rtf2html(payload.decodeToString())
+
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.TEXT_HTML)
+            .body(html)
     }
 
     fun htmlToPDF(payload: ByteArray): ResponseEntity<ByteArray> {
