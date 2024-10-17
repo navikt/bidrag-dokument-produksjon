@@ -20,10 +20,11 @@ export interface Arbeidsforhold {
 }
 
 export interface BeregnetBidragPerBarn {
-  personidentBarn: string;
+  gjelderBarn: string;
   saksnummer: string;
   løpendeBeløp: number;
   valutakode: string;
+  samværsklasse: Samvaersklasse;
   samværsfradrag: number;
   beregnetBeløp: number;
   faktiskBeløp: number;
@@ -52,13 +53,6 @@ export enum Bostatuskode {
   UNNTAKENSLIGASYLSOKER = "UNNTAK_ENSLIG_ASYLSØKER",
   MED_VERGE = "MED_VERGE",
   ALENE = "ALENE",
-}
-
-export interface DelberegningBPsBeregnedeTotalbidrag {
-  periode: TypeArManedsperiode;
-  bBPsBeregnedeTotalbidrag?: number;
-  beregnetBidragPerBarnListe: BeregnetBidragPerBarn[];
-  bbpsBeregnedeTotalbidrag: number;
 }
 
 export interface DelberegningBidragspliktigesAndel {
@@ -236,6 +230,11 @@ export interface NotatBehandlingDetaljerDto {
   avslagVisningsnavn?: string;
 }
 
+export interface NotatBeregnetBidragPerBarnDto {
+  beregnetBidragPerBarn: BeregnetBidragPerBarn;
+  personidentBarn: string;
+}
+
 export interface NotatBeregnetInntektDto {
   gjelderBarn: NotatRolleDto;
   summertInntektListe: DelberegningSumInntekt[];
@@ -262,6 +261,12 @@ export interface NotatDelberegningBidragsevneDto {
   skatt: NotatSkattBeregning;
   underholdEgneBarnIHusstand: NotatUnderholdEgneBarnIHusstand;
   utgifter: NotatBidragsevneUtgifterBolig;
+}
+
+export interface NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto {
+  beregnetBidragPerBarnListe: NotatBeregnetBidragPerBarnDto[];
+  bidragspliktigesBeregnedeTotalbidrag: number;
+  periode: TypeArManedsperiode;
 }
 
 export interface NotatInntektDto {
@@ -333,7 +338,7 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   forskuddssats?: number;
   maksGodkjentBeløp?: number;
   inntekter?: ResultatSaerbidragsberegningInntekterDto;
-  delberegningBPsBeregnedeTotalbidrag?: DelberegningBPsBeregnedeTotalbidrag;
+  delberegningBidragspliktigesBeregnedeTotalbidrag?: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto;
   delberegningBidragsevne?: NotatDelberegningBidragsevneDto;
   delberegningUtgift?: DelberegningUtgift;
   resultat: number;
@@ -461,8 +466,8 @@ export interface NotatVirkningstidspunktDto {
   begrunnelse: NotatBegrunnelseDto;
   /** Notat begrunnelse skrevet av saksbehandler */
   notat: NotatBegrunnelseDto;
-  avslagVisningsnavn?: string;
   årsakVisningsnavn?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatVoksenIHusstandenDetaljerDto {
@@ -576,6 +581,15 @@ export enum Rolletype {
   BP = "BP",
   FR = "FR",
   RM = "RM",
+}
+
+export enum Samvaersklasse {
+  INGENSAMVAeR = "INGEN_SAMVÆR",
+  SAMVAeRSKLASSE1 = "SAMVÆRSKLASSE_1",
+  SAMVAeRSKLASSE2 = "SAMVÆRSKLASSE_2",
+  SAMVAeRSKLASSE3 = "SAMVÆRSKLASSE_3",
+  SAMVAeRSKLASSE4 = "SAMVÆRSKLASSE_4",
+  DELT_BOSTED = "DELT_BOSTED",
 }
 
 export enum Sivilstandskode {

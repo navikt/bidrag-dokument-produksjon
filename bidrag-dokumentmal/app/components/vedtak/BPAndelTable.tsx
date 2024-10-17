@@ -43,7 +43,7 @@ export const BPsAndel = () => {
               value:
                 inntekter.inntektBarn! > 0 ? (
                   <div>
-                    <MathValue value={inntekter.inntektBarn!} /> -{" "}
+                    <MathValue value={inntekter.inntektBarn!} /> ç
                     <MathMultiplication
                       left="30"
                       right={beregnetSærbidrag.forskuddssats!}

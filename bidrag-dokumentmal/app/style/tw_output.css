@@ -156,6 +156,10 @@
   margin-top: 0.25rem
 }
 
+.mb-2 {
+  margin-bottom: 0.5rem
+}
+
 .block {
   display: block
 }
@@ -190,6 +194,14 @@
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y)
 }
 
+.border {
+  border-width: 1px
+}
+
+.border-0 {
+  border-width: 0px
+}
+
 .border-b-2 {
   border-bottom-width: 2px
 }
@@ -206,6 +218,10 @@
   border-top-width: 1px
 }
 
+.border-b {
+  border-bottom-width: 1px
+}
+
 .border-solid {
   border-style: solid
 }
@@ -213,6 +229,11 @@
 .border-black {
   --tw-border-opacity: 1;
   border-color: rgb(0 0 0 / var(--tw-border-opacity))
+}
+
+.border-b-black {
+  --tw-border-opacity: 1;
+  border-bottom-color: rgb(0 0 0 / var(--tw-border-opacity))
 }
 
 .px-1 {
@@ -230,6 +251,10 @@
 
 .pr-4 {
   padding-right: 1rem
+}
+
+.pb-4 {
+  padding-bottom: 1rem
 }
 
 .text-left {
