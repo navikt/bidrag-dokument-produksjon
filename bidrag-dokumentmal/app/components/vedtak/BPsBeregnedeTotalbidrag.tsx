@@ -40,7 +40,7 @@ export const BPsBeregnedeTotalbidrag = () => {
           {delberegning.beregnetBidragPerBarnListe.map(
             ({ beregnetBidragPerBarn: row, personidentBarn }, rowIndex) => {
               const showBeregningAvU =
-                row.beregnetBeløp > 0 && row.faktiskBeløp > 0;
+                row.beregnetBeløp !== 0 || row.faktiskBeløp !== 0;
               return (
                 <React.Fragment key={rowIndex}>
                   <tr key={rowIndex}>
