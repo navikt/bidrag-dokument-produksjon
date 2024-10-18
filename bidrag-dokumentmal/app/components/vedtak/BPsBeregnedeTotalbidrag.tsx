@@ -24,18 +24,24 @@ export const BPsBeregnedeTotalbidrag = () => {
       >
         <thead>
           <tr>
-            <th className="pr-1">{"Barn"}</th>
-            <th className={`${colPaddingClassname}`}>{"Saksnummer"}</th>
-            <th className={`${colPaddingClassname} text-right`}>
+            <th className="pr-1 w-[100px]">{"Barn"}</th>
+            <th className={`${colPaddingClassname} w-[100px]`}>
+              {"Saksnummer"}
+            </th>
+            <th className={`${colPaddingClassname} text-right w-[100px]`}>
               {"Løpende bidrag"}
             </th>
-            <th className={`${colPaddingClassname} text-right`}>{"Samvær"}</th>
+            <th className={`${colPaddingClassname} text-right w-[100px]`}>
+              {"Samvær"}
+            </th>
             <th
-              className={`${colPaddingClassname} text-right whitespace-pre-wrap w-[110px]`}
+              className={`${colPaddingClassname} text-right whitespace-pre-wrap w-[120px]`}
             >
               {`Reduksjon av BPs andel av U*`}
             </th>
-            <th className={`${colPaddingClassname} text-right`}>{"Sum"}</th>
+            <th className={`${colPaddingClassname} text-right w-[70px]`}>
+              {"Sum"}
+            </th>
           </tr>
         </thead>
         <tbody>
@@ -46,7 +52,7 @@ export const BPsBeregnedeTotalbidrag = () => {
               return (
                 <React.Fragment key={rowIndex}>
                   <tr key={rowIndex}>
-                    <td className="pr-4">{personidentBarn}</td>
+                    <td className="pr-1 w-[100px]">{personidentBarn}</td>
                     <td className={`${colPaddingClassname}`}>
                       {row.saksnummer}
                     </td>
@@ -72,12 +78,12 @@ export const BPsBeregnedeTotalbidrag = () => {
                       <td
                         colSpan={7}
                         className={
-                          "table_row_details border-b-2 border-b-black border-solid border-0"
+                          "table_row_details border-b-2 border-b-black border-solid border-0 w-full"
                         }
                         style={{ paddingTop: "8px" }}
                       >
                         <CalculationTabell
-                          width={"250px"}
+                          width={"200px"}
                           title={`Reduksjon av BPs andel av U*`}
                           labelColWidth={"150px"}
                           valueColWidth={"100px"}

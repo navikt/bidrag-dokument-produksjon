@@ -196,6 +196,26 @@
   width: 110px
 }
 
+.w-\[100px\] {
+  width: 100px
+}
+
+.w-\[200px\] {
+  width: 200px
+}
+
+.w-\[290px\] {
+  width: 290px
+}
+
+.w-full {
+  width: 100%
+}
+
+.w-\[70px\] {
+  width: 70px
+}
+
 .table-auto {
   table-layout: auto
 }
