@@ -57,8 +57,8 @@ function VedleggBeregningsDetaljerInnhold() {
             label: `${tekster.begreper.bidragspliktig} har evne`,
             textRight: false,
             value: !resultat.bpHarEvne
-              ? "Nei, sum løpende bidrag er høyere enn BPs bidragsevne"
-              : "Ja, sum løpende bidrag er lavere enn BPs bidragsevne",
+              ? "Nei, bidragsevnen er lavere enn beregnet totalbidrag"
+              : "Ja, bidragsevnen er høyere enn beregnet totalbidrag",
           },
           {
             label: "Resultat",

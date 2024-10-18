@@ -30,8 +30,10 @@ export const BPsBeregnedeTotalbidrag = () => {
               {"Løpende bidrag"}
             </th>
             <th className={`${colPaddingClassname} text-right`}>{"Samvær"}</th>
-            <th className={`${colPaddingClassname} text-right`}>
-              {"Reduksjon av underhold"}
+            <th
+              className={`${colPaddingClassname} text-right whitespace-pre-wrap w-[110px]`}
+            >
+              {`Reduksjon av BPs andel av U*`}
             </th>
             <th className={`${colPaddingClassname} text-right`}>{"Sum"}</th>
           </tr>
@@ -75,8 +77,8 @@ export const BPsBeregnedeTotalbidrag = () => {
                         style={{ paddingTop: "8px" }}
                       >
                         <CalculationTabell
-                          width={"200px"}
-                          title={"Reduksjon av underhold"}
+                          width={"250px"}
+                          title={`Reduksjon av BPs andel av U*`}
                           labelColWidth={"150px"}
                           valueColWidth={"100px"}
                           className={"pb-2 "}
@@ -132,6 +134,9 @@ export const BPsBeregnedeTotalbidrag = () => {
                 true,
               )}
             </td>
+          </tr>
+          <tr>
+            <td colSpan={7}>* U = Underholdskostnad, BP = Bidragspliktig</td>
           </tr>
         </tbody>
       </table>
