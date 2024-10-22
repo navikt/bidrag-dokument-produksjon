@@ -36,10 +36,10 @@ spec:
   resources:
     limits:
       cpu: 1000m
-      memory: 1000Mi
+      memory: 2048Mi
     requests:
-      cpu: 300m
-      memory: 200Mi
+      cpu: 200m
+      memory: 1000Mi
   ingresses:
   {{#each ingresses as |url|}}
      - {{url}}

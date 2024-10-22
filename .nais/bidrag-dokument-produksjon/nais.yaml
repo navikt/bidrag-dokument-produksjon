@@ -48,10 +48,10 @@ spec:
     path: /actuator/prometheus
   resources:
     limits:
-      memory: 1000Mi
+      memory: 2000Mi
     requests:
       cpu: 300m
-      memory: 500Mi
+      memory: 1000Mi
   env:
   {{#each env}}
      - name: {{@key}}
