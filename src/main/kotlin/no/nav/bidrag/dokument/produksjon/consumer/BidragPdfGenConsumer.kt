@@ -88,7 +88,7 @@ class BidragPdfGenConsumer(
         val footer =
             getElementByIdFromString(
                 html,
-                headerId,
+                footerId,
             )?.html()?.toHtmlResource("footer")
         add("files", htmlContent)
         header?.let { add("files", header) }
