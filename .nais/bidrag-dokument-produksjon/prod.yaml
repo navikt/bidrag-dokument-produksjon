@@ -7,4 +7,4 @@ outbound-access-apps:
   - bidrag-dokumentmal
   - bidrag-pdfgen
 env:
-  PDFGEN_VERSION: V1
+  PDFGEN_VERSION: V2
