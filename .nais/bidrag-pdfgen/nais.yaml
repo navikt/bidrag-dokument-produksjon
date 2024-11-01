@@ -10,6 +10,10 @@ metadata:
     nais.io/run-as-user: "1001"
     nais.io/run-as-group: "1001"
 spec:
+  observability:
+    autoInstrumentation:
+      enabled: true
+      runtime: java
   image: {{ image }}
   port: 8080
   accessPolicy:
