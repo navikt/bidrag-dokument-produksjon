@@ -224,10 +224,10 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
+  avslagVisningsnavn?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -349,8 +349,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
   bpHarEvne: boolean;
-  resultatVisningsnavn: string;
   beløpSomInnkreves: number;
+  resultatVisningsnavn: string;
 };
 
 export interface NotatRolleDto {
@@ -372,10 +372,10 @@ export interface NotatSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattAlminneligInntektMånedsbeløp: number;
+  skattMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface NotatSaerbidragKategoriDto {
@@ -466,8 +466,8 @@ export interface NotatVirkningstidspunktDto {
   begrunnelse: NotatBegrunnelseDto;
   /** Notat begrunnelse skrevet av saksbehandler */
   notat: NotatBegrunnelseDto;
-  årsakVisningsnavn?: string;
   avslagVisningsnavn?: string;
+  årsakVisningsnavn?: string;
 }
 
 export interface NotatVoksenIHusstandenDetaljerDto {
@@ -518,10 +518,10 @@ export interface ResultatSaerbidragsberegningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  inntektBarnMånedlig?: number;
   totalEndeligInntekt: number;
   inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
+  inntektBarnMånedlig?: number;
 }
 
 export enum Resultatkode {
@@ -584,7 +584,7 @@ export enum Rolletype {
 }
 
 export enum Samvaersklasse {
-  INGENSAMVAeR = "INGEN_SAMVÆR",
+  SAMVAeRSKLASSE0 = "SAMVÆRSKLASSE_0",
   SAMVAeRSKLASSE1 = "SAMVÆRSKLASSE_1",
   SAMVAeRSKLASSE2 = "SAMVÆRSKLASSE_2",
   SAMVAeRSKLASSE3 = "SAMVÆRSKLASSE_3",
