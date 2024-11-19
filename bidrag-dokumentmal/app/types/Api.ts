@@ -224,10 +224,10 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
-  avslagVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -349,8 +349,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
   bpHarEvne: boolean;
-  beløpSomInnkreves: number;
   resultatVisningsnavn: string;
+  beløpSomInnkreves: number;
 };
 
 export interface NotatRolleDto {
@@ -372,10 +372,10 @@ export interface NotatSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
+  skattMånedsbeløp: number;
 }
 
 export interface NotatSaerbidragKategoriDto {
@@ -518,27 +518,27 @@ export interface ResultatSaerbidragsberegningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
+  inntektBarnMånedlig?: number;
   totalEndeligInntekt: number;
   inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
-  inntektBarnMånedlig?: number;
 }
 
 export enum Resultatkode {
   BARNETERSELVFORSORGET = "BARNET_ER_SELVFORSØRGET",
-  BEGRENSETEVNEFLERESAKERUTFORFORHOLDSMESSIGFORDELING = "BEGRENSET_EVNE_FLERE_SAKER_UTFØR_FORHOLDSMESSIG_FORDELING",
-  BEGRENSET_REVURDERING = "BEGRENSET_REVURDERING",
   BIDRAG_IKKE_BEREGNET_DELT_BOSTED = "BIDRAG_IKKE_BEREGNET_DELT_BOSTED",
   BIDRAG_REDUSERT_AV_EVNE = "BIDRAG_REDUSERT_AV_EVNE",
   BIDRAGREDUSERTTIL25PROSENTAVINNTEKT = "BIDRAG_REDUSERT_TIL_25_PROSENT_AV_INNTEKT",
   BIDRAG_SATT_TIL_BARNETILLEGG_BP = "BIDRAG_SATT_TIL_BARNETILLEGG_BP",
-  BIDRAG_SATT_TIL_BARNETILLEGG_FORSVARET = "BIDRAG_SATT_TIL_BARNETILLEGG_FORSVARET",
   BIDRAG_SATT_TIL_UNDERHOLDSKOSTNAD_MINUS_BARNETILLEGG_BM = "BIDRAG_SATT_TIL_UNDERHOLDSKOSTNAD_MINUS_BARNETILLEGG_BM",
   DELT_BOSTED = "DELT_BOSTED",
-  FORHOLDSMESSIGFORDELINGBIDRAGSBELOPENDRET = "FORHOLDSMESSIG_FORDELING_BIDRAGSBELØP_ENDRET",
-  FORHOLDSMESSIG_FORDELING_INGEN_ENDRING = "FORHOLDSMESSIG_FORDELING_INGEN_ENDRING",
   INGEN_EVNE = "INGEN_EVNE",
+  DIREKTEOPPJOR = "DIREKTE_OPPJØR",
   KOSTNADSBEREGNET_BIDRAG = "KOSTNADSBEREGNET_BIDRAG",
+  IKKE_OMSORG_FOR_BARNET = "IKKE_OMSORG_FOR_BARNET",
+  BIDRAGSPLIKTIG_ER_UKJENT = "BIDRAGSPLIKTIG_ER_UKJENT",
+  BIDRAGSPLIKTIGERDOD = "BIDRAGSPLIKTIG_ER_DØD",
+  BEREGNET_BIDRAG = "BEREGNET_BIDRAG",
   REDUSERTFORSKUDD50PROSENT = "REDUSERT_FORSKUDD_50_PROSENT",
   ORDINAeRTFORSKUDD75PROSENT = "ORDINÆRT_FORSKUDD_75_PROSENT",
   FORHOYETFORSKUDD100PROSENT = "FORHØYET_FORSKUDD_100_PROSENT",
@@ -665,6 +665,7 @@ export enum Utgiftstype {
 
 export interface VedtakNotatDto {
   type: NotatMalType;
+  medInnkreving: boolean;
   saksnummer: string;
   behandling: NotatBehandlingDetaljerDto;
   saksbehandlerNavn?: string;
@@ -725,4 +726,6 @@ export enum TypeArsakstype {
   TREMANEDERTILBAKE = "TRE_MÅNEDER_TILBAKE",
   TREARSREGELEN = "TRE_ÅRS_REGELEN",
   FRAMANEDENETTERIPAVENTEAVBIDRAGSSAK = "FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK",
+  FRAMANEDENETTERPRIVATAVTALE = "FRA_MÅNEDEN_ETTER_PRIVAT_AVTALE",
+  BIDRAGSPLIKTIGHARIKKEBIDRATTTILFORSORGELSE = "BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE",
 }

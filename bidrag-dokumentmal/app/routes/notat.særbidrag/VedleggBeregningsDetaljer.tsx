@@ -74,7 +74,9 @@ function VedleggBeregningsDetaljerInnhold() {
             ),
           },
           {
-            label: "Beløp som innkreves",
+            label: data.medInnkreving
+              ? "Beløp som innkreves"
+              : "Fastsatt beløp å betale",
             value: erBeregningeAvslag
               ? "Avslag"
               : formatterBeløp(resultat.beløpSomInnkreves, true),

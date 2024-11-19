@@ -51,6 +51,9 @@ function VedtakTable({
 }: {
   data: NotatResultatSaerbidragsberegningDto[];
 }) {
+  const {
+    data: { medInnkreving },
+  } = useNotatFelles();
   if (data.length == 0) return <div>Mangler resultat</div>;
   const resultat = data[0]!;
   const erDirekteAvslag = resultat?.erDirekteAvslag;
@@ -209,7 +212,9 @@ function VedtakTable({
               ),
             },
             {
-              label: "Beløp som innkreves",
+              label: medInnkreving
+                ? "Beløp som innkreves"
+                : "Fastsatt beløp å betale",
               value: erBeregningeAvslag
                 ? "Avslag"
                 : formatterBeløp(resultat.beløpSomInnkreves, true),
