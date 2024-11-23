@@ -5,7 +5,7 @@ import {
   Kilde,
   NotatInntektDto,
   NotatMalType,
-  NotatRolleDto,
+  NotatPersonDto,
 } from "~/types/Api";
 import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
 import { groupBy } from "~/utils/array-utils";
@@ -57,7 +57,7 @@ function OpplysningerForRolle({
   rolle,
   showRole = true,
 }: {
-  rolle: NotatRolleDto;
+  rolle: NotatPersonDto;
   showRole?: boolean;
 }) {
   const { data } = useNotatFelles();

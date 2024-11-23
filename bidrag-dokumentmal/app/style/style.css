@@ -1,6 +1,6 @@
 @page {
-  size: A4 portrait;
-  margin: 2.5cm 2.5cm 2.5cm 1.5cm;
+  size: 595px 842px;
+  margin: 64px 64px 74px 64px;
   padding-bottom: 0cm;
   padding-top: 0cm;
 
@@ -21,7 +21,7 @@
 .footnote::footnote-call {
   /* controls the footnote markers in the main page text */
   content: counter(footnote, symbols('*', '†', '‡'));
-  font-size: 0.7em;
+  font-size: 11px;
   vertical-align: super;
   line-height: 0;
   color: red;
@@ -81,9 +81,6 @@ body {
   width: 210mm;
   height: 100%;
   color: black;
-  line-height: 20px;
-  font-size: 12px;
-  font-family: "Source Sans Pro", serif;
 }
 
 table {
@@ -189,7 +186,9 @@ dt {
 }
 
 * {
-  font-family: "Source Sans Pro";
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 11px;
+  line-height: 16px;
 }
 
 
@@ -224,8 +223,7 @@ dt {
 .table thead tr th {
   display: table-cell;
   text-align: left;
-  padding: 2px 2px 2px 0;
-
+  padding: 2px 5px 2px 0;
 }
 
 .table tbody {
@@ -357,7 +355,6 @@ h6 {
 p {
   margin-top: 3px;
   margin-bottom: 3px;
-  font-size: 12px;
   font-family: "Source Sans Pro";
 }
 
@@ -369,7 +366,6 @@ Topp og bunntekst
 .custom-next-page-info:after {
   text-align: left;
   float: left;
-  font-size: 12px;
 
   content: attr(data-content);
 }

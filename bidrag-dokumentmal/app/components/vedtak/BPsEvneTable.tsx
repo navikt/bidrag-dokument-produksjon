@@ -5,17 +5,19 @@ import {
   MathValue,
 } from "./CalculationTable";
 import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
-import { useNotatFelles } from "~/components/notat_felles/NotatContext";
-import { NotatResultatSaerbidragsberegningDto } from "~/types/Api";
 import tekster from "~/tekster";
+import {
+  NotatDelberegningBidragsevneDto,
+  NotatResultatBeregningInntekterDto,
+} from "~/types/Api";
 
-export const BPsEvneTable = () => {
-  const { data } = useNotatFelles();
-
-  const beregnetSærbidrag = data.vedtak!
-    .resultat[0] as NotatResultatSaerbidragsberegningDto;
-  const delberegningBidragsevne = beregnetSærbidrag.delberegningBidragsevne!;
-  const inntekter = beregnetSærbidrag.inntekter!;
+export const BPsEvneTable = ({
+  delberegningBidragsevne,
+  inntekter,
+}: {
+  delberegningBidragsevne: NotatDelberegningBidragsevneDto;
+  inntekter: NotatResultatBeregningInntekterDto;
+}) => {
   return (
     <CalculationTabell
       title={`${tekster.begreper.bidragspliktiges} evne`}

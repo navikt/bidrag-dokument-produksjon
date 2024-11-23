@@ -76,7 +76,7 @@ class PdfProducerService(
                     if (pdfgenVersion == RenderPDFVersion.V2) {
                         bidragPdfGenConsumer.produserPdf(
                             document.fjernKontrollTegn(),
-                            Configuration(BigDecimal(1.5), false),
+                            Configuration(BigDecimal(1), false),
                         )
                     } else {
                         PdfContent(document.fjernKontrollTegn()).generate()

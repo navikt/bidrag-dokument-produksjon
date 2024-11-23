@@ -20,24 +20,26 @@ export default function HeaderFooter() {
       <div id={isHeader ? "header" : "footer"}>
         <span
           style={{
-            fontSize: "12px",
+            fontSize: "11px",
             position: "absolute",
             left: "80px",
             top: isHeader ? "40px" : "auto",
             bottom: isHeader ? "auto" : "40px",
-            fontFamily: "Source Sans Pro",
+            fontFamily: "Source Sans 3",
+            lineHeight: "16px",
           }}
         >
           Saksnummer {data.saksnummer}
         </span>
         <span
           style={{
-            fontSize: "12px",
+            fontSize: "11px",
             position: "absolute",
             right: "80px",
             top: isHeader ? "40px" : "auto",
             bottom: isHeader ? "auto" : "40px",
-            fontFamily: "Source Sans Pro",
+            fontFamily: "Source Sans 3",
+            lineHeight: "16px",
           }}
         >
           <span className="pageNumber"></span>

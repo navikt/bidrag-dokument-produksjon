@@ -40,13 +40,24 @@ function VedleggBeregningsDetaljerInnhold() {
 
   const erBeregningeAvslag =
     resultat?.resultatKode !== Resultatkode.SAeRBIDRAGINNVILGET;
+
+  const beregnetSærbidrag = data.vedtak!
+    .resultat[0] as NotatResultatSaerbidragsberegningDto;
+
   return (
     <>
       <BPsAndel />
       <div className={"mb-medium"} />
-      <BPsEvneTable />
+      <BPsEvneTable
+        inntekter={beregnetSærbidrag.inntekter!}
+        delberegningBidragsevne={beregnetSærbidrag.delberegningBidragsevne!}
+      />
       <div className={"mb-medium"} />
-      <BPsBeregnedeTotalbidrag />
+      <BPsBeregnedeTotalbidrag
+        delberegning={
+          beregnetSærbidrag.delberegningBidragspliktigesBeregnedeTotalbidrag!
+        }
+      />
       <div className={"mb-medium"} />
 
       <DataViewTable

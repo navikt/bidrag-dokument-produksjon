@@ -2,6 +2,8 @@ import { Fragment, ReactElement } from "react";
 
 export type TableColumn = {
   width?: string;
+  colSpan?: number;
+  labelBold?: boolean;
   content: ReactElement | string | number | null | undefined;
 };
 export type TableHeader = {
@@ -11,6 +13,7 @@ export type TableHeader = {
 export type TableData = {
   headers: TableHeader[];
   rows: {
+    borderBottom?: boolean;
     columns: TableColumn[];
     expandableContent?: TableColumn[];
   }[];
@@ -28,7 +31,11 @@ export function CommonTable({
   return (
     <table
       className="table"
-      style={{ width: width, tableLayout: layoutAuto ? "auto" : "fixed" }}
+      style={{
+        width: width,
+        maxWidth: "600px",
+        tableLayout: layoutAuto ? "auto" : "fixed",
+      }}
     >
       <colgroup>
         {headers.map((header, i) => (
@@ -38,7 +45,7 @@ export function CommonTable({
           ></col>
         ))}
       </colgroup>
-      <thead>
+      <thead style={{ wordBreak: "auto-phrase", textWrap: "wrap" }}>
         <tr>
           {headers.map((header, i) => (
             <th
@@ -57,9 +64,18 @@ export function CommonTable({
         {rows.map((d, i) => {
           return (
             <Fragment key={"row" + i.toString()}>
-              <tr key={"row" + i.toString()}>
+              <tr
+                key={"row" + i.toString()}
+                style={{
+                  borderBottom: d.borderBottom ? "1px solid black" : undefined,
+                }}
+              >
                 {d.columns.map((column, j) => (
-                  <td key={column.content?.toString() ?? "" + j}>
+                  <td
+                    key={column.content?.toString() ?? "" + j}
+                    colSpan={column.colSpan}
+                    style={{ fontWeight: column.labelBold ? "bold" : "normal" }}
+                  >
                     {column.content}
                   </td>
                 ))}

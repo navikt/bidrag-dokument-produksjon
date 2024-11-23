@@ -4,7 +4,7 @@ import {
   Vedtakstype,
   Rolletype,
   VedtakNotatDto,
-  NotatRolleDto,
+  NotatPersonDto,
 } from "~/types/Api";
 import { konverterRolletype, erRolle } from "~/utils/converter-utils";
 export enum RenderPDFVersion {
@@ -19,9 +19,9 @@ interface INotatContext {
   erAvslag: boolean;
   erOpphør: boolean;
   harFlereEnnEttSøknadsbarn: boolean;
-  bidragsmottaker: NotatRolleDto;
-  bidragspliktig?: NotatRolleDto;
-  søknadsbarn: NotatRolleDto[];
+  bidragsmottaker: NotatPersonDto;
+  bidragspliktig?: NotatPersonDto;
+  søknadsbarn: NotatPersonDto[];
   data: VedtakNotatDto;
   type: NotatMalType;
   renderMode: RenderMode;

@@ -1,10 +1,10 @@
-import { NotatRolleDto } from "~/types/Api";
+import { NotatPersonDto } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 
 export default function TableGjelderBarn({
   gjelderBarn,
 }: {
-  gjelderBarn: NotatRolleDto;
+  gjelderBarn: NotatPersonDto;
 }) {
   return (
     <dl style={{ marginBottom: 0 }}>

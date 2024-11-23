@@ -1,22 +1,25 @@
 import { useActionData } from "@remix-run/react";
+import { ActionFunctionArgs } from "@remix-run/node";
 import "../../style/style.css";
-import Vedtak from "~/routes/notat.forskudd/Vedtak";
 import tekster from "~/tekster";
 import {
   NotatProvider,
   RenderMode,
 } from "~/components/notat_felles/NotatContext";
-import Soknaddetaljer from "~/components/notat_felles/components/Soknaddetaljer";
 import Boforhold from "~/components/notat_felles/components/Boforhold";
+import Soknaddetaljer from "~/components/notat_felles/components/Soknaddetaljer";
 import Inntekter from "~/components/notat_felles/components/Inntekter";
 import VedleggBoforhold from "~/components/notat_felles/components/VedleggBoforhold";
 import VedleggInntekter from "~/components/notat_felles/components/VedleggInntekter";
-import DagensDato from "~/components/DagensDato";
 import NotatTittel from "~/components/NotatTittel";
+import DagensDato from "~/components/DagensDato";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";
 import { parseRequestAction, NotatRequest } from "~/routes/common";
-import { ActionFunctionArgs } from "@remix-run/node";
 import Virkningstidspunkt from "~/components/notat_felles/components/Virkningstidspunkt";
+import Underholdskostnad from "~/routes/notat.bidrag/Underholdskostnad";
+import Samvær from "~/routes/notat.bidrag/Samvær";
+import Vedtak from "~/routes/notat.bidrag/Vedtak";
+import VedleggBeregningsDetaljer from "~/routes/notat.bidrag/VedleggBeregningsDetaljer";
 
 export async function action(args: ActionFunctionArgs) {
   return await parseRequestAction(args);
@@ -24,14 +27,14 @@ export async function action(args: ActionFunctionArgs) {
 
 export function meta() {
   return [
-    { title: tekster.titler.forskudd },
-    { name: "description", content: tekster.titler.forskudd },
+    { title: tekster.titler.bidrag },
+    { name: "description", content: tekster.titler.bidrag },
     { property: "author", content: "bidrag-dokument-produksjon" },
-    { property: "subject", content: tekster.titler.forskudd },
+    { property: "subject", content: tekster.titler.bidrag },
   ];
 }
 
-export default function NotatForskudd() {
+export default function NotatBidrag() {
   const response = useActionData<NotatRequest>();
   if (response === undefined) {
     return <div>Oops</div>;
@@ -39,7 +42,7 @@ export default function NotatForskudd() {
 
   const data = response.data;
   return (
-    <div id="forskudd_notat">
+    <div id="bidrag_notat">
       <NotatProvider
         data={data}
         renderPDFVersion={response.renderPDFVersion}
@@ -49,13 +52,16 @@ export default function NotatForskudd() {
         <div className={"container page"}>
           <Soknaddetaljer />
           <DagensDato />
-          <NotatTittel title={tekster.titler.forskudd} />
+          <NotatTittel title={tekster.titler.bidrag} />
           <Virkningstidspunkt />
-          <Boforhold />
+          <Underholdskostnad />
           <Inntekter />
+          <Boforhold />
+          <Samvær />
           <Vedtak />
           <VedleggBoforhold />
           <VedleggInntekter />
+          <VedleggBeregningsDetaljer />
         </div>
       </NotatProvider>
     </div>
