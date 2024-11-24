@@ -55,7 +55,7 @@ function VedtakTable({
             { name: "Samværsfradrag", width: "100px" },
             { name: "Beregnet bidrag", width: "60px" },
             { name: "Endelig bidrag", width: "60px" },
-            { name: "Resultat", width: "160px" },
+            { name: "Resultat", width: "150px" },
           ],
           rows: perioder
             .map((d) => ({
