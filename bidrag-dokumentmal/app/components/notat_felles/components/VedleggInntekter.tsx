@@ -205,7 +205,7 @@ function ArbeidsforholdTable({ data }: { data: Arbeidsforhold[] }) {
           { name: tekster.tabell.felles.periode, width: "100px" },
           { name: tekster.tabell.arbeidsforhold.arbeidsgiver, width: "140px" },
           { name: tekster.tabell.arbeidsforhold.stilling, width: "40px" },
-          { name: tekster.tabell.arbeidsforhold.lønnsendring, width: "40px" },
+          { name: tekster.tabell.arbeidsforhold.lønnsendring, width: "80px" },
         ],
         rows: data.map((d) => ({
           columns: [

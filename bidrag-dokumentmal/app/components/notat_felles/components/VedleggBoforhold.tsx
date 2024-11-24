@@ -96,6 +96,7 @@ export function BoforholdTable({
   const erSivilstand = isSivilstand(data);
   return (
     <CommonTable
+      width={"400px"}
       data={{
         headers: [
           {
@@ -143,7 +144,7 @@ function AndreVoksneiHusstandenDetaljer({
 }) {
   return (
     <>
-      <h3 style={{ width: "200px" }}>Hvem bor på adresse?</h3>
+      <h4 style={{ width: "200px" }}>Hvem bor på adresse?</h4>
       <ul
         style={{
           listStyleType: "decimal",

@@ -10,7 +10,12 @@
   @bottom-center {
     content: element(footer)
   }
-  /*@top-left { content: element(header) }*/
+}
+
+* {
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 11px;
+  line-height: 16px;
 }
 
 .footnote {
@@ -78,13 +83,8 @@
 
 body {
   background-color: white;
-  width: 210mm;
   height: 100%;
   color: black;
-}
-
-table {
-  font-size: 12px;
 }
 
 :root {
@@ -185,13 +185,6 @@ dt {
   height: 180px;
 }
 
-* {
-  font-family: "Source Sans 3", sans-serif;
-  font-size: 11px;
-  line-height: 16px;
-}
-
-
 .container {
   margin: 0cm 0.5cm;
   height: 100%;
@@ -223,7 +216,6 @@ dt {
 .table thead tr th {
   display: table-cell;
   text-align: left;
-  padding: 2px 5px 2px 0;
 }
 
 .table tbody {
@@ -233,14 +225,12 @@ dt {
 .table tbody tr th {
   display: table-cell;
   text-align: left;
-  padding: 2px 2px 2px 0;
   font-weight: bold;
 }
 
 .table tbody tr td {
   display: table-cell;
   text-align: left;
-  padding: 2px 2px 0 0;
 }
 
 .table_head_periode {
@@ -420,8 +410,6 @@ Custom components
 .soknad_detaljer {
   margin-bottom: 52px;
 }
-
-
 
 .text-red-500 {
   --tw-text-opacity: 1;

@@ -66,11 +66,9 @@ function UnderholdskostnaderSøknadsbarn({
   data: NotatUnderholdBarnDto;
 }) {
   return (
-    <div
-      className={"mb-4 mt-4"}
-      style={{ breakBefore: "auto", breakInside: "avoid" }}
-    >
+    <>
       <DataViewTable
+        className={"mb-4 mt-4"}
         data={[
           {
             label: "Barn i saken",
@@ -92,7 +90,7 @@ function UnderholdskostnaderSøknadsbarn({
       )}
       <UnderholdskostnaderTabell data={data} />
       <NotatBegrunnelse data={data?.begrunnelse} />
-    </div>
+    </>
   );
 }
 function TilleggstønadTabell({ data }: { data: NotatUnderholdBarnDto }) {
@@ -101,7 +99,7 @@ function TilleggstønadTabell({ data }: { data: NotatUnderholdBarnDto }) {
       <h4>Tilleggsstønad</h4>
       <CommonTable
         layoutAuto
-        width={"270px"}
+        width={"320px"}
         data={{
           headers: [
             {
@@ -138,7 +136,7 @@ function FaktiskeTilsynsutgifterTabell({
       <h4>Faktiske tilsynsutgifter</h4>
       <CommonTable
         layoutAuto
-        width={"500px"}
+        width={"550px"}
         data={{
           headers: [
             {
@@ -182,7 +180,7 @@ function StønadTilBarnetilsynTabell({ data }: { data: NotatUnderholdBarnDto }) 
       <h4>Stønad til barnetilsyn</h4>
       <CommonTable
         layoutAuto
-        width={"350px"}
+        width={"400px"}
         data={{
           headers: [
             {
@@ -221,6 +219,7 @@ function UnderholdskostnaderTabell({ data }: { data: NotatUnderholdBarnDto }) {
       <h4>Underholdskostnader</h4>
       <CommonTable
         layoutAuto
+        width={"850px"}
         data={{
           headers: [
             {

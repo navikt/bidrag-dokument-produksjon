@@ -48,14 +48,7 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
               </tr>
               {row.additionalInfo && (
                 <tr aria-colspan={2} key={rowIndex + "2"}>
-                  <td
-                    colSpan={2}
-                    style={{
-                      fontSize: "11px",
-                    }}
-                  >
-                    {row.additionalInfo}
-                  </td>
+                  <td colSpan={2}>{row.additionalInfo}</td>
                 </tr>
               )}
             </>

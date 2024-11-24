@@ -46,6 +46,7 @@ export default function NotatBidrag() {
     <div id="bidrag_notat">
       <NotatProvider
         data={data}
+        styling={"V2"}
         renderPDFVersion={response.renderPDFVersion}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >

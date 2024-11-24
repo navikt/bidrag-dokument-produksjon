@@ -26,9 +26,9 @@ function SamværsberegningDetaljerBarn({
   samværBarn: NotatSamvaerDto;
 }) {
   return (
-    <div className={"flex flex-col gap-4"}>
+    <>
       <DataViewTable
-        gap={"5px"}
+        className={"pb-2 pt-2"}
         data={
           [
             {
@@ -42,9 +42,9 @@ function SamværsberegningDetaljerBarn({
       {samværBarn.perioder
         .filter((p) => p.beregning != null)
         .map((periode, index) => (
-          <>
+          <div>
             <DataViewTable
-              gap={"5px"}
+              className={"pt-2 pb-2"}
               data={
                 [
                   {
@@ -62,9 +62,9 @@ function SamværsberegningDetaljerBarn({
               beregning={periode.beregning!}
               key={`ferie_${index}_${samværBarn.gjelderBarn.navn}`}
             />
-          </>
+          </div>
         ))}
-    </div>
+    </>
   );
 }
 
@@ -76,7 +76,7 @@ function SamværKalkulatorTable({
   frekvensVisningsnavnMap,
 }: NotatSamvaersperiodeDto) {
   return (
-    <div className={"flex flex-col gap-1"}>
+    <div className={"flex flex-col gap-1 pt-2 pb-2"}>
       <DataViewTable
         title={"Regelmessig samvær"}
         data={

@@ -64,7 +64,6 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
           ],
           rows: barnetillegg.barnetillegg
             .map((bt) => ({
-              borderBottom: true,
               columns: [
                 {
                   content: bt.visningsnavn,
@@ -91,7 +90,6 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
                     ),
                   },
                 ],
-                borderBottom: true,
               },
             ]),
         }}

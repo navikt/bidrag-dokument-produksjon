@@ -156,16 +156,16 @@
   margin-bottom: 8px
 }
 
+.mb-4 {
+  margin-bottom: 16px
+}
+
 .mt-1 {
   margin-top: 4px
 }
 
 .mt-4 {
   margin-top: 16px
-}
-
-.mb-4 {
-  margin-bottom: 16px
 }
 
 .block {
@@ -204,6 +204,10 @@
   width: 45px
 }
 
+.w-\[500px\] {
+  width: 500px
+}
+
 .w-\[5px\] {
   width: 5px
 }
@@ -214,10 +218,6 @@
 
 .w-full {
   width: 100%
-}
-
-.w-\[500px\] {
-  width: 500px
 }
 
 .table-auto {
@@ -234,28 +234,9 @@
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y)
 }
 
-.break-before-avoid {
-  -moz-column-break-before: avoid;
-       break-before: avoid
-}
-
-.break-before-avoid-page {
-  -moz-column-break-before: avoid;
-       break-before: avoid-page
-}
-
-.break-inside-avoid {
-  -moz-column-break-inside: avoid;
-       break-inside: avoid
-}
-
-.break-inside-avoid-page {
-  break-inside: avoid-page
-}
-
-.break-after-avoid {
-  -moz-column-break-after: avoid;
-       break-after: avoid
+.break-before-column {
+  -moz-column-break-before: column;
+       break-before: column
 }
 
 .flex-row {
@@ -286,6 +267,10 @@
   border-width: 0px
 }
 
+.border-b {
+  border-bottom-width: 1px
+}
+
 .border-b-2 {
   border-bottom-width: 2px
 }
@@ -302,18 +287,30 @@
   border-top-width: 1px
 }
 
+.border-t-0 {
+  border-top-width: 0px
+}
+
 .border-solid {
   border-style: solid
 }
 
-.border-black {
-  --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity))
+.bg-table-header {
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 240 255 / var(--tw-bg-opacity))
 }
 
-.border-b-black {
-  --tw-border-opacity: 1;
-  border-bottom-color: rgb(0 0 0 / var(--tw-border-opacity))
+.bg-table-bg-even {
+  --tw-bg-opacity: 1;
+  background-color: rgb(242 243 245 / var(--tw-bg-opacity))
+}
+
+.p-table-body-tr-v1 {
+  padding: 2px 2px 0 0
+}
+
+.p-table-header-v1 {
+  padding: 2px 5px 2px 0
 }
 
 .px-1 {
@@ -323,6 +320,10 @@
 
 .pb-2 {
   padding-bottom: 8px
+}
+
+.pl-1 {
+  padding-left: 4px
 }
 
 .pr-1 {
@@ -339,11 +340,6 @@
 
 .text-right {
   text-align: right
-}
-
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity))
 }
 
 .filter {

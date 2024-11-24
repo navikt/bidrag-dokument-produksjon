@@ -34,7 +34,6 @@ export default function BPsAndelInntekterTable({
         ],
         rows: [
           {
-            borderBottom: true,
             columns: [
               {
                 content: `${tekster.begreper.bidragspliktiges} inntekt`,
@@ -49,7 +48,6 @@ export default function BPsAndelInntekterTable({
             ],
           },
           {
-            borderBottom: true,
             columns: [
               {
                 content: `${tekster.begreper.bidragsmottakerens} inntekt`,
@@ -61,7 +59,6 @@ export default function BPsAndelInntekterTable({
             ],
           },
           {
-            borderBottom: true,
             columns: [
               {
                 content: `${tekster.begreper.barnets} inntekt`,

@@ -59,6 +59,7 @@ function VedtakTable({
           ],
           rows: perioder
             .map((d) => ({
+              skipBorderBottom: false,
               columns: [
                 {
                   content: formatPeriode(
@@ -93,6 +94,7 @@ function VedtakTable({
             }))
             .concat([
               {
+                skipBorderBottom: true,
                 columns: [
                   {
                     colSpan: 7,

@@ -19,7 +19,6 @@ export default function Soknaddetaljer() {
         <NavLogo />
         <DataViewTable
           labelColWidth={"98px"}
-          width={"100%"}
           data={[
             {
               label: "Saksnummer",

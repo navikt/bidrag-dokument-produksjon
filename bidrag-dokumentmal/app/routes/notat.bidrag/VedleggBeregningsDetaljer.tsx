@@ -13,10 +13,10 @@ import HorizontalLine from "~/components/HorizontalLine";
 import { BPAndelUnderholdskostnad } from "~/routes/notat.bidrag/BPAndelUnderholdskostnad";
 import { Samværsfradrag } from "~/routes/notat.bidrag/beregningsdetaljer/Samværsfradrag";
 import { NettoBarnetilleggTable } from "~/routes/notat.bidrag/beregningsdetaljer/NettoBarnetilleggTable";
-import { BPsEvneTable } from "~/components/vedtak/BPsEvneTable";
 import { BeregningFordeltBidragEvne } from "~/routes/notat.bidrag/beregningsdetaljer/BeregningFordeltBidragEvne";
 import { createContext, useContext } from "react";
 import { EndeligBidragTable } from "~/routes/notat.bidrag/beregningsdetaljer/EndeligBidrag";
+import { BPsEvneTableV2 } from "~/components/vedtak/BPsEvneTableV2";
 
 export default function VedleggBeregningsDetaljer() {
   const { data } = useNotatFelles();
@@ -76,28 +76,38 @@ function VedleggBeregningsDetaljerInnhold() {
                 const detaljer = periode.beregningsdetaljer!;
                 return (
                   <>
-                    <DataViewTable
-                      className={"mt-medium mb-2"}
-                      data={[
-                        {
-                          label: "Periode",
-                          labelBold: true,
-                          value: formatPeriode(
-                            periode.periode.fom,
-                            periode.periode.til,
-                          ),
-                        },
-                      ]}
-                    />
                     <BidragBeregningContext.Provider value={{ ...detaljer }}>
-                      <div className={"flex flex-col gap-4"}>
-                        <BPAndelUnderholdskostnad />
-                        {!detaljer.deltBosted && <Samværsfradrag />}
+                      <>
+                        <div className={"pt-2 pb-2"}>
+                          <DataViewTable
+                            className={"mt-medium mb-2"}
+                            data={[
+                              {
+                                label: "Periode",
+                                labelBold: true,
+                                value: formatPeriode(
+                                  periode.periode.fom,
+                                  periode.periode.til,
+                                ),
+                              },
+                            ]}
+                          />
+                          <BPAndelUnderholdskostnad />
+                        </div>
                         {!detaljer.deltBosted && (
-                          <NettoBarnetilleggTable rolle={Rolletype.BM} />
+                          <>
+                            <Samværsfradrag />
+                            <div className={"pt-2 pb-2"} />
+                          </>
                         )}
-                        <div>
-                          <BPsEvneTable
+                        {!detaljer.deltBosted && (
+                          <>
+                            <NettoBarnetilleggTable rolle={Rolletype.BM} />
+                            <div className={"pt-2 pb-2"} />
+                          </>
+                        )}
+                        <div className={"pt-2 pb-2"}>
+                          <BPsEvneTableV2
                             inntekter={detaljer!.inntekter!}
                             delberegningBidragsevne={
                               detaljer!.delberegningBidragsevne!
@@ -107,10 +117,13 @@ function VedleggBeregningsDetaljerInnhold() {
                         </div>
 
                         {!detaljer.deltBosted && (
-                          <NettoBarnetilleggTable rolle={Rolletype.BP} />
+                          <>
+                            <NettoBarnetilleggTable rolle={Rolletype.BP} />
+                            <div className={"pt-2 pb-2"} />
+                          </>
                         )}
                         <EndeligBidragTable />
-                      </div>
+                      </>
                     </BidragBeregningContext.Provider>
                     <HorizontalLine />
                   </>

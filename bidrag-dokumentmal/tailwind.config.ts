@@ -3,7 +3,18 @@ import type { Config } from "tailwindcss";
 export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
-    extend: {},
+    extend: {
+      padding: {
+        "table-header-v1": "2px 5px 2px 0",
+        "table-body-v1": "2px 2px 2px 0",
+        "table-body-tr-v1": "2px 2px 0 0",
+      },
+    },
+    colors: {
+      "table-header": "#E6F0FF",
+      "table-bg-even": "#F2F3F5",
+    },
+
     spacing: {
       "1": "4px",
       "2": "8px",

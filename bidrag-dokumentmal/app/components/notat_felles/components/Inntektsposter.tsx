@@ -2,6 +2,7 @@ import Inntektspost from "~/components/Inntekspost";
 import { formatPeriode } from "~/utils/date-utils";
 import { formatterBeløp } from "~/utils/visningsnavn";
 import { NotatInntektDto, TypeArManedsperiode } from "~/types/Api";
+import { useTheme } from "~/components/notat_felles/ThemeContext";
 
 type InntektsposterProps = {
   periode?: TypeArManedsperiode;
@@ -13,6 +14,7 @@ export default function Inntektsposter({
   data,
   withHorizontalLine = true,
 }: InntektsposterProps) {
+  const { styling } = useTheme();
   return (
     <div
       style={{
@@ -30,7 +32,9 @@ export default function Inntektsposter({
           value={formatterBeløp(d.beløp)}
         />
       ))}
-      {withHorizontalLine && <div className="horizontal-line"></div>}
+      {withHorizontalLine && styling == "V1" && (
+        <div className="horizontal-line"></div>
+      )}
     </div>
   );
 }
