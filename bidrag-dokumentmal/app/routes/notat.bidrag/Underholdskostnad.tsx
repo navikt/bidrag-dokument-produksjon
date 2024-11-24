@@ -94,6 +94,8 @@ function UnderholdskostnaderSøknadsbarn({
   );
 }
 function TilleggstønadTabell({ data }: { data: NotatUnderholdBarnDto }) {
+  if (data.tilleggsstønad.length == 0) return null;
+
   return (
     <div className={"mb-4 mt-4"}>
       <h4>Tilleggsstønad</h4>
@@ -131,6 +133,7 @@ function FaktiskeTilsynsutgifterTabell({
 }: {
   data: NotatUnderholdBarnDto;
 }) {
+  if (data.faktiskTilsynsutgift.length == 0) return null;
   return (
     <div className={"mb-4"}>
       <h4>Faktiske tilsynsutgifter</h4>
@@ -175,6 +178,7 @@ function FaktiskeTilsynsutgifterTabell({
 }
 
 function StønadTilBarnetilsynTabell({ data }: { data: NotatUnderholdBarnDto }) {
+  if (data.stønadTilBarnetilsyn.length == 0) return null;
   return (
     <div className={"mb-4 mt-4"}>
       <h4>Stønad til barnetilsyn</h4>
@@ -214,6 +218,8 @@ function StønadTilBarnetilsynTabell({ data }: { data: NotatUnderholdBarnDto }) 
   );
 }
 function UnderholdskostnaderTabell({ data }: { data: NotatUnderholdBarnDto }) {
+  if (data.underholdskostnad.length == 0) return null;
+
   return (
     <div className={"mb-4 mt-4"}>
       <h4>Underholdskostnader</h4>
