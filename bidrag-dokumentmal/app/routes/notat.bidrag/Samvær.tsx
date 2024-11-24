@@ -5,6 +5,7 @@ import tekster from "~/tekster";
 import { formatPeriode } from "~/utils/date-utils";
 import { DataViewTable } from "~/components/DataViewTable";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
+import elementIds from "~/utils/elementIds";
 
 export default function Samvær() {
   const { data } = useNotatFelles();
@@ -12,7 +13,12 @@ export default function Samvær() {
   if (samvær.length == 0) return null;
   return (
     <div className={"underholdskostnad"}>
-      <h2>Samvær</h2>
+      <div className={"elements_inline"}>
+        <h2>Samvær</h2>
+        <a href={`#${elementIds.vedleggSamvær}`}>
+          se vedlegg nr. 3 for beregningsdetaljer
+        </a>
+      </div>
       <div>
         {samvær.map((barn, i) => (
           <SamværBarn data={barn} key={i + barn.gjelderBarn.ident!} />

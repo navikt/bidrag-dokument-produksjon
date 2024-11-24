@@ -20,7 +20,7 @@ export default function HeaderFooter() {
       <div id={isHeader ? "header" : "footer"}>
         <span
           style={{
-            fontSize: "11px",
+            fontSize: "10px",
             position: "absolute",
             left: "80px",
             top: isHeader ? "40px" : "auto",
@@ -33,7 +33,7 @@ export default function HeaderFooter() {
         </span>
         <span
           style={{
-            fontSize: "11px",
+            fontSize: "10px",
             position: "absolute",
             right: "80px",
             top: isHeader ? "40px" : "auto",

@@ -466,6 +466,8 @@ export interface NotatSamvaersperiodeDto {
   gjennomsnittligSamværPerMåned: number;
   beregning?: SamvaerskalkulatorDetaljer;
   samværsklasseVisningsnavn: string;
+  ferieVisningsnavnMap: Record<string, string>;
+  frekvensVisningsnavnMap: Record<string, string>;
 }
 
 export interface NotatSivilstand {

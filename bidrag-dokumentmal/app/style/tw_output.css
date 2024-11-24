@@ -152,12 +152,20 @@
   position: relative
 }
 
-.mt-1 {
-  margin-top: 0.25rem
+.mb-2 {
+  margin-bottom: 8px
 }
 
-.mb-0 {
-  margin-bottom: 0px
+.mt-1 {
+  margin-top: 4px
+}
+
+.mt-4 {
+  margin-top: 16px
+}
+
+.mb-4 {
+  margin-bottom: 16px
 }
 
 .block {
@@ -192,6 +200,14 @@
   width: 120px
 }
 
+.w-\[45px\] {
+  width: 45px
+}
+
+.w-\[5px\] {
+  width: 5px
+}
+
 .w-\[70px\] {
   width: 70px
 }
@@ -200,20 +216,8 @@
   width: 100%
 }
 
-.w-\[10px\] {
-  width: 10px
-}
-
-.w-\[55px\] {
-  width: 55px
-}
-
-.w-\[45px\] {
-  width: 45px
-}
-
-.w-\[5px\] {
-  width: 5px
+.w-\[500px\] {
+  width: 500px
 }
 
 .table-auto {
@@ -225,9 +229,33 @@
 }
 
 .border-spacing-2 {
-  --tw-border-spacing-x: 0.5rem;
-  --tw-border-spacing-y: 0.5rem;
+  --tw-border-spacing-x: 8px;
+  --tw-border-spacing-y: 8px;
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y)
+}
+
+.break-before-avoid {
+  -moz-column-break-before: avoid;
+       break-before: avoid
+}
+
+.break-before-avoid-page {
+  -moz-column-break-before: avoid;
+       break-before: avoid-page
+}
+
+.break-inside-avoid {
+  -moz-column-break-inside: avoid;
+       break-inside: avoid
+}
+
+.break-inside-avoid-page {
+  break-inside: avoid-page
+}
+
+.break-after-avoid {
+  -moz-column-break-after: avoid;
+       break-after: avoid
 }
 
 .flex-row {
@@ -238,8 +266,16 @@
   flex-direction: column
 }
 
+.justify-between {
+  justify-content: space-between
+}
+
+.gap-1 {
+  gap: 4px
+}
+
 .gap-4 {
-  gap: 1rem
+  gap: 16px
 }
 
 .whitespace-pre-wrap {
@@ -281,24 +317,20 @@
 }
 
 .px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem
+  padding-left: 4px;
+  padding-right: 4px
 }
 
 .pb-2 {
-  padding-bottom: 0.5rem
+  padding-bottom: 8px
 }
 
 .pr-1 {
-  padding-right: 0.25rem
-}
-
-.pb-0 {
-  padding-bottom: 0px
+  padding-right: 4px
 }
 
 .pt-2 {
-  padding-top: 0.5rem
+  padding-top: 8px
 }
 
 .text-left {

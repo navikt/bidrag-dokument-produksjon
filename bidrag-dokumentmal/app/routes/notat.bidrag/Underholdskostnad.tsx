@@ -13,9 +13,9 @@ export default function Underholdskostnad() {
   const underholdskostnader = data.underholdskostnader;
   if (underholdskostnader == null) return null;
   return (
-    <div className={"underholdskostnad"}>
+    <>
       <h2>Underholdskostnad</h2>
-      <div>
+      <>
         {underholdskostnader.underholdskostnaderBarn
           .filter((barn) => barn.gjelderBarn.rolle != null)
           .map((barn, i) => (
@@ -29,8 +29,8 @@ export default function Underholdskostnad() {
             (barn) => barn.gjelderBarn.rolle == null,
           )}
         />
-      </div>
-    </div>
+      </>
+    </>
   );
 }
 function UnderholdskostnaderAndreBarn({
@@ -40,12 +40,11 @@ function UnderholdskostnaderAndreBarn({
 }) {
   if (data.length == 0) return null;
   return (
-    <div className={"mb-medium"}>
+    <div className={"mb-4"}>
       {data.map((barn) => (
         <>
           <DataViewTable
             className={"pt-2 pb-0 mb-0"}
-            gap={"5px"}
             data={[
               {
                 label: "Andre barn til bidragsmottaker",
@@ -67,9 +66,11 @@ function UnderholdskostnaderSøknadsbarn({
   data: NotatUnderholdBarnDto;
 }) {
   return (
-    <div className={"mb-medium mt-medium"}>
+    <div
+      className={"mb-4 mt-4"}
+      style={{ breakBefore: "auto", breakInside: "avoid" }}
+    >
       <DataViewTable
-        gap={"5px"}
         data={[
           {
             label: "Barn i saken",
@@ -96,8 +97,8 @@ function UnderholdskostnaderSøknadsbarn({
 }
 function TilleggstønadTabell({ data }: { data: NotatUnderholdBarnDto }) {
   return (
-    <div className={"mb-medium mt-medium"}>
-      <h3 style={{ margin: "0 0 5px 0", display: "inline" }}>Tilleggsstønad</h3>
+    <div className={"mb-4 mt-4"}>
+      <h4>Tilleggsstønad</h4>
       <CommonTable
         layoutAuto
         width={"270px"}
@@ -133,10 +134,8 @@ function FaktiskeTilsynsutgifterTabell({
   data: NotatUnderholdBarnDto;
 }) {
   return (
-    <div className={"mb-medium"}>
-      <h3 style={{ margin: "0 0 5px 0", display: "inline" }}>
-        Faktiske tilsynsutgifter
-      </h3>
+    <div className={"mb-4"}>
+      <h4>Faktiske tilsynsutgifter</h4>
       <CommonTable
         layoutAuto
         width={"500px"}
@@ -179,10 +178,8 @@ function FaktiskeTilsynsutgifterTabell({
 
 function StønadTilBarnetilsynTabell({ data }: { data: NotatUnderholdBarnDto }) {
   return (
-    <div className={"mb-medium mt-medium"}>
-      <h3 style={{ margin: "0 0 5px 0", display: "inline" }}>
-        Stønad til barnetilsyn
-      </h3>
+    <div className={"mb-4 mt-4"}>
+      <h4>Stønad til barnetilsyn</h4>
       <CommonTable
         layoutAuto
         width={"350px"}
@@ -220,10 +217,8 @@ function StønadTilBarnetilsynTabell({ data }: { data: NotatUnderholdBarnDto }) 
 }
 function UnderholdskostnaderTabell({ data }: { data: NotatUnderholdBarnDto }) {
   return (
-    <div className={"mb-medium mt-medium"}>
-      <h3 style={{ margin: "0 0 5px 0", display: "inline" }}>
-        Underholdskostnader
-      </h3>
+    <div className={"mb-4 mt-4"}>
+      <h4>Underholdskostnader</h4>
       <CommonTable
         layoutAuto
         data={{

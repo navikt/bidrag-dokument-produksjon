@@ -29,7 +29,7 @@ export default function VedleggBeregningsDetaljer() {
   return (
     <div style={{ pageBreakBefore: "always" }}>
       <h2 id={elementIds.vedleggBeregningsdetaljer} className={"pb-2"}>
-        Vedlegg nr. 3: Beregningsdetaljer
+        Vedlegg nr. 4: Beregningsdetaljer
       </h2>
       <VedleggBeregningsDetaljerInnhold />
     </div>
@@ -77,8 +77,7 @@ function VedleggBeregningsDetaljerInnhold() {
                 return (
                   <>
                     <DataViewTable
-                      className={"pt-2 pt-2 mb-0"}
-                      gap={"5px"}
+                      className={"mt-medium mb-2"}
                       data={[
                         {
                           label: "Periode",

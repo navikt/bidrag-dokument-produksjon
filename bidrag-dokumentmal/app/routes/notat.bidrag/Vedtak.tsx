@@ -50,45 +50,58 @@ function VedtakTable({
         const tableData: TableData = {
           headers: [
             { name: "Periode", width: "130px" },
-            { name: "U", width: "50px" },
-            { name: "BPs andel U ", width: "120px" },
+            { name: "U*", width: "50px" },
+            { name: "BPs andel U*", width: "120px" },
             { name: "Samværsfradrag", width: "100px" },
             { name: "Beregnet bidrag", width: "60px" },
             { name: "Endelig bidrag", width: "60px" },
             { name: "Resultat", width: "160px" },
           ],
-          rows: perioder.map((d) => ({
-            columns: [
+          rows: perioder
+            .map((d) => ({
+              columns: [
+                {
+                  content: formatPeriode(
+                    d.periode!.fom,
+                    deductDays(d.periode!.til, 1),
+                  ),
+                  colSpan: 1,
+                },
+                { content: formatterBeløpForBeregning(d.underholdskostnad) },
+                {
+                  content: (
+                    <table>
+                      <tbody>
+                        <tr>
+                          <td className="w-[45px]">
+                            {formatterProsent(d.bpsAndelU)}
+                          </td>
+                          <td className="w-[5px]">/</td>
+                          <td className="w-[45px]">
+                            {formatterBeløpForBeregning(d.bpsAndelBeløp)}
+                          </td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  ),
+                },
+                { content: formatterBeløpForBeregning(d.samværsfradrag) },
+                { content: formatterBeløpForBeregning(d.beregnetBidrag) },
+                { content: formatterBeløpForBeregning(d.faktiskBidrag) },
+                { content: d.resultatkodeVisningsnavn },
+              ],
+            }))
+            .concat([
               {
-                content: formatPeriode(
-                  d.periode!.fom,
-                  deductDays(d.periode!.til, 1),
-                ),
+                columns: [
+                  {
+                    colSpan: 7,
+                    content:
+                      "* U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
+                  },
+                ],
               },
-              { content: formatterBeløpForBeregning(d.underholdskostnad) },
-              {
-                content: (
-                  <table>
-                    <tbody>
-                      <tr>
-                        <td className="w-[45px]">
-                          {formatterProsent(d.bpsAndelU)}
-                        </td>
-                        <td className="w-[5px]">/</td>
-                        <td className="w-[45px]">
-                          {formatterBeløpForBeregning(d.bpsAndelBeløp)}
-                        </td>
-                      </tr>
-                    </tbody>
-                  </table>
-                ),
-              },
-              { content: formatterBeløpForBeregning(d.samværsfradrag) },
-              { content: formatterBeløpForBeregning(d.beregnetBidrag) },
-              { content: formatterBeløpForBeregning(d.faktiskBidrag) },
-              { content: d.resultatkodeVisningsnavn },
-            ],
-          })),
+            ]),
         };
         return (
           <div key={key} className="table_container mb-medium mt-medium">

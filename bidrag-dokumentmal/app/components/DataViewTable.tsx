@@ -20,7 +20,7 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
   data,
   title,
   labelColWidth,
-  gap,
+  gap = "5px",
   width,
   className,
 }) => {
