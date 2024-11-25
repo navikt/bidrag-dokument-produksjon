@@ -51,7 +51,7 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
           headers: [
             {
               name: "Type barnetillegg",
-              width: "250px",
+              width: "100px",
             },
             {
               name: "Brutto",
@@ -82,11 +82,15 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
                 columns: [
                   {
                     content: "Resultat",
-                    colSpan: 2,
                   },
                   {
                     content: formatterBeløpForBeregning(
-                      barnetillegg!.nettoBeløp,
+                      barnetillegg!.sumBruttoBeløp,
+                    ),
+                  },
+                  {
+                    content: formatterBeløpForBeregning(
+                      barnetillegg!.sumNettoBeløp,
                     ),
                   },
                 ],
@@ -165,7 +169,7 @@ export const BeregningJusterBMsBarnetillegg = ({
           {
             label: "U - BMs netto barnetillegg",
             labelBold: true,
-            value: `${formatterBeløpForBeregning(underholdskostnad.underholdskostnad)} - ${formatterBeløpForBeregning(barnetilleggBM.nettoBeløp)} = ${formatterBeløpForBeregning(sluttberegning.uminusNettoBarnetilleggBM)}`,
+            value: `${formatterBeløpForBeregning(underholdskostnad.underholdskostnad)} - ${formatterBeløpForBeregning(barnetilleggBM.sumNettoBeløp)} = ${formatterBeløpForBeregning(sluttberegning.uminusNettoBarnetilleggBM)}`,
           },
           {
             label: "Foreløpig bidrag",

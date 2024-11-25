@@ -312,7 +312,8 @@ export interface NotatBoforholdDto {
 export interface NotatDelberegningBarnetilleggDto {
   barnetillegg: NotatBarnetilleggDetaljerDto[];
   skattFaktor: number;
-  nettoBeløp: number;
+  sumBruttoBeløp: number;
+  sumNettoBeløp: number;
 }
 
 export interface NotatDelberegningBidragsevneDto {
