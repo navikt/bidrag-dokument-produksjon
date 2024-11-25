@@ -1,6 +1,6 @@
 @page {
-  size: A4 portrait;
-  margin: 2.5cm 2.5cm 2.5cm 1.5cm;
+  size: 595px 842px;
+  margin: 64px 64px 74px 64px;
   padding-bottom: 0cm;
   padding-top: 0cm;
 
@@ -10,7 +10,12 @@
   @bottom-center {
     content: element(footer)
   }
-  /*@top-left { content: element(header) }*/
+}
+
+* {
+  font-family: "Source Sans 3", sans-serif;
+  font-size: 11px;
+  line-height: 16px;
 }
 
 .footnote {
@@ -21,7 +26,7 @@
 .footnote::footnote-call {
   /* controls the footnote markers in the main page text */
   content: counter(footnote, symbols('*', '†', '‡'));
-  font-size: 0.7em;
+  font-size: 11px;
   vertical-align: super;
   line-height: 0;
   color: red;
@@ -78,16 +83,8 @@
 
 body {
   background-color: white;
-  width: 210mm;
   height: 100%;
   color: black;
-  line-height: 20px;
-  font-size: 12px;
-  font-family: "Source Sans Pro", serif;
-}
-
-table {
-  font-size: 12px;
 }
 
 :root {
@@ -188,11 +185,6 @@ dt {
   height: 180px;
 }
 
-* {
-  font-family: "Source Sans Pro";
-}
-
-
 .container {
   margin: 0cm 0.5cm;
   height: 100%;
@@ -224,8 +216,6 @@ dt {
 .table thead tr th {
   display: table-cell;
   text-align: left;
-  padding: 2px 2px 2px 0;
-
 }
 
 .table tbody {
@@ -235,14 +225,12 @@ dt {
 .table tbody tr th {
   display: table-cell;
   text-align: left;
-  padding: 2px 2px 2px 0;
   font-weight: bold;
 }
 
 .table tbody tr td {
   display: table-cell;
   text-align: left;
-  padding: 2px 2px 0 0;
 }
 
 .table_head_periode {
@@ -357,7 +345,6 @@ h6 {
 p {
   margin-top: 3px;
   margin-bottom: 3px;
-  font-size: 12px;
   font-family: "Source Sans Pro";
 }
 
@@ -369,7 +356,6 @@ Topp og bunntekst
 .custom-next-page-info:after {
   text-align: left;
   float: left;
-  font-size: 12px;
 
   content: attr(data-content);
 }
@@ -424,8 +410,6 @@ Custom components
 .soknad_detaljer {
   margin-bottom: 52px;
 }
-
-
 
 .text-red-500 {
   --tw-text-opacity: 1;

@@ -5,7 +5,7 @@ import {
   NotatInntektDto,
   NotatMalType,
   Rolletype,
-  NotatRolleDto,
+  NotatPersonDto,
 } from "~/types/Api";
 import { deductDays, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
@@ -35,7 +35,7 @@ import InntektRolle from "~/components/inntekt/InntektRolle";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
 
 export default function Inntekter() {
-  const { erAvslag, data, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
+  const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
     useNotatFelles();
   if (erAvslag) return null;
   return (
@@ -59,7 +59,7 @@ export default function Inntekter() {
       )}
 
       {type !== NotatMalType.FORSKUDD &&
-        søknadsbarn.map((barn, i) => (
+        søknadsbarn.map((barn) => (
           <div key={barn.ident} className={"mt-medium"}>
             <InntekterForRolle rolle={barn} />
           </div>
@@ -72,7 +72,7 @@ function InntekterForRolle({
   rolle,
   showRole = true,
 }: {
-  rolle: NotatRolleDto;
+  rolle: NotatPersonDto;
   showRole?: boolean;
 }) {
   const { data } = useNotatFelles();
@@ -274,7 +274,7 @@ function InntektPerBarnTable({
 
 type BeregnetInntektTableProps = {
   data: NotatBeregnetInntektDto[];
-  rolle: NotatRolleDto;
+  rolle: NotatPersonDto;
 };
 
 function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
@@ -289,7 +289,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
     beregnetInntekterColumnWidth[type][rolle.rolle as BehandlingRolletype];
   function renderTable(
     inntekter: DelberegningSumInntekt[],
-    gjelderBarn?: NotatRolleDto,
+    gjelderBarn?: NotatPersonDto,
   ) {
     return (
       <>

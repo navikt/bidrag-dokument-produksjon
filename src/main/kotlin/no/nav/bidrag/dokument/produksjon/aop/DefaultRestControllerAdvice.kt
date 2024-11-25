@@ -53,7 +53,8 @@ class DefaultRestControllerAdvice {
     private fun createMissingKotlinParameterViolation(ex: MismatchedInputException): String {
         val errorFieldRegex = Regex("\\.([^.]*)\\[\\\"(.*)\"\\]\$")
         val paths =
-            ex.path.map { errorFieldRegex.find(it.description)!! }.map {
+            ex.path.map { errorFieldRegex.find(it.description) }.map {
+                if (it == null) return "???"
                 val (objectName, field) = it.destructured
                 "$objectName.$field"
             }

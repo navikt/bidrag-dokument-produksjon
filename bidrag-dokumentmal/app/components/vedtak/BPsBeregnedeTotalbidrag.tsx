@@ -1,19 +1,15 @@
-import { useNotatFelles } from "~/components/notat_felles/NotatContext";
-import { NotatResultatSaerbidragsberegningDto } from "~/types/Api";
+import { NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto } from "~/types/Api";
 import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import { calculationTableBottomBorder } from "~/utils/stylingUtils";
 import tekster from "~/tekster";
 import { CalculationTabell } from "~/components/vedtak/CalculationTable";
 import React from "react";
 
-export const BPsBeregnedeTotalbidrag = () => {
-  const { data } = useNotatFelles();
-
-  const beregnetSærbidrag = data.vedtak!
-    .resultat[0] as NotatResultatSaerbidragsberegningDto;
-
-  const delberegning =
-    beregnetSærbidrag.delberegningBidragspliktigesBeregnedeTotalbidrag!;
+export const BPsBeregnedeTotalbidrag = ({
+  delberegning,
+}: {
+  delberegning: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto;
+}) => {
   const colPaddingClassname = "px-1";
   return (
     <div>

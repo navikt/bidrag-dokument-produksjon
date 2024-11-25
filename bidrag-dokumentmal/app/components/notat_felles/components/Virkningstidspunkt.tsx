@@ -15,10 +15,8 @@ export default function Virkningstidspunkt() {
     <div className={"virkningstidspunkt"}>
       <h2>Virkningstidspunkt</h2>
       <div>
-        <div style={{ width: "800px", height: "80px", marginBottom: 0 }}>
+        <div className={"flex flex-row justify-between w-[500px]"}>
           <DataViewTable
-            className={"two_column_view"}
-            width={"40%"}
             labelColWidth={"70px"}
             data={[
               {
@@ -26,7 +24,7 @@ export default function Virkningstidspunkt() {
                 value: capitalizeFirstLetter(behandling.søknadstype),
               },
               {
-                label: "Søkt fra",
+                label: "Søknad fra",
                 value: søktAvTilVisningsnavn(behandling.søktAv),
               },
               ...[
@@ -43,14 +41,8 @@ export default function Virkningstidspunkt() {
             ]}
           />
           <DataViewTable
-            className={"two_column_view"}
-            width={"40%"}
             labelColWidth={"100px"}
             data={[
-              {
-                label: "Virkningstidspunkt",
-                value: dateToDDMMYYYY(behandling.virkningstidspunkt),
-              },
               {
                 label: "Mottatt dato",
                 value: dateToDDMMYYYY(behandling.mottattDato as string),
@@ -62,6 +54,16 @@ export default function Virkningstidspunkt() {
             ]}
           />
         </div>
+        <DataViewTable
+          labelColWidth={"100px"}
+          className={"mt-4"}
+          data={[
+            {
+              label: "Virkningstidspunkt",
+              value: dateToDDMMYYYY(behandling.virkningstidspunkt),
+            },
+          ]}
+        />
         <NotatBegrunnelse data={virkningstidspunkt.begrunnelse} />
       </div>
     </div>

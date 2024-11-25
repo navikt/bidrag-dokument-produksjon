@@ -5,7 +5,7 @@ import {
   Kilde,
   NotatInntektDto,
   NotatMalType,
-  NotatRolleDto,
+  NotatPersonDto,
 } from "~/types/Api";
 import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
 import { groupBy } from "~/utils/array-utils";
@@ -57,7 +57,7 @@ function OpplysningerForRolle({
   rolle,
   showRole = true,
 }: {
-  rolle: NotatRolleDto;
+  rolle: NotatPersonDto;
   showRole?: boolean;
 }) {
   const { data } = useNotatFelles();
@@ -205,7 +205,7 @@ function ArbeidsforholdTable({ data }: { data: Arbeidsforhold[] }) {
           { name: tekster.tabell.felles.periode, width: "100px" },
           { name: tekster.tabell.arbeidsforhold.arbeidsgiver, width: "140px" },
           { name: tekster.tabell.arbeidsforhold.stilling, width: "40px" },
-          { name: tekster.tabell.arbeidsforhold.lønnsendring, width: "40px" },
+          { name: tekster.tabell.arbeidsforhold.lønnsendring, width: "80px" },
         ],
         rows: data.map((d) => ({
           columns: [

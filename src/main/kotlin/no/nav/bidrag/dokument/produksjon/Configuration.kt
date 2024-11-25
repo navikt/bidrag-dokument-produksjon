@@ -8,9 +8,6 @@ import no.nav.bidrag.commons.web.DefaultCorsFilter
 import no.nav.bidrag.commons.web.UserMdcFilter
 import no.nav.bidrag.dokument.produksjon.util.ReloadFilter
 import no.nav.bidrag.dokument.produksjon.util.getObjectmapper
-import no.nav.pdfgen.core.Environment
-import no.nav.pdfgen.core.PDFGenCore
-import no.nav.pdfgen.core.PDFGenResource
 import org.springdoc.core.customizers.OpenApiCustomizer
 import org.springframework.context.annotation.Bean
 import org.springframework.context.annotation.Configuration
@@ -26,13 +23,13 @@ class Configuration {
     init {
         System.setProperty("sun.java2d.cmm", "sun.java2d.cmm.kcms.KcmsServiceProvider")
         VeraGreenfieldFoundryProvider.initialise()
-        PDFGenCore.init(
-            Environment(
-                templateRoot = PDFGenResource("templates/"),
-                resourcesRoot = PDFGenResource("resources/"),
-                dataRoot = PDFGenResource("data/"),
-            ),
-        )
+//        PDFGenCore.init(
+//            Environment(
+//                templateRoot = PDFGenResource("templates/"),
+//                resourcesRoot = PDFGenResource("resources/"),
+//                dataRoot = PDFGenResource("data/"),
+//            ),
+//        )
     }
 
     @Bean

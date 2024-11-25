@@ -152,8 +152,20 @@
   position: relative
 }
 
+.mb-2 {
+  margin-bottom: 8px
+}
+
+.mb-4 {
+  margin-bottom: 16px
+}
+
 .mt-1 {
-  margin-top: 0.25rem
+  margin-top: 4px
+}
+
+.mt-4 {
+  margin-top: 16px
 }
 
 .block {
@@ -166,6 +178,10 @@
 
 .inline {
   display: inline
+}
+
+.flex {
+  display: flex
 }
 
 .table {
@@ -182,6 +198,18 @@
 
 .w-\[120px\] {
   width: 120px
+}
+
+.w-\[45px\] {
+  width: 45px
+}
+
+.w-\[500px\] {
+  width: 500px
+}
+
+.w-\[5px\] {
+  width: 5px
 }
 
 .w-\[70px\] {
@@ -201,9 +229,34 @@
 }
 
 .border-spacing-2 {
-  --tw-border-spacing-x: 0.5rem;
-  --tw-border-spacing-y: 0.5rem;
+  --tw-border-spacing-x: 8px;
+  --tw-border-spacing-y: 8px;
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y)
+}
+
+.break-before-column {
+  -moz-column-break-before: column;
+       break-before: column
+}
+
+.flex-row {
+  flex-direction: row
+}
+
+.flex-col {
+  flex-direction: column
+}
+
+.justify-between {
+  justify-content: space-between
+}
+
+.gap-1 {
+  gap: 4px
+}
+
+.gap-4 {
+  gap: 16px
 }
 
 .whitespace-pre-wrap {
@@ -212,6 +265,10 @@
 
 .border-0 {
   border-width: 0px
+}
+
+.border-b {
+  border-bottom-width: 1px
 }
 
 .border-b-2 {
@@ -230,31 +287,51 @@
   border-top-width: 1px
 }
 
+.border-t-0 {
+  border-top-width: 0px
+}
+
 .border-solid {
   border-style: solid
 }
 
-.border-black {
-  --tw-border-opacity: 1;
-  border-color: rgb(0 0 0 / var(--tw-border-opacity))
+.bg-table-header {
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 240 255 / var(--tw-bg-opacity))
 }
 
-.border-b-black {
-  --tw-border-opacity: 1;
-  border-bottom-color: rgb(0 0 0 / var(--tw-border-opacity))
+.bg-table-bg-even {
+  --tw-bg-opacity: 1;
+  background-color: rgb(242 243 245 / var(--tw-bg-opacity))
+}
+
+.p-table-body-tr-v1 {
+  padding: 2px 2px 0 0
+}
+
+.p-table-header-v1 {
+  padding: 2px 5px 2px 0
 }
 
 .px-1 {
-  padding-left: 0.25rem;
-  padding-right: 0.25rem
+  padding-left: 4px;
+  padding-right: 4px
 }
 
 .pb-2 {
-  padding-bottom: 0.5rem
+  padding-bottom: 8px
+}
+
+.pl-1 {
+  padding-left: 4px
 }
 
 .pr-1 {
-  padding-right: 0.25rem
+  padding-right: 4px
+}
+
+.pt-2 {
+  padding-top: 8px
 }
 
 .text-left {
@@ -263,11 +340,6 @@
 
 .text-right {
   text-align: right
-}
-
-.text-red-500 {
-  --tw-text-opacity: 1;
-  color: rgb(239 68 68 / var(--tw-text-opacity))
 }
 
 .filter {

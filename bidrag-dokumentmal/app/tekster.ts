@@ -1,17 +1,20 @@
+const begreper = {
+  bidragspliktiges: "Bidragspliktiges",
+  bidragspliktig: "Bidragspliktig",
+  bidragsmottakerens: "Bidragsmottakerens",
+  bidragsmottaker: "Bidragsmottaker",
+  barnets: "Barnets",
+  barn: "Barn",
+};
 export default {
   fraOffentligeRegistre: "Hentet fra offentlige registre",
   vedleggLenke: "se vedlegg nr. {} for opplysninger fra offentlige registre",
-  begreper: {
-    bidragspliktiges: "Bidragspliktiges",
-    bidragspliktig: "Bidragspliktig",
-    bidragsmottakerens: "Bidragsmottakerens",
-    bidragsmottaker: "Bidragsmottaker",
-    barnets: "Barnets",
-    barn: "Barn",
-  },
+  begreper: begreper,
   titler: {
     forskudd: "Forskudd, saksbehandlingsnotat",
     særbidrag: "Særbidrag, saksbehandlingsnotat",
+    bidrag: "Bidrag, saksbehandlingsnotat",
+    barnISaken: "Barn i saken",
     boforhold: {
       tittel: "Boforhold",
       søknadsbarn: "Søknadsbarn",
@@ -25,6 +28,11 @@ export default {
     },
   },
   tabell: {
+    bpsAndel: {
+      bpsInntekt: `${begreper.bidragspliktiges} inntekt`,
+      bmsInntekt: `${begreper.bidragsmottakerens} inntekt`,
+      barnsInntekt: `${begreper.barnets} inntekt`,
+    },
     felles: {
       periode: "Periode",
       fraDato: "Fra dato",
@@ -33,6 +41,35 @@ export default {
       beskrivelse: "Beskrivelse",
       type: "Type",
       status: "Status",
+      beregning: "Beregning",
+      beløp: "Beløp",
+    },
+    samvær: {
+      samværsklasse: "Samværsklasse",
+    },
+    underholdskostnader: {
+      beregning: {
+        forbruk: "Forbruk",
+        boutgifter: "Boutgifter",
+        stønadTilBarnetilsyn: "Stønad til barnetilsyn",
+        beregnetTilsyn: "Beregnet tilsynsutgift",
+        barnetrygd: "Barnetrygd",
+        underholdskostnad: "Underholdskostnad",
+      },
+      stønadTilBarnetilsyn: {
+        stønadTilBarnetilsyn: "Stønad til barnetilsyn",
+        omfang: "Omfang",
+      },
+      faktiskeTilsynsutgifter: {
+        totalTilsynsutgift: "Total tilsynsutgift",
+        kostpenger: "Kostpenger",
+        totalt: "Totalt (12 mnd)",
+        kommentar: "Kommentar",
+      },
+      tilleggsstønad: {
+        dagsats: "Dagsats",
+        totalt: "Totalt (12 mnd)",
+      },
     },
     utgifter: {
       betaltAvBp: "Betalt av Bidragspliktig",
