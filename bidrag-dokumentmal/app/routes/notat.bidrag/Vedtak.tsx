@@ -50,8 +50,8 @@ function VedtakTable({
         const tableData: TableData = {
           headers: [
             { name: "Periode", width: "130px" },
-            { name: "U*", width: "50px" },
-            { name: "BPs andel U*", width: "120px" },
+            { name: "U", width: "50px" },
+            { name: "BPs andel U", width: "120px" },
             { name: "Samværsfradrag", width: "100px" },
             { name: "Beregnet bidrag", width: "60px" },
             { name: "Endelig bidrag", width: "60px" },
@@ -74,11 +74,11 @@ function VedtakTable({
                     <table>
                       <tbody>
                         <tr>
-                          <td className="w-[45px]">
+                          <td className="w-[35px]">
                             {formatterProsent(d.bpsAndelU)}
                           </td>
                           <td className="w-[5px]">/</td>
-                          <td className="w-[45px]">
+                          <td className="w-[35px]">
                             {formatterBeløpForBeregning(d.bpsAndelBeløp)}
                           </td>
                         </tr>
@@ -99,7 +99,7 @@ function VedtakTable({
                   {
                     colSpan: 7,
                     content:
-                      "* U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
+                      "U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
                   },
                 ],
               },
