@@ -220,6 +220,10 @@
   width: 100%
 }
 
+.w-\[35px\] {
+  width: 35px
+}
+
 .table-auto {
   table-layout: auto
 }
@@ -232,11 +236,6 @@
   --tw-border-spacing-x: 8px;
   --tw-border-spacing-y: 8px;
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y)
-}
-
-.break-before-column {
-  -moz-column-break-before: column;
-       break-before: column
 }
 
 .flex-row {
@@ -253,10 +252,6 @@
 
 .gap-1 {
   gap: 4px
-}
-
-.gap-4 {
-  gap: 16px
 }
 
 .whitespace-pre-wrap {
@@ -295,14 +290,14 @@
   border-style: solid
 }
 
-.bg-table-header {
-  --tw-bg-opacity: 1;
-  background-color: rgb(230 240 255 / var(--tw-bg-opacity))
-}
-
 .bg-table-bg-even {
   --tw-bg-opacity: 1;
   background-color: rgb(242 243 245 / var(--tw-bg-opacity))
+}
+
+.bg-table-header {
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 240 255 / var(--tw-bg-opacity))
 }
 
 .p-table-body-tr-v1 {
