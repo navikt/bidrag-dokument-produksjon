@@ -168,6 +168,14 @@
   margin-top: 16px
 }
 
+.mt-2 {
+  margin-top: 8px
+}
+
+.mb-1 {
+  margin-bottom: 4px
+}
+
 .block {
   display: block
 }
@@ -234,11 +242,6 @@
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y)
 }
 
-.break-before-column {
-  -moz-column-break-before: column;
-       break-before: column
-}
-
 .flex-row {
   flex-direction: row
 }
@@ -253,6 +256,10 @@
 
 .gap-1 {
   gap: 4px
+}
+
+.gap-2 {
+  gap: 8px
 }
 
 .gap-4 {
@@ -295,14 +302,14 @@
   border-style: solid
 }
 
-.bg-table-header {
-  --tw-bg-opacity: 1;
-  background-color: rgb(230 240 255 / var(--tw-bg-opacity))
-}
-
 .bg-table-bg-even {
   --tw-bg-opacity: 1;
   background-color: rgb(242 243 245 / var(--tw-bg-opacity))
+}
+
+.bg-table-header {
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 240 255 / var(--tw-bg-opacity))
 }
 
 .p-table-body-tr-v1 {
@@ -310,7 +317,7 @@
 }
 
 .p-table-header-v1 {
-  padding: 2px 5px 2px 0
+  padding: 2px 5px 2px 5px
 }
 
 .px-1 {
@@ -332,6 +339,22 @@
 
 .pt-2 {
   padding-top: 8px
+}
+
+.pl-2 {
+  padding-left: 8px
+}
+
+.pr-2 {
+  padding-right: 8px
+}
+
+.pl-3 {
+  padding-left: 12px
+}
+
+.pr-3 {
+  padding-right: 12px
 }
 
 .text-left {

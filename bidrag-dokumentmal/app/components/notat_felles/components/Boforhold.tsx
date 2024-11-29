@@ -11,12 +11,14 @@ import elementIds from "~/utils/elementIds";
 import tekster from "~/tekster";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Sivilstand from "~/components/notat_felles/components/Sivilstand";
+import { CommonTable } from "~/components/CommonTable";
+import { formatPeriode } from "~/utils/date-utils";
 
 export default function Boforhold() {
   const { erAvslag, data } = useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div className="soknad_parter section">
+    <div className="soknad_parter section mb-medium">
       <div className={"elements_inline"}>
         <h2>{tekster.titler.boforhold.tittel}</h2>
         <a href={`#${elementIds.vedleggBoforhold}`}>
@@ -34,8 +36,44 @@ export default function Boforhold() {
           />
         )}
         <NotatBegrunnelse data={data.boforhold.begrunnelse} />
+        <BoforholdBeregnetTabell />
       </div>
     </div>
+  );
+}
+
+function BoforholdBeregnetTabell() {
+  const { data } = useNotatFelles();
+  if (data.boforhold.beregnetBoforhold.length === 0) return null;
+  return (
+    <>
+      <h3 id={"linktilmeg"}>
+        {tekster.titler.boforhold.beregnetBoforholdTittel}
+      </h3>
+
+      <CommonTable
+        data={{
+          headers: [
+            {
+              name: tekster.tabell.felles.fraTilOgMed,
+            },
+            {
+              name: "Antall barn i husstanden",
+            },
+            {
+              name: "Bor med andre voksne",
+            },
+          ],
+          rows: data.boforhold.beregnetBoforhold.map((d) => ({
+            columns: [
+              { content: formatPeriode(d.periode.fom, d.periode.til) },
+              { content: d.antallBarn },
+              { content: d.borMedAndreVoksne ? "Ja" : "Nei" },
+            ],
+          })),
+        }}
+      />
+    </>
   );
 }
 function BoforholdAndreVoksneIHusstanden({

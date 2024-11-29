@@ -5,7 +5,7 @@ export default {
   theme: {
     extend: {
       padding: {
-        "table-header-v1": "2px 5px 2px 0",
+        "table-header-v1": "2px 5px 2px 5px",
         "table-body-v1": "2px 2px 2px 0",
         "table-body-tr-v1": "2px 2px 0 0",
       },

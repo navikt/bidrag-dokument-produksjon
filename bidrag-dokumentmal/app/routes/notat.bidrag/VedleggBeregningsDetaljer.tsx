@@ -10,7 +10,7 @@ import { erResutlatMedBeregning } from "~/routes/notat.særbidrag/SærbidragHelp
 import { DataViewTable } from "~/components/DataViewTable";
 import { formatPeriode } from "~/utils/date-utils";
 import HorizontalLine from "~/components/HorizontalLine";
-import { BPAndelUnderholdskostnad } from "~/routes/notat.bidrag/BPAndelUnderholdskostnad";
+import { BPAndelUnderholdskostnad } from "~/routes/notat.bidrag/beregningsdetaljer/BPAndelUnderholdskostnad";
 import { Samværsfradrag } from "~/routes/notat.bidrag/beregningsdetaljer/Samværsfradrag";
 import { NettoBarnetilleggTable } from "~/routes/notat.bidrag/beregningsdetaljer/NettoBarnetilleggTable";
 import { BeregningFordeltBidragEvne } from "~/routes/notat.bidrag/beregningsdetaljer/BeregningFordeltBidragEvne";

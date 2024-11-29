@@ -90,6 +90,13 @@ export interface DelberegningBidragspliktigesAndel {
   barnetErSelvforsørget: boolean;
 }
 
+export interface DelberegningBoforhold {
+  periode: TypeArManedsperiode;
+  /** @format double */
+  antallBarn: number;
+  borMedAndreVoksne: boolean;
+}
+
 export interface DelberegningSumInntekt {
   periode: TypeArManedsperiode;
   totalinntekt: number;
@@ -270,9 +277,9 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
   avslagVisningsnavn?: string;
 }
 
@@ -307,6 +314,7 @@ export interface NotatBoforholdDto {
   begrunnelse: NotatBegrunnelseDto;
   /** Notat begrunnelse skrevet av saksbehandler */
   notat: NotatBegrunnelseDto;
+  beregnetBoforhold: DelberegningBoforhold[];
 }
 
 export interface NotatDelberegningBarnetilleggDto {
@@ -336,6 +344,22 @@ export interface NotatFaktiskTilsynsutgiftDto {
   kostpenger?: number;
   kommentar?: string;
   total: number;
+}
+
+export interface NotatGebyrInntektDto {
+  skattepliktigInntekt: number;
+  maksBarnetillegg?: number;
+  totalInntekt: number;
+}
+
+export interface NotatGebyrRolleDto {
+  inntekt: NotatGebyrInntektDto;
+  manueltOverstyrtGebyr?: NotatManueltOverstyrGebyrDto;
+  beregnetIlagtGebyr: boolean;
+  beløpGebyrsats: number;
+  rolle: NotatPersonDto;
+  gebyrResultatVisningsnavn: string;
+  ilagtGebyr?: boolean;
 }
 
 export interface NotatInntektDto {
@@ -379,6 +403,12 @@ export enum NotatMalType {
   FORSKUDD = "FORSKUDD",
   SAeRBIDRAG = "SÆRBIDRAG",
   BIDRAG = "BIDRAG",
+}
+
+export interface NotatManueltOverstyrGebyrDto {
+  begrunnelse?: string;
+  /** Skal bare settes hvis det er avslag */
+  ilagtGebyr?: boolean;
 }
 
 export interface NotatOffentligeOpplysningerUnderhold {
@@ -481,9 +511,9 @@ export interface NotatSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
   skattMånedsbeløp: number;
 }
 
@@ -620,8 +650,8 @@ export interface NotatVirkningstidspunktDto {
   begrunnelse: NotatBegrunnelseDto;
   /** Notat begrunnelse skrevet av saksbehandler */
   notat: NotatBegrunnelseDto;
-  årsakVisningsnavn?: string;
   avslagVisningsnavn?: string;
+  årsakVisningsnavn?: string;
 }
 
 export interface NotatVoksenIHusstandenDetaljerDto {
@@ -872,6 +902,7 @@ export interface VedtakNotatDto {
   utgift?: NotatSaerbidragUtgifterDto;
   boforhold: NotatBoforholdDto;
   samvær: NotatSamvaerDto[];
+  gebyr?: NotatGebyrRolleDto[];
   underholdskostnader?: NotatUnderholdDto;
   personer: NotatPersonDto[];
   roller: NotatPersonDto[];

@@ -4,12 +4,13 @@ import { VedtakFattetDetaljer } from "~/components/notat_felles/components/Vedta
 import { formatPeriode, deductDays } from "~/utils/date-utils";
 import elementIds from "~/utils/elementIds";
 import { groupBy } from "~/utils/array-utils";
-import { TableData, CommonTable } from "~/components/CommonTable";
+import { TableData, CommonTable, TableRow } from "~/components/CommonTable";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
 import {
   formatterBeløpForBeregning,
   formatterProsent,
 } from "~/utils/visningsnavn";
+import { DataViewTable } from "~/components/DataViewTable";
 
 export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
@@ -49,52 +50,72 @@ function VedtakTable({
         const perioder = value[0].perioder;
         const tableData: TableData = {
           headers: [
-            { name: "Periode", width: "130px" },
-            { name: "U*", width: "50px" },
-            { name: "BPs andel U*", width: "120px" },
+            { name: "U", width: "50px" },
+            { name: "BPs andel U", width: "120px" },
             { name: "Samværsfradrag", width: "100px" },
             { name: "Beregnet bidrag", width: "60px" },
             { name: "Endelig bidrag", width: "60px" },
-            { name: "Resultat", width: "150px" },
           ],
           rows: perioder
-            .map((d) => ({
-              skipBorderBottom: false,
-              columns: [
-                {
-                  content: formatPeriode(
-                    d.periode!.fom,
-                    deductDays(d.periode!.til, 1),
-                  ),
-                  colSpan: 1,
-                },
-                { content: formatterBeløpForBeregning(d.underholdskostnad) },
-                {
-                  content: (
-                    <table>
-                      <tbody>
-                        <tr>
-                          <td className="w-[45px]">
-                            {formatterProsent(d.bpsAndelU)}
-                          </td>
-                          <td className="w-[5px]">/</td>
-                          <td className="w-[45px]">
-                            {formatterBeløpForBeregning(d.bpsAndelBeløp)}
-                          </td>
-                        </tr>
-                      </tbody>
-                    </table>
-                  ),
-                },
-                { content: formatterBeløpForBeregning(d.samværsfradrag) },
-                { content: formatterBeløpForBeregning(d.beregnetBidrag) },
-                { content: formatterBeløpForBeregning(d.faktiskBidrag) },
-                { content: d.resultatkodeVisningsnavn },
-              ],
-            }))
+            .flatMap((d) => [
+              {
+                skipBorderBottom: true,
+                periodColumn: formatPeriode(
+                  d.periode!.fom,
+                  deductDays(d.periode!.til, 1),
+                ),
+                columns: [
+                  { content: formatterBeløpForBeregning(d.underholdskostnad) },
+                  {
+                    content: (
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td className="w-[45px]">
+                              {formatterProsent(d.bpsAndelU)}
+                            </td>
+                            <td className="w-[5px]">/</td>
+                            <td className="w-[45px]">
+                              {formatterBeløpForBeregning(d.bpsAndelBeløp)}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    ),
+                  },
+                  { content: formatterBeløpForBeregning(d.samværsfradrag) },
+                  { content: formatterBeløpForBeregning(d.beregnetBidrag) },
+                  { content: formatterBeløpForBeregning(d.faktiskBidrag) },
+                ],
+              },
+              {
+                zebraStripe: false,
+                skipPadding: true,
+                columns: [
+                  {
+                    colSpan: 8,
+                    content: (
+                      <DataViewTable
+                        className={"pl-0 ml-0"}
+                        data={[
+                          {
+                            label: "Resultat",
+                            labelBold: true,
+                            value: d.resultatkodeVisningsnavn,
+                          },
+                        ]}
+                      />
+                    ),
+                  },
+                ],
+              },
+            ])
             .concat([
               {
                 skipBorderBottom: true,
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-ignore
+                zebraStripe: false,
                 columns: [
                   {
                     colSpan: 7,
@@ -102,8 +123,8 @@ function VedtakTable({
                       "* U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
                   },
                 ],
-              },
-            ]),
+              } as TableRow,
+            ]) as TableRow[],
         };
         return (
           <div key={key} className="table_container mb-medium mt-medium">
