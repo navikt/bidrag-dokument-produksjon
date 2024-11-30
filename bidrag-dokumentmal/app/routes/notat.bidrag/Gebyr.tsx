@@ -9,7 +9,6 @@ export default function Gebyr() {
   const { data, erAvslag } = useNotatFelles();
   const gebyr = data.gebyr;
   if (!gebyr || gebyr.length == 0) return null;
-  console.log(gebyr);
   return (
     <div>
       <div className={"elements_inline section-title"}>
