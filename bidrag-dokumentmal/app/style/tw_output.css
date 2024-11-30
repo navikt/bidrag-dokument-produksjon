@@ -141,7 +141,7 @@
 }
 
 .section-title {
-  margin: 32px 0 8px 0
+  margin: 32px 0 0 0
 }
 
 .fixed {
@@ -301,7 +301,7 @@
 }
 
 .p-table-body-tr-v1 {
-  padding: 2px 2px 0 0
+  padding: 2px 2px 0 5px
 }
 
 .p-table-header-v1 {

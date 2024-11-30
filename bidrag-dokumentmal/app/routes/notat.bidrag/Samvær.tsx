@@ -30,7 +30,7 @@ export default function Samvær() {
 
 function SamværBarn({ data }: { data: NotatSamvaerDto }) {
   return (
-    <div className={"mb-medium mt-medium"}>
+    <div className={"mb-medium"}>
       <DataViewTable
         gap={"5px"}
         data={[

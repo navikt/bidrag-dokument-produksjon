@@ -129,9 +129,9 @@ function VedtakTable({
             ]) as TableRow[],
         };
         return (
-          <div key={key} className="table_container mb-medium mt-medium">
+          <div key={key} className="table_container mb-medium">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            <CommonTable data={tableData} width={"550px"} />
+            <CommonTable data={tableData} />
           </div>
         );
       })}

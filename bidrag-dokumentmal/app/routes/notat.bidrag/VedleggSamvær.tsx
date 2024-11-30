@@ -10,9 +10,7 @@ export default function VedleggSamvær() {
 
   return (
     <div style={{ pageBreakBefore: "always" }}>
-      <h2 id={elementIds.vedleggSamvær} className={"pb-2"}>
-        Vedlegg nr. 3: Samvær
-      </h2>
+      <h2 id={elementIds.vedleggSamvær}>Vedlegg nr. 3: Samvær</h2>
       {data.samvær.map((samværBarn, index) => (
         <SamværsberegningDetaljerBarn samværBarn={samværBarn} key={index} />
       ))}
@@ -28,7 +26,7 @@ function SamværsberegningDetaljerBarn({
   return (
     <>
       <DataViewTable
-        className={"pb-2 pt-2"}
+        className={"pb-2"}
         data={
           [
             {

@@ -8,7 +8,7 @@ export default {
       padding: {
         "table-header-v1": "2px 5px 2px 5px",
         "table-body-v1": "2px 2px 2px 0",
-        "table-body-tr-v1": "2px 2px 0 0",
+        "table-body-tr-v1": "2px 2px 0 5px",
       },
       margin: {
         "section-title": "5px",
@@ -37,7 +37,7 @@ export default {
     plugin(function ({ addComponents }) {
       addComponents({
         ".section-title": {
-          margin: "32px 0 8px 0",
+          margin: "32px 0 0 0",
         },
       });
     }),

@@ -28,7 +28,7 @@ export default function VedleggBeregningsDetaljer() {
     return null;
   return (
     <div style={{ pageBreakBefore: "always" }}>
-      <h2 id={elementIds.vedleggBeregningsdetaljer} className={"pb-2"}>
+      <h2 id={elementIds.vedleggBeregningsdetaljer}>
         Vedlegg nr. 4: Beregningsdetaljer
       </h2>
       <VedleggBeregningsDetaljerInnhold />
@@ -56,8 +56,6 @@ function VedleggBeregningsDetaljerInnhold() {
         (resultat: NotatResultatBidragsberegningBarnDto) => (
           <>
             <DataViewTable
-              className={"pt-2 pb-0 mb-0"}
-              gap={"5px"}
               data={[
                 {
                   label: "Barn i saken",
@@ -78,9 +76,9 @@ function VedleggBeregningsDetaljerInnhold() {
                   <>
                     <BidragBeregningContext.Provider value={{ ...detaljer }}>
                       <>
-                        <div className={"pt-2 pb-2"}>
+                        <div className={"pb-2"}>
                           <DataViewTable
-                            className={"mt-medium mb-2"}
+                            className={"mb-2"}
                             data={[
                               {
                                 label: "Periode",
