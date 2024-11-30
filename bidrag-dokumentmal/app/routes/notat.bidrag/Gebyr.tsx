@@ -11,17 +11,20 @@ export default function Gebyr() {
   if (!gebyr || gebyr.length == 0) return null;
   console.log(gebyr);
   return (
-    <div className={"mb-medium"}>
-      <div className={"elements_inline"}>
+    <div>
+      <div className={"elements_inline section-title"}>
         <h2>Gebyr</h2>
       </div>
-      <div className={"flex flex-col gap-4 mt-2"}>
+      <>
         {gebyr
           .sort((d) =>
             konverterRolletype(d.rolle.rolle) == Rolletype.BM ? 1 : -1,
           )
           .map((gebyRolle, i) => (
-            <div key={gebyRolle.rolle.ident! + i}>
+            <div
+              key={gebyRolle.rolle.ident! + i}
+              className={gebyr.length - 1 == i ? "" : "mb-2"}
+            >
               <DataViewTable
                 className={"mb-2"}
                 data={
@@ -103,7 +106,7 @@ export default function Gebyr() {
               {gebyRolle.beregnetIlagtGebyr}
             </div>
           ))}
-      </div>
+      </>
     </div>
   );
 }

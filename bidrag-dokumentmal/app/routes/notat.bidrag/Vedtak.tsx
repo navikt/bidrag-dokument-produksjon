@@ -111,16 +111,18 @@ function VedtakTable({
               },
             ])
             .concat([
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-ignore
               {
                 skipBorderBottom: true,
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-ignore
                 zebraStripe: false,
+                skipPadding: true,
+                className: "pt-2",
                 columns: [
                   {
-                    colSpan: 7,
+                    fullSpan: true,
                     content:
-                      "* U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
+                      "U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
                   },
                 ],
               } as TableRow,

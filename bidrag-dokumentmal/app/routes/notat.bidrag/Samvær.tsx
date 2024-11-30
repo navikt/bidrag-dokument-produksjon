@@ -12,19 +12,19 @@ export default function Samvær() {
   const samvær = data.samvær;
   if (samvær.length == 0) return null;
   return (
-    <div className={"underholdskostnad"}>
-      <div className={"elements_inline"}>
+    <>
+      <div className={"elements_inline section-title"}>
         <h2>Samvær</h2>
         <a href={`#${elementIds.vedleggSamvær}`}>
           se vedlegg nr. 3 for beregningsdetaljer
         </a>
       </div>
-      <div>
+      <>
         {samvær.map((barn, i) => (
           <SamværBarn data={barn} key={i + barn.gjelderBarn.ident!} />
         ))}
-      </div>
-    </div>
+      </>
+    </>
   );
 }
 

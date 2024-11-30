@@ -18,14 +18,14 @@ export default function Boforhold() {
   const { erAvslag, data } = useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div className="soknad_parter section mb-medium">
-      <div className={"elements_inline"}>
+    <>
+      <div className={"elements_inline section-title"}>
         <h2>{tekster.titler.boforhold.tittel}</h2>
         <a href={`#${elementIds.vedleggBoforhold}`}>
           {tekster.vedleggLenke.replace("{}", "1")}
         </a>
       </div>
-      <div>
+      <>
         {data.boforhold.barn.map((b, i) => (
           <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />
         ))}
@@ -37,8 +37,8 @@ export default function Boforhold() {
         )}
         <NotatBegrunnelse data={data.boforhold.begrunnelse} />
         <BoforholdBeregnetTabell />
-      </div>
-    </div>
+      </>
+    </>
   );
 }
 

@@ -14,7 +14,7 @@ export default function Underholdskostnad() {
   if (underholdskostnader == null) return null;
   return (
     <>
-      <h2>Underholdskostnad</h2>
+      <h2 className={"section-title"}>Underholdskostnad</h2>
       <>
         {underholdskostnader.underholdskostnaderBarn
           .filter((barn) => barn.gjelderBarn.rolle != null)
@@ -143,6 +143,7 @@ function FaktiskeTilsynsutgifterTabell({
             {
               name: tekster.tabell.underholdskostnader.faktiskeTilsynsutgifter
                 .totalTilsynsutgift,
+              width: "100px",
             },
             {
               name: tekster.tabell.underholdskostnader.faktiskeTilsynsutgifter
@@ -155,6 +156,7 @@ function FaktiskeTilsynsutgifterTabell({
             {
               name: tekster.tabell.underholdskostnader.faktiskeTilsynsutgifter
                 .kommentar,
+              width: "300px",
             },
           ],
           rows: data.faktiskTilsynsutgift.flatMap((d) => [

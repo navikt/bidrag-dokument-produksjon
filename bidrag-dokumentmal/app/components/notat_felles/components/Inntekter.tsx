@@ -41,8 +41,8 @@ export default function Inntekter() {
     useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div className="soknad_parter section">
-      <div className={"elements_inline"}>
+    <>
+      <div className={"elements_inline section-title"}>
         <h2>Inntekter</h2>
         <a href={`#${elementIds.vedleggInntekter}`}>
           se vedlegg nr. 2 for opplysninger fra offentlige registre
@@ -66,7 +66,7 @@ export default function Inntekter() {
             <InntekterForRolle rolle={barn} />
           </div>
         ))}
-    </div>
+    </>
   );
 }
 
@@ -88,7 +88,7 @@ function InntekterForRolle({
   function renderInntekter() {
     if (!isHarInntekter(inntekter!)) return <p>Ingen inntekter</p>;
     return (
-      <div>
+      <>
         <InntektTable
           data={inntekter!.årsinntekter}
           title={"Skattepliktige og pensjonsgivende inntekt"}
@@ -116,11 +116,11 @@ function InntekterForRolle({
           data={inntekter!.beregnetInntekter}
           rolle={rolle}
         />
-      </div>
+      </>
     );
   }
   return (
-    <div>
+    <>
       {showRole && <InntektRolle rolle={rolle} />}
       {renderInntekter()}
       <NotatBegrunnelse
@@ -128,7 +128,7 @@ function InntekterForRolle({
           (d) => d.gjelder?.ident == rolle?.ident,
         )}
       />
-    </div>
+    </>
   );
 }
 
@@ -250,9 +250,9 @@ function InntektPerBarnTable({
 
                     return {
                       periodColumn:
-                        styling == "V2" &&
-                        erBarnetillegg &&
-                        formatPeriode(periode!.fom, periode!.til),
+                        styling == "V2" && erBarnetillegg
+                          ? formatPeriode(periode!.fom, periode!.til)
+                          : undefined,
                       columns: [
                         (styling == "V1" || !erBarnetillegg) && {
                           content: formatPeriode(periode!.fom, periode!.til),

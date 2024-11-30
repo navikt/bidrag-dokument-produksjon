@@ -5,6 +5,7 @@ type RowContent = ReactElement | string | number | null | undefined;
 export type TableColumn = {
   width?: string;
   colSpan?: number;
+  fullSpan?: boolean;
   labelBold?: boolean;
   content: RowContent;
 };
@@ -13,6 +14,7 @@ export type TableRow = {
   borderBottom?: boolean;
   skipBorderBottom?: boolean;
   skipPadding?: boolean;
+  className?: string;
   periodColumn?: RowContent;
   zebraStripe?: boolean;
   columns: TableColumn[];
@@ -39,7 +41,7 @@ export function CommonTable({
   const { styling } = useTheme();
   const cellV2Styling =
     "pb-2 pt-2 pl-3 pr-3 border-b border-solid border-t-0 border-r-0 border-l-0";
-  const cellV2StylingWithoutBorder = "pb-2 pt-2 pl-1 pr-1";
+  const cellV2StylingWithoutBorder = "pb-2 pt-2 pl-3 pr-3";
   const style =
     styling == "V2" ? { width: "670px" } : { width: width, maxWidth: "620px" };
 
@@ -61,11 +63,11 @@ export function CommonTable({
                         ? cellV2StylingWithoutBorder
                         : cellV2Styling
                       : ""
-                  } ${row.periodColumn ? false : (row.zebraStripe != false && index % 2 == 1) || row.zebraStripe == true ? "bg-table-bg-even" : ""}`
+                  } ${row.periodColumn ? false : (row.zebraStripe != false && index % 2 == 1) || row.zebraStripe == true ? "bg-table-bg-even" : ""} ${row.className}`
                 : "p-table-body-tr-v1"
             }
             key={column.content?.toString()}
-            colSpan={column.colSpan}
+            colSpan={column.fullSpan ? headers.length : column.colSpan}
             style={{
               fontWeight: column.labelBold ? "bold" : "normal",
             }}
@@ -123,9 +125,7 @@ export function CommonTable({
                   {
                     ...d,
                     periodColumn: null,
-                    columns: [
-                      { content: d.periodColumn, colSpan: headers.length },
-                    ],
+                    columns: [{ content: d.periodColumn, fullSpan: true }],
                   },
                   1,
                   true,
