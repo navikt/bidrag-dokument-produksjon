@@ -1,4 +1,7 @@
-import { NotatResultatBidragsberegningBarnDto } from "~/types/Api";
+import {
+  NotatResultatBidragsberegningBarnDto,
+  Samvaersklasse,
+} from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
 import { formatPeriode, deductDays } from "~/utils/date-utils";
@@ -52,7 +55,8 @@ function VedtakTable({
           headers: [
             { name: "U", width: "50px" },
             { name: "BPs andel U", width: "120px" },
-            { name: "Samværsfradrag", width: "100px" },
+            { name: "Samvær", width: "100px" },
+            { name: "Evne / 25%", width: "100px" },
             { name: "Beregnet bidrag", width: "60px" },
             { name: "Endelig bidrag", width: "60px" },
           ],
@@ -71,11 +75,11 @@ function VedtakTable({
                       <table>
                         <tbody>
                           <tr>
-                            <td className="w-[45px]">
+                            <td align={"right"}>
                               {formatterProsent(d.bpsAndelU)}
                             </td>
                             <td className="w-[5px]">/</td>
-                            <td className="w-[45px]">
+                            <td>
                               {formatterBeløpForBeregning(d.bpsAndelBeløp)}
                             </td>
                           </tr>
@@ -83,7 +87,53 @@ function VedtakTable({
                       </table>
                     ),
                   },
-                  { content: formatterBeløpForBeregning(d.samværsfradrag) },
+                  {
+                    content: (
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td align="right">
+                              {formatterBeløpForBeregning(d.samværsfradrag)}
+                            </td>
+                            <td className="w-[5px]">/</td>
+                            <td>
+                              {d.beregningsdetaljer != undefined
+                                ? d.beregningsdetaljer!.samværsfradrag!
+                                    .samværsklasse ===
+                                  Samvaersklasse.DELT_BOSTED
+                                  ? "D"
+                                  : d.beregningsdetaljer!.samværsfradrag
+                                      ?.samværsklasseVisningsnavn
+                                : 0}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    ),
+                  },
+                  {
+                    content: (
+                      <table>
+                        <tbody>
+                          <tr>
+                            <td align="right">
+                              {formatterBeløpForBeregning(
+                                d.beregningsdetaljer?.delberegningBidragsevne
+                                  ?.bidragsevne ?? 0,
+                              )}
+                            </td>
+                            <td className="w-[5px]">/</td>
+                            <td>
+                              {formatterBeløpForBeregning(
+                                d.beregningsdetaljer?.delberegningBidragsevne
+                                  ?.sumInntekt25Prosent ?? 0,
+                              )}
+                            </td>
+                          </tr>
+                        </tbody>
+                      </table>
+                    ),
+                  },
                   { content: formatterBeløpForBeregning(d.beregnetBidrag) },
                   { content: formatterBeløpForBeregning(d.faktiskBidrag) },
                 ],
