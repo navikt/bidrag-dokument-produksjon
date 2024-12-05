@@ -258,6 +258,11 @@
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y)
 }
 
+.break-before-page {
+  -moz-column-break-before: page;
+       break-before: page
+}
+
 .flex-row {
   flex-direction: row
 }

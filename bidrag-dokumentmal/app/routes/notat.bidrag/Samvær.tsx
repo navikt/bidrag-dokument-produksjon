@@ -8,7 +8,8 @@ import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import elementIds from "~/utils/elementIds";
 
 export default function Samvær() {
-  const { data } = useNotatFelles();
+  const { data, erAvslag } = useNotatFelles();
+  if (erAvslag) return null;
   const samvær = data.samvær;
   if (samvær.length == 0) return null;
   return (

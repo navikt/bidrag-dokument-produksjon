@@ -9,7 +9,9 @@ import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import KildeIcon from "~/components/KildeIcon";
 
 export default function Underholdskostnad() {
-  const { data } = useNotatFelles();
+  const { data, erAvslag } = useNotatFelles();
+  if (erAvslag) return null;
+
   const underholdskostnader = data.underholdskostnader;
   if (underholdskostnader == null) return null;
   return (

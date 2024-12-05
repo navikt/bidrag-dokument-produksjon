@@ -1,12 +1,10 @@
 import elementIds from "~/utils/elementIds";
 import {
   NotatResultatBidragsberegningBarnDto,
-  NotatResultatSaerbidragsberegningDto,
   Rolletype,
   BidragPeriodeBeregningsdetaljer,
 } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
-import { erResutlatMedBeregning } from "~/routes/notat.særbidrag/SærbidragHelpers";
 import { DataViewTable } from "~/components/DataViewTable";
 import { formatPeriode } from "~/utils/date-utils";
 import HorizontalLine from "~/components/HorizontalLine";
@@ -19,13 +17,8 @@ import { EndeligBidragTable } from "~/routes/notat.bidrag/beregningsdetaljer/End
 import { BPsEvneTableV2 } from "~/components/vedtak/BPsEvneTableV2";
 
 export default function VedleggBeregningsDetaljer() {
-  const { data } = useNotatFelles();
-  if (
-    !erResutlatMedBeregning(
-      (data.vedtak?.resultat as NotatResultatSaerbidragsberegningDto[]) ?? [],
-    )
-  )
-    return null;
+  const { erAvslag } = useNotatFelles();
+  if (erAvslag) return null;
   return (
     <div style={{ pageBreakBefore: "always" }}>
       <h2 id={elementIds.vedleggBeregningsdetaljer}>

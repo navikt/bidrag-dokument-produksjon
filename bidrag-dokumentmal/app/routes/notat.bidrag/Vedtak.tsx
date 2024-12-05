@@ -18,35 +18,26 @@ import { DataViewTable } from "~/components/DataViewTable";
 export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
   return (
-    <div>
-      <div
-        style={{
-          pageBreakBefore: erAvslag ? "auto" : "always",
-          display: "inline-block",
-        }}
-      >
-        <div className={"elements_inline"}>
-          <h2>Vedtak</h2>
+    <>
+      <div className={"elements_inline section-title break-before-page"}>
+        <h2 className={"section-title"}>Vedtak</h2>
+        {!erAvslag && (
           <a href={`#${elementIds.vedleggBeregningsdetaljer}`}>
             se vedlegg nr. 3 for beregningsdetaljer
           </a>
-        </div>
-        {erAvslag ? (
-          <VedtakTableAvslag
-            data={
-              data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]
-            }
-          />
-        ) : (
-          <VedtakTable
-            data={
-              data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]
-            }
-          />
         )}
       </div>
+      {erAvslag ? (
+        <VedtakTableAvslag
+          data={data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]}
+        />
+      ) : (
+        <VedtakTable
+          data={data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]}
+        />
+      )}
       <VedtakFattetDetaljer data={data.vedtak} />
-    </div>
+    </>
   );
 }
 

@@ -6,8 +6,8 @@ import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { formatPeriode } from "~/utils/date-utils";
 
 export default function VedleggSamvær() {
-  const { data } = useNotatFelles();
-
+  const { data, erAvslag } = useNotatFelles();
+  if (erAvslag) return null;
   return (
     <div style={{ pageBreakBefore: "always" }}>
       <h2 id={elementIds.vedleggSamvær}>Vedlegg nr. 3: Samvær</h2>
