@@ -232,6 +232,18 @@
   width: 60px
 }
 
+.w-\[40px\] {
+  width: 40px
+}
+
+.w-\[35px\] {
+  width: 35px
+}
+
+.w-\[25px\] {
+  width: 25px
+}
+
 .table-auto {
   table-layout: auto
 }

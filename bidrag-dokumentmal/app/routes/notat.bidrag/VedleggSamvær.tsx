@@ -23,6 +23,10 @@ function SamværsberegningDetaljerBarn({
 }: {
   samværBarn: NotatSamvaerDto;
 }) {
+  console.log("HERE", samværBarn.perioder.length);
+  const samværsperioderMedBeregning = samværBarn.perioder.filter(
+    (p) => p.beregning != null,
+  );
   return (
     <>
       <DataViewTable
@@ -37,10 +41,11 @@ function SamværsberegningDetaljerBarn({
           ].filter((d) => d != null) as DataViewTableData[]
         }
       />
-      {samværBarn.perioder
-        .filter((p) => p.beregning != null)
-        .map((periode, index) => (
-          <div>
+      {samværsperioderMedBeregning.length == 0 ? (
+        <p>Ingen beregnet samvær</p>
+      ) : (
+        samværsperioderMedBeregning.map((periode, index) => (
+          <div key={index + "_" + periode.samværsklasseVisningsnavn}>
             <DataViewTable
               className={"pt-2 pb-2"}
               data={
@@ -61,7 +66,8 @@ function SamværsberegningDetaljerBarn({
               key={`ferie_${index}_${samværBarn.gjelderBarn.navn}`}
             />
           </div>
-        ))}
+        ))
+      )}
     </>
   );
 }

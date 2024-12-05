@@ -57,8 +57,8 @@ function VedtakTable({
             { name: "BPs andel U", width: "120px" },
             { name: "Samvær", width: "100px" },
             { name: "Evne / 25%", width: "100px" },
-            { name: "Beregnet bidrag", width: "60px" },
-            { name: "Endelig bidrag", width: "60px" },
+            { name: "Beregnet bidrag", width: "80px" },
+            { name: "Endelig bidrag", width: "80px" },
           ],
           rows: perioder
             .flatMap((d) => [
@@ -75,7 +75,7 @@ function VedtakTable({
                       <table>
                         <tbody>
                           <tr>
-                            <td align={"right"}>
+                            <td className={"w-[25px]"} align={"right"}>
                               {formatterProsent(d.bpsAndelU)}
                             </td>
                             <td className="w-[5px]">/</td>
@@ -92,7 +92,7 @@ function VedtakTable({
                       <table>
                         <tbody>
                           <tr>
-                            <td align="right">
+                            <td className={"w-[25px]"} align="right">
                               {formatterBeløpForBeregning(d.samværsfradrag)}
                             </td>
                             <td className="w-[5px]">/</td>
@@ -116,7 +116,7 @@ function VedtakTable({
                       <table>
                         <tbody>
                           <tr>
-                            <td align="right">
+                            <td className={"w-[35px]"} align="right">
                               {formatterBeløpForBeregning(
                                 d.beregningsdetaljer?.delberegningBidragsevne
                                   ?.bidragsevne ?? 0,

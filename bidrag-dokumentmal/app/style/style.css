@@ -230,7 +230,7 @@ dt {
 
 .table tbody tr td {
   display: table-cell;
-  text-align: left;
+  /*text-align: left;*/
 }
 
 .table_head_periode {
