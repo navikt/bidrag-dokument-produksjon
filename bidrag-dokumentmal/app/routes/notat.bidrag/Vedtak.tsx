@@ -31,11 +31,59 @@ export default function Vedtak() {
             se vedlegg nr. 3 for beregningsdetaljer
           </a>
         </div>
-        <VedtakTable
-          data={data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]}
-        />
+        {erAvslag ? (
+          <VedtakTableAvslag
+            data={
+              data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]
+            }
+          />
+        ) : (
+          <VedtakTable
+            data={
+              data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]
+            }
+          />
+        )}
       </div>
       <VedtakFattetDetaljer data={data.vedtak} />
+    </div>
+  );
+}
+
+function VedtakTableAvslag({
+  data,
+}: {
+  data: NotatResultatBidragsberegningBarnDto[];
+}) {
+  const { erOpphør } = useNotatFelles();
+
+  if (data.length == 0) return <div>Mangler resultat</div>;
+  return (
+    <div style={{ paddingTop: "0px" }}>
+      {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
+        const gjelderBarn = value[0].barn!;
+        const perioder = value[0].perioder;
+        const tableData: TableData = {
+          headers: [
+            { name: "Periode", width: "170px" },
+            { name: "Resultat", width: "150px" },
+            { name: "Årsak", width: "250px" },
+          ],
+          rows: perioder.map((d) => ({
+            columns: [
+              { content: formatPeriode(d.periode!.fom, d.periode!.til) },
+              { content: erOpphør ? "Opphør" : "Avslag" },
+              { content: d.resultatkodeVisningsnavn },
+            ],
+          })),
+        };
+        return (
+          <div key={key} className="table_container">
+            <TableGjelderBarn gjelderBarn={gjelderBarn} />
+            <CommonTable data={tableData} />
+          </div>
+        );
+      })}
     </div>
   );
 }
