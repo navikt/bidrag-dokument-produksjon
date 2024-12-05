@@ -9,12 +9,14 @@ import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import KildeIcon from "~/components/KildeIcon";
 
 export default function Underholdskostnad() {
-  const { data } = useNotatFelles();
+  const { data, erAvslag } = useNotatFelles();
+  if (erAvslag) return null;
+
   const underholdskostnader = data.underholdskostnader;
   if (underholdskostnader == null) return null;
   return (
     <>
-      <h2>Underholdskostnad</h2>
+      <h2 className={"section-title"}>Underholdskostnad</h2>
       <>
         {underholdskostnader.underholdskostnaderBarn
           .filter((barn) => barn.gjelderBarn.rolle != null)
@@ -138,16 +140,12 @@ function FaktiskeTilsynsutgifterTabell({
     <div className={"mb-4"}>
       <h4>Faktiske tilsynsutgifter</h4>
       <CommonTable
-        layoutAuto
-        width={"550px"}
         data={{
           headers: [
             {
-              name: tekster.tabell.felles.fraTilOgMed,
-            },
-            {
               name: tekster.tabell.underholdskostnader.faktiskeTilsynsutgifter
                 .totalTilsynsutgift,
+              width: "100px",
             },
             {
               name: tekster.tabell.underholdskostnader.faktiskeTilsynsutgifter
@@ -160,17 +158,20 @@ function FaktiskeTilsynsutgifterTabell({
             {
               name: tekster.tabell.underholdskostnader.faktiskeTilsynsutgifter
                 .kommentar,
+              width: "300px",
             },
           ],
-          rows: data.faktiskTilsynsutgift.map((d) => ({
-            columns: [
-              { content: formatPeriode(d.periode.fom, d.periode.tom) },
-              { content: formatterBeløpForBeregning(d.utgift) },
-              { content: formatterBeløpForBeregning(d.kostpenger) },
-              { content: formatterBeløpForBeregning(d.total) },
-              { content: d.kommentar },
-            ],
-          })),
+          rows: data.faktiskTilsynsutgift.flatMap((d) => [
+            {
+              periodColumn: formatPeriode(d.periode.fom, d.periode.tom),
+              columns: [
+                { content: formatterBeløpForBeregning(d.utgift) },
+                { content: formatterBeløpForBeregning(d.kostpenger) },
+                { content: formatterBeløpForBeregning(d.total) },
+                { content: d.kommentar },
+              ],
+            },
+          ]),
         }}
       />
     </div>
@@ -224,14 +225,8 @@ function UnderholdskostnaderTabell({ data }: { data: NotatUnderholdBarnDto }) {
     <div className={"mb-4 mt-4"}>
       <h4>Underholdskostnader</h4>
       <CommonTable
-        layoutAuto
-        width={"850px"}
         data={{
           headers: [
-            {
-              name: tekster.tabell.felles.fraTilOgMed,
-              width: "250px",
-            },
             {
               name: tekster.tabell.underholdskostnader.beregning.forbruk,
               width: "80px",
@@ -258,17 +253,19 @@ function UnderholdskostnaderTabell({ data }: { data: NotatUnderholdBarnDto }) {
                 .underholdskostnad,
             },
           ],
-          rows: data.underholdskostnad.map((d) => ({
-            columns: [
-              { content: formatPeriode(d.periode.fom, d.periode.tom) },
-              { content: formatterBeløpForBeregning(d.forbruk) },
-              { content: formatterBeløpForBeregning(d.boutgifter) },
-              { content: formatterBeløpForBeregning(d.stønadTilBarnetilsyn) },
-              { content: formatterBeløpForBeregning(d.tilsynsutgifter) },
-              { content: formatterBeløpForBeregning(d.barnetrygd) },
-              { content: formatterBeløpForBeregning(d.total) },
-            ],
-          })),
+          rows: data.underholdskostnad.flatMap((d) => [
+            {
+              periodColumn: formatPeriode(d.periode.fom, d.periode.tom),
+              columns: [
+                { content: formatterBeløpForBeregning(d.forbruk) },
+                { content: formatterBeløpForBeregning(d.boutgifter) },
+                { content: formatterBeløpForBeregning(d.stønadTilBarnetilsyn) },
+                { content: formatterBeløpForBeregning(d.tilsynsutgifter) },
+                { content: formatterBeløpForBeregning(d.barnetrygd) },
+                { content: formatterBeløpForBeregning(d.total) },
+              ],
+            },
+          ]),
         }}
       />
     </div>

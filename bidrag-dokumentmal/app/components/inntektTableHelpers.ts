@@ -129,6 +129,79 @@ export const beregnetInntekterColumnNames: {
       [InntektTableType.BARNETILLEGG]:
         tekster.tabell.beregnet.barnetilleggSplittet,
       [InntektTableType.UTVIDET_BARNETRYGD]:
+        tekster.tabell.beregnet.utvidetBarnetrygdSplittet,
+      [InntektTableType.SMÅBARNSTILLEGG]:
+        tekster.tabell.beregnet.småbarnstilleggSplittet,
+      [InntektTableType.KONTANTSTØTTE]: tekster.tabell.beregnet.kontantstøtte,
+      [InntektTableType.TOTAL_INNTEKTER]: tekster.tabell.beregnet.total,
+    },
+    [Rolletype.BP]: {
+      [InntektTableType.SKATTEPLIKTIG]:
+        tekster.tabell.beregnet.skattepliktigInntekt,
+      [InntektTableType.BARNETILLEGG]: tekster.tabell.beregnet.barnetillegg,
+      [InntektTableType.TOTAL_INNTEKTER]: tekster.tabell.beregnet.total,
+    },
+    [Rolletype.BA]: {
+      [InntektTableType.SKATTEPLIKTIG]:
+        tekster.tabell.beregnet.skattepliktigInntekt,
+      [InntektTableType.TOTAL_INNTEKTER]: tekster.tabell.beregnet.total,
+    },
+  },
+  [NotatMalType.SAeRBIDRAG]: {
+    [Rolletype.BM]: {
+      [InntektTableType.SKATTEPLIKTIG]:
+        tekster.tabell.beregnet.skattepliktigInntektSplittet,
+      [InntektTableType.BARNETILLEGG]:
+        tekster.tabell.beregnet.barnetilleggSplittet,
+      [InntektTableType.UTVIDET_BARNETRYGD]:
+        tekster.tabell.beregnet.utvidetBarnetrygdSplittet,
+      [InntektTableType.SMÅBARNSTILLEGG]:
+        tekster.tabell.beregnet.småbarnstilleggSplittet,
+      [InntektTableType.KONTANTSTØTTE]: tekster.tabell.beregnet.kontantstøtte,
+      [InntektTableType.TOTAL_INNTEKTER]: tekster.tabell.beregnet.total,
+    },
+    [Rolletype.BP]: {
+      [InntektTableType.SKATTEPLIKTIG]:
+        tekster.tabell.beregnet.skattepliktigInntekt,
+      [InntektTableType.BARNETILLEGG]: tekster.tabell.beregnet.barnetillegg,
+      [InntektTableType.TOTAL_INNTEKTER]: tekster.tabell.beregnet.total,
+    },
+    [Rolletype.BA]: {
+      [InntektTableType.SKATTEPLIKTIG]:
+        tekster.tabell.beregnet.skattepliktigInntekt,
+      [InntektTableType.TOTAL_INNTEKTER]: tekster.tabell.beregnet.total,
+    },
+  },
+  [NotatMalType.FORSKUDD]: {
+    [Rolletype.BM]: {
+      [InntektTableType.SKATTEPLIKTIG]:
+        tekster.tabell.beregnet.skattepliktigInntektSplittet,
+      [InntektTableType.BARNETILLEGG]:
+        tekster.tabell.beregnet.barnetilleggSplittet,
+      [InntektTableType.UTVIDET_BARNETRYGD]:
+        tekster.tabell.beregnet.utvidetBarnetrygdSplittet,
+      [InntektTableType.SMÅBARNSTILLEGG]:
+        tekster.tabell.beregnet.småbarnstilleggSplittet,
+      [InntektTableType.KONTANTSTØTTE]: tekster.tabell.beregnet.kontantstøtte,
+      [InntektTableType.TOTAL_INNTEKTER]: tekster.tabell.beregnet.total,
+    },
+    [Rolletype.BP]: {},
+    [Rolletype.BA]: {},
+  },
+};
+export const beregnetInntekterColumnNamesV2: {
+  [key in NotatMalType]: {
+    [key in BehandlingRolletype]: {
+      [key in InntektTableType]?: string;
+    };
+  };
+} = {
+  [NotatMalType.BIDRAG]: {
+    [Rolletype.BM]: {
+      [InntektTableType.SKATTEPLIKTIG]:
+        tekster.tabell.beregnet.skattepliktigInntekt,
+      [InntektTableType.BARNETILLEGG]: tekster.tabell.beregnet.barnetillegg,
+      [InntektTableType.UTVIDET_BARNETRYGD]:
         tekster.tabell.beregnet.utvidetBarnetrygd,
       [InntektTableType.SMÅBARNSTILLEGG]:
         tekster.tabell.beregnet.småbarnstillegg,
@@ -189,7 +262,6 @@ export const beregnetInntekterColumnNames: {
     [Rolletype.BA]: {},
   },
 };
-
 export function isHarInntekter(inntekter: InntekterPerRolle): boolean {
   return (
     inntekter.årsinntekter.length > 0 ||

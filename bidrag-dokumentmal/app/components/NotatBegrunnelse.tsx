@@ -1,6 +1,6 @@
-import DataDescription from "~/components/DataDescription";
 import xss from "xss";
 import { NotatBegrunnelseDto } from "~/types/Api";
+import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 
 type NotatProps = {
   data?: NotatBegrunnelseDto;
@@ -13,9 +13,17 @@ export default function NotatBegrunnelse({ data }: NotatProps) {
         marginTop: "16px",
       }}
     >
-      <DataDescription
-        label={"Begrunnelse"}
-        value={<PurifiedHtml text={data?.innhold} />}
+      <DataViewTable
+        data={
+          [
+            {
+              label: "Begrunnelse",
+              textRight: false,
+              labelBold: true,
+              value: <PurifiedHtml text={data?.innhold} />,
+            },
+          ].filter((d) => d != null) as DataViewTableData[]
+        }
       />
     </div>
   );

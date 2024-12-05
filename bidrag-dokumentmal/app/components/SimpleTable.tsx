@@ -15,6 +15,7 @@ type SimpleTableProps = {
 };
 
 export function SimpleTable({ data }: SimpleTableProps) {
+  if (data.length === 0) return "Ingen offentlige opplysninger";
   return (
     <CommonTable
       layoutAuto

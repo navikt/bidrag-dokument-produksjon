@@ -1,15 +1,19 @@
 import tekster from "~/tekster";
 import { TableHeader } from "~/components/CommonTable";
+import { Styling } from "~/components/notat_felles/ThemeContext";
 
 export const getInntektTableHeaders = (
   erBarnetillegg: boolean = false,
   inkluderKilde: boolean = true,
+  styling: Styling,
 ) =>
   [
-    {
-      name: tekster.tabell.felles.fraTilOgMed,
-      width: inkluderKilde ? "170px" : erBarnetillegg ? "150px" : "345px",
-    },
+    !erBarnetillegg || styling == "V1"
+      ? {
+          name: tekster.tabell.felles.fraTilOgMed,
+          width: inkluderKilde ? "170px" : erBarnetillegg ? "150px" : "345px",
+        }
+      : undefined,
     inkluderKilde
       ? {
           name: tekster.tabell.felles.kilde,
