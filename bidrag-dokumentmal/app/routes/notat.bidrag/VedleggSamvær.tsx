@@ -23,7 +23,6 @@ function SamværsberegningDetaljerBarn({
 }: {
   samværBarn: NotatSamvaerDto;
 }) {
-  console.log("HERE", samværBarn.perioder.length);
   const samværsperioderMedBeregning = samværBarn.perioder.filter(
     (p) => p.beregning != null,
   );
