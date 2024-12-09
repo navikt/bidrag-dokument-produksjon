@@ -17,7 +17,7 @@ export default function Samvær() {
       <div className={"elements_inline section-title"}>
         <h2>Samvær</h2>
         <a href={`#${elementIds.vedleggSamvær}`}>
-          se vedlegg nr. 3 for beregningsdetaljer
+          se vedlegg nr. 4 for beregningsdetaljer
         </a>
       </div>
       <>

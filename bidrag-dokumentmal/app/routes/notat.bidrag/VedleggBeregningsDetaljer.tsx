@@ -22,7 +22,7 @@ export default function VedleggBeregningsDetaljer() {
   return (
     <div style={{ pageBreakBefore: "always" }}>
       <h2 id={elementIds.vedleggBeregningsdetaljer}>
-        Vedlegg nr. 4: Beregningsdetaljer
+        Vedlegg nr. 5: Beregningsdetaljer
       </h2>
       <VedleggBeregningsDetaljerInnhold />
     </div>

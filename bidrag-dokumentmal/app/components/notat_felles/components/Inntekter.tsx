@@ -32,9 +32,9 @@ import {
   beregnetInntekterColumnNamesV2,
 } from "~/components/inntektTableHelpers";
 import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
-import InntektRolle from "~/components/inntekt/InntektRolle";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
 import { useTheme } from "~/components/notat_felles/ThemeContext";
+import GjelderPerson from "~/components/GjelderPerson";
 
 export default function Inntekter() {
   const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
@@ -121,7 +121,7 @@ function InntekterForRolle({
   }
   return (
     <>
-      {showRole && <InntektRolle rolle={rolle} />}
+      {showRole && <GjelderPerson rolle={rolle} />}
       {renderInntekter()}
       <NotatBegrunnelse
         data={data.inntekter.notatPerRolle.find(

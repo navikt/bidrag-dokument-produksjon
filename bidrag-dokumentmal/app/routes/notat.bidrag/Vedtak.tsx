@@ -23,7 +23,7 @@ export default function Vedtak() {
         <h2 className={"section-title"}>Vedtak</h2>
         {!erAvslag && (
           <a href={`#${elementIds.vedleggBeregningsdetaljer}`}>
-            se vedlegg nr. 3 for beregningsdetaljer
+            se vedlegg nr. 5 for beregningsdetaljer
           </a>
         )}
       </div>

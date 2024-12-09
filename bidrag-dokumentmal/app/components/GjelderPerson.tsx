@@ -1,9 +1,9 @@
-import { Rolletype, NotatPersonDto } from "~/types/Api";
-import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
+import { NotatPersonDto, Rolletype } from "~/types/Api";
 import { useTheme } from "~/components/notat_felles/ThemeContext";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
+import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
 
-export default function InntektRolle({ rolle }: { rolle: NotatPersonDto }) {
+export default function GjelderPerson({ rolle }: { rolle: NotatPersonDto }) {
   const { styling } = useTheme();
   if (styling == "V2") {
     return (

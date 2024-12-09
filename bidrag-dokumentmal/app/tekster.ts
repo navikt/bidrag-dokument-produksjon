@@ -37,6 +37,7 @@ export default {
     felles: {
       periode: "Periode",
       fraDato: "Fra dato",
+      tilDato: "Til dato",
       fraTilOgMed: "Fra og med - Til og med",
       kilde: "Kilde",
       beskrivelse: "Beskrivelse",

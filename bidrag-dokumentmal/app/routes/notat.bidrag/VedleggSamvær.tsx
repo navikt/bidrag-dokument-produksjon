@@ -10,7 +10,7 @@ export default function VedleggSamvær() {
   if (erAvslag) return null;
   return (
     <div style={{ pageBreakBefore: "always" }}>
-      <h2 id={elementIds.vedleggSamvær}>Vedlegg nr. 3: Samvær</h2>
+      <h2 id={elementIds.vedleggSamvær}>Vedlegg nr. 4: Samvær</h2>
       {data.samvær.map((samværBarn, index) => (
         <SamværsberegningDetaljerBarn samværBarn={samværBarn} key={index} />
       ))}

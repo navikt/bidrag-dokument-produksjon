@@ -7,6 +7,7 @@ import { formatPeriode } from "~/utils/date-utils";
 import tekster from "~/tekster";
 import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import KildeIcon from "~/components/KildeIcon";
+import elementIds from "~/utils/elementIds";
 
 export default function Underholdskostnad() {
   const { data, erAvslag } = useNotatFelles();
@@ -16,7 +17,12 @@ export default function Underholdskostnad() {
   if (underholdskostnader == null) return null;
   return (
     <>
-      <h2 className={"section-title"}>Underholdskostnad</h2>
+      <div className={"elements_inline"}>
+        <h2 className={"section-title"}>Underholdskostnad</h2>
+        <a href={`#${elementIds.vedleggUnderholdskostnader}`}>
+          se vedlegg nr. 4 for underholdskostnad
+        </a>
+      </div>
       <>
         {underholdskostnader.underholdskostnaderBarn
           .filter((barn) => barn.gjelderBarn.rolle != null)
@@ -35,6 +41,7 @@ export default function Underholdskostnad() {
     </>
   );
 }
+
 function UnderholdskostnaderAndreBarn({
   data,
 }: {
