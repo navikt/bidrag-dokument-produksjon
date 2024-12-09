@@ -1,11 +1,24 @@
 import { Fragment, ReactElement } from "react";
 import { useTheme } from "~/components/notat_felles/ThemeContext";
 
+type RowContent = ReactElement | string | number | null | undefined;
 export type TableColumn = {
   width?: string;
   colSpan?: number;
+  fullSpan?: boolean;
   labelBold?: boolean;
-  content: ReactElement | string | number | null | undefined;
+  content: RowContent;
+};
+
+export type TableRow = {
+  borderBottom?: boolean;
+  skipBorderBottom?: boolean;
+  skipPadding?: boolean;
+  className?: string;
+  periodColumn?: RowContent;
+  zebraStripe?: boolean;
+  columns: TableColumn[];
+  expandableContent?: TableColumn[];
 };
 export type TableHeader = {
   name: string;
@@ -13,12 +26,7 @@ export type TableHeader = {
 };
 export type TableData = {
   headers: TableHeader[];
-  rows: {
-    borderBottom?: boolean;
-    skipBorderBottom?: boolean;
-    columns: TableColumn[];
-    expandableContent?: TableColumn[];
-  }[];
+  rows: TableRow[];
 };
 type CommonTableProps = {
   width?: string;
@@ -32,15 +40,51 @@ export function CommonTable({
 }: CommonTableProps) {
   const { styling } = useTheme();
   const cellV2Styling =
-    "pb-2 pt-2 pl-1 pr-1 border-b border-solid border-t-0 border-r-0 border-l-0";
-  const cellV2StylingWithoutBorder = "pb-2 pt-2 pl-1 pr-1";
+    "pb-2 pt-2 pl-3 pr-3 border-b border-solid border-t-0 border-r-0 border-l-0";
+  const cellV2StylingWithoutBorder = "pb-2 pt-2 pl-3 pr-3";
+  const style =
+    styling == "V2" ? { width: "670px" } : { width: width, maxWidth: "620px" };
+
+  function renderRow(row: TableRow, index: number, isPeriodColumn: boolean) {
+    return (
+      <tr
+        key={"row" + index.toString()}
+        style={{
+          borderBottom: row.borderBottom ? "1px solid black" : undefined,
+        }}
+      >
+        {row.columns.map((column) => (
+          <td
+            className={
+              styling == "V2"
+                ? `${
+                    !row.skipPadding
+                      ? row.skipBorderBottom || isPeriodColumn
+                        ? cellV2StylingWithoutBorder
+                        : cellV2Styling
+                      : ""
+                  } ${row.periodColumn ? false : (row.zebraStripe != false && index % 2 == 1) || row.zebraStripe == true ? "bg-table-bg-even" : ""} ${row.className}`
+                : "p-table-body-tr-v1"
+            }
+            key={column.content?.toString()}
+            colSpan={column.fullSpan ? headers.length : column.colSpan}
+            style={{
+              fontWeight: column.labelBold ? "bold" : "normal",
+            }}
+          >
+            {column.content}
+          </td>
+        ))}
+      </tr>
+    );
+  }
+
   return (
     <table
       className="table"
       style={{
-        width: width,
-        maxWidth: "620px",
-        tableLayout: layoutAuto ? "auto" : "fixed",
+        ...style,
+        tableLayout: layoutAuto || styling == "V2" ? "auto" : "fixed",
       }}
     >
       <colgroup>
@@ -52,6 +96,8 @@ export function CommonTable({
         ))}
       </colgroup>
       <thead
+        // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+        //@ts-ignore
         style={{ wordBreak: "auto-phrase", textWrap: "wrap" }}
         className={styling == "V2" ? "bg-table-header" : ""}
       >
@@ -74,31 +120,17 @@ export function CommonTable({
         {rows.map((d, i) => {
           return (
             <Fragment key={"row" + i.toString()}>
-              <tr
-                key={"row" + i.toString()}
-                style={{
-                  borderBottom: d.borderBottom ? "1px solid black" : undefined,
-                }}
-              >
-                {d.columns.map((column, j) => (
-                  <td
-                    className={
-                      styling == "V2"
-                        ? `${
-                            d.skipBorderBottom
-                              ? cellV2StylingWithoutBorder
-                              : cellV2Styling
-                          } ${i % 2 == 1 ? "bg-table-bg-even" : ""}`
-                        : "p-table-body-tr-v1"
-                    }
-                    key={column.content?.toString() ?? "" + j}
-                    colSpan={column.colSpan}
-                    style={{ fontWeight: column.labelBold ? "bold" : "normal" }}
-                  >
-                    {column.content}
-                  </td>
-                ))}
-              </tr>
+              {d.periodColumn &&
+                renderRow(
+                  {
+                    ...d,
+                    periodColumn: null,
+                    columns: [{ content: d.periodColumn, fullSpan: true }],
+                  },
+                  1,
+                  true,
+                )}
+              {renderRow(d, i, false)}
               {d.expandableContent && (
                 <tr>
                   {d.expandableContent?.map((column, j) => (

@@ -21,8 +21,9 @@ import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Inntektsposter from "~/components/notat_felles/components/Inntektsposter";
 import { isHarInntekter } from "~/components/inntektTableHelpers";
 import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
-import InntektRolle from "~/components/inntekt/InntektRolle";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
+import { useTheme } from "~/components/notat_felles/ThemeContext";
+import GjelderPerson from "~/components/GjelderPerson";
 
 export default function VedleggInntekter() {
   const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
@@ -71,7 +72,7 @@ function OpplysningerForRolle({
 
   return (
     <div>
-      {showRole && <InntektRolle rolle={rolle} />}
+      {showRole && <GjelderPerson rolle={rolle} />}
       {inntekter.arbeidsforhold && inntekter.arbeidsforhold.length > 0 && (
         <div>
           <h4>2.1 Arbeidsforhold</h4>
@@ -223,6 +224,7 @@ function ArbeidsforholdTable({ data }: { data: Arbeidsforhold[] }) {
   );
 }
 function InntektPerBarnTable({ data }: InntektTableProps) {
+  const { styling } = useTheme();
   if (data.length == 0) return null;
   return (
     <div>
@@ -243,7 +245,7 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
             <CommonTable
               width={"580px"}
               data={{
-                headers: getInntektTableHeaders(erBarnetillegg, false),
+                headers: getInntektTableHeaders(erBarnetillegg, false, styling),
                 rows: data
                   .filter((d) => d.kilde == Kilde.OFFENTLIG)
                   .map((d) => {

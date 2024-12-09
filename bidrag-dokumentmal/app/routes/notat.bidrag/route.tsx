@@ -21,6 +21,8 @@ import Samvær from "~/routes/notat.bidrag/Samvær";
 import Vedtak from "~/routes/notat.bidrag/Vedtak";
 import VedleggBeregningsDetaljer from "~/routes/notat.bidrag/VedleggBeregningsDetaljer";
 import VedleggSamvær from "~/routes/notat.bidrag/VedleggSamvær";
+import Gebyr from "~/routes/notat.bidrag/Gebyr";
+import VedleggUnderholdskostnader from "~/routes/notat.bidrag/VedleggUnderholdskostnader";
 
 export async function action(args: ActionFunctionArgs) {
   return await parseRequestAction(args);
@@ -58,11 +60,13 @@ export default function NotatBidrag() {
           <Virkningstidspunkt />
           <Underholdskostnad />
           <Inntekter />
+          <Gebyr />
           <Boforhold />
           <Samvær />
           <Vedtak />
           <VedleggBoforhold />
           <VedleggInntekter />
+          <VedleggUnderholdskostnader />
           <VedleggSamvær />
           <VedleggBeregningsDetaljer />
         </div>

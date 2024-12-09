@@ -29,18 +29,20 @@ import {
   isHarInntekter,
   beregnetInntekterColumnNames,
   beregnetInntekterColumnWidth,
+  beregnetInntekterColumnNamesV2,
 } from "~/components/inntektTableHelpers";
 import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
-import InntektRolle from "~/components/inntekt/InntektRolle";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
+import { useTheme } from "~/components/notat_felles/ThemeContext";
+import GjelderPerson from "~/components/GjelderPerson";
 
 export default function Inntekter() {
   const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
     useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div className="soknad_parter section">
-      <div className={"elements_inline"}>
+    <>
+      <div className={"elements_inline section-title"}>
         <h2>Inntekter</h2>
         <a href={`#${elementIds.vedleggInntekter}`}>
           se vedlegg nr. 2 for opplysninger fra offentlige registre
@@ -64,7 +66,7 @@ export default function Inntekter() {
             <InntekterForRolle rolle={barn} />
           </div>
         ))}
-    </div>
+    </>
   );
 }
 
@@ -86,7 +88,7 @@ function InntekterForRolle({
   function renderInntekter() {
     if (!isHarInntekter(inntekter!)) return <p>Ingen inntekter</p>;
     return (
-      <div>
+      <>
         <InntektTable
           data={inntekter!.årsinntekter}
           title={"Skattepliktige og pensjonsgivende inntekt"}
@@ -114,19 +116,19 @@ function InntekterForRolle({
           data={inntekter!.beregnetInntekter}
           rolle={rolle}
         />
-      </div>
+      </>
     );
   }
   return (
-    <div>
-      {showRole && <InntektRolle rolle={rolle} />}
+    <>
+      {showRole && <GjelderPerson rolle={rolle} />}
       {renderInntekter()}
       <NotatBegrunnelse
         data={data.inntekter.notatPerRolle.find(
           (d) => d.gjelder?.ident == rolle?.ident,
         )}
       />
-    </div>
+    </>
   );
 }
 
@@ -212,6 +214,7 @@ function InntektPerBarnTable({
   bareMedIBeregning = true,
 }: InntektTableProps) {
   const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
+  const { styling } = useTheme();
   if (inntekter.length == 0) return null;
 
   const inntekterBarn = groupBy(data, (d) => d.gjelderBarn?.ident!);
@@ -235,7 +238,7 @@ function InntektPerBarnTable({
             <CommonTable
               width={"580px"}
               data={{
-                headers: getInntektTableHeaders(erBarnetillegg, true),
+                headers: getInntektTableHeaders(erBarnetillegg, true, styling),
                 rows: value
                   .filter((d) => !bareMedIBeregning || d.medIBeregning)
                   .map((d) => {
@@ -246,8 +249,14 @@ function InntektPerBarnTable({
                         : "";
 
                     return {
+                      periodColumn:
+                        styling == "V2" && erBarnetillegg
+                          ? formatPeriode(periode!.fom, periode!.til)
+                          : undefined,
                       columns: [
-                        { content: formatPeriode(periode!.fom, periode!.til) },
+                        (styling == "V1" || !erBarnetillegg) && {
+                          content: formatPeriode(periode!.fom, periode!.til),
+                        },
                         { content: <KildeIcon kilde={d.kilde} /> },
                         erBarnetillegg
                           ? [
@@ -260,7 +269,9 @@ function InntektPerBarnTable({
                               { content: formatterBeløp(d.beløp) },
                             ]
                           : [{ content: formatterBeløp(d.beløp) }],
-                      ].flatMap((d) => d),
+                      ]
+                        .filter((d) => typeof d != "boolean")
+                        .flatMap((d) => d as TableColumn),
                     };
                   }),
               }}
@@ -279,11 +290,14 @@ type BeregnetInntektTableProps = {
 
 function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
   const { type, harFlereEnnEttSøknadsbarn } = useNotatFelles();
+  const { styling } = useTheme();
   const inntektTableRules =
     inntekterTablesViewRules[type][rolle.rolle as BehandlingRolletype];
 
   const columnNames =
-    beregnetInntekterColumnNames[type][rolle.rolle as BehandlingRolletype];
+    styling == "V2"
+      ? beregnetInntekterColumnNamesV2[type][rolle.rolle as BehandlingRolletype]
+      : beregnetInntekterColumnNames[type][rolle.rolle as BehandlingRolletype];
 
   const columnWidth =
     beregnetInntekterColumnWidth[type][rolle.rolle as BehandlingRolletype];
@@ -300,7 +314,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
           width={"580px"}
           data={{
             headers: [
-              {
+              styling == "V1" && {
                 name: tekster.tabell.felles.fraTilOgMed,
                 width: columnWidth[tekster.tabell.felles.fraTilOgMed],
               },
@@ -333,8 +347,12 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
               },
             ].filter((d) => typeof d != "boolean") as TableHeader[],
             rows: inntekter.map((d) => ({
+              periodColumn:
+                styling == "V2"
+                  ? formatPeriode(d.periode!.fom, deductDays(d.periode!.til, 1))
+                  : undefined,
               columns: [
-                {
+                styling == "V1" && {
                   content: formatPeriode(
                     d.periode!.fom,
                     deductDays(d.periode!.til, 1),

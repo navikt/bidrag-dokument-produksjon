@@ -8,29 +8,30 @@ import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import elementIds from "~/utils/elementIds";
 
 export default function Samvær() {
-  const { data } = useNotatFelles();
+  const { data, erAvslag } = useNotatFelles();
+  if (erAvslag) return null;
   const samvær = data.samvær;
   if (samvær.length == 0) return null;
   return (
-    <div className={"underholdskostnad"}>
-      <div className={"elements_inline"}>
+    <>
+      <div className={"elements_inline section-title"}>
         <h2>Samvær</h2>
         <a href={`#${elementIds.vedleggSamvær}`}>
-          se vedlegg nr. 3 for beregningsdetaljer
+          se vedlegg nr. 4 for beregningsdetaljer
         </a>
       </div>
-      <div>
+      <>
         {samvær.map((barn, i) => (
           <SamværBarn data={barn} key={i + barn.gjelderBarn.ident!} />
         ))}
-      </div>
-    </div>
+      </>
+    </>
   );
 }
 
 function SamværBarn({ data }: { data: NotatSamvaerDto }) {
   return (
-    <div className={"mb-medium mt-medium"}>
+    <div className={"mb-medium"}>
       <DataViewTable
         gap={"5px"}
         data={[

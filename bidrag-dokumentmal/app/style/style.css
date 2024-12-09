@@ -230,7 +230,7 @@ dt {
 
 .table tbody tr td {
   display: table-cell;
-  text-align: left;
+  /*text-align: left;*/
 }
 
 .table_head_periode {
@@ -243,10 +243,6 @@ dt {
 
 .table_head_belop {
   width: 20px;
-}
-
-.section {
-  margin-top: 0px;
 }
 
 .subsection {
@@ -313,7 +309,7 @@ h1 {
 
 h2 {
   margin-top: 16px;
-  margin-bottom: 0px;
+  margin-bottom: 8px;
   font-size: 16px;
 }
 
