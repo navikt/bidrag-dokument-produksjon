@@ -42,7 +42,7 @@ export default function NotatForskudd() {
     <div id="forskudd_notat">
       <NotatProvider
         data={data}
-        styling={"V2"}
+        styling={"V1"}
         renderPDFVersion={response.renderPDFVersion}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >

@@ -17,7 +17,7 @@ export default function Gebyr() {
       <>
         {gebyr
           .sort((d) =>
-            konverterRolletype(d.rolle.rolle) == Rolletype.BM ? 1 : -1,
+            konverterRolletype(d.rolle.rolle) == Rolletype.BP ? 1 : -1,
           )
           .map((gebyRolle, i) => (
             <div
@@ -66,7 +66,7 @@ export default function Gebyr() {
                           content: "Høyeste barnetillegg",
                         },
                         {
-                          content: gebyRolle.inntekt.maksBarnetillegg,
+                          content: gebyRolle.inntekt.maksBarnetillegg ?? 0,
                         },
                       ],
                     },

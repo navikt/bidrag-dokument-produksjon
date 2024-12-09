@@ -172,6 +172,10 @@
   margin-top: 16px
 }
 
+.mt-2 {
+  margin-top: 8px
+}
+
 .block {
   display: block
 }
