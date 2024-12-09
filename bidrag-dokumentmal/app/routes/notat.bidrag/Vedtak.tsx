@@ -220,6 +220,18 @@ function VedtakTable({
         return (
           <div key={key} className="table_container mb-medium">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
+            {gjelderBarn.innbetaltBeløp && (
+              <DataViewTable
+                className="mt-2 mb-2"
+                data={[
+                  {
+                    label: "Innbetalt beløp",
+                    labelBold: true,
+                    value: gjelderBarn.innbetaltBeløp,
+                  },
+                ]}
+              />
+            )}
             <CommonTable data={tableData} />
           </div>
         );

@@ -277,10 +277,10 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
-  kategoriVisningsnavn?: string;
-  vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
   avslagVisningsnavn?: string;
+  vedtakstypeVisningsnavn?: string;
+  kategoriVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -356,10 +356,12 @@ export interface NotatGebyrRolleDto {
   inntekt: NotatGebyrInntektDto;
   manueltOverstyrtGebyr?: NotatManueltOverstyrGebyrDto;
   beregnetIlagtGebyr: boolean;
+  endeligIlagtGebyr: boolean;
+  begrunnelse?: string;
   beløpGebyrsats: number;
   rolle: NotatPersonDto;
+  erManueltOverstyrt: boolean;
   gebyrResultatVisningsnavn: string;
-  ilagtGebyr?: boolean;
 }
 
 export interface NotatInntektDto {
@@ -425,6 +427,7 @@ export interface NotatPersonDto {
   fødselsdato?: string;
   ident?: string;
   erBeskyttet: boolean;
+  innbetaltBeløp?: number;
 }
 
 export interface NotatResultatBeregningInntekterDto {
@@ -432,10 +435,10 @@ export interface NotatResultatBeregningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  inntektBarnMånedlig?: number;
   totalEndeligInntekt: number;
   inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
+  inntektBarnMånedlig?: number;
 }
 
 export type NotatResultatBidragsberegningBarnDto = UtilRequiredKeys<VedtakResultatInnhold, "type"> & {
@@ -480,8 +483,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
   bpHarEvne: boolean;
-  resultatVisningsnavn: string;
   beløpSomInnkreves: number;
+  resultatVisningsnavn: string;
 };
 
 export interface NotatSamvaerDto {
@@ -511,10 +514,10 @@ export interface NotatSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
+  skattMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
   skattAlminneligInntektMånedsbeløp: number;
-  skattMånedsbeløp: number;
 }
 
 export interface NotatStonadTilBarnetilsynDto {

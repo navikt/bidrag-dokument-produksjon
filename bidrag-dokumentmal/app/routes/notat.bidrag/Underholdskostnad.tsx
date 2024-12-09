@@ -46,7 +46,7 @@ function UnderholdskostnaderAndreBarn({
       {data.map((barn) => (
         <>
           <DataViewTable
-            className={"pt-2 pb-0 mb-0"}
+            className={"pt-2 pb-0 mb-2 mt-2"}
             data={[
               {
                 label: "Andre barn til bidragsmottaker",
@@ -70,13 +70,17 @@ function UnderholdskostnaderSøknadsbarn({
   return (
     <>
       <DataViewTable
-        className={"mb-4 mt-4"}
+        className={"mb-2 mt-2"}
         data={[
           {
             label: "Barn i saken",
             labelBold: true,
             value: data.gjelderBarn.navn,
           },
+        ]}
+      />
+      <DataViewTable
+        data={[
           {
             label: "Barn har tilsynsutgift",
             value: data.harTilsynsordning ? "Ja" : "Nei",

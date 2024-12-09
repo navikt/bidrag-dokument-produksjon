@@ -25,7 +25,7 @@ export default function Gebyr() {
               className={gebyr.length - 1 == i ? "" : "mb-2"}
             >
               <DataViewTable
-                className={"mb-2"}
+                className={"mb-2 mt-2"}
                 data={
                   [
                     {
@@ -94,12 +94,12 @@ export default function Gebyr() {
                       labelBold: true,
                       value: gebyRolle.gebyrResultatVisningsnavn,
                     },
-                    gebyRolle.manueltOverstyrtGebyr && {
+                    gebyRolle.erManueltOverstyrt && {
                       label: "Begrunnelse",
                       labelBold: true,
-                      value: gebyRolle.manueltOverstyrtGebyr.begrunnelse,
+                      value: gebyRolle.begrunnelse,
                     },
-                  ].filter((d) => d != null) as DataViewTableData[]
+                  ].filter((d) => d) as DataViewTableData[]
                 }
               />
               {gebyRolle.beregnetIlagtGebyr}

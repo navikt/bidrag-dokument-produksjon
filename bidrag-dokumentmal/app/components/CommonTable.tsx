@@ -59,7 +59,7 @@ export function CommonTable({
               styling == "V2"
                 ? `${
                     !row.skipPadding
-                      ? row.skipBorderBottom && !isPeriodColumn
+                      ? row.skipBorderBottom || isPeriodColumn
                         ? cellV2StylingWithoutBorder
                         : cellV2Styling
                       : ""
