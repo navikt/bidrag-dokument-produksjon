@@ -17,8 +17,8 @@ export default function Underholdskostnad() {
   if (underholdskostnader == null) return null;
   return (
     <>
-      <div className={"elements_inline"}>
-        <h2 className={"section-title"}>Underholdskostnad</h2>
+      <div className={"section-title elements_inline"}>
+        <h2>Underholdskostnad</h2>
         <a href={`#${elementIds.vedleggUnderholdskostnader}`}>
           se vedlegg nr. 4 for underholdskostnad
         </a>
