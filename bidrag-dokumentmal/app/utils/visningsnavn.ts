@@ -1,4 +1,5 @@
 import { Rolletype, SoktAvType } from "~/types/Api";
+import { konverterRolletype } from "~/utils/converter-utils";
 
 export const sammenlignRoller = (rolle?: Rolletype, erLikRolle?: Rolletype) =>
   rolle != undefined &&
@@ -21,7 +22,7 @@ export function søktAvTilVisningsnavn(søktAv?: SoktAvType) {
   }
 }
 export const rolleTilVisningsnavn = (rolle: Rolletype): string => {
-  switch (rolle) {
+  switch (konverterRolletype(rolle)) {
     case Rolletype.BM:
       return "Bidragsmottaker";
     case Rolletype.BP:

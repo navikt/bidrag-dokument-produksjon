@@ -6,13 +6,11 @@ import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { formatPeriode } from "~/utils/date-utils";
 
 export default function VedleggSamvær() {
-  const { data } = useNotatFelles();
-
+  const { data, erAvslag } = useNotatFelles();
+  if (erAvslag) return null;
   return (
     <div style={{ pageBreakBefore: "always" }}>
-      <h2 id={elementIds.vedleggSamvær} className={"pb-2"}>
-        Vedlegg nr. 3: Samvær
-      </h2>
+      <h2 id={elementIds.vedleggSamvær}>Vedlegg nr. 4: Samvær</h2>
       {data.samvær.map((samværBarn, index) => (
         <SamværsberegningDetaljerBarn samværBarn={samværBarn} key={index} />
       ))}
@@ -25,10 +23,13 @@ function SamværsberegningDetaljerBarn({
 }: {
   samværBarn: NotatSamvaerDto;
 }) {
+  const samværsperioderMedBeregning = samværBarn.perioder.filter(
+    (p) => p.beregning != null,
+  );
   return (
     <>
       <DataViewTable
-        className={"pb-2 pt-2"}
+        className={"pb-2"}
         data={
           [
             {
@@ -39,10 +40,11 @@ function SamværsberegningDetaljerBarn({
           ].filter((d) => d != null) as DataViewTableData[]
         }
       />
-      {samværBarn.perioder
-        .filter((p) => p.beregning != null)
-        .map((periode, index) => (
-          <div>
+      {samværsperioderMedBeregning.length == 0 ? (
+        <p>Ingen beregnet samvær</p>
+      ) : (
+        samværsperioderMedBeregning.map((periode, index) => (
+          <div key={index + "_" + periode.samværsklasseVisningsnavn}>
             <DataViewTable
               className={"pt-2 pb-2"}
               data={
@@ -63,7 +65,8 @@ function SamværsberegningDetaljerBarn({
               key={`ferie_${index}_${samværBarn.gjelderBarn.navn}`}
             />
           </div>
-        ))}
+        ))
+      )}
     </>
   );
 }

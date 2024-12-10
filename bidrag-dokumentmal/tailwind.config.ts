@@ -1,13 +1,17 @@
 import type { Config } from "tailwindcss";
+import plugin from "tailwindcss/plugin";
 
 export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       padding: {
-        "table-header-v1": "2px 5px 2px 0",
+        "table-header-v1": "2px 5px 2px 5px",
         "table-body-v1": "2px 2px 2px 0",
-        "table-body-tr-v1": "2px 2px 0 0",
+        "table-body-tr-v1": "2px 2px 0 5px",
+      },
+      margin: {
+        "section-title": "5px",
       },
     },
     colors: {
@@ -25,9 +29,19 @@ export default {
       "7": "28px",
       "8": "32px",
       "9": "36px",
+      "10": "40px",
+      "16": "64px",
     },
   },
-  plugins: [],
+  plugins: [
+    plugin(function ({ addComponents }) {
+      addComponents({
+        ".section-title": {
+          margin: "32px 0 0 0",
+        },
+      });
+    }),
+  ],
   corePlugins: {
     preflight: false,
   },

@@ -140,6 +140,10 @@
   }
 }
 
+.section-title {
+  margin: 32px 0 0 0
+}
+
 .fixed {
   position: fixed
 }
@@ -166,6 +170,14 @@
 
 .mt-4 {
   margin-top: 16px
+}
+
+.mt-2 {
+  margin-top: 8px
+}
+
+.mt-3 {
+  margin-top: 12px
 }
 
 .block {
@@ -220,6 +232,26 @@
   width: 100%
 }
 
+.w-\[10px\] {
+  width: 10px
+}
+
+.w-\[60px\] {
+  width: 60px
+}
+
+.w-\[40px\] {
+  width: 40px
+}
+
+.w-\[35px\] {
+  width: 35px
+}
+
+.w-\[25px\] {
+  width: 25px
+}
+
 .table-auto {
   table-layout: auto
 }
@@ -234,9 +266,9 @@
   border-spacing: var(--tw-border-spacing-x) var(--tw-border-spacing-y)
 }
 
-.break-before-column {
-  -moz-column-break-before: column;
-       break-before: column
+.break-before-page {
+  -moz-column-break-before: page;
+       break-before: page
 }
 
 .flex-row {
@@ -253,10 +285,6 @@
 
 .gap-1 {
   gap: 4px
-}
-
-.gap-4 {
-  gap: 16px
 }
 
 .whitespace-pre-wrap {
@@ -295,22 +323,22 @@
   border-style: solid
 }
 
-.bg-table-header {
-  --tw-bg-opacity: 1;
-  background-color: rgb(230 240 255 / var(--tw-bg-opacity))
-}
-
 .bg-table-bg-even {
   --tw-bg-opacity: 1;
   background-color: rgb(242 243 245 / var(--tw-bg-opacity))
 }
 
+.bg-table-header {
+  --tw-bg-opacity: 1;
+  background-color: rgb(230 240 255 / var(--tw-bg-opacity))
+}
+
 .p-table-body-tr-v1 {
-  padding: 2px 2px 0 0
+  padding: 2px 2px 0 5px
 }
 
 .p-table-header-v1 {
-  padding: 2px 5px 2px 0
+  padding: 2px 5px 2px 5px
 }
 
 .px-1 {
@@ -322,12 +350,16 @@
   padding-bottom: 8px
 }
 
-.pl-1 {
-  padding-left: 4px
+.pl-3 {
+  padding-left: 12px
 }
 
 .pr-1 {
   padding-right: 4px
+}
+
+.pr-3 {
+  padding-right: 12px
 }
 
 .pt-2 {

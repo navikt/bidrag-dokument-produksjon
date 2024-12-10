@@ -17,6 +17,7 @@ export default {
     barnISaken: "Barn i saken",
     boforhold: {
       tittel: "Boforhold",
+      beregnetBoforholdTittel: "Beregnet boforhold",
       søknadsbarn: "Søknadsbarn",
       egetBarnIHusstanden: "Eget barn i husstanden",
     },
@@ -36,6 +37,7 @@ export default {
     felles: {
       periode: "Periode",
       fraDato: "Fra dato",
+      tilDato: "Til dato",
       fraTilOgMed: "Fra og med - Til og med",
       kilde: "Kilde",
       beskrivelse: "Beskrivelse",
@@ -95,8 +97,10 @@ export default {
       skattepliktigInntekt: "Skattepliktige inntekter",
       barnetilleggSplittet: "Barnetillegg",
       barnetillegg: "Barnetillegg",
-      utvidetBarnetrygd: "Utvidet- barnetrygd",
-      småbarnstillegg: "Småbarns- tillegg",
+      utvidetBarnetrygdSplittet: "Utvidet- barnetrygd",
+      utvidetBarnetrygd: "Utvidet barnetrygd",
+      småbarnstilleggSplittet: "Småbarns- tillegg",
+      småbarnstillegg: "Småbarnstillegg",
       kontantstøtte: "Kontantstøtte",
       total: "Totalt",
     },

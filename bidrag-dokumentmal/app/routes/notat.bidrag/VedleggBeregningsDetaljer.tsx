@@ -1,16 +1,14 @@
 import elementIds from "~/utils/elementIds";
 import {
   NotatResultatBidragsberegningBarnDto,
-  NotatResultatSaerbidragsberegningDto,
   Rolletype,
   BidragPeriodeBeregningsdetaljer,
 } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
-import { erResutlatMedBeregning } from "~/routes/notat.særbidrag/SærbidragHelpers";
 import { DataViewTable } from "~/components/DataViewTable";
 import { formatPeriode } from "~/utils/date-utils";
 import HorizontalLine from "~/components/HorizontalLine";
-import { BPAndelUnderholdskostnad } from "~/routes/notat.bidrag/BPAndelUnderholdskostnad";
+import { BPAndelUnderholdskostnad } from "~/routes/notat.bidrag/beregningsdetaljer/BPAndelUnderholdskostnad";
 import { Samværsfradrag } from "~/routes/notat.bidrag/beregningsdetaljer/Samværsfradrag";
 import { NettoBarnetilleggTable } from "~/routes/notat.bidrag/beregningsdetaljer/NettoBarnetilleggTable";
 import { BeregningFordeltBidragEvne } from "~/routes/notat.bidrag/beregningsdetaljer/BeregningFordeltBidragEvne";
@@ -19,17 +17,12 @@ import { EndeligBidragTable } from "~/routes/notat.bidrag/beregningsdetaljer/End
 import { BPsEvneTableV2 } from "~/components/vedtak/BPsEvneTableV2";
 
 export default function VedleggBeregningsDetaljer() {
-  const { data } = useNotatFelles();
-  if (
-    !erResutlatMedBeregning(
-      (data.vedtak?.resultat as NotatResultatSaerbidragsberegningDto[]) ?? [],
-    )
-  )
-    return null;
+  const { erAvslag } = useNotatFelles();
+  if (erAvslag) return null;
   return (
     <div style={{ pageBreakBefore: "always" }}>
-      <h2 id={elementIds.vedleggBeregningsdetaljer} className={"pb-2"}>
-        Vedlegg nr. 4: Beregningsdetaljer
+      <h2 id={elementIds.vedleggBeregningsdetaljer}>
+        Vedlegg nr. 5: Beregningsdetaljer
       </h2>
       <VedleggBeregningsDetaljerInnhold />
     </div>
@@ -56,8 +49,6 @@ function VedleggBeregningsDetaljerInnhold() {
         (resultat: NotatResultatBidragsberegningBarnDto) => (
           <>
             <DataViewTable
-              className={"pt-2 pb-0 mb-0"}
-              gap={"5px"}
               data={[
                 {
                   label: "Barn i saken",
@@ -78,9 +69,9 @@ function VedleggBeregningsDetaljerInnhold() {
                   <>
                     <BidragBeregningContext.Provider value={{ ...detaljer }}>
                       <>
-                        <div className={"pt-2 pb-2"}>
+                        <div className={"pb-2"}>
                           <DataViewTable
-                            className={"mt-medium mb-2"}
+                            className={"mb-2"}
                             data={[
                               {
                                 label: "Periode",

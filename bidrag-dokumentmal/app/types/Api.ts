@@ -90,6 +90,13 @@ export interface DelberegningBidragspliktigesAndel {
   barnetErSelvforsørget: boolean;
 }
 
+export interface DelberegningBoforhold {
+  periode: TypeArManedsperiode;
+  /** @format double */
+  antallBarn: number;
+  borMedAndreVoksne: boolean;
+}
+
 export interface DelberegningSumInntekt {
   periode: TypeArManedsperiode;
   totalinntekt: number;
@@ -270,10 +277,10 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
-  kategoriVisningsnavn?: string;
-  vedtakstypeVisningsnavn?: string;
   avslagVisningsnavn?: string;
+  vedtakstypeVisningsnavn?: string;
+  kategoriVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -307,6 +314,7 @@ export interface NotatBoforholdDto {
   begrunnelse: NotatBegrunnelseDto;
   /** Notat begrunnelse skrevet av saksbehandler */
   notat: NotatBegrunnelseDto;
+  beregnetBoforhold: DelberegningBoforhold[];
 }
 
 export interface NotatDelberegningBarnetilleggDto {
@@ -336,6 +344,24 @@ export interface NotatFaktiskTilsynsutgiftDto {
   kostpenger?: number;
   kommentar?: string;
   total: number;
+}
+
+export interface NotatGebyrInntektDto {
+  skattepliktigInntekt: number;
+  maksBarnetillegg?: number;
+  totalInntekt: number;
+}
+
+export interface NotatGebyrRolleDto {
+  inntekt: NotatGebyrInntektDto;
+  manueltOverstyrtGebyr?: NotatManueltOverstyrGebyrDto;
+  beregnetIlagtGebyr: boolean;
+  endeligIlagtGebyr: boolean;
+  begrunnelse?: string;
+  beløpGebyrsats: number;
+  rolle: NotatPersonDto;
+  erManueltOverstyrt: boolean;
+  gebyrResultatVisningsnavn: string;
 }
 
 export interface NotatInntektDto {
@@ -381,6 +407,12 @@ export enum NotatMalType {
   BIDRAG = "BIDRAG",
 }
 
+export interface NotatManueltOverstyrGebyrDto {
+  begrunnelse?: string;
+  /** Skal bare settes hvis det er avslag */
+  ilagtGebyr?: boolean;
+}
+
 export interface NotatOffentligeOpplysningerUnderhold {
   gjelder: NotatPersonDto;
   gjelderBarn?: NotatPersonDto;
@@ -395,6 +427,7 @@ export interface NotatPersonDto {
   fødselsdato?: string;
   ident?: string;
   erBeskyttet: boolean;
+  innbetaltBeløp?: number;
 }
 
 export interface NotatResultatBeregningInntekterDto {
@@ -402,10 +435,10 @@ export interface NotatResultatBeregningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  inntektBarnMånedlig?: number;
   totalEndeligInntekt: number;
   inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
+  inntektBarnMånedlig?: number;
 }
 
 export type NotatResultatBidragsberegningBarnDto = UtilRequiredKeys<VedtakResultatInnhold, "type"> & {
@@ -450,8 +483,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
   bpHarEvne: boolean;
-  resultatVisningsnavn: string;
   beløpSomInnkreves: number;
+  resultatVisningsnavn: string;
 };
 
 export interface NotatSamvaerDto {
@@ -481,10 +514,10 @@ export interface NotatSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattAlminneligInntektMånedsbeløp: number;
+  skattMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface NotatStonadTilBarnetilsynDto {
@@ -620,8 +653,8 @@ export interface NotatVirkningstidspunktDto {
   begrunnelse: NotatBegrunnelseDto;
   /** Notat begrunnelse skrevet av saksbehandler */
   notat: NotatBegrunnelseDto;
-  årsakVisningsnavn?: string;
   avslagVisningsnavn?: string;
+  årsakVisningsnavn?: string;
 }
 
 export interface NotatVoksenIHusstandenDetaljerDto {
@@ -872,6 +905,7 @@ export interface VedtakNotatDto {
   utgift?: NotatSaerbidragUtgifterDto;
   boforhold: NotatBoforholdDto;
   samvær: NotatSamvaerDto[];
+  gebyr?: NotatGebyrRolleDto[];
   underholdskostnader?: NotatUnderholdDto;
   personer: NotatPersonDto[];
   roller: NotatPersonDto[];
