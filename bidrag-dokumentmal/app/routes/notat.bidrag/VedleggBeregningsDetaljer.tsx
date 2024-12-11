@@ -91,12 +91,13 @@ function VedleggBeregningsDetaljerInnhold() {
                             <div className={"pt-2 pb-2"} />
                           </>
                         )}
-                        {!detaljer.deltBosted && (
-                          <>
-                            <NettoBarnetilleggTable rolle={Rolletype.BM} />
-                            <div className={"pt-2 pb-2"} />
-                          </>
-                        )}
+                        {!detaljer.deltBosted &&
+                          detaljer.barnetilleggBM.barnetillegg.length > 0 && (
+                            <>
+                              <NettoBarnetilleggTable rolle={Rolletype.BM} />
+                              <div className={"pt-2 pb-2"} />
+                            </>
+                          )}
                         <div className={"pt-2 pb-2"}>
                           <BPsEvneTableV2
                             inntekter={detaljer!.inntekter!}
@@ -107,12 +108,13 @@ function VedleggBeregningsDetaljerInnhold() {
                           <BeregningFordeltBidragEvne />
                         </div>
 
-                        {!detaljer.deltBosted && (
-                          <>
-                            <NettoBarnetilleggTable rolle={Rolletype.BP} />
-                            <div className={"pt-2 pb-2"} />
-                          </>
-                        )}
+                        {!detaljer.deltBosted &&
+                          detaljer.barnetilleggBP.barnetillegg.length > 0 && (
+                            <>
+                              <NettoBarnetilleggTable rolle={Rolletype.BP} />
+                              <div className={"pt-2 pb-2"} />
+                            </>
+                          )}
                         <EndeligBidragTable />
                       </>
                     </BidragBeregningContext.Provider>

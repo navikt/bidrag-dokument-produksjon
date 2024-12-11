@@ -255,8 +255,14 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
                         ? d.inntektsposter[0].visningsnavn
                         : "";
                     return {
+                      periodColumn:
+                        styling == "V2" && erBarnetillegg
+                          ? formatPeriode(periode!.fom, periode!.til)
+                          : undefined,
                       columns: [
-                        { content: formatPeriode(periode!.fom, periode!.til) },
+                        (styling == "V1" || !erBarnetillegg) && {
+                          content: formatPeriode(periode!.fom, periode!.til),
+                        },
                         erBarnetillegg
                           ? [
                               { content: visningsnavnInntektstype },
@@ -268,7 +274,9 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
                               { content: formatterBeløp(d.beløp) },
                             ]
                           : { content: formatterBeløp(d.beløp) },
-                      ].flatMap((d) => d),
+                      ]
+                        .filter((d) => typeof d != "boolean")
+                        .flatMap((d) => d as TableColumn),
                     };
                   }),
               }}
