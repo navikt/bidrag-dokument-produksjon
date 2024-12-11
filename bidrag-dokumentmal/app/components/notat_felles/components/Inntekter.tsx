@@ -263,7 +263,7 @@ function InntektPerBarnTable({
                               { content: visningsnavnInntektstype },
                               {
                                 content: formatterBeløp(
-                                  formatterBeløp(d.beløp / 12),
+                                  formatterBeløp(d.månedsbeløp),
                                 ),
                               },
                               { content: formatterBeløp(d.beløp) },

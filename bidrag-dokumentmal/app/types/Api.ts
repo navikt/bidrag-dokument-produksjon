@@ -234,6 +234,8 @@ export interface NotatBarnetilleggDetaljerDto {
 
 export interface NotatBarnetilsynOffentligeOpplysninger {
   periode: TypeArManedsperiode;
+  tilsynstype?: "HELTID" | "DELTID" | "IKKE_ANGITT";
+  skolealder?: "OVER" | "UNDER" | "IKKE_ANGITT";
 }
 
 /** Notat begrunnelse skrevet av saksbehandler */
@@ -278,8 +280,8 @@ export interface NotatBehandlingDetaljerDto {
   /** @format date */
   klageMottattDato?: string;
   avslagVisningsnavn?: string;
-  vedtakstypeVisningsnavn?: string;
   kategoriVisningsnavn?: string;
+  vedtakstypeVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
 }
 
@@ -375,6 +377,8 @@ export interface NotatInntektDto {
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
   visningsnavn: string;
+  /** Avrundet månedsbeløp for barnetillegg */
+  månedsbeløp?: number;
 }
 
 export interface NotatInntekterDto {
@@ -715,7 +719,7 @@ export interface ResultatBarnebidragsberegningPeriodeDto {
 }
 
 export enum Resultatkode {
-  GEBYR_FRITTATT = "GEBYR_FRITTATT",
+  GEBYR_FRITATT = "GEBYR_FRITATT",
   GEBYR_ILAGT = "GEBYR_ILAGT",
   BARNETERSELVFORSORGET = "BARNET_ER_SELVFORSØRGET",
   DIREKTEOPPJOR = "DIREKTE_OPPJØR",
