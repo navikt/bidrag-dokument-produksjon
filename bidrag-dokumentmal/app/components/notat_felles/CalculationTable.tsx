@@ -16,7 +16,6 @@ export default function CalculationTable({
   title,
 }: CalculationTableProps) {
   const hasCalulcation = data.some((row) => row.calculation);
-  console.log("HSA", hasCalulcation, data);
   return (
     <div>
       {title && <h4>{title}</h4>}
