@@ -180,6 +180,10 @@
   margin-top: 16px
 }
 
+.mb-1 {
+  margin-bottom: 4px
+}
+
 .block {
   display: block
 }
