@@ -34,12 +34,10 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
           [
             {
               label: "Skatteprosent",
-              labelBold: true,
               value: formatterProsent(barnetillegg.skattFaktor),
             },
             {
               label: "Inntekt siste 12 mnd",
-              labelBold: true,
               value: formatterBeløpForBeregning(inntekt),
             },
           ].filter((d) => d != null) as DataViewTableData[]
@@ -137,7 +135,6 @@ export const BeregningJusterBPsBarnetillegg = ({
         [
           {
             label: "Foreløpig bidrag",
-            labelBold: true,
             value: `${hentForeløpigBidrag()}${renderResult()}`,
           },
         ].filter((d) => d != null) as DataViewTableData[]
@@ -168,13 +165,11 @@ export const BeregningJusterBMsBarnetillegg = ({
         [
           {
             label: "U - BMs netto barnetillegg",
-            labelBold: true,
             value: `${formatterBeløpForBeregning(underholdskostnad.underholdskostnad)} - ${formatterBeløpForBeregning(barnetilleggBM.sumNettoBeløp)} = ${formatterBeløpForBeregning(sluttberegning.uminusNettoBarnetilleggBM)}`,
           },
           {
             label: "Foreløpig bidrag",
             textRight: false,
-            labelBold: true,
             value: `${formatterBeløpForBeregning(sluttberegning.bruttoBidragEtterBarnetilleggBM)}${renderResult()}`,
           },
         ].filter((d) => d != null) as DataViewTableData[]

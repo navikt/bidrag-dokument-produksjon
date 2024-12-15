@@ -1,7 +1,7 @@
 import { Fragment, ReactElement } from "react";
 import { useTheme } from "~/components/notat_felles/ThemeContext";
 
-type RowContent = ReactElement | string | number | null | undefined;
+export type RowContent = ReactElement | string | number | null | undefined;
 export type TableColumn = {
   width?: string;
   colSpan?: number;
@@ -39,6 +39,8 @@ export function CommonTable({
   width,
 }: CommonTableProps) {
   const { styling } = useTheme();
+  const cellV2StylingOnlyBorder =
+    "border-b border-solid border-t-0 border-r-0 border-l-0";
   const cellV2Styling =
     "pb-2 pt-2 pl-3 pr-3 border-b border-solid border-t-0 border-r-0 border-l-0";
   const cellV2StylingWithoutBorder = "pb-2 pt-2 pl-3 pr-3";
@@ -62,7 +64,9 @@ export function CommonTable({
                       ? row.skipBorderBottom || isPeriodColumn
                         ? cellV2StylingWithoutBorder
                         : cellV2Styling
-                      : ""
+                      : row.skipBorderBottom
+                        ? ""
+                        : cellV2StylingOnlyBorder
                   } ${row.periodColumn ? false : (row.zebraStripe != false && index % 2 == 1) || row.zebraStripe == true ? "bg-table-bg-even" : ""} ${row.className}`
                 : "p-table-body-tr-v1"
             }

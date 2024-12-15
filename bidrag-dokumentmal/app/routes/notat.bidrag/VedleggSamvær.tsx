@@ -12,7 +12,9 @@ export default function VedleggSamvær() {
     <div style={{ pageBreakBefore: "always" }}>
       <h2 id={elementIds.vedleggSamvær}>Vedlegg nr. 4: Samvær</h2>
       {data.samvær.map((samværBarn, index) => (
-        <SamværsberegningDetaljerBarn samværBarn={samværBarn} key={index} />
+        <div className={"flex flex-col gap-2"}>
+          <SamværsberegningDetaljerBarn samværBarn={samværBarn} key={index} />
+        </div>
       ))}
     </div>
   );
@@ -29,7 +31,6 @@ function SamværsberegningDetaljerBarn({
   return (
     <>
       <DataViewTable
-        className={"pb-2"}
         data={
           [
             {
@@ -46,7 +47,6 @@ function SamværsberegningDetaljerBarn({
         samværsperioderMedBeregning.map((periode, index) => (
           <div key={index + "_" + periode.samværsklasseVisningsnavn}>
             <DataViewTable
-              className={"pt-2 pb-2"}
               data={
                 [
                   {

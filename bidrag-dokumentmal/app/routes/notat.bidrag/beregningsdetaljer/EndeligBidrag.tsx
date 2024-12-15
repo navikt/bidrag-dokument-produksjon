@@ -20,14 +20,12 @@ export const EndeligBidragTable = () => {
               ? {
                   label: "Etter samværsfradraget",
                   textRight: false,
-                  labelBold: true,
                   value: `${formatterBeløpForBeregning(sluttberegning.bruttoBidragEtterBarnetilleggBP)} - ${formatterBeløpForBeregning(beregning.samværsfradrag)} = ${formatterBeløpForBeregning(sluttberegning.beregnetBeløp)}`,
                 }
               : null,
             {
               label: "Avrundet beløp",
               textRight: false,
-              labelBold: true,
               value: `${formatterBeløpForBeregning(sluttberegning.resultatBeløp)}`,
             },
           ].filter((d) => d != null) as DataViewTableData[]
