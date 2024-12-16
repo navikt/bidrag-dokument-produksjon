@@ -36,11 +36,10 @@ export default function VedleggUnderholdskostnader() {
         <h4 className={"mt-2"}>3.3 Beregningsdetaljer tilsynsutgifter</h4>
         {data.underholdskostnader?.underholdskostnaderBarn?.flatMap((uBarn) =>
           uBarn.underholdskostnad.map((underholdskostnader, index) => (
-            <div className={"mt-4"}>
+            <div className={"mt-4"} key={index}>
               <UnderholdskostnaderBeregningsdetaljerTabell
                 detaljer={underholdskostnader.beregningsdetaljer}
                 periode={underholdskostnader.periode}
-                key={index}
               />
             </div>
           )),
@@ -91,7 +90,8 @@ function InnhentetBarnetilsynTable({
         data={
           [
             {
-              label: "Har innvilget tilleggsstønad",
+              label:
+                "Har fått innvilget tilleggsstønad for ett eller flere barn",
               value: opplysninger.harTilleggsstønad ? "Ja" : "Nei",
             },
           ].filter((d) => d != null) as DataViewTableData[]
@@ -164,7 +164,7 @@ function UnderholdskostnadBeregningsdetaljer({
               label: "Andel søknadsbarn",
               textRight: false,
               labelBold: true,
-              value: `${formatterBeløpForBeregning(detaljer.faktiskTilsynsutgift)} / ${formatterBeløpForBeregning(detaljer.sumTilsynsutgifter)} = ${formatterProsent(detaljer.fordelingFaktor)}`,
+              value: `${formatterBeløpForBeregning(detaljer.bruttoTilsynsutgift)} / ${formatterBeløpForBeregning(detaljer.sumTilsynsutgifter)} = ${formatterProsent(detaljer.fordelingFaktor)}`,
             },
           ].filter((d) => d)}
         />
@@ -201,11 +201,11 @@ function UnderholdskostnadBeregningsdetaljer({
             calculation: detaljer.erBegrensetAvMaksTilsyn
               ? `${formatterBeløpForBeregning(detaljer.totalTilsynsutgift)} x ${formatterProsent(detaljer.fordelingFaktor)}`
               : undefined,
-            result: `${formatterBeløpForBeregning(detaljer.bruttoTilsynsutgift)}`,
+            result: `${formatterBeløpForBeregning(detaljer.justertBruttoTilsynsutgift)}`,
           },
           {
             label: "Skattefradrag (per barn)",
-            calculation: `${formatterBeløpForBeregning(detaljer.skattefradrag)} / ${formatterBeløpForBeregning(detaljer.antallBarn)}`,
+            calculation: `${formatterBeløpForBeregning(detaljer.skattefradrag)} / ${formatterBeløpForBeregning(detaljer.antallBarnBMUnderTolvÅr)}`,
             result: `- ${formatterBeløpForBeregning(detaljer.skattefradragPerBarn)}`,
           },
           {

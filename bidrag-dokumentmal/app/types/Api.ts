@@ -280,9 +280,9 @@ export interface NotatBehandlingDetaljerDto {
   /** @format date */
   klageMottattDato?: string;
   avslagVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -519,9 +519,9 @@ export interface NotatSkattBeregning {
   trinnskatt: number;
   trygdeavgift: number;
   skattMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface NotatStonadTilBarnetilsynDto {
@@ -611,12 +611,12 @@ export interface NotatUnderholdskostnadPeriodeBeregningsdetaljer {
   sjablonMaksTilsynsutgift: number;
   sjablonMaksFradrag: number;
   /** @format int32 */
-  antallBarn: number;
+  antallBarnBMUnderTolvÅr: number;
   skattesatsFaktor: number;
   totalTilsynsutgift: number;
   sumTilsynsutgifter: number;
-  faktiskTilsynsutgift: number;
   bruttoTilsynsutgift: number;
+  justertBruttoTilsynsutgift: number;
   nettoTilsynsutgift: number;
   erBegrensetAvMaksTilsyn: boolean;
   fordelingFaktor: number;
