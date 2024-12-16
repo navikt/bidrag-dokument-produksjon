@@ -1,7 +1,6 @@
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import {
   formatterBeløpForBeregning,
-  formatterProsent,
   rolleTilVisningsnavn,
 } from "~/utils/visningsnavn";
 import {
@@ -19,30 +18,13 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
     delberegningUnderholdskostnad: underholdskostnad,
     barnetilleggBP,
     barnetilleggBM,
-    inntekter,
   } = useBeregningDetaljer();
 
   const barnetillegg = rolle == Rolletype.BP ? barnetilleggBP : barnetilleggBM;
-  const inntekt =
-    rolle == Rolletype.BP ? inntekter?.inntektBP : inntekter?.inntektBM;
   return (
     <div style={{ width: "600px" }}>
       <h4>{`Netto barnetillegg (${rolleTilVisningsnavn(rolle)})`}</h4>
-      <DataViewTable
-        gap={"5px"}
-        data={
-          [
-            {
-              label: "Skatteprosent",
-              value: formatterProsent(barnetillegg.skattFaktor),
-            },
-            {
-              label: "Inntekt siste 12 mnd",
-              value: formatterBeløpForBeregning(inntekt),
-            },
-          ].filter((d) => d != null) as DataViewTableData[]
-        }
-      />
+
       <CommonTable
         layoutAuto
         data={{
