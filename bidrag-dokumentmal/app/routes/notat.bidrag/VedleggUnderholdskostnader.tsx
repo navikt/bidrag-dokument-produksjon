@@ -133,6 +133,15 @@ function UnderholdskostnadBeregningsdetaljer({
   if (!detaljer) return <div>Ingen beregningsdetaljer</div>;
   return (
     <>
+      <DataViewTable
+        data={[
+          {
+            label: "Antall barn under 12 år",
+            textRight: false,
+            value: `${formatterBeløpForBeregning(detaljer.antallBarnBMUnderTolvÅr)}`,
+          },
+        ].filter((d) => d)}
+      />
       <CalculationTable
         title="Tilsynsutgifter"
         data={[
@@ -157,13 +166,11 @@ function UnderholdskostnadBeregningsdetaljer({
             {
               label: "Totalbeløp begrenset av maks tilsynsutgift",
               textRight: false,
-              labelBold: true,
               value: `${formatterBeløpForBeregning(detaljer.totalTilsynsutgift)}`,
             },
             {
               label: "Andel søknadsbarn",
               textRight: false,
-              labelBold: true,
               value: `${formatterBeløpForBeregning(detaljer.bruttoTilsynsutgift)} / ${formatterBeløpForBeregning(detaljer.sumTilsynsutgifter)} = ${formatterProsent(detaljer.fordelingFaktor)}`,
             },
           ].filter((d) => d)}
