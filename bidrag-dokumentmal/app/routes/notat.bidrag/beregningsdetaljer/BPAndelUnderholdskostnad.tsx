@@ -30,19 +30,16 @@ export const BPAndelUnderholdskostnad = () => {
             [
               {
                 label: "BP's andel av underholdskostnad (i prosent)",
-                labelBold: true,
                 value: `${formatterBeløpForBeregning(inntekter.inntektBP)} / ${formatterBeløpForBeregning(inntekter.totalEndeligInntekt)} = ${formatterProsent(bpsAndel.beregnetAndelFaktor)}`,
               },
               {
                 label: "Andel underholdskostnad",
-                labelBold: true,
                 value: `${formatterBeløpForBeregning(delberegningUnderholdskostnad.underholdskostnad)} x ${formatterProsent(bpsAndel.endeligAndelFaktor)} = ${formatterBeløpForBeregning(bpsAndel.andelBeløp)}`,
               },
               deltBosted
                 ? {
                     label: "Etter fratrekk delt bosted",
                     textRight: false,
-                    labelBold: true,
                     value: `${formatterBeløpForBeregning(bpsAndel.andelBeløp, true)} - ${formatterBeløpForBeregning(delberegningUnderholdskostnad.underholdskostnad)} x ${formatterProsent(0.5)} = ${formatterBeløpForBeregning(sluttberegning.bpAndelAvUVedDeltBostedBeløp)}`,
                   }
                 : null,

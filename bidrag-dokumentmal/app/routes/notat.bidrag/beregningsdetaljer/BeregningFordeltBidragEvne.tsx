@@ -22,13 +22,11 @@ export const BeregningFordeltBidragEvne = () => {
           {
             label: "25% av inntekt",
             textRight: false,
-            labelBold: true,
             value: formatterBeløpForBeregning(evne.sumInntekt25Prosent),
           },
           {
             label: "Foreløpig bidrag",
             textRight: false,
-            labelBold: true,
             value: `${formatterBeløpForBeregning(sluttberegning.bruttoBidragJustertForEvneOg25Prosent)}${renderResult()}`,
           },
         ].filter((d) => d != null) as DataViewTableData[]

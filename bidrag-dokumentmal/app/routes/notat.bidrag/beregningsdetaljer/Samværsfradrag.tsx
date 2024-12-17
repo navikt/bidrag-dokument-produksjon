@@ -13,12 +13,10 @@ export const Samværsfradrag = () => {
           [
             {
               label: "Samværsklasse",
-              labelBold: true,
               value: `Samværsklasse ${samværsfradrag.samværsklasseVisningsnavn} (samvær per måned: ${samværsfradrag.gjennomsnittligSamværPerMåned})`,
             },
             {
               label: "Samværsfradrag",
-              labelBold: true,
               value: formatterBeløpForBeregning(samværsfradrag.samværsfradrag),
             },
           ].filter((d) => d != null) as DataViewTableData[]

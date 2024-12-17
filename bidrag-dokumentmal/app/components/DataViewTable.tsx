@@ -1,7 +1,7 @@
 import React from "react";
 
 export interface DataViewTableData {
-  label: string;
+  label?: string;
   labelBold?: boolean;
   value?: string | number | React.ReactNode;
   additionalInfo?: string | number;
@@ -32,16 +32,18 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
           {data.map((row, rowIndex) => (
             <>
               <tr key={rowIndex + "-" + row.value}>
-                <td
-                  style={{
-                    verticalAlign: "text-top",
-                    width: labelColWidth,
-                    paddingRight: gap,
-                    fontWeight: row.labelBold ? "bold" : "normal",
-                  }}
-                >
-                  {row.label}:{" "}
-                </td>
+                {row.label && (
+                  <td
+                    style={{
+                      verticalAlign: "text-top",
+                      width: labelColWidth,
+                      paddingRight: gap,
+                      fontWeight: row.labelBold ? "bold" : "normal",
+                    }}
+                  >
+                    {row.label}:{" "}
+                  </td>
+                )}
                 <td>
                   <>{row.value}</>
                 </td>

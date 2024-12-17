@@ -1,7 +1,6 @@
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import {
   formatterBeløpForBeregning,
-  formatterProsent,
   rolleTilVisningsnavn,
 } from "~/utils/visningsnavn";
 import {
@@ -19,32 +18,13 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
     delberegningUnderholdskostnad: underholdskostnad,
     barnetilleggBP,
     barnetilleggBM,
-    inntekter,
   } = useBeregningDetaljer();
 
   const barnetillegg = rolle == Rolletype.BP ? barnetilleggBP : barnetilleggBM;
-  const inntekt =
-    rolle == Rolletype.BP ? inntekter?.inntektBP : inntekter?.inntektBM;
   return (
     <div style={{ width: "600px" }}>
       <h4>{`Netto barnetillegg (${rolleTilVisningsnavn(rolle)})`}</h4>
-      <DataViewTable
-        gap={"5px"}
-        data={
-          [
-            {
-              label: "Skatteprosent",
-              labelBold: true,
-              value: formatterProsent(barnetillegg.skattFaktor),
-            },
-            {
-              label: "Inntekt siste 12 mnd",
-              labelBold: true,
-              value: formatterBeløpForBeregning(inntekt),
-            },
-          ].filter((d) => d != null) as DataViewTableData[]
-        }
-      />
+
       <CommonTable
         layoutAuto
         data={{
@@ -137,7 +117,6 @@ export const BeregningJusterBPsBarnetillegg = ({
         [
           {
             label: "Foreløpig bidrag",
-            labelBold: true,
             value: `${hentForeløpigBidrag()}${renderResult()}`,
           },
         ].filter((d) => d != null) as DataViewTableData[]
@@ -168,13 +147,11 @@ export const BeregningJusterBMsBarnetillegg = ({
         [
           {
             label: "U - BMs netto barnetillegg",
-            labelBold: true,
             value: `${formatterBeløpForBeregning(underholdskostnad.underholdskostnad)} - ${formatterBeløpForBeregning(barnetilleggBM.sumNettoBeløp)} = ${formatterBeløpForBeregning(sluttberegning.uminusNettoBarnetilleggBM)}`,
           },
           {
             label: "Foreløpig bidrag",
             textRight: false,
-            labelBold: true,
             value: `${formatterBeløpForBeregning(sluttberegning.bruttoBidragEtterBarnetilleggBM)}${renderResult()}`,
           },
         ].filter((d) => d != null) as DataViewTableData[]

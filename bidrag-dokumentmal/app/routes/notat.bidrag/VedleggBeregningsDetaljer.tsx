@@ -15,6 +15,7 @@ import { BeregningFordeltBidragEvne } from "~/routes/notat.bidrag/beregningsdeta
 import { createContext, useContext } from "react";
 import { EndeligBidragTable } from "~/routes/notat.bidrag/beregningsdetaljer/EndeligBidrag";
 import { BPsEvneTableV2 } from "~/components/vedtak/BPsEvneTableV2";
+import { BarnetilleggSkattesats } from "~/routes/notat.bidrag/beregningsdetaljer/BarnetilleggSkattesats";
 
 export default function VedleggBeregningsDetaljer() {
   const { erAvslag } = useNotatFelles();
@@ -94,6 +95,7 @@ function VedleggBeregningsDetaljerInnhold() {
                         {!detaljer.deltBosted &&
                           detaljer.barnetilleggBM.barnetillegg.length > 0 && (
                             <>
+                              <BarnetilleggSkattesats rolle={Rolletype.BM} />
                               <NettoBarnetilleggTable rolle={Rolletype.BM} />
                               <div className={"pt-2 pb-2"} />
                             </>
@@ -111,6 +113,7 @@ function VedleggBeregningsDetaljerInnhold() {
                         {!detaljer.deltBosted &&
                           detaljer.barnetilleggBP.barnetillegg.length > 0 && (
                             <>
+                              <BarnetilleggSkattesats rolle={Rolletype.BP} />
                               <NettoBarnetilleggTable rolle={Rolletype.BP} />
                               <div className={"pt-2 pb-2"} />
                             </>

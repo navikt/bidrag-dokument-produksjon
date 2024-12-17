@@ -267,9 +267,7 @@ function InntektPerBarnTable({ data }: InntektTableProps) {
                           ? [
                               { content: visningsnavnInntektstype },
                               {
-                                content: formatterBeløp(
-                                  Math.round(d.beløp / 12),
-                                ),
+                                content: formatterBeløp(d.månedsbeløp ?? 0),
                               },
                               { content: formatterBeløp(d.beløp) },
                             ]

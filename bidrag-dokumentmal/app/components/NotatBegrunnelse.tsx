@@ -10,14 +10,19 @@ export default function NotatBegrunnelse({ data }: NotatProps) {
     <div
       style={{
         maxWidth: "35rem",
-        marginTop: "16px",
       }}
+      className={"mt-4"}
     >
       <DataViewTable
         data={
           [
             {
               label: "Begrunnelse",
+              textRight: false,
+              labelBold: true,
+            },
+            {
+              label: undefined,
               textRight: false,
               labelBold: true,
               value: <PurifiedHtml text={data?.innhold} />,
