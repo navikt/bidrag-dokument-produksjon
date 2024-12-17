@@ -17,7 +17,7 @@ export const BarnetilleggSkattesats = ({ rolle }: { rolle: Rolletype }) => {
   if (barnetilleggSkattesats == null) return null;
   return (
     <div className={"mb-2"}>
-      <h4>{`Beregning av skatteprosent (${rolleTilVisningsnavn(rolle)})`}</h4>
+      <h4>{`Beregning av skatteprosent på barnetillegg (${rolleTilVisningsnavn(rolle)})`}</h4>
       <CalculationTable
         data={[
           {
