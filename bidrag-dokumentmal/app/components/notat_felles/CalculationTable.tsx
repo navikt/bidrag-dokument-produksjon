@@ -9,7 +9,7 @@ type CalculationTableRowProps = {
 };
 type CalculationTableProps = {
   data: CalculationTableRowProps[];
-  title: string;
+  title?: string;
 };
 export default function CalculationTable({
   data,

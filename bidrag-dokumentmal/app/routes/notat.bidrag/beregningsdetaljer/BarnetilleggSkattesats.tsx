@@ -1,12 +1,12 @@
 import { Rolletype } from "~/types/Api";
 import { useBeregningDetaljer } from "~/routes/notat.bidrag/VedleggBeregningsDetaljer";
-import { CalculationTabell } from "~/components/vedtak/CalculationTable";
 import {
   formatterBeløpForBeregning,
   formatterProsent,
   rolleTilVisningsnavn,
 } from "~/utils/visningsnavn";
 import { DataViewTable } from "~/components/DataViewTable";
+import CalculationTable from "~/components/notat_felles/CalculationTable";
 
 export const BarnetilleggSkattesats = ({ rolle }: { rolle: Rolletype }) => {
   const { barnetilleggBP, barnetilleggBM } = useBeregningDetaljer();
@@ -18,7 +18,7 @@ export const BarnetilleggSkattesats = ({ rolle }: { rolle: Rolletype }) => {
   return (
     <div className={"mb-2"}>
       <h4>{`Beregning av skatteprosent (${rolleTilVisningsnavn(rolle)})`}</h4>
-      <CalculationTabell
+      <CalculationTable
         data={[
           {
             label: "Skatt",
@@ -41,21 +41,21 @@ export const BarnetilleggSkattesats = ({ rolle }: { rolle: Rolletype }) => {
               true,
             ),
           },
+          {
+            label: "Sum skatt",
+            labelBold: true,
+            result: formatterBeløpForBeregning(
+              barnetilleggSkattesats.sumSkatt,
+              true,
+            ),
+          },
         ]}
-        result={{
-          label: "Sum skatt",
-          value: formatterBeløpForBeregning(
-            barnetilleggSkattesats.sumSkatt,
-            true,
-          ),
-        }}
       />
       <DataViewTable
         data={[
           {
             label: "Inntekt",
             textRight: false,
-            labelBold: true,
             value: formatterBeløpForBeregning(
               barnetilleggSkattesats.sumInntekt,
             ),
@@ -63,7 +63,6 @@ export const BarnetilleggSkattesats = ({ rolle }: { rolle: Rolletype }) => {
           {
             label: "Skatteprosent",
             textRight: false,
-            labelBold: true,
             value: `${formatterBeløpForBeregning(barnetilleggSkattesats.sumSkatt, true)} / ${formatterBeløpForBeregning(barnetilleggSkattesats.sumInntekt)} = ${formatterProsent(barnetilleggSkattesats.skattFaktor)}`,
           },
         ].filter((d) => d)}
