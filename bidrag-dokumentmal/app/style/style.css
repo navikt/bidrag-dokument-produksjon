@@ -104,9 +104,9 @@ dt:before {
   margin: 0
 }
 
-dl {
-  margin: 0 0 16px 0;
-}
+/*dl {*/
+/*  margin: 0 0 16px 0;*/
+/*}*/
 
 dt, dd {
   display: inline;

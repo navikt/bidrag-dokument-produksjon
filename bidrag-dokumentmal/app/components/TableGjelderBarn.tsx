@@ -3,6 +3,7 @@ import { dateToDDMMYYYY } from "~/utils/date-utils";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
 import { useTheme } from "~/components/notat_felles/ThemeContext";
+import Person from "~/components/Person";
 
 export default function TableGjelderBarn({
   gjelderBarn,
@@ -19,7 +20,13 @@ export default function TableGjelderBarn({
             {
               label: rolleTilVisningsnavn(gjelderBarn.rolle!),
               labelBold: true,
-              value: gjelderBarn.navn,
+              value: (
+                <Person
+                  fødselsdato={gjelderBarn.fødselsdato!}
+                  navn={gjelderBarn.navn!}
+                  erBeskyttet={gjelderBarn.erBeskyttet}
+                />
+              ),
             },
           ].filter((d) => d != null) as DataViewTableData[]
         }
