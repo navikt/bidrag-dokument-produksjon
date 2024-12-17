@@ -180,7 +180,7 @@ function UnderholdskostnadBeregningsdetaljer({
         title="Skattefradrag"
         data={[
           {
-            label: "Maksfradrag",
+            label: "Maks fradrag",
             calculation: `${formatterBeløpForBeregning(detaljer.sjablonMaksFradrag)} x ${formatterProsent(detaljer.skattesatsFaktor)}`,
             result: formatterBeløpForBeregning(
               detaljer.skattefradragMaksFradrag,
