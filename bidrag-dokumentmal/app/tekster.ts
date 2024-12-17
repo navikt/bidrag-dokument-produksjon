@@ -65,6 +65,7 @@ export default {
       faktiskeTilsynsutgifter: {
         totalTilsynsutgift: "Total tilsynsutgift",
         kostpenger: "Kostpenger",
+        fratrekk: "Fratrekk",
         totalt: "Totalt (12 mnd)",
         kommentar: "Kommentar",
       },

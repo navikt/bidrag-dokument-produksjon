@@ -160,7 +160,7 @@ function FaktiskeTilsynsutgifterTabell({
             },
             {
               name: tekster.tabell.underholdskostnader.faktiskeTilsynsutgifter
-                .kostpenger,
+                .fratrekk,
             },
             {
               name: tekster.tabell.underholdskostnader.faktiskeTilsynsutgifter
