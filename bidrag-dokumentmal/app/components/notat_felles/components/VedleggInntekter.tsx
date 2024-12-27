@@ -24,30 +24,35 @@ import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
 import { useTheme } from "~/components/notat_felles/ThemeContext";
 import GjelderPerson from "~/components/GjelderPerson";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function VedleggInntekter() {
+export default function VedleggInntekter({ vedleggNummer = 2 }: VedleggProps) {
   const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
     useNotatFelles();
   if (erAvslag) return null;
 
   return (
-    <div style={{ pageBreakBefore: "always" }}>
+    <div>
       <h2 id={elementIds.vedleggInntekter}>
-        Vedlegg nr. 2: Inntekt - {tekster.fraOffentligeRegistre}
+        Vedlegg nr. {vedleggNummer}: Inntekt - {tekster.fraOffentligeRegistre}
       </h2>
       <OpplysningerForRolle
         rolle={bidragsmottaker}
         showRole={type !== NotatMalType.FORSKUDD}
+        vedleggNummer={vedleggNummer}
       />
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
         <div className={"mt-medium"}>
-          <OpplysningerForRolle rolle={bidragspliktig} />
+          <OpplysningerForRolle
+            rolle={bidragspliktig}
+            vedleggNummer={vedleggNummer}
+          />
         </div>
       )}
       {type !== NotatMalType.FORSKUDD &&
         søknadsbarn.map((barn) => (
           <div key={barn.ident} className={"mt-medium"}>
-            <OpplysningerForRolle rolle={barn} />
+            <OpplysningerForRolle rolle={barn} vedleggNummer={vedleggNummer} />
           </div>
         ))}
     </div>
@@ -57,9 +62,11 @@ export default function VedleggInntekter() {
 function OpplysningerForRolle({
   rolle,
   showRole = true,
+  vedleggNummer,
 }: {
   rolle: NotatPersonDto;
   showRole?: boolean;
+  vedleggNummer?: number;
 }) {
   const { data } = useNotatFelles();
 
@@ -75,7 +82,7 @@ function OpplysningerForRolle({
       {showRole && <GjelderPerson rolle={rolle} />}
       {inntekter.arbeidsforhold && inntekter.arbeidsforhold.length > 0 && (
         <div>
-          <h4>2.1 Arbeidsforhold</h4>
+          <h4>{vedleggNummer}.1 Arbeidsforhold</h4>
           <ArbeidsforholdTable data={inntekter.arbeidsforhold} />
         </div>
       )}
@@ -85,25 +92,25 @@ function OpplysningerForRolle({
         <>
           <OffentligeInntekter
             data={inntekter.årsinntekter}
-            tittel={"2.2 Skattepliktige og pensjonsgivende inntekter"}
+            tittel={`${vedleggNummer}.2 Skattepliktige og pensjonsgivende inntekter`}
             medInntektsposter
           />
           <OffentligeInntekter
             data={inntekter.barnetillegg}
-            tittel={"2.3 Barnetillegg"}
+            tittel={`${vedleggNummer}.3 Barnetillegg`}
             medBarn
           />
           <OffentligeInntekter
             data={inntekter.utvidetBarnetrygd}
-            tittel={"2.4 Utvidet barnetrygd"}
+            tittel={`${vedleggNummer}.4 Utvidet barnetrygd`}
           />
           <OffentligeInntekter
             data={inntekter.småbarnstillegg}
-            tittel={"2.5 Småbarnstillegg"}
+            tittel={`${vedleggNummer}.5 Småbarnstillegg`}
           />
           <OffentligeInntekter
             data={inntekter.kontantstøtte}
-            tittel={"2.6 Kontantstøtte"}
+            tittel={`${vedleggNummer}.6 Kontantstøtte`}
             medBarn
           />
         </>

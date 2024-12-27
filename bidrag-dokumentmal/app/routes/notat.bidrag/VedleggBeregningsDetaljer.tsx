@@ -16,14 +16,17 @@ import { createContext, useContext } from "react";
 import { EndeligBidragTable } from "~/routes/notat.bidrag/beregningsdetaljer/EndeligBidrag";
 import { BPsEvneTableV2 } from "~/components/vedtak/BPsEvneTableV2";
 import { BarnetilleggSkattesats } from "~/routes/notat.bidrag/beregningsdetaljer/BarnetilleggSkattesats";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function VedleggBeregningsDetaljer() {
+export default function VedleggBeregningsDetaljer({
+  vedleggNummer,
+}: VedleggProps) {
   const { erAvslag } = useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div style={{ pageBreakBefore: "always" }}>
+    <div>
       <h2 id={elementIds.vedleggBeregningsdetaljer}>
-        Vedlegg nr. 5: Beregningsdetaljer
+        Vedlegg nr. {vedleggNummer}: Beregningsdetaljer
       </h2>
       <VedleggBeregningsDetaljerInnhold />
     </div>

@@ -388,9 +388,9 @@ export interface NotatInntektDto {
   gjelderBarn?: NotatPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
-  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
+  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -430,6 +430,12 @@ export interface NotatManueltOverstyrGebyrDto {
 }
 
 export interface NotatOffentligeOpplysningerUnderhold {
+  offentligeOpplysningerBarn: NotatOffentligeOpplysningerUnderholdBarn[];
+  andreBarnTilBidragsmottaker: NotatPersonDto[];
+  bidragsmottakerHarInnvilgetTilleggsstønad: boolean;
+}
+
+export interface NotatOffentligeOpplysningerUnderholdBarn {
   gjelder: NotatPersonDto;
   gjelderBarn?: NotatPersonDto;
   barnetilsyn: NotatBarnetilsynOffentligeOpplysninger[];
@@ -596,7 +602,8 @@ export interface NotatUnderholdBarnDto {
 
 export interface NotatUnderholdDto {
   underholdskostnaderBarn: NotatUnderholdBarnDto[];
-  offentligeOpplysninger: NotatOffentligeOpplysningerUnderhold[];
+  offentligeOpplysninger: NotatOffentligeOpplysningerUnderholdBarn[];
+  offentligeOpplysningerV2: NotatOffentligeOpplysningerUnderhold;
 }
 
 export interface NotatUnderholdEgneBarnIHusstand {

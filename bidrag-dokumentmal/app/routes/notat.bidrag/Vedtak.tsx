@@ -14,8 +14,9 @@ import {
   formatterProsent,
 } from "~/utils/visningsnavn";
 import { DataViewTable } from "~/components/DataViewTable";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function Vedtak() {
+export default function Vedtak({ vedleggNummer }: VedleggProps) {
   const { erAvslag, data } = useNotatFelles();
   return (
     <>
@@ -23,7 +24,7 @@ export default function Vedtak() {
         <h2 className={"section-title"}>Vedtak</h2>
         {!erAvslag && (
           <a href={`#${elementIds.vedleggBeregningsdetaljer}`}>
-            se vedlegg nr. 5 for beregningsdetaljer
+            se vedlegg nr. {vedleggNummer} for beregningsdetaljer
           </a>
         )}
       </div>

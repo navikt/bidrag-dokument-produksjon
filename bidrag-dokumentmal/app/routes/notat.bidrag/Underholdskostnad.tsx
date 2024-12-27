@@ -3,13 +3,14 @@ import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { NotatUnderholdBarnDto } from "~/types/Api";
 import { DataViewTable } from "~/components/DataViewTable";
 import { CommonTable } from "~/components/CommonTable";
-import { formatPeriode } from "~/utils/date-utils";
+import { formatPeriode, dateToDDMMYYYY } from "~/utils/date-utils";
 import tekster from "~/tekster";
 import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import KildeIcon from "~/components/KildeIcon";
 import elementIds from "~/utils/elementIds";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function Underholdskostnad() {
+export default function Underholdskostnad({ vedleggNummer }: VedleggProps) {
   const { data, erAvslag } = useNotatFelles();
   if (erAvslag) return null;
 
@@ -20,7 +21,7 @@ export default function Underholdskostnad() {
       <div className={"section-title elements_inline"}>
         <h2>Underholdskostnad</h2>
         <a href={`#${elementIds.vedleggUnderholdskostnader}`}>
-          se vedlegg nr. 4 for underholdskostnad
+          se vedlegg nr. {vedleggNummer} for underholdskostnad
         </a>
       </div>
       <>
@@ -58,7 +59,7 @@ function UnderholdskostnaderAndreBarn({
               {
                 label: "Andre barn til bidragsmottaker",
                 labelBold: true,
-                value: barn.gjelderBarn.navn,
+                value: `${barn.gjelderBarn.navn} / ${dateToDDMMYYYY(barn.gjelderBarn.fødselsdato)}`,
               },
             ]}
           />

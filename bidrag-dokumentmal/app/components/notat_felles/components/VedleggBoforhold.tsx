@@ -18,14 +18,15 @@ import elementIds from "~/utils/elementIds";
 import tekster from "~/tekster";
 import { CommonTable } from "~/components/CommonTable";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function VedleggBoforhold() {
+export default function VedleggBoforhold({ vedleggNummer = 1 }: VedleggProps) {
   const { erAvslag, data, type } = useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div style={{ pageBreakBefore: "always" }}>
+    <div>
       <h2 id={elementIds.vedleggBoforhold}>
-        Vedlegg nr. 1: Boforhold - {tekster.fraOffentligeRegistre}
+        Vedlegg nr. {vedleggNummer}: Boforhold - {tekster.fraOffentligeRegistre}
       </h2>
       {groupBy(
         data.boforhold.barn

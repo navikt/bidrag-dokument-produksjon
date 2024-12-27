@@ -35,8 +35,9 @@ import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
 import { useTheme } from "~/components/notat_felles/ThemeContext";
 import GjelderPerson from "~/components/GjelderPerson";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function Inntekter() {
+export default function Inntekter({ vedleggNummer = 2 }: VedleggProps) {
   const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
     useNotatFelles();
   if (erAvslag) return null;
@@ -45,7 +46,8 @@ export default function Inntekter() {
       <div className={"elements_inline section-title"}>
         <h2>Inntekter</h2>
         <a href={`#${elementIds.vedleggInntekter}`}>
-          se vedlegg nr. 2 for opplysninger fra offentlige registre
+          se vedlegg nr. {vedleggNummer} for opplysninger fra offentlige
+          registre
         </a>
       </div>
       <InntekterForRolle

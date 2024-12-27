@@ -13,8 +13,9 @@ import Sivilstand from "~/components/notat_felles/components/Sivilstand";
 import { CommonTable } from "~/components/CommonTable";
 import { formatPeriode } from "~/utils/date-utils";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function Boforhold() {
+export default function Boforhold({ vedleggNummer = 1 }: VedleggProps) {
   const { erAvslag, data } = useNotatFelles();
   if (erAvslag) return null;
   return (
@@ -22,7 +23,7 @@ export default function Boforhold() {
       <div className={"elements_inline section-title"}>
         <h2>{tekster.titler.boforhold.tittel}</h2>
         <a href={`#${elementIds.vedleggBoforhold}`}>
-          {tekster.vedleggLenke.replace("{}", "1")}
+          {tekster.vedleggLenke.replace("{}", vedleggNummer?.toString())}
         </a>
       </div>
       <>
