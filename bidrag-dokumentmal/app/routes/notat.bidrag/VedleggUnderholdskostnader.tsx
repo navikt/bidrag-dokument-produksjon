@@ -82,7 +82,8 @@ function InnhentetAndreBarnTilBidragsmottaker({
   return (
     <>
       <h4 className={"mt-3"}>
-        {vedleggNummer}.2 Andre barn til bidragsmottaker
+        {vedleggNummer}.2 Andre barn til bidragsmottaker - hentet fra offentlige
+        registre
       </h4>
       {opplysninger.length == 0 ? (
         <p>Bidragsmottaker har ingen andre barn</p>
