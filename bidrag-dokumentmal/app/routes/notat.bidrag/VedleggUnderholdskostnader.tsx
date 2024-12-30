@@ -1,9 +1,11 @@
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import elementIds from "~/utils/elementIds";
 import {
-  NotatOffentligeOpplysningerUnderhold,
   DatoperiodeDto,
+  NotatOffentligeOpplysningerUnderholdBarn,
+  NotatPersonDto,
   NotatUnderholdskostnadPeriodeBeregningsdetaljer,
+  Rolletype,
 } from "~/types/Api";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import GjelderPerson from "~/components/GjelderPerson";
@@ -15,28 +17,50 @@ import {
   formatterProsent,
 } from "~/utils/visningsnavn";
 import CalculationTable from "~/components/notat_felles/CalculationTable";
+import { VedleggProps } from "~/types/commonTypes";
+import { erRolle } from "~/utils/converter-utils";
 
-export default function VedleggUnderholdskostnader() {
+export default function VedleggUnderholdskostnader({
+  vedleggNummer,
+}: VedleggProps) {
   const { data, erAvslag } = useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div style={{ pageBreakBefore: "always" }}>
+    <div>
       <h2 id={elementIds.vedleggUnderholdskostnader}>
-        Vedlegg nr. 3: Underholdskostnader
+        Vedlegg nr. {vedleggNummer}: Underholdskostnader
       </h2>
-      {data.underholdskostnader?.offentligeOpplysninger.map(
+      {data.underholdskostnader?.offentligeOpplysningerV2.offentligeOpplysningerBarn.map(
         (offentligOpplysningBarn, index) => (
           <InnhentetBarnetilsynTable
             opplysninger={offentligOpplysningBarn}
             key={index}
+            vedleggNummer={vedleggNummer!}
           />
         ),
       )}
+      <InnhentetTilleggsstønad
+        vedleggNummer={vedleggNummer!}
+        bidragsmottakerHarInnvilgetTilleggsstønad={
+          data.underholdskostnader?.offentligeOpplysningerV2
+            ?.bidragsmottakerHarInnvilgetTilleggsstønad ?? false
+        }
+      />
+      <InnhentetAndreBarnTilBidragsmottaker
+        opplysninger={
+          data.underholdskostnader?.offentligeOpplysningerV2
+            ?.andreBarnTilBidragsmottaker ?? []
+        }
+        vedleggNummer={vedleggNummer!}
+      />
+
       <>
-        <h4 className={"mt-2"}>3.3 Beregningsdetaljer tilsynsutgifter</h4>
+        <h4 className={"mt-2"}>
+          {vedleggNummer}.4 Beregningsdetaljer tilsynsutgifter
+        </h4>
         {data.underholdskostnader?.underholdskostnaderBarn?.flatMap((uBarn) =>
           uBarn.underholdskostnad.map((underholdskostnader, index) => (
-            <div className={"mt-4"} key={index}>
+            <div className={index > 0 ? "mt-4" : ""} key={index}>
               <UnderholdskostnaderBeregningsdetaljerTabell
                 detaljer={underholdskostnader.beregningsdetaljer}
                 periode={underholdskostnader.periode}
@@ -48,15 +72,39 @@ export default function VedleggUnderholdskostnader() {
     </div>
   );
 }
-
-function InnhentetBarnetilsynTable({
+function InnhentetAndreBarnTilBidragsmottaker({
   opplysninger,
+  vedleggNummer,
 }: {
-  opplysninger: NotatOffentligeOpplysningerUnderhold;
+  opplysninger: NotatPersonDto[];
+  vedleggNummer: number;
 }) {
   return (
     <>
-      <h4>3.1 Barnetilsyn</h4>
+      <h4 className={"mt-3"}>
+        {vedleggNummer}.2 Andre barn til bidragsmottaker - hentet fra offentlige
+        registre
+      </h4>
+      {opplysninger.length == 0 ? (
+        <p>Bidragsmottaker har ingen andre barn</p>
+      ) : (
+        opplysninger.map((barn, index) => (
+          <GjelderPerson rolle={barn} key={index} visFødselsdato />
+        ))
+      )}
+    </>
+  );
+}
+function InnhentetBarnetilsynTable({
+  opplysninger,
+  vedleggNummer,
+}: {
+  opplysninger: NotatOffentligeOpplysningerUnderholdBarn;
+  vedleggNummer: number;
+}) {
+  return (
+    <>
+      <h4>{vedleggNummer}.1 Barnetilsyn</h4>
       <GjelderPerson rolle={opplysninger.gjelderBarn!} />
       {opplysninger.barnetilsyn.length == 0 ? (
         <p>Ingen offentlig barnetilsyn</p>
@@ -83,16 +131,31 @@ function InnhentetBarnetilsynTable({
           }}
         />
       )}
-      <h4 className={"mt-3"}>3.2 Tilleggsstønad</h4>
-      <GjelderPerson rolle={opplysninger.gjelder!} />
+    </>
+  );
+}
+function InnhentetTilleggsstønad({
+  bidragsmottakerHarInnvilgetTilleggsstønad,
+  vedleggNummer,
+}: {
+  bidragsmottakerHarInnvilgetTilleggsstønad: boolean;
+  vedleggNummer: number;
+}) {
+  const { data } = useNotatFelles();
+
+  const bm = data.roller.find((r) => erRolle(Rolletype.BM)(r));
+  return (
+    <>
+      <h4 className={"mt-3"}>{vedleggNummer}.2 Tilleggsstønad</h4>
+      <GjelderPerson rolle={bm!} />
       <DataViewTable
-        className={"pt-2 pb-2"}
+        className={"pt-2"}
         data={
           [
             {
               label:
                 "Har fått innvilget tilleggsstønad for ett eller flere barn",
-              value: opplysninger.harTilleggsstønad ? "Ja" : "Nei",
+              value: bidragsmottakerHarInnvilgetTilleggsstønad ? "Ja" : "Nei",
             },
           ].filter((d) => d != null) as DataViewTableData[]
         }
@@ -100,6 +163,7 @@ function InnhentetBarnetilsynTable({
     </>
   );
 }
+
 function UnderholdskostnaderBeregningsdetaljerTabell({
   detaljer,
   periode,

@@ -1,4 +1,3 @@
-import DataDescription from "~/components/DataDescription";
 import {
   BoforholdBarn,
   NotatAndreVoksneIHusstanden,
@@ -13,8 +12,10 @@ import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Sivilstand from "~/components/notat_felles/components/Sivilstand";
 import { CommonTable } from "~/components/CommonTable";
 import { formatPeriode } from "~/utils/date-utils";
+import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function Boforhold() {
+export default function Boforhold({ vedleggNummer = 1 }: VedleggProps) {
   const { erAvslag, data } = useNotatFelles();
   if (erAvslag) return null;
   return (
@@ -22,7 +23,7 @@ export default function Boforhold() {
       <div className={"elements_inline section-title"}>
         <h2>{tekster.titler.boforhold.tittel}</h2>
         <a href={`#${elementIds.vedleggBoforhold}`}>
-          {tekster.vedleggLenke.replace("{}", "1")}
+          {tekster.vedleggLenke.replace("{}", vedleggNummer?.toString())}
         </a>
       </div>
       <>
@@ -83,7 +84,7 @@ function BoforholdAndreVoksneIHusstanden({
 }) {
   if (!data) return;
   return (
-    <div className={"mb-medium"}>
+    <div className={"mb-2"}>
       <h3 id={"linktilmeg"}>{tekster.titler.andreVoksneIHusstanden.tittel}</h3>
       <SimpleTable data={data.opplysningerBruktTilBeregning} />
     </div>
@@ -92,22 +93,28 @@ function BoforholdAndreVoksneIHusstanden({
 
 function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
   return (
-    <div className={"mb-medium"}>
-      <DataDescription
-        style={{ paddingBottom: 0, marginBottom: 0 }}
-        label={
-          data.medIBehandling
-            ? tekster.titler.boforhold.søknadsbarn
-            : tekster.titler.boforhold.egetBarnIHusstanden
-        }
-        value={
-          <Person
-            fødselsdato={data.gjelder.fødselsdato!}
-            navn={data.gjelder.navn!}
-            erBeskyttet={data.gjelder.erBeskyttet}
-          />
+    <div className={"mb-3"}>
+      <DataViewTable
+        className={"mb-2 mt-2"}
+        data={
+          [
+            {
+              label: data.medIBehandling
+                ? tekster.titler.boforhold.søknadsbarn
+                : tekster.titler.boforhold.egetBarnIHusstanden,
+              labelBold: true,
+              value: (
+                <Person
+                  fødselsdato={data.gjelder.fødselsdato!}
+                  navn={data.gjelder.navn!}
+                  erBeskyttet={data.gjelder.erBeskyttet}
+                />
+              ),
+            },
+          ].filter((d) => d != null) as DataViewTableData[]
         }
       />
+
       <SimpleTable data={data.opplysningerBruktTilBeregning} />
     </div>
   );

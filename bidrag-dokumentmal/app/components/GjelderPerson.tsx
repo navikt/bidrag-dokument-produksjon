@@ -2,8 +2,15 @@ import { NotatPersonDto, Rolletype } from "~/types/Api";
 import { useTheme } from "~/components/notat_felles/ThemeContext";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
+import { dateToDDMMYYYY } from "~/utils/date-utils";
 
-export default function GjelderPerson({ rolle }: { rolle: NotatPersonDto }) {
+export default function GjelderPerson({
+  rolle,
+  visFødselsdato,
+}: {
+  rolle: NotatPersonDto;
+  visFødselsdato?: boolean;
+}) {
   const { styling } = useTheme();
   if (styling == "V2") {
     return (
@@ -14,7 +21,9 @@ export default function GjelderPerson({ rolle }: { rolle: NotatPersonDto }) {
             {
               label: rolleTilVisningsnavn(rolle.rolle!),
               labelBold: true,
-              value: rolle.navn,
+              value: visFødselsdato
+                ? `${rolle.navn} / ${dateToDDMMYYYY(rolle.fødselsdato)}`
+                : rolle.navn,
             },
           ].filter((d) => d != null) as DataViewTableData[]
         }

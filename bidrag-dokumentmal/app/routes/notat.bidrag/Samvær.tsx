@@ -6,18 +6,19 @@ import { formatPeriode } from "~/utils/date-utils";
 import { DataViewTable } from "~/components/DataViewTable";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import elementIds from "~/utils/elementIds";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function Samvær() {
+export default function Samvær({ vedleggNummer }: VedleggProps) {
   const { data, erAvslag } = useNotatFelles();
   if (erAvslag) return null;
   const samvær = data.samvær;
   if (samvær.length == 0) return null;
   return (
-    <>
+    <div>
       <div className={"elements_inline section-title"}>
         <h2>Samvær</h2>
         <a href={`#${elementIds.vedleggSamvær}`}>
-          se vedlegg nr. 4 for beregningsdetaljer
+          se vedlegg nr. {vedleggNummer} for beregningsdetaljer
         </a>
       </div>
       <>
@@ -25,7 +26,7 @@ export default function Samvær() {
           <SamværBarn data={barn} key={i + barn.gjelderBarn.ident!} />
         ))}
       </>
-    </>
+    </div>
   );
 }
 

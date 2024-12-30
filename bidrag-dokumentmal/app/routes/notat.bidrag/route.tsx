@@ -58,17 +58,17 @@ export default function NotatBidrag() {
           <DagensDato />
           <NotatTittel title={tekster.titler.bidrag} />
           <Virkningstidspunkt />
-          <Underholdskostnad />
-          <Inntekter />
+          <Underholdskostnad vedleggNummer={1} />
+          <Inntekter vedleggNummer={2} />
           <Gebyr />
-          <Boforhold />
-          <Samvær />
-          <Vedtak />
-          <VedleggBoforhold />
-          <VedleggInntekter />
-          <VedleggUnderholdskostnader />
-          <VedleggSamvær />
-          <VedleggBeregningsDetaljer />
+          <Boforhold vedleggNummer={3} />
+          <Samvær vedleggNummer={4} />
+          <Vedtak vedleggNummer={5} />
+          <VedleggUnderholdskostnader vedleggNummer={1} />
+          <VedleggBoforhold vedleggNummer={2} />
+          <VedleggInntekter vedleggNummer={3} />
+          <VedleggSamvær vedleggNummer={4} />
+          <VedleggBeregningsDetaljer vedleggNummer={5} />
         </div>
       </NotatProvider>
     </div>

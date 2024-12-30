@@ -4,15 +4,19 @@ import { CommonTable } from "~/components/CommonTable";
 import { NotatSamvaerDto, NotatSamvaersperiodeDto } from "~/types/Api";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { formatPeriode } from "~/utils/date-utils";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function VedleggSamvær() {
+export default function VedleggSamvær({ vedleggNummer }: VedleggProps) {
   const { data, erAvslag } = useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div style={{ pageBreakBefore: "always" }}>
-      <h2 id={elementIds.vedleggSamvær}>Vedlegg nr. 4: Samvær</h2>
+    <div>
+      <h2 id={elementIds.vedleggSamvær}>Vedlegg nr. {vedleggNummer}: Samvær</h2>
       {data.samvær.map((samværBarn, index) => (
-        <div className={"flex flex-col gap-2"}>
+        <div
+          className={"flex flex-col gap-2"}
+          key={index + "-" + samværBarn.gjelderBarn.ident}
+        >
           <SamværsberegningDetaljerBarn samværBarn={samværBarn} key={index} />
         </div>
       ))}

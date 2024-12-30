@@ -11,7 +11,7 @@ export default function NotatBegrunnelse({ data }: NotatProps) {
       style={{
         maxWidth: "35rem",
       }}
-      className={"mt-4"}
+      className={"mt-2"}
     >
       <DataViewTable
         data={
