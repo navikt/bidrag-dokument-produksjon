@@ -206,6 +206,12 @@ function UnderholdskostnadBeregningsdetaljer({
           },
           detaljer.antallBarnBMBeregnet !==
             detaljer.antallBarnBMUnderTolvÅr && {
+            label: "Antall barn over 12 år med tilsynsutgifter",
+            textRight: false,
+            value: `${formatterBeløpForBeregning(detaljer.antallBarnBMBeregnet - detaljer.antallBarnBMUnderTolvÅr)}`,
+          },
+          detaljer.antallBarnBMBeregnet !==
+            detaljer.antallBarnBMUnderTolvÅr && {
             label: "Antall barn i beregningen",
             textRight: false,
             value: `${formatterBeløpForBeregning(detaljer.antallBarnBMBeregnet)}`,
