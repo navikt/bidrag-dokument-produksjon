@@ -8,9 +8,6 @@ import no.nav.bidrag.dokument.produksjon.consumer.RenderPDFVersion
 import no.nav.bidrag.transport.felles.commonObjectmapper
 import no.nav.bidrag.transport.notat.NotatMalType
 import no.nav.bidrag.transport.notat.VedtakNotatDto
-import no.nav.pdfgen.core.PDFGenCore.Companion.environment
-import no.nav.pdfgen.core.pdf.createPDFA
-import org.bbottema.rtftohtml.impl.RTF2HTMLConverterJEditorPane
 import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
@@ -19,6 +16,10 @@ import org.springframework.http.ResponseEntity
 import org.springframework.stereotype.Service
 import java.math.BigDecimal
 import java.nio.file.Files
+import java.nio.file.Path
+import java.nio.file.Paths
+import kotlin.io.path.exists
+import kotlin.io.path.pathString
 
 private val log = KotlinLogging.logger {}
 
@@ -47,7 +48,6 @@ class PdfProducerService(
                 type,
                 jsonPayload,
                 false,
-                renderPDFVersion = pdfgenVersion,
             )?.let {
                 ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
             }
@@ -69,18 +69,13 @@ class PdfProducerService(
         val jsonPayload = payload ?: hotTemplateData(category, type)
         val startTime = System.currentTimeMillis()
         return bidragDokumentmalConsumer
-            .hentDokumentmal(category, type, jsonPayload, renderPDFVersion = pdfgenVersion)
+            .hentDokumentmal(category, type, jsonPayload)
             ?.let { document ->
-                log.info { "Produserer PDF med pdfgenerator versjon $pdfgenVersion" }
                 val bytes =
-                    if (pdfgenVersion == RenderPDFVersion.V2) {
-                        bidragPdfGenConsumer.produserPdf(
-                            document.fjernKontrollTegn(),
-                            Configuration(BigDecimal(1), false),
-                        )
-                    } else {
-                        PdfContent(document.fjernKontrollTegn()).generate()
-                    }
+                    bidragPdfGenConsumer.produserPdf(
+                        document.fjernKontrollTegn(),
+                        Configuration(BigDecimal(1), false),
+                    )
                 log.info {
                     "Done generating PDF for category $category and template $type in ${System.currentTimeMillis() - startTime}ms"
                 }
@@ -96,16 +91,6 @@ class PdfProducerService(
                 .status(
                     HttpStatus.NOT_FOUND,
                 ).body("Template or category not found".toByteArray())
-    }
-
-    fun rtfToHTML(payload: ByteArray): ResponseEntity<String> {
-        val converter = RTF2HTMLConverterJEditorPane.INSTANCE
-        val html = converter.rtf2html(payload.decodeToString())
-
-        return ResponseEntity
-            .ok()
-            .contentType(MediaType.TEXT_HTML)
-            .body(html)
     }
 
     fun htmlToPDF(payload: ByteArray): ResponseEntity<ByteArray> {
@@ -131,7 +116,7 @@ fun hotTemplateData(
     foldername: String,
     template: String,
 ): String {
-    val dataFile = environment.dataRoot.getPath("$foldername/$template.json")
+    val dataFile = getPath("$foldername/$template.json")
     val data =
         commonObjectmapper.readValue(
             if (Files.exists(dataFile)) {
@@ -144,8 +129,15 @@ fun hotTemplateData(
     return commonObjectmapper.writeValueAsString(data)
 }
 
-class PdfContent(
-    private val html: String,
-) {
-    fun generate(): ByteArray = createPDFA(html)
+fun getPath(filename: String): Path {
+    val filePath = filename.let { Paths.get("data/").resolve(it) }
+    log.trace { "Reading file from path $filePath. File exists on path = ${filePath.exists()}" }
+    return if (filePath.exists()) {
+        filePath
+    } else {
+        PdfProducerService::class.java.classLoader.getResource(filePath.pathString)?.let {
+            Path.of(it.toURI())
+        }
+            ?: throw RuntimeException("Could not find file at path $filePath")
+    }
 }

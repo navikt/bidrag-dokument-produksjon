@@ -25,14 +25,4 @@ class KonverterApi(
         log.info { "Produserer notat HTML for dokumentmal" }
         return pdfProducerService.htmlToPDF(payload)
     }
-
-    @PostMapping("/rtf")
-    fun rtfToHtml(
-        @org.springframework.web.bind.annotation.RequestBody payload: ByteArray,
-    ): ResponseEntity<String> {
-        log.info {
-            "Konverterer RTF til HTML"
-        }
-        return pdfProducerService.rtfToHTML(payload)
-    }
 }
