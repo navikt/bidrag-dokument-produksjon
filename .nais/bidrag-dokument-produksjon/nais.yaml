@@ -38,8 +38,7 @@ spec:
           - application: {{this}}
         {{/each}}
   replicas:
-    min: 1
-    max: 2
+    min: 2
     cpuThresholdPercentage: 90
   liveness:
     path: /actuator/health
