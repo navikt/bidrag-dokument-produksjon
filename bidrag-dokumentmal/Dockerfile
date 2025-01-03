@@ -7,8 +7,7 @@ WORKDIR /app
 RUN npm set registry https://registry.npmjs.org/
 RUN npm set @navikt:registry https://npm.pkg.github.com
 RUN --mount=type=secret,id=reader_token \
-    npm config set //npm.pkg.github.com/:_authToken=$(cat /run/secrets/reader_token) \
-
+    npm config set //npm.pkg.github.com/:_authToken=$(cat /run/secrets/reader_token)
 ENV NODE_ENV production
 
 COPY package*.json ./
