@@ -32,8 +32,8 @@ jobs:
           tag: bidrag-dokumentmal
           docker_context: ./bidrag-dokumentmal
           dockerfile: ./bidrag-dokumentmal/Dockerfile
-          build_args: |
-            NPM_TOKEN=${{ secrets.READER_TOKEN }}
+          build_secrets: |
+            "reader_token=${{ secrets.READER_TOKEN }}"
       - name: Deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v2
         env:
