@@ -18,22 +18,21 @@
     "gen_api": "swagger-typescript-api -p http://localhost:8183/v3/api-docs --no-client -n Api.ts -o app/types"
   },
   "dependencies": {
-    "@navikt/aksel-icons": "^6.13.0",
-    "@navikt/ds-css": "^6.13.0",
-    "@navikt/ds-react": "^6.13.0",
-    "@remix-run/css-bundle": "^2.12.1",
-    "@remix-run/node": "^2.12.1",
-    "@remix-run/react": "^2.12.1",
-    "@remix-run/serve": "^2.12.1",
+    "@navikt/aksel-icons": "^7.9.0",
+    "@navikt/ds-css": "^7.9.0",
+    "@navikt/ds-react": "^7.9.0",
+    "@remix-run/css-bundle": "^2.15.2",
+    "@remix-run/node": "^2.15.2",
+    "@remix-run/react":"^2.15.2",
+    "@remix-run/serve": "^2.15.2",
     "isbot": "^5.1.17",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
-    "remix": "^2.12.1",
-    "remix-utils": "^7.7.0",
+    "remix": "^2.15.2",
     "xss": "^1.0.15"
   },
   "devDependencies": {
-    "@remix-run/dev": "^2.12.1",
+    "@remix-run/dev": "^2.15.2",
     "@svgr/cli": "^8.1.0",
     "@svgr/plugin-jsx": "^8.1.0",
     "@svgr/plugin-prettier": "^8.1.0",
@@ -57,11 +56,11 @@
     "postcss": "^8.4.47",
     "prettier": "^3.3.3",
     "swagger-typescript-api": "^13.0.22",
-    "tailwindcss": "^3.4.13",
-    "typescript": "^5.6.3",
-    "vite": "^5.4.8",
-    "vite-plugin-singlefile": "^2.0.2",
-    "vite-tsconfig-paths": "^5.0.1"
+    "tailwindcss": "^3.4.17",
+    "typescript": "^5.7.2",
+    "vite": "5.4.11",
+    "vite-plugin-singlefile": "^2.1.0",
+    "vite-tsconfig-paths": "^5.1.4"
   },
   "engines": {
     "node": ">=18.0.0"

@@ -325,12 +325,12 @@
 
 .bg-table-bg-even {
   --tw-bg-opacity: 1;
-  background-color: rgb(242 243 245 / var(--tw-bg-opacity))
+  background-color: rgb(242 243 245 / var(--tw-bg-opacity, 1))
 }
 
 .bg-table-header {
   --tw-bg-opacity: 1;
-  background-color: rgb(230 240 255 / var(--tw-bg-opacity))
+  background-color: rgb(230 240 255 / var(--tw-bg-opacity, 1))
 }
 
 .p-table-body-tr-v1 {
