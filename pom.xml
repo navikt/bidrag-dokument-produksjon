@@ -21,7 +21,7 @@
         <jackson.version>2.17.2</jackson.version>
         <jaxb.version>4.0.5</jaxb.version>
         <jaxb.api.version>4.0.2</jaxb.api.version>
-        <jsoup.version>1.18.1</jsoup.version>
+        <jsoup.version>1.18.3</jsoup.version>
         <kluent.version>1.72</kluent.version>
         <logback.version>1.5.6</logback.version>
         <logstash.encoder.version>8.0</logstash.encoder.version>
