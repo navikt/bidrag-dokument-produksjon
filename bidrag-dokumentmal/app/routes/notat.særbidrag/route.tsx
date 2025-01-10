@@ -43,7 +43,7 @@ export default function NotatSærbidrag() {
     <div id="særbidrag_notat">
       <NotatProvider
         data={data}
-        styling={"V1"}
+        styling={"V2"}
         renderPDFVersion={response.renderPDFVersion}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >

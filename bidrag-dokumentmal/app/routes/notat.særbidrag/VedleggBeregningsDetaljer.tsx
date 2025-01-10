@@ -1,6 +1,5 @@
 import elementIds from "~/utils/elementIds";
 import { BPsAndel } from "~/components/vedtak/BPAndelTable";
-import { BPsEvneTable } from "~/components/vedtak/BPsEvneTable";
 import { BPsBeregnedeTotalbidrag } from "~/components/vedtak/BPsBeregnedeTotalbidrag";
 import { DataViewTable } from "~/components/DataViewTable";
 import { formatterBeløp } from "~/utils/visningsnavn";
@@ -11,6 +10,7 @@ import {
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { erResutlatMedBeregning } from "~/routes/notat.særbidrag/SærbidragHelpers";
 import tekster from "~/tekster";
+import { BPsEvneTableV2 } from "~/components/vedtak/BPsEvneTableV2";
 
 export default function VedleggBeregningsDetaljer() {
   const { data } = useNotatFelles();
@@ -48,7 +48,7 @@ function VedleggBeregningsDetaljerInnhold() {
     <>
       <BPsAndel />
       <div className={"mb-medium"} />
-      <BPsEvneTable
+      <BPsEvneTableV2
         inntekter={beregnetSærbidrag.inntekter!}
         delberegningBidragsevne={beregnetSærbidrag.delberegningBidragsevne!}
       />

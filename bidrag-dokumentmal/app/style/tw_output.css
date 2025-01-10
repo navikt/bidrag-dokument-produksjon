@@ -366,6 +366,14 @@
   padding-top: 8px
 }
 
+.pb-1 {
+  padding-bottom: 4px
+}
+
+.pt-1 {
+  padding-top: 4px
+}
+
 .text-left {
   text-align: left
 }

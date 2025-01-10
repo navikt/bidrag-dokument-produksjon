@@ -1,8 +1,4 @@
-import {
-  CalculationTabell,
-  MathMultiplication,
-  MathValue,
-} from "./CalculationTable";
+import { MathMultiplication, MathValue } from "./CalculationTable";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { NotatResultatSaerbidragsberegningDto } from "~/types/Api";
 import {
@@ -10,6 +6,9 @@ import {
   formatterProsent,
 } from "~/utils/visningsnavn";
 import tekster from "~/tekster";
+import { CalculationTabellV2 } from "~/components/vedtak/CalculationTableV2";
+import { DataViewTableData } from "~/components/DataViewTable";
+import { DataViewTableV2 } from "~/components/DataViewTableV2";
 
 export const BPsAndel = () => {
   const { data } = useNotatFelles();
@@ -22,102 +21,75 @@ export const BPsAndel = () => {
   return (
     <div style={{ width: "600px" }}>
       <h4>{`${tekster.begreper.bidragspliktiges} andel`}</h4>
-      <div>
-        <CalculationTabell
-          width={"55%"}
-          title={"Beregning av total inntekt"}
-          labelColWidth={"270px"}
-          valueColWidth={"240px"}
-          className={"pb-2 "}
-          data={[
-            {
-              label: `${tekster.begreper.bidragspliktiges} inntekt`,
-              result: formatterBeløpForBeregning(inntekter.inntektBP, true),
-            },
-            {
-              label: `${tekster.begreper.bidragsmottakerens} inntekt`,
-              result: formatterBeløpForBeregning(inntekter.inntektBM, true),
-            },
-            {
-              label: `${tekster.begreper.barnets} inntekt`,
-              value:
-                inntekter.inntektBarn! > 0 ? (
-                  <div>
-                    <MathValue value={inntekter.inntektBarn!} /> -{" "}
-                    <MathMultiplication
-                      left="30"
-                      right={beregnetSærbidrag.forskuddssats!}
-                    />
-                  </div>
-                ) : undefined,
-              result: formatterBeløpForBeregning(
-                inntekter.barnEndeligInntekt,
-                true,
-              ),
-            },
-          ]}
-          result={{
-            label: "Total inntekt",
+      <CalculationTabellV2
+        width={"55%"}
+        title={"Beregning av total inntekt"}
+        labelColWidth={"270px"}
+        valueColWidth={"240px"}
+        className={"pb-2 "}
+        data={[
+          {
+            label: `${tekster.begreper.bidragspliktiges} inntekt`,
+            value: formatterBeløpForBeregning(inntekter.inntektBP, true),
+          },
+          {
+            label: `${tekster.begreper.bidragsmottakerens} inntekt`,
+            value: formatterBeløpForBeregning(inntekter.inntektBM, true),
+          },
+          {
+            label: `${tekster.begreper.barnets} inntekt`,
+            calculation:
+              inntekter.inntektBarn! > 0 ? (
+                <div>
+                  <MathValue value={inntekter.inntektBarn!} /> -{" "}
+                  <MathMultiplication
+                    left="30"
+                    right={beregnetSærbidrag.forskuddssats!}
+                  />
+                </div>
+              ) : undefined,
             value: formatterBeløpForBeregning(
-              inntekter.totalEndeligInntekt,
+              inntekter.barnEndeligInntekt,
               true,
             ),
-          }}
-        />
-        <CalculationTabell
-          width={"400px"}
-          title={"Beregning av andel prosent"}
-          style={{ marginRight: "0" }}
-          valueColWidth={"0px"}
-          className={"pb-2"}
-          data={[
-            {
-              label: `${tekster.begreper.bidragspliktiges} inntekt`,
-              result: formatterBeløpForBeregning(inntekter.inntektBP, true),
-            },
-            {
-              label: "Total inntekt",
-              result: (
-                <div
-                  style={{
-                    textWrap: "nowrap",
-                    whiteSpace: "nowrap",
-                    whiteSpaceTrim: "discard-after",
-                  }}
-                >
-                  &#247;{" "}
-                  {formatterBeløpForBeregning(
-                    inntekter.totalEndeligInntekt,
-                    true,
-                  )}
-                </div>
-              ),
-            },
-          ]}
-          result={{
-            label: `${tekster.begreper.bidragspliktiges} andel`,
-            value: formatterProsent(delberegningBpsAndel.beregnetAndelFaktor),
-          }}
-          message={
-            delberegningBpsAndel.endeligAndelFaktor !==
-            delberegningBpsAndel.beregnetAndelFaktor ? (
-              <div className="text-red-500" style={{ width: "200px" }}>
-                Andel begrenset til{" "}
-                {formatterProsent(delberegningBpsAndel.endeligAndelFaktor)}
-              </div>
-            ) : undefined
-          }
-        />
-      </div>
+          },
+        ]}
+        result={{
+          label: "Total inntekt",
+          value: formatterBeløpForBeregning(
+            inntekter.totalEndeligInntekt,
+            true,
+          ),
+        }}
+      />
 
-      <div>
-        Andel utgifter:{" "}
-        <MathMultiplication
-          left={`${formatterBeløpForBeregning(utgifter.sumGodkjent, true)}`}
-          right={formatterProsent(delberegningBpsAndel.endeligAndelFaktor)}
-        />{" "}
-        = {formatterBeløpForBeregning(delberegningBpsAndel.andelBeløp, true)}
-      </div>
+      <DataViewTableV2
+        gap={"5px"}
+        className={"pt-2"}
+        data={
+          [
+            {
+              label: "BP's andel av utgifter (i prosent)",
+              value: `${formatterBeløpForBeregning(inntekter.inntektBP, true)} X ${formatterBeløpForBeregning(inntekter.totalEndeligInntekt)}`,
+              result: `${formatterProsent(delberegningBpsAndel.beregnetAndelFaktor)}`,
+            },
+            {
+              label: "Andel utgifter",
+              value: `${formatterBeløpForBeregning(utgifter.sumGodkjent, true)} X ${formatterProsent(delberegningBpsAndel.endeligAndelFaktor)}`,
+              result: `${formatterBeløpForBeregning(delberegningBpsAndel.andelBeløp, true)}`,
+            },
+          ].filter((d) => d != null) as DataViewTableData[]
+        }
+      />
+      <>
+        {delberegningBpsAndel.endeligAndelFaktor !==
+          delberegningBpsAndel.beregnetAndelFaktor && (
+          <div className="text-red-500" style={{ width: "200px" }}>
+            Andel begrenset til{" "}
+            {formatterProsent(delberegningBpsAndel.endeligAndelFaktor)}
+          </div>
+        )}
+      </>
     </div>
   );
 };

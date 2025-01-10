@@ -3,9 +3,10 @@ import {
   formatterProsent,
 } from "~/utils/visningsnavn";
 import tekster from "~/tekster";
-import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
+import { DataViewTableData } from "~/components/DataViewTable";
 import BPsAndelInntekterTable from "~/components/vedtak/BPsAndelInntekterTable";
 import { useBeregningDetaljer } from "~/routes/notat.bidrag/VedleggBeregningsDetaljer";
+import { DataViewTableV2 } from "~/components/DataViewTableV2";
 
 export const BPAndelUnderholdskostnad = () => {
   const {
@@ -24,29 +25,39 @@ export const BPAndelUnderholdskostnad = () => {
           inntekter={inntekter!}
           forskuddssats={forskuddssats}
         />
-        <DataViewTable
+        <DataViewTableV2
           gap={"5px"}
           data={
             [
               {
                 label: "BP's andel av underholdskostnad (i prosent)",
-                value: `${formatterBeløpForBeregning(inntekter.inntektBP)} / ${formatterBeløpForBeregning(inntekter.totalEndeligInntekt)} = ${formatterProsent(bpsAndel.beregnetAndelFaktor)}`,
+                value: `${formatterBeløpForBeregning(inntekter.inntektBP)} / ${formatterBeløpForBeregning(inntekter.totalEndeligInntekt)}`,
+                result: formatterProsent(bpsAndel.beregnetAndelFaktor),
               },
               {
                 label: "Andel underholdskostnad",
-                value: `${formatterBeløpForBeregning(delberegningUnderholdskostnad.underholdskostnad)} x ${formatterProsent(bpsAndel.endeligAndelFaktor)} = ${formatterBeløpForBeregning(bpsAndel.andelBeløp)}`,
+                value: `${formatterBeløpForBeregning(delberegningUnderholdskostnad.underholdskostnad)} x ${formatterProsent(bpsAndel.endeligAndelFaktor)}`,
+                result: formatterBeløpForBeregning(bpsAndel.andelBeløp),
               },
               deltBosted
                 ? {
                     label: "Etter fratrekk delt bosted",
                     textRight: false,
-                    value: `${formatterBeløpForBeregning(bpsAndel.andelBeløp, true)} - ${formatterBeløpForBeregning(delberegningUnderholdskostnad.underholdskostnad)} x ${formatterProsent(0.5)} = ${formatterBeløpForBeregning(sluttberegning.bpAndelAvUVedDeltBostedBeløp)}`,
+                    value: `${formatterBeløpForBeregning(bpsAndel.andelBeløp, true)} - ${formatterBeløpForBeregning(delberegningUnderholdskostnad.underholdskostnad)} x ${formatterProsent(0.5)}`,
+                    result: formatterBeløpForBeregning(
+                      sluttberegning.bpAndelAvUVedDeltBostedBeløp,
+                    ),
                   }
                 : null,
             ].filter((d) => d != null) as DataViewTableData[]
           }
         />
       </div>
+      {bpsAndel.endeligAndelFaktor !== bpsAndel.beregnetAndelFaktor && (
+        <div className="text-red-500" style={{ width: "200px" }}>
+          Andel begrenset til {formatterProsent(bpsAndel.endeligAndelFaktor)}
+        </div>
+      )}
     </div>
   );
 };

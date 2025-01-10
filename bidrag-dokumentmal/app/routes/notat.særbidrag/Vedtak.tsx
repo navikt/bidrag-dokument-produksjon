@@ -14,19 +14,24 @@ import tekster from "~/tekster";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import elementIds from "~/utils/elementIds";
 import { erResutlatMedBeregning } from "~/routes/notat.særbidrag/SærbidragHelpers";
-import { calculationTableBottomBorder } from "~/utils/stylingUtils";
+import {
+  CommonTable,
+  TableHeader,
+  TableColumn,
+  TableRow,
+} from "~/components/CommonTable";
 
 export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
   return (
-    <div>
+    <>
       <div
         style={{
           pageBreakBefore: erAvslag ? "auto" : "always",
           display: "inline-block",
         }}
       >
-        <div className={"elements_inline"}>
+        <div className={"elements_inline section-title mb-2"}>
           <h2>Vedtak</h2>
           {erResutlatMedBeregning(
             (data.vedtak?.resultat as NotatResultatSaerbidragsberegningDto[]) ??
@@ -42,7 +47,7 @@ export default function Vedtak() {
         />
       </div>
       <VedtakFattetDetaljer data={data.vedtak} />
-    </div>
+    </>
   );
 }
 
@@ -115,7 +120,7 @@ function VedtakTable({
     );
   }
   return (
-    <div style={{ paddingTop: "0px" }}>
+    <div>
       {erBeregningeAvslag ? (
         <h3 style={{ marginTop: 0 }}>
           Avslag: {resultat.resultatVisningsnavn}
@@ -124,7 +129,6 @@ function VedtakTable({
         <h3 style={{ marginTop: 0 }}>Særbidrag innvilget</h3>
       )}
       <div>
-        <UtgifsposterTabell />
         <DataViewTable
           title="Inntekter"
           className={"two_column_view_v2"}
@@ -222,6 +226,7 @@ function VedtakTable({
           ]}
         />
       </div>
+      <UtgifsposterTabell />
     </div>
   );
 }
@@ -230,67 +235,52 @@ function UtgifsposterTabell() {
   const utgifstposter = data.utgift?.utgifter ?? [];
   const beregnetSærbidrag = data.utgift?.beregning!;
   return (
-    <div className={"mb-medium"}>
+    <div className={"mt-4"}>
       <h4>{"Utgiftene lagt til grunn"}</h4>
-      <table
-        className={"border-collapse"}
-        style={{
-          textAlign: "left",
-          tableLayout: "auto",
-          width: "450px",
-          marginLeft: "-2px",
+      <CommonTable
+        layoutAuto
+        width={"630px"}
+        data={{
+          headers: [
+            { name: tekster.tabell.utgifter.betaltAvBp, width: "100px" },
+            { name: tekster.tabell.utgifter.dato, width: "70px" },
+            { name: tekster.tabell.utgifter.utgift, width: "120px" },
+            { name: tekster.tabell.utgifter.kravbeløp, width: "80px" },
+            { name: tekster.tabell.utgifter.godkjentBeløp, width: "110px" },
+          ].filter((d) => typeof d != "boolean") as TableHeader[],
+          rows: utgifstposter
+            .map((d) => {
+              return {
+                columns: [
+                  { content: d.betaltAvBp ? "Ja" : "Nei" },
+                  { content: dateToDDMMYYYY(d.dato) },
+                  { content: d.utgiftstypeVisningsnavn },
+                  { content: formatterBeløp(d.kravbeløp) },
+                  { content: formatterBeløp(d.godkjentBeløp) },
+                ].filter((d) => typeof d != "boolean") as TableColumn[],
+              };
+            })
+            .concat([
+              {
+                columns: [
+                  { content: "Sum", colSpan: 3, labelBold: true },
+                  {
+                    content: formatterBeløpForBeregning(
+                      beregnetSærbidrag.totalKravbeløp,
+                      true,
+                    ),
+                  },
+                  {
+                    content: formatterBeløpForBeregning(
+                      beregnetSærbidrag.totalGodkjentBeløp,
+                      true,
+                    ),
+                  },
+                ] as TableColumn[],
+              } as TableRow,
+            ]),
         }}
-      >
-        <thead>
-          <tr>
-            <th style={{ width: "50px" }}>
-              {tekster.tabell.utgifter.betaltAvBp}
-            </th>
-            <th>{tekster.tabell.utgifter.dato}</th>
-            <th>{tekster.tabell.utgifter.utgift}</th>
-            <th style={{ textAlign: "right" }}>
-              {tekster.tabell.utgifter.kravbeløp}
-            </th>
-            <th style={{ textAlign: "right" }}>
-              {tekster.tabell.utgifter.godkjentBeløp}
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          {utgifstposter.map((utgifspost, rowIndex) => (
-            <tr key={rowIndex}>
-              <td style={{ width: "100px" }}>
-                {utgifspost.betaltAvBp ? "Ja" : "Nei"}
-              </td>
-              <td style={{}}>{dateToDDMMYYYY(utgifspost.dato)}</td>
-              <td style={{}}>{utgifspost.utgiftstypeVisningsnavn}</td>
-              <td style={{ textAlign: "right" }}>
-                {formatterBeløpForBeregning(utgifspost.kravbeløp, true)}
-              </td>
-              <td style={{ textAlign: "right" }}>
-                {formatterBeløpForBeregning(utgifspost.godkjentBeløp, true)}
-              </td>
-            </tr>
-          ))}
-          <tr>
-            <td className={`text-left ${calculationTableBottomBorder}`}>Sum</td>
-            <td className={`text-right ${calculationTableBottomBorder}`} />
-            <td className={`text-right ${calculationTableBottomBorder}`} />
-            <td className={`text-right ${calculationTableBottomBorder}`}>
-              {formatterBeløpForBeregning(
-                beregnetSærbidrag.totalKravbeløp,
-                true,
-              )}
-            </td>
-            <td className={`text-right ${calculationTableBottomBorder}`}>
-              {formatterBeløpForBeregning(
-                beregnetSærbidrag.totalGodkjentBeløp,
-                true,
-              )}
-            </td>
-          </tr>
-        </tbody>
-      </table>
+      />
     </div>
   );
 }
