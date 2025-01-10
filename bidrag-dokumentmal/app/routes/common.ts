@@ -1,6 +1,8 @@
 import { RenderPDFVersion } from "~/components/notat_felles/NotatContext";
 import { VedtakNotatDto } from "~/types/Api";
-import { json, ActionFunctionArgs } from "@remix-run/node";
+import { ActionFunctionArgs } from "react-router";
+import Undici from "undici";
+import Response = Undici.Response;
 
 export type NotatRequest = {
   renderForPdf: boolean;
@@ -10,7 +12,7 @@ export type NotatRequest = {
 
 export async function parseRequestAction({ request }: ActionFunctionArgs) {
   const body = await request.json();
-  return json({
+  return {
     data: body,
     renderPDFVersion: request.headers.get(
       "renderPDFVersion",
@@ -18,5 +20,5 @@ export async function parseRequestAction({ request }: ActionFunctionArgs) {
     renderForPdf:
       request.headers.get("renderforpdf") == "true" ||
       request.headers.get("renderforpdf") == null,
-  });
+  };
 }
