@@ -248,6 +248,22 @@
   width: 100%
 }
 
+.w-\[-content-width\] {
+  width: -content-width
+}
+
+.w-\[--content-width\] {
+  width: var(--content-width)
+}
+
+.max-w-full {
+  max-width: 100%
+}
+
+.max-w-\[--paper-width\] {
+  max-width: var(--paper-width)
+}
+
 .table-auto {
   table-layout: auto
 }
@@ -289,6 +305,10 @@
 
 .gap-3 {
   gap: 12px
+}
+
+.self-center {
+  align-self: center
 }
 
 .whitespace-pre-wrap {
@@ -384,6 +404,10 @@
 
 .text-right {
   text-align: right
+}
+
+.align-middle {
+  vertical-align: middle
 }
 
 .filter {

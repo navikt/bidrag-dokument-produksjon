@@ -21,8 +21,9 @@ import {
   TableRow,
 } from "~/components/CommonTable";
 import { DataViewTableV2 } from "~/components/DataViewTableV2";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function Vedtak() {
+export default function Vedtak({ vedleggNummer = 3 }: VedleggProps) {
   const { erAvslag, data } = useNotatFelles();
   return (
     <>
@@ -39,7 +40,7 @@ export default function Vedtak() {
               [],
           ) && (
             <a href={`#${elementIds.vedleggBeregningsdetaljer}`}>
-              se vedlegg nr. 3 for beregningsdetaljer
+              se vedlegg nr. {vedleggNummer} for beregningsdetaljer
             </a>
           )}
         </div>

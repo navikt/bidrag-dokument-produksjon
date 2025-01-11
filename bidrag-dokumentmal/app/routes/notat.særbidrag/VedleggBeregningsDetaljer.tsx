@@ -11,8 +11,11 @@ import { BPsEvneTable } from "~/components/vedtak/BPsEvneTable";
 import { CommonTable, TableHeader } from "~/components/CommonTable";
 import { BPsAndel } from "~/routes/notat.særbidrag/BPAndelTable";
 import { BPsBeregnedeTotalbidrag } from "~/routes/notat.særbidrag/BPsBeregnedeTotalbidrag";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function VedleggBeregningsDetaljer() {
+export default function VedleggBeregningsDetaljer({
+  vedleggNummer = 2,
+}: VedleggProps) {
   const { data } = useNotatFelles();
   if (
     !erResutlatMedBeregning(
@@ -23,7 +26,7 @@ export default function VedleggBeregningsDetaljer() {
   return (
     <div style={{ pageBreakBefore: "always" }}>
       <h2 id={elementIds.vedleggBeregningsdetaljer} className={"pb-2"}>
-        Vedlegg nr. 3: Beregningsdetaljer
+        Vedlegg nr. {vedleggNummer}: Beregningsdetaljer
       </h2>
       <VedleggBeregningsDetaljerInnhold />
     </div>

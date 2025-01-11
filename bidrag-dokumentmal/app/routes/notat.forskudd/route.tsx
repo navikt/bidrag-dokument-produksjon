@@ -11,7 +11,6 @@ import Boforhold from "~/components/notat_felles/components/Boforhold";
 import Inntekter from "~/components/notat_felles/components/Inntekter";
 import VedleggBoforhold from "~/components/notat_felles/components/VedleggBoforhold";
 import VedleggInntekter from "~/components/notat_felles/components/VedleggInntekter";
-import DagensDato from "~/components/DagensDato";
 import NotatTittel from "~/components/NotatTittel";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";
 import { parseRequestAction, NotatRequest } from "~/routes/common";
@@ -49,7 +48,6 @@ export default function NotatForskudd() {
         <HeaderFooter />
         <div className={"container page"}>
           <Soknaddetaljer />
-          <DagensDato />
           <NotatTittel title={tekster.titler.forskudd} />
           <Virkningstidspunkt />
           <Boforhold />
