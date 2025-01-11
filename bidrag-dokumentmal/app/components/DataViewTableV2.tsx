@@ -51,7 +51,7 @@ export const DataViewTableV2: React.FC<DataViewTableV2Props> = ({
                 <td
                   colSpan={!row.label && !row.result ? 3 : !row.label ? 2 : 1}
                   className={
-                    row.textRight === false ? "text-left" : "text-right"
+                    row.textRight === true ? "text-right" : "text-left"
                   }
                 >
                   <>{row.value}</>

@@ -1,4 +1,3 @@
-import { MathMultiplication, MathValue } from "./CalculationTable";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { NotatResultatSaerbidragsberegningDto } from "~/types/Api";
 import {
@@ -6,9 +5,13 @@ import {
   formatterProsent,
 } from "~/utils/visningsnavn";
 import tekster from "~/tekster";
-import { CalculationTabellV2 } from "~/components/vedtak/CalculationTableV2";
 import { DataViewTableData } from "~/components/DataViewTable";
 import { DataViewTableV2 } from "~/components/DataViewTableV2";
+import {
+  MathValue,
+  MathMultiplication,
+  CalculationTable,
+} from "~/components/vedtak/CalculationTable";
 
 export const BPsAndel = () => {
   const { data } = useNotatFelles();
@@ -21,11 +24,8 @@ export const BPsAndel = () => {
   return (
     <div style={{ width: "600px" }}>
       <h4>{`${tekster.begreper.bidragspliktiges} andel`}</h4>
-      <CalculationTabellV2
+      <CalculationTable
         width={"55%"}
-        title={"Beregning av total inntekt"}
-        labelColWidth={"270px"}
-        valueColWidth={"240px"}
         className={"pb-2 "}
         data={[
           {

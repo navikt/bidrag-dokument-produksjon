@@ -1,15 +1,14 @@
 import { NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto } from "~/types/Api";
 import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import tekster from "~/tekster";
-import { CommonTable } from "~/components/CommonTable";
-import { CalculationTabellV2 } from "~/components/vedtak/CalculationTableV2";
+import { CommonTable, TableColumn, TableRow } from "~/components/CommonTable";
+import { CalculationTable } from "~/components/vedtak/CalculationTable";
 
 export const BPsBeregnedeTotalbidrag = ({
   delberegning,
 }: {
   delberegning: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto;
 }) => {
-  const colPaddingClassname = "px-1";
   return (
     <div>
       <h4>{`${tekster.begreper.bidragspliktiges} beregnede totalbidrag`}</h4>
@@ -29,7 +28,7 @@ export const BPsBeregnedeTotalbidrag = ({
               name: "Samvær",
             },
             {
-              name: "Reduksjon av BPs andel av U*",
+              name: "Reduksjon av BPs andel av U",
             },
             {
               name: "Sum",
@@ -44,10 +43,11 @@ export const BPsBeregnedeTotalbidrag = ({
                   ? [
                       {
                         content: (
-                          <CalculationTabellV2
+                          <CalculationTable
                             width={"200px"}
                             simpleStyling
-                            title={`Reduksjon av BPs andel av U*`}
+                            className={"ml-2"}
+                            title={`Reduksjon av BPs andel av U`}
                             data={[
                               {
                                 label: `Beregnet bidrag`,
@@ -120,34 +120,34 @@ export const BPsBeregnedeTotalbidrag = ({
                   {
                     content: "",
                     colSpan: 4,
-                  },
+                  } as TableColumn,
                   {
                     content: "Beregnet totalbidrag: ",
                     labelBold: true,
-                    alignRight: true,
+                    textAlign: "right",
                     colSpan: 1,
-                  },
+                  } as TableColumn,
                   {
-                    alignRight: true,
+                    textAlign: "center",
                     content: formatterBeløpForBeregning(
                       delberegning.bidragspliktigesBeregnedeTotalbidrag,
                       true,
                     ),
-                  },
-                ],
-              },
+                  } as TableColumn,
+                ] as TableColumn[],
+              } as TableRow,
               {
                 zebraStripe: false,
                 skipPadding: true,
                 skipBorderBottom: true,
                 columns: [
                   {
-                    content: "* U = Underholdskostnad, BP = Bidragspliktig",
+                    content: "U = Underholdskostnad, BP = Bidragspliktig",
                     colSpan: 7,
                   },
-                ],
-              },
-            ]),
+                ] as TableColumn[],
+              } as TableRow,
+            ]) as TableRow[],
         }}
       />
     </div>

@@ -7,7 +7,7 @@ export type TableColumn = {
   colSpan?: number;
   fullSpan?: boolean;
   labelBold?: boolean;
-  alignRight?: boolean;
+  textAlign?: "left" | "right" | "center";
   content: RowContent;
 };
 
@@ -24,7 +24,7 @@ export type TableRow = {
 export type TableHeader = {
   name: string;
   width?: string;
-  alignRight?: boolean;
+  textAlign?: "left" | "right" | "center";
 };
 export type TableData = {
   headers: TableHeader[];
@@ -35,11 +35,13 @@ type CommonTableProps = {
   layoutAuto?: boolean;
   size?: "small" | "large";
   data: TableData;
+  className?: string;
 };
 export function CommonTable({
   layoutAuto,
   size = "large",
   data: { headers, rows },
+  className,
   width,
 }: CommonTableProps) {
   const { styling } = useTheme();
@@ -67,7 +69,6 @@ export function CommonTable({
           return (
             <td
               className={`
-              ${column.alignRight == true ? "text-right" : ""}
               ${
                 expressiveStyling
                   ? `${
@@ -85,6 +86,7 @@ export function CommonTable({
               colSpan={column.fullSpan ? headers.length : column.colSpan}
               style={{
                 fontWeight: column.labelBold ? "bold" : "normal",
+                textAlign: column.textAlign ?? "left",
               }}
             >
               {column.content}
@@ -97,7 +99,7 @@ export function CommonTable({
 
   return (
     <table
-      className="table"
+      className={`table ${className}`}
       style={{
         ...style,
         tableLayout: layoutAuto || styling == "V2" ? "auto" : "fixed",
@@ -125,7 +127,7 @@ export function CommonTable({
               style={{
                 width: header.width,
                 verticalAlign: "top",
-                textAlign: header.alignRight ? "right" : "left",
+                textAlign: header.textAlign ?? "left",
               }}
             >
               {header.name}

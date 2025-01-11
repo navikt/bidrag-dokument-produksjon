@@ -188,6 +188,10 @@
   margin-top: 16px
 }
 
+.ml-2 {
+  margin-left: 8px
+}
+
 .block {
   display: block
 }

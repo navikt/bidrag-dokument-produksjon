@@ -8,7 +8,7 @@ import {
   formatterBeløpForBeregning,
 } from "~/utils/visningsnavn";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
-import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
+import { DataViewTableData } from "~/components/DataViewTable";
 import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
 import tekster from "~/tekster";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
@@ -20,6 +20,7 @@ import {
   TableColumn,
   TableRow,
 } from "~/components/CommonTable";
+import { DataViewTableV2 } from "~/components/DataViewTableV2";
 
 export default function Vedtak() {
   const { erAvslag, data } = useNotatFelles();
@@ -86,7 +87,7 @@ function VedtakTable({
       <div>
         <h3 style={{ marginTop: 0 }}>Avslag</h3>
         <UtgifsposterTabell />
-        <DataViewTable
+        <DataViewTableV2
           labelColWidth={"90px"}
           key={"inntekter"}
           data={
@@ -129,7 +130,7 @@ function VedtakTable({
         <h3 style={{ marginTop: 0 }}>Særbidrag innvilget</h3>
       )}
       <div>
-        <DataViewTable
+        <DataViewTableV2
           title="Inntekter"
           className={"two_column_view_v2"}
           labelColWidth={"140px"}
@@ -151,7 +152,7 @@ function VedtakTable({
           ]}
         />
 
-        <DataViewTable
+        <DataViewTableV2
           title="Boforhold"
           className={"two_column_view_v2"}
           width={"45%"}
@@ -172,7 +173,7 @@ function VedtakTable({
             },
           ]}
         />
-        <DataViewTable
+        <DataViewTableV2
           title="Beregning"
           className={"two_column_view_v2 mt-medium"}
           labelColWidth={"130px"}
