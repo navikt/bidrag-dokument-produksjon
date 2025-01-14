@@ -87,7 +87,7 @@ function VedtakTable({
 }) {
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
-    <div style={{ paddingTop: "0px" }}>
+    <>
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
@@ -219,7 +219,7 @@ function VedtakTable({
             ]) as TableRow[],
         };
         return (
-          <div key={key} className="table_container mb-medium">
+          <>
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
             {gjelderBarn.innbetaltBeløp && (
               <DataViewTable
@@ -234,9 +234,9 @@ function VedtakTable({
               />
             )}
             <CommonTable data={tableData} />
-          </div>
+          </>
         );
       })}
-    </div>
+    </>
   );
 }

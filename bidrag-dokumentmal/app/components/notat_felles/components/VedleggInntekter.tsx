@@ -33,7 +33,10 @@ export default function VedleggInntekter({ vedleggNummer = 2 }: VedleggProps) {
 
   return (
     <div>
-      <h2 id={elementIds.vedleggInntekter}>
+      <h2
+        id={elementIds.vedleggInntekter}
+        className={`${vedleggNummer == 1 ? "break-before-page" : ""}`}
+      >
         Vedlegg nr. {vedleggNummer}: Inntekt - {tekster.fraOffentligeRegistre}
       </h2>
       <OpplysningerForRolle

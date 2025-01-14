@@ -10,7 +10,7 @@ export default function VedleggSamvær({ vedleggNummer }: VedleggProps) {
   const { data, erAvslag } = useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div>
+    <div className={`${vedleggNummer == 1 ? "break-before-page" : ""}`}>
       <h2 id={elementIds.vedleggSamvær}>Vedlegg nr. {vedleggNummer}: Samvær</h2>
       {data.samvær.map((samværBarn, index) => (
         <div

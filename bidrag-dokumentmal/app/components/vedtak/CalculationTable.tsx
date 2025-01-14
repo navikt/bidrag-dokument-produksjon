@@ -1,100 +1,99 @@
 import React, { ReactElement, CSSProperties } from "react";
+import tekster from "~/tekster";
+import {
+  CommonTable,
+  TableColumn,
+  RowContent,
+  TableHeader,
+} from "~/components/CommonTable";
 //file:@ts-ignore
 interface CalculationTableData {
-  label: string;
-  value?: string | number | ReactElement;
-  result: string | number | ReactElement;
+  label: RowContent;
+  calculation?: RowContent;
+  value: RowContent;
 }
 
 interface CalculationTableProps {
   data: CalculationTableData[]; // Array of data objects
   title?: string;
   result?: {
-    label: string;
-    value: string | number | ReactElement;
+    label: RowContent;
+    value: RowContent;
   };
   message?: string | ReactElement;
   width?: string;
-  tableWidth?: string;
-  labelColWidth?: string;
-  valueColWidth?: string;
-  resultColWidth?: string;
+  simpleStyling?: boolean;
   className?: string;
   style?: CSSProperties;
 }
 
-export const CalculationTabell: React.FC<CalculationTableProps> = ({
+export const CalculationTable: React.FC<CalculationTableProps> = ({
   data,
-  title,
   result,
-  message,
-  width,
-  tableWidth,
-  labelColWidth,
-  resultColWidth,
-  valueColWidth,
-  style,
+  simpleStyling,
   className,
+  width,
 }) => {
-  const bottomRowBorder =
-    "border-t border-solid border-black border-b-2 border-l-0 border-r-0";
+  const harBeregning = data.some((d) => d.calculation);
+
   return (
-    <div className={className} style={{ width: width, ...style }}>
-      {title && <h4>{title}</h4>}
-      <table
-        className="table-auto border-collapse"
-        style={{ width: tableWidth }}
-      >
-        <tbody>
-          {data.map((row, rowIndex) => (
-            <tr key={rowIndex}>
-              <td style={{ width: labelColWidth ?? "180px" }}>{row.label}</td>
-              {row.value ? (
-                <td
-                  className={"text-right"}
-                  style={{ width: valueColWidth ?? "200px" }}
-                >
-                  {row.value}
-                </td>
-              ) : (
-                <td style={{ width: valueColWidth ?? "200px" }}></td>
-              )}
-              <td
-                className={"text-right"}
-                style={{ width: resultColWidth ?? "100px" }}
-              >
-                {row.result}
-              </td>
-            </tr>
-          ))}
-          {result && (
-            <tr className={`${bottomRowBorder}`}>
-              <td
-                className={`border-t ${bottomRowBorder}`}
-                style={{ width: labelColWidth ?? "180px" }}
-              >
-                {result.label}
-              </td>
-              <td
-                className={`text-right ${bottomRowBorder}`}
-                style={{ width: valueColWidth ?? "200px" }}
-              ></td>
-              <td
-                className={`text-right ${bottomRowBorder}`}
-                style={{ width: resultColWidth ?? "100px" }}
-              >
-                {result.value}
-              </td>
-            </tr>
-          )}
-          {message && (
-            <tr className="mt-1">
-              <td colSpan={3}>{message}</td>
-            </tr>
-          )}
-        </tbody>
-      </table>
-    </div>
+    <CommonTable
+      layoutAuto
+      size={simpleStyling ? "small" : "large"}
+      width={width}
+      className={className}
+      data={{
+        headers: [
+          {
+            name: tekster.tabell.felles.beskrivelse,
+            width: "250px",
+          },
+          harBeregning && {
+            name: tekster.tabell.felles.beregning,
+            width: "250px",
+          },
+          {
+            name: tekster.tabell.felles.beløp,
+            width: "100px",
+            textAlign: "right",
+          },
+        ].filter((d) => typeof d != "boolean") as TableHeader[],
+        rows: data
+          .map((content) => ({
+            columns: [
+              {
+                content: content.label,
+              },
+              harBeregning && {
+                content: content.calculation,
+              },
+              {
+                textAlign: "right",
+                content: content.value,
+              },
+            ].filter((d) => typeof d != "boolean") as TableColumn[],
+          }))
+          .concat(
+            result
+              ? [
+                  {
+                    columns: [
+                      {
+                        content: result!.label,
+                        colSpan: harBeregning ? 2 : 1,
+                        labelBold: true,
+                      } as TableColumn,
+                      {
+                        textAlign: "right",
+                        content: result!.value,
+                      } as TableColumn,
+                    ],
+                  },
+                ]
+              : [],
+          ),
+      }}
+    />
   );
 };
 
@@ -110,14 +109,12 @@ export const MathDivision: React.FC<MathDivisionProps> = ({
   bottom,
 }) => {
   return (
-    <math>
-      <mrow>
-        {negativeValue && <mi>-</mi>}
-        <mn>{top}</mn>
-        <mo>&#247;</mo> {/* Multiplication symbol */}
-        <mn>{bottom}</mn>
-      </mrow>
-    </math>
+    <span>
+      {negativeValue && <span>-</span>}
+      <span>{top}</span>
+      <span> &#247;</span> {/* Multiplication symbol */}
+      <span>{bottom}</span>
+    </span>
   );
 };
 
@@ -126,11 +123,10 @@ export const MathValue: React.FC<{
   negativeValue?: boolean;
 }> = ({ value, negativeValue }) => {
   return (
-    <math>
-      {negativeValue && <mi>-</mi>}
-
-      <mn>{value}</mn>
-    </math>
+    <span>
+      {negativeValue && <span>-</span>}
+      <span>{value}</span>
+    </span>
   );
 };
 interface MathMultiplicationProps {
@@ -145,13 +141,11 @@ export const MathMultiplication: React.FC<MathMultiplicationProps> = ({
   right,
 }) => {
   return (
-    <math>
-      <mrow>
-        {negativeValue && <mi>-</mi>}
-        <mn>{left}</mn>
-        <mo>&#xD7;</mo> {/* Multiplication symbol */}
-        <mn>{right}</mn>
-      </mrow>
-    </math>
+    <span>
+      {negativeValue && <span>-</span>}
+      <span>{left}</span>
+      <span> &#xD7;</span> {/* Multiplication symbol */}
+      <span>{right}</span>
+    </span>
   );
 };

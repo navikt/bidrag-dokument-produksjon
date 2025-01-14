@@ -1,8 +1,4 @@
 import elementIds from "~/utils/elementIds";
-import { BPsAndel } from "~/components/vedtak/BPAndelTable";
-import { BPsEvneTable } from "~/components/vedtak/BPsEvneTable";
-import { BPsBeregnedeTotalbidrag } from "~/components/vedtak/BPsBeregnedeTotalbidrag";
-import { DataViewTable } from "~/components/DataViewTable";
 import { formatterBeløp } from "~/utils/visningsnavn";
 import {
   Resultatkode,
@@ -11,8 +7,15 @@ import {
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { erResutlatMedBeregning } from "~/routes/notat.særbidrag/SærbidragHelpers";
 import tekster from "~/tekster";
+import { BPsEvneTable } from "~/components/vedtak/BPsEvneTable";
+import { CommonTable, TableHeader } from "~/components/CommonTable";
+import { BPsAndel } from "~/routes/notat.særbidrag/BPAndelTable";
+import { BPsBeregnedeTotalbidrag } from "~/routes/notat.særbidrag/BPsBeregnedeTotalbidrag";
+import { VedleggProps } from "~/types/commonTypes";
 
-export default function VedleggBeregningsDetaljer() {
+export default function VedleggBeregningsDetaljer({
+  vedleggNummer = 2,
+}: VedleggProps) {
   const { data } = useNotatFelles();
   if (
     !erResutlatMedBeregning(
@@ -21,9 +24,9 @@ export default function VedleggBeregningsDetaljer() {
   )
     return null;
   return (
-    <div style={{ pageBreakBefore: "always" }}>
+    <div className={`${vedleggNummer == 1 ? "break-before-page" : ""}`}>
       <h2 id={elementIds.vedleggBeregningsdetaljer} className={"pb-2"}>
-        Vedlegg nr. 3: Beregningsdetaljer
+        Vedlegg nr. {vedleggNummer}: Beregningsdetaljer
       </h2>
       <VedleggBeregningsDetaljerInnhold />
     </div>
@@ -60,39 +63,75 @@ function VedleggBeregningsDetaljerInnhold() {
       />
       <div className={"mb-medium"} />
 
-      <DataViewTable
-        title="Beregning"
-        labelColWidth={"150px"}
-        data={[
-          {
-            label: `${tekster.begreper.bidragspliktig} har evne`,
-            textRight: false,
-            value: !resultat.bpHarEvne
-              ? "Nei, bidragsevnen er lavere enn beregnet totalbidrag"
-              : "Ja, bidragsevnen er høyere enn beregnet totalbidrag",
-          },
-          {
-            label: "Resultat",
-            value: erBeregningeAvslag
-              ? "Avslag"
-              : formatterBeløp(resultat.resultat, true),
-          },
-          {
-            label: `Betalt av ${tekster.begreper.bidragspliktig}`,
-            value: formatterBeløp(
-              resultat.beregning?.totalBeløpBetaltAvBp,
-              true,
-            ),
-          },
-          {
-            label: data.medInnkreving
-              ? "Beløp som innkreves"
-              : "Fastsatt beløp å betale",
-            value: erBeregningeAvslag
-              ? "Avslag"
-              : formatterBeløp(resultat.beløpSomInnkreves, true),
-          },
-        ].filter((d) => d)}
+      <CommonTable
+        data={{
+          headers: [
+            {
+              name: tekster.tabell.felles.beskrivelse,
+            },
+            {
+              name: "",
+              textAlign: "right",
+            },
+          ].filter((d) => typeof d != "boolean") as TableHeader[],
+          rows: [
+            {
+              columns: [
+                {
+                  content: "BP har evne",
+                },
+                {
+                  textAlign: "right",
+                  content: !resultat.bpHarEvne
+                    ? "Nei, bidragsevnen er lavere enn beregnet totalbidrag"
+                    : "Ja, bidragsevnen er høyere enn beregnet totalbidrag",
+                },
+              ],
+            },
+            {
+              columns: [
+                {
+                  content: "Resultat",
+                },
+                {
+                  textAlign: "right",
+                  content: erBeregningeAvslag
+                    ? "Avslag"
+                    : formatterBeløp(resultat.resultat, true),
+                },
+              ],
+            },
+            {
+              columns: [
+                {
+                  content: `Betalt av ${tekster.begreper.bidragspliktig}`,
+                },
+                {
+                  textAlign: "right",
+                  content: formatterBeløp(
+                    resultat.beregning?.totalBeløpBetaltAvBp,
+                    true,
+                  ),
+                },
+              ],
+            },
+            {
+              columns: [
+                {
+                  content: data.medInnkreving
+                    ? "Beløp som innkreves"
+                    : "Fastsatt beløp å betale",
+                },
+                {
+                  textAlign: "right",
+                  content: erBeregningeAvslag
+                    ? "Avslag"
+                    : formatterBeløp(resultat.beløpSomInnkreves, true),
+                },
+              ],
+            },
+          ],
+        }}
       />
     </>
   );

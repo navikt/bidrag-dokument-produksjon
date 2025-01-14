@@ -24,7 +24,7 @@ export default function VedleggBoforhold({ vedleggNummer = 1 }: VedleggProps) {
   const { erAvslag, data, type } = useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div>
+    <div className={`${vedleggNummer == 1 ? "break-before-page" : ""}`}>
       <h2 id={elementIds.vedleggBoforhold}>
         Vedlegg nr. {vedleggNummer}: Boforhold - {tekster.fraOffentligeRegistre}
       </h2>

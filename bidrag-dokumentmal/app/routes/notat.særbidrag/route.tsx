@@ -14,7 +14,6 @@ import Vedtak from "~/routes/notat.særbidrag/Vedtak";
 import VedleggBoforhold from "~/components/notat_felles/components/VedleggBoforhold";
 import VedleggInntekter from "~/components/notat_felles/components/VedleggInntekter";
 import NotatTittel from "~/components/NotatTittel";
-import DagensDato from "~/components/DagensDato";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";
 import VedleggBeregningsDetaljer from "~/routes/notat.særbidrag/VedleggBeregningsDetaljer";
 import { parseRequestAction, NotatRequest } from "~/routes/common";
@@ -43,22 +42,21 @@ export default function NotatSærbidrag() {
     <div id="særbidrag_notat">
       <NotatProvider
         data={data}
-        styling={"V1"}
+        styling={"V2"}
         renderPDFVersion={response.renderPDFVersion}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >
         <HeaderFooter />
         <div className={"container page"}>
           <Soknaddetaljer />
-          <DagensDato />
           <NotatTittel title={tekster.titler.særbidrag} />
           <Utgifter />
-          <Inntekter />
-          <Boforhold />
-          <Vedtak />
-          <VedleggBoforhold />
-          <VedleggInntekter />
-          <VedleggBeregningsDetaljer />
+          <Inntekter vedleggNummer={1} />
+          <Boforhold vedleggNummer={2} />
+          <Vedtak vedleggNummer={3} />
+          <VedleggInntekter vedleggNummer={1} />
+          <VedleggBoforhold vedleggNummer={2} />
+          <VedleggBeregningsDetaljer vedleggNummer={3} />
         </div>
       </NotatProvider>
     </div>

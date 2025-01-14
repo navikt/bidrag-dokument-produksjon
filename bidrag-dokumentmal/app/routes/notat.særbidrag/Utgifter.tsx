@@ -12,20 +12,21 @@ import {
   TableColumn,
 } from "~/components/CommonTable";
 import tekster from "~/tekster";
-import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
+import { DataViewTableData } from "~/components/DataViewTable";
+import { DataViewTableV2 } from "~/components/DataViewTableV2";
 
 export default function Utgifter() {
   const { data } = useNotatFelles();
   const utgifter = data.utgift;
   return (
-    <div className={"utgift"}>
+    <>
       <h2>Utgift</h2>
-      <div>
+      <>
         <SøknadsDetaljer />
         <Utgiftsposter />
         <NotatBegrunnelse data={utgifter?.begrunnelse} />
-      </div>
-    </div>
+      </>
+    </>
   );
 }
 
@@ -35,7 +36,7 @@ function Utgiftsposter() {
   const utgifter = data.utgift?.utgifter ?? [];
   const beregnetUtgifter = data.utgift?.totalBeregning ?? [];
   return (
-    <div>
+    <>
       <h3>Oversikt over utgifter</h3>
       <CommonTable
         layoutAuto
@@ -96,7 +97,7 @@ function Utgiftsposter() {
       )}
       <h3>Totalt</h3>
       <div style={{ marginTop: "8px", width: "280px" }}>
-        <DataViewTable
+        <DataViewTableV2
           className={"two_column_view_v2"}
           labelColWidth={"200px"}
           data={
@@ -123,7 +124,7 @@ function Utgiftsposter() {
       </div>
       {data.utgift?.maksGodkjentBeløp?.taMed && (
         <div>
-          <DataViewTable
+          <DataViewTableV2
             className={"two_column_view_v2"}
             labelColWidth={"200px"}
             data={
@@ -141,7 +142,7 @@ function Utgiftsposter() {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -149,9 +150,9 @@ function SøknadsDetaljer() {
   const { data } = useNotatFelles();
   const behandling = data.behandling;
   return (
-    <div>
+    <>
       <div style={{ width: "600px", height: "80px", marginBottom: 0 }}>
-        <DataViewTable
+        <DataViewTableV2
           className={"two_column_view"}
           width={"45%"}
           labelColWidth={"80px"}
@@ -170,7 +171,7 @@ function SøknadsDetaljer() {
             },
           ]}
         />
-        <DataViewTable
+        <DataViewTableV2
           className={"two_column_view"}
           width={"40%"}
           labelColWidth={behandling.klageMottattDato ? "110px" : "80px"}
@@ -192,6 +193,6 @@ function SøknadsDetaljer() {
           }
         />
       </div>
-    </div>
+    </>
   );
 }

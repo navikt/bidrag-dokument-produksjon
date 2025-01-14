@@ -12,7 +12,6 @@ import Inntekter from "~/components/notat_felles/components/Inntekter";
 import VedleggBoforhold from "~/components/notat_felles/components/VedleggBoforhold";
 import VedleggInntekter from "~/components/notat_felles/components/VedleggInntekter";
 import NotatTittel from "~/components/NotatTittel";
-import DagensDato from "~/components/DagensDato";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";
 import { parseRequestAction, NotatRequest } from "~/routes/common";
 import Virkningstidspunkt from "~/components/notat_felles/components/Virkningstidspunkt";
@@ -55,7 +54,6 @@ export default function NotatBidrag() {
         <HeaderFooter />
         <div className={"container page"}>
           <Soknaddetaljer />
-          <DagensDato />
           <NotatTittel title={tekster.titler.bidrag} />
           <Virkningstidspunkt />
           <Underholdskostnad vedleggNummer={1} />

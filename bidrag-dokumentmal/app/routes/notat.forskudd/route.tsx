@@ -11,7 +11,6 @@ import Boforhold from "~/components/notat_felles/components/Boforhold";
 import Inntekter from "~/components/notat_felles/components/Inntekter";
 import VedleggBoforhold from "~/components/notat_felles/components/VedleggBoforhold";
 import VedleggInntekter from "~/components/notat_felles/components/VedleggInntekter";
-import DagensDato from "~/components/DagensDato";
 import NotatTittel from "~/components/NotatTittel";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";
 import { parseRequestAction, NotatRequest } from "~/routes/common";
@@ -42,21 +41,20 @@ export default function NotatForskudd() {
     <div id="forskudd_notat">
       <NotatProvider
         data={data}
-        styling={"V1"}
+        styling={"V2"}
         renderPDFVersion={response.renderPDFVersion}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >
         <HeaderFooter />
         <div className={"container page"}>
           <Soknaddetaljer />
-          <DagensDato />
           <NotatTittel title={tekster.titler.forskudd} />
           <Virkningstidspunkt />
-          <Boforhold />
-          <Inntekter />
+          <Boforhold vedleggNummer={1} />
+          <Inntekter vedleggNummer={2} />
           <Vedtak />
-          <VedleggBoforhold />
-          <VedleggInntekter />
+          <VedleggBoforhold vedleggNummer={1} />
+          <VedleggInntekter vedleggNummer={2} />
         </div>
       </NotatProvider>
     </div>
