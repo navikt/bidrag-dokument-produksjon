@@ -24,7 +24,7 @@ export default function VedleggBeregningsDetaljer({
   )
     return null;
   return (
-    <div style={{ pageBreakBefore: "always" }}>
+    <div className={`${vedleggNummer == 1 ? "break-before-page" : ""}`}>
       <h2 id={elementIds.vedleggBeregningsdetaljer} className={"pb-2"}>
         Vedlegg nr. {vedleggNummer}: Beregningsdetaljer
       </h2>

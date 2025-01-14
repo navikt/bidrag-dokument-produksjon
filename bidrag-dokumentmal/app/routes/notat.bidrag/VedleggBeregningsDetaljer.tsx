@@ -24,7 +24,7 @@ export default function VedleggBeregningsDetaljer({
   const { erAvslag } = useNotatFelles();
   if (erAvslag) return null;
   return (
-    <div>
+    <div className={`${vedleggNummer == 1 ? "break-before-page" : ""}`}>
       <h2 id={elementIds.vedleggBeregningsdetaljer}>
         Vedlegg nr. {vedleggNummer}: Beregningsdetaljer
       </h2>
