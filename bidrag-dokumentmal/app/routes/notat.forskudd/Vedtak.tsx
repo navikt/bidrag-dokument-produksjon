@@ -78,27 +78,24 @@ function VedtakTable({
 }) {
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
-    <div style={{ paddingTop: "0px" }}>
+    <>
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
         const tableData: TableData = {
           headers: [
-            { name: "Periode", width: "130px" },
             { name: "Inntekt", width: "80px" },
-            { name: "Sivilstand", width: "120px" },
+            { name: "Sivilstand", width: "100px" },
             { name: "Antall barn i husstand", width: "80px" },
             { name: "Forskudd", width: "70px" },
-            { name: "Resultat", width: "120px" },
+            { name: "Resultat", width: "160px" },
           ],
           rows: perioder.map((d) => ({
+            periodColumn: formatPeriode(
+              d.periode!.fom,
+              deductDays(d.periode!.til, 1),
+            ),
             columns: [
-              {
-                content: formatPeriode(
-                  d.periode!.fom,
-                  deductDays(d.periode!.til, 1),
-                ),
-              },
               { content: formatterBeløp(d.inntekt) },
               { content: d.sivilstandVisningsnavn },
               { content: d.antallBarnIHusstanden },
@@ -114,6 +111,6 @@ function VedtakTable({
           </div>
         );
       })}
-    </div>
+    </>
   );
 }

@@ -406,14 +406,14 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
 
   if (!harInntekter) return;
   return (
-    <div className={"mt-medium"}>
-      <InntektTableTitle title={"Beregnet totalt"} />
+    <>
+      <InntektTableTitle title={"Beregnet totalt"} witMarginTop />
       {rolle.rolle === Rolletype.BA
         ? renderTable(
             data.find((d) => d.gjelderBarn.ident == rolle.ident)
               ?.summertInntektListe ?? [],
           )
         : renderForAllChildren()}
-    </div>
+    </>
   );
 }

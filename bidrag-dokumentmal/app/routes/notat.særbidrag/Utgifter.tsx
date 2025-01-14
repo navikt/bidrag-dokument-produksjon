@@ -19,14 +19,14 @@ export default function Utgifter() {
   const { data } = useNotatFelles();
   const utgifter = data.utgift;
   return (
-    <div className={"utgift"}>
+    <>
       <h2>Utgift</h2>
-      <div>
+      <>
         <SøknadsDetaljer />
         <Utgiftsposter />
         <NotatBegrunnelse data={utgifter?.begrunnelse} />
-      </div>
-    </div>
+      </>
+    </>
   );
 }
 
@@ -36,7 +36,7 @@ function Utgiftsposter() {
   const utgifter = data.utgift?.utgifter ?? [];
   const beregnetUtgifter = data.utgift?.totalBeregning ?? [];
   return (
-    <div>
+    <>
       <h3>Oversikt over utgifter</h3>
       <CommonTable
         layoutAuto
@@ -142,7 +142,7 @@ function Utgiftsposter() {
           />
         </div>
       )}
-    </div>
+    </>
   );
 }
 
@@ -150,7 +150,7 @@ function SøknadsDetaljer() {
   const { data } = useNotatFelles();
   const behandling = data.behandling;
   return (
-    <div>
+    <>
       <div style={{ width: "600px", height: "80px", marginBottom: 0 }}>
         <DataViewTableV2
           className={"two_column_view"}
@@ -193,6 +193,6 @@ function SøknadsDetaljer() {
           }
         />
       </div>
-    </div>
+    </>
   );
 }

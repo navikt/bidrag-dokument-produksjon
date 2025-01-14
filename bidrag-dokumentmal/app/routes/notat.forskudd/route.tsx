@@ -50,11 +50,11 @@ export default function NotatForskudd() {
           <Soknaddetaljer />
           <NotatTittel title={tekster.titler.forskudd} />
           <Virkningstidspunkt />
-          <Boforhold />
-          <Inntekter />
+          <Boforhold vedleggNummer={1} />
+          <Inntekter vedleggNummer={2} />
           <Vedtak />
-          <VedleggBoforhold />
-          <VedleggInntekter />
+          <VedleggBoforhold vedleggNummer={1} />
+          <VedleggInntekter vedleggNummer={2} />
         </div>
       </NotatProvider>
     </div>
