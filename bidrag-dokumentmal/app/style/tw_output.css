@@ -265,6 +265,19 @@
   align-self: center
 }
 
+.break-normal {
+  overflow-wrap: normal;
+  word-break: normal
+}
+
+.break-all {
+  word-break: break-all
+}
+
+.border {
+  border-width: 1px
+}
+
 .border-b {
   border-bottom-width: 1px
 }
