@@ -8,10 +8,11 @@ type NotatProps = {
 export default function NotatBegrunnelse({ data }: NotatProps) {
   return (
     <div
+      className={"mt-2"}
       style={{
         maxWidth: "35rem",
+        overflowWrap: "anywhere",
       }}
-      className={"mt-2 break-all"}
     >
       <DataViewTable
         data={
@@ -36,14 +37,25 @@ export default function NotatBegrunnelse({ data }: NotatProps) {
 
 function PurifiedHtml({ text }: { text?: string }) {
   if (text == null || text === "") return null;
-  const cleanText = xss(text.replace(/(?:\r\n|\r|\n)/g, "<br />"), {
-    whiteList: {
-      ...getDefaultWhiteList(),
-      em: ["style"],
+  const cleanText = xss(
+    text
+      .replace(/(?:\r\n|\r|\n)/g, "<br />")
+      .replaceAll("<p><br/></p>", "<br/>"),
+    {
+      whiteList: {
+        ...getDefaultWhiteList(),
+        em: ["style"],
+        p: ["style"],
+      },
     },
-  });
+  );
 
-  return <span dangerouslySetInnerHTML={{ __html: cleanText }} />;
+  return (
+    <span
+      className={"begrunnelse"}
+      dangerouslySetInnerHTML={{ __html: cleanText }}
+    />
+  );
 }
 function getDefaultWhiteList() {
   return {
