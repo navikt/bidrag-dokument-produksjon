@@ -418,3 +418,8 @@ Custom components
   /*color: rgb(239 68 68 / var(--tw-text-opacity));*/
   color: red;
 }
+
+.begrunnelse p {
+  padding: 0;
+  margin: 0;
+}
