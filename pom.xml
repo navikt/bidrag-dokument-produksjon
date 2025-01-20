@@ -33,7 +33,7 @@
         <bidrag.felles.version>2024.12.31.102412</bidrag.felles.version>
         <kotlin.logger.version>7.0.0</kotlin.logger.version>
         <snakeyaml.version>2.3</snakeyaml.version>
-        <swagger.version>2.2.26</swagger.version>
+        <swagger.version>2.2.28</swagger.version>
     </properties>
     <repositories>
         <repository>
