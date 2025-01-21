@@ -205,6 +205,12 @@ function UnderholdskostnadBeregningsdetaljer({
             value: `${formatterBeløpForBeregning(detaljer.antallBarnBMUnderTolvÅr)}`,
           },
           detaljer.antallBarnBMBeregnet !==
+            detaljer.antallBarnMedTilsynsutgifter && {
+            label: "Antall barn med tilsynsutgifter",
+            textRight: false,
+            value: `${formatterBeløpForBeregning(detaljer.antallBarnMedTilsynsutgifter)}`,
+          },
+          detaljer.antallBarnBMBeregnet !==
             detaljer.antallBarnBMUnderTolvÅr && {
             label: "Antall barn over 12 år med tilsynsutgifter",
             textRight: false,
@@ -288,7 +294,7 @@ function UnderholdskostnadBeregningsdetaljer({
           },
           {
             label: "Skattefradrag (per barn)",
-            calculation: `${formatterBeløpForBeregning(detaljer.skattefradrag)} / ${formatterBeløpForBeregning(detaljer.antallBarnBMBeregnet)}`,
+            calculation: `${formatterBeløpForBeregning(detaljer.skattefradrag)} / ${formatterBeløpForBeregning(detaljer.antallBarnMedTilsynsutgifter)}`,
             result: `- ${formatterBeløpForBeregning(detaljer.skattefradragPerBarn)}`,
           },
           {
