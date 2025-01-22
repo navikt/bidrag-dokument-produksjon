@@ -291,9 +291,9 @@ export interface NotatBehandlingDetaljerDto {
   /** @format date */
   klageMottattDato?: string;
   avslagVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
-  vedtakstypeVisningsnavn?: string;
   kategoriVisningsnavn?: string;
+  vedtakstypeVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -325,7 +325,10 @@ export interface NotatBoforholdDto {
   sivilstand: NotatSivilstand;
   /** Notat begrunnelse skrevet av saksbehandler */
   begrunnelse: NotatBegrunnelseDto;
-  /** Notat begrunnelse skrevet av saksbehandler */
+  /**
+   * Bruk begrunnelse
+   * @deprecated
+   */
   notat: NotatBegrunnelseDto;
   beregnetBoforhold: DelberegningBoforhold[];
 }
@@ -388,9 +391,9 @@ export interface NotatInntektDto {
   gjelderBarn?: NotatPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
-  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
+  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -457,9 +460,9 @@ export interface NotatResultatBeregningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  totalEndeligInntekt: number;
-  inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
+  inntektBPMånedlig?: number;
+  totalEndeligInntekt: number;
   inntektBarnMånedlig?: number;
 }
 
@@ -537,9 +540,9 @@ export interface NotatSkattBeregning {
   trinnskatt: number;
   trygdeavgift: number;
   skattMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface NotatStonadTilBarnetilsynDto {
@@ -561,7 +564,10 @@ export interface NotatSaerbidragUtgifterDto {
   maksGodkjentBeløp?: NotatMaksGodkjentBelopDto;
   /** Notat begrunnelse skrevet av saksbehandler */
   begrunnelse: NotatBegrunnelseDto;
-  /** Notat begrunnelse skrevet av saksbehandler */
+  /**
+   * Bruk begrunnelse
+   * @deprecated
+   */
   notat: NotatBegrunnelseDto;
   utgifter: NotatUtgiftspostDto[];
   totalBeregning: NotatTotalBeregningUtgifterDto[];
@@ -633,6 +639,8 @@ export interface NotatUnderholdskostnadPeriodeBeregningsdetaljer {
   antallBarnBMUnderTolvÅr: number;
   /** @format int32 */
   antallBarnBMBeregnet: number;
+  /** @format int32 */
+  antallBarnMedTilsynsutgifter: number;
   skattesatsFaktor: number;
   totalTilsynsutgift: number;
   sumTilsynsutgifter: number;
@@ -696,17 +704,29 @@ export interface NotatVirkningstidspunktDto {
   søknadstype?: string;
   vedtakstype?: Vedtakstype;
   søktAv?: SoktAvType;
-  /** @format date */
+  /**
+   * @format date
+   * @example "01.12.2025"
+   */
   mottattDato?: string;
-  /** @format date */
+  /**
+   * @format date
+   * @example "01.12.2025"
+   */
   søktFraDato?: string;
-  /** @format date */
+  /**
+   * @format date
+   * @example "01.12.2025"
+   */
   virkningstidspunkt?: string;
   avslag?: Resultatkode;
   årsak?: TypeArsakstype;
   /** Notat begrunnelse skrevet av saksbehandler */
   begrunnelse: NotatBegrunnelseDto;
-  /** Notat begrunnelse skrevet av saksbehandler */
+  /**
+   * Bruk begrunnelse
+   * @deprecated
+   */
   notat: NotatBegrunnelseDto;
   avslagVisningsnavn?: string;
   årsakVisningsnavn?: string;
@@ -744,14 +764,12 @@ export interface OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndre
 export interface OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeUnit {
   periode: TypeArManedsperiode;
   status?: Bostatuskode;
-  detaljer?: Unit;
   statusVisningsnavn?: string;
 }
 
 export interface OpplysningerFraFolkeregisteretMedDetaljerSivilstandskodePDLUnit {
   periode: TypeArManedsperiode;
   status?: SivilstandskodePDL;
-  detaljer?: Unit;
   statusVisningsnavn?: string;
 }
 
@@ -788,6 +806,7 @@ export enum Resultatkode {
   SAeRBIDRAGMANGLERBIDRAGSEVNE = "SÆRBIDRAG_MANGLER_BIDRAGSEVNE",
   AVSLAG = "AVSLAG",
   AVSLAG2 = "AVSLAG2",
+  PARTENBEROMOPPHOR = "PARTEN_BER_OM_OPPHØR",
   AVSLAGOVER18AR = "AVSLAG_OVER_18_ÅR",
   AVSLAGIKKEREGISTRERTPAADRESSE = "AVSLAG_IKKE_REGISTRERT_PÅ_ADRESSE",
   AVSLAGHOYINNTEKT = "AVSLAG_HØY_INNTEKT",
@@ -923,8 +942,6 @@ export enum SoktAvType {
   KLAGE_ANKE = "KLAGE_ANKE",
   KONVERTERING = "KONVERTERING",
 }
-
-export type Unit = object;
 
 export interface UtgiftBeregningDto {
   /** Beløp som er direkte betalt av BP */
