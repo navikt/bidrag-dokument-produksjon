@@ -82,6 +82,10 @@ function SamværKalkulatorTable({
   ferieVisningsnavnMap,
   frekvensVisningsnavnMap,
 }: NotatSamvaersperiodeDto) {
+  const samværNetterBeskrivelse = () => {
+    if (gjennomsnittligSamværPerMåned === 0) return "";
+    return ` (samvær per måned: ${gjennomsnittligSamværPerMåned} ${gjennomsnittligSamværPerMåned <= 1 ? "natt" : "netter"})`;
+  };
   return (
     <div className={"flex flex-col gap-1 pt-2 pb-2"}>
       <DataViewTable
@@ -138,7 +142,7 @@ function SamværKalkulatorTable({
               {
                 label: "Beregning",
                 labelBold: true,
-                value: `Samværsklasse ${samværsklasseVisningsnavn} (samvær per måned: ${gjennomsnittligSamværPerMåned})`,
+                value: `Samværsklasse ${samværsklasseVisningsnavn}${samværNetterBeskrivelse()}`,
               },
             ].filter((d) => d != null) as DataViewTableData[]
           }
