@@ -84,7 +84,7 @@ function SamværKalkulatorTable({
 }: NotatSamvaersperiodeDto) {
   const samværNetterBeskrivelse = () => {
     if (gjennomsnittligSamværPerMåned === 0) return "";
-    return ` (samvær per måned: ${gjennomsnittligSamværPerMåned} ${gjennomsnittligSamværPerMåned <= 1 ? "natt" : "netter"})`;
+    return ` (samvær per måned: ${gjennomsnittligSamværPerMåned} ${gjennomsnittligSamværPerMåned === 1 ? "natt" : "netter"})`;
   };
   return (
     <div className={"flex flex-col gap-1 pt-2 pb-2"}>
