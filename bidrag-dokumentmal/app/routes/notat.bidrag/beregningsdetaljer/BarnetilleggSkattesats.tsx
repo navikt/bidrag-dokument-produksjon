@@ -7,6 +7,7 @@ import {
 } from "~/utils/visningsnavn";
 import { DataViewTable } from "~/components/DataViewTable";
 import CalculationTable from "~/components/notat_felles/CalculationTable";
+import { barnetilleggTiltakspengerVisningsnavn } from "~/constants/beregning";
 
 export const BarnetilleggSkattesats = ({ rolle }: { rolle: Rolletype }) => {
   const { barnetilleggBP, barnetilleggBM } = useBeregningDetaljer();
@@ -15,6 +16,13 @@ export const BarnetilleggSkattesats = ({ rolle }: { rolle: Rolletype }) => {
   const barnetilleggSkattesats = barnetillegg.delberegningSkattesats;
 
   if (barnetilleggSkattesats == null) return null;
+  if (
+    barnetillegg.barnetillegg.every(
+      (bt) => bt.visningsnavn === barnetilleggTiltakspengerVisningsnavn,
+    )
+  )
+    return null;
+
   return (
     <div className={"mb-2"}>
       <h4>{`Beregning av skatteprosent på barnetillegg (${rolleTilVisningsnavn(rolle)})`}</h4>
