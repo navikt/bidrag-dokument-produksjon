@@ -14,6 +14,7 @@
     <version>0.0.1-SNAPSHOT</version>
     <name>bidrag-dokument-produksjon</name>
     <properties>
+        <kotlin.version>2.1.0</kotlin.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <maven.compiler.source>21</maven.compiler.source>
         <maven.compiler.target>21</maven.compiler.target>

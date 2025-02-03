@@ -6,7 +6,7 @@ import {
 } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable } from "~/components/DataViewTable";
-import { formatPeriode } from "~/utils/date-utils";
+import { formatPeriode, deductDays } from "~/utils/date-utils";
 import HorizontalLine from "~/components/HorizontalLine";
 import { BPAndelUnderholdskostnad } from "~/routes/notat.bidrag/beregningsdetaljer/BPAndelUnderholdskostnad";
 import { Samværsfradrag } from "~/routes/notat.bidrag/beregningsdetaljer/Samværsfradrag";
@@ -82,7 +82,7 @@ function VedleggBeregningsDetaljerInnhold() {
                                 labelBold: true,
                                 value: formatPeriode(
                                   periode.periode.fom,
-                                  periode.periode.til,
+                                  deductDays(periode.periode!.til, 1),
                                 ),
                               },
                             ]}
