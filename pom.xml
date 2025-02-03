@@ -32,7 +32,7 @@
         <verapdf.version>1.26.1</verapdf.version>
         <ktfmt.version>0.44</ktfmt.version>
         <bidrag.felles.version>2025.02.03.142844</bidrag.felles.version>
-        <kotlin.logger.version>7.0.0</kotlin.logger.version>
+        <kotlin.logger.version>7.0.3</kotlin.logger.version>
         <snakeyaml.version>2.3</snakeyaml.version>
         <swagger.version>2.2.28</swagger.version>
     </properties>
