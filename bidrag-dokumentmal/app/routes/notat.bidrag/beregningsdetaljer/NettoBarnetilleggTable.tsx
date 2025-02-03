@@ -9,8 +9,13 @@ import {
   Rolletype,
   SluttberegningBarnebidrag,
 } from "~/types/Api";
-import { CommonTable } from "~/components/CommonTable";
+import {
+  CommonTable,
+  TableHeader,
+  TableColumn,
+} from "~/components/CommonTable";
 import { useBeregningDetaljer } from "~/routes/notat.bidrag/VedleggBeregningsDetaljer";
+import { barnetilleggTiltakspengerVisningsnavn } from "~/constants/beregning";
 
 export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
   const {
@@ -21,6 +26,9 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
   } = useBeregningDetaljer();
 
   const barnetillegg = rolle == Rolletype.BP ? barnetilleggBP : barnetilleggBM;
+  const harBareTiltakspenger = barnetillegg.barnetillegg.every(
+    (bt) => bt.visningsnavn === barnetilleggTiltakspengerVisningsnavn,
+  );
   return (
     <div style={{ width: "600px" }}>
       <h4>{`Netto barnetillegg (${rolleTilVisningsnavn(rolle)})`}</h4>
@@ -33,7 +41,7 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
               name: "Type barnetillegg",
               width: "100px",
             },
-            {
+            !harBareTiltakspenger && {
               name: "Brutto",
               width: "50px",
             },
@@ -41,7 +49,7 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
               name: "Netto",
               width: "50px",
             },
-          ],
+          ].filter((h) => h != null) as TableHeader[],
           rows: barnetillegg.barnetillegg
             .map((bt) => ({
               columns: [
@@ -49,21 +57,24 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
                   content: bt.visningsnavn,
                   colSpan: 1,
                 },
-                {
-                  content: formatterBeløpForBeregning(bt.bruttoBeløp, true),
+                !harBareTiltakspenger && {
+                  content:
+                    bt.visningsnavn === barnetilleggTiltakspengerVisningsnavn
+                      ? "Ikke relevant"
+                      : formatterBeløpForBeregning(bt.bruttoBeløp, true),
                 },
                 {
                   content: formatterBeløpForBeregning(bt.nettoBeløp, true),
                 },
-              ],
+              ].filter((d) => d != null) as TableColumn[],
             }))
             .concat([
               {
                 columns: [
                   {
-                    content: "Resultat",
+                    content: "Resultat" as string,
                   },
-                  {
+                  !harBareTiltakspenger && {
                     content: formatterBeløpForBeregning(
                       barnetillegg!.sumBruttoBeløp,
                     ),
@@ -73,7 +84,7 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
                       barnetillegg!.sumNettoBeløp,
                     ),
                   },
-                ],
+                ] as TableColumn[],
               },
             ]),
         }}
