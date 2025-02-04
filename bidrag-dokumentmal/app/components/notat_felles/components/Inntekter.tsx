@@ -4,8 +4,9 @@ import {
   NotatBeregnetInntektDto,
   NotatInntektDto,
   NotatMalType,
-  Rolletype,
   NotatPersonDto,
+  Rolletype,
+  Kilde,
 } from "~/types/Api";
 import { deductDays, formatPeriode } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
@@ -24,12 +25,12 @@ import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Inntektsposter from "~/components/notat_felles/components/Inntektsposter";
 import {
   BehandlingRolletype,
+  beregnetInntekterColumnNames,
+  beregnetInntekterColumnNamesV2,
+  beregnetInntekterColumnWidth,
   inntekterTablesViewRules,
   InntektTableType,
   isHarInntekter,
-  beregnetInntekterColumnNames,
-  beregnetInntekterColumnWidth,
-  beregnetInntekterColumnNamesV2,
 } from "~/components/inntektTableHelpers";
 import InntektTableTitle from "~/components/inntekt/InntektTableTitle";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
@@ -264,9 +265,10 @@ function InntektPerBarnTable({
                           ? [
                               { content: visningsnavnInntektstype },
                               {
-                                content: formatterBeløp(
-                                  formatterBeløp(d.månedsbeløp),
-                                ),
+                                content:
+                                  d.kilde == Kilde.OFFENTLIG
+                                    ? Number(d.beløp / 12)
+                                    : formatterBeløp(d.månedsbeløp),
                               },
                               { content: formatterBeløp(d.beløp) },
                             ]
