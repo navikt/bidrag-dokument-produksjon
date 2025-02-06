@@ -4,6 +4,7 @@ export interface DataViewTableData {
   label?: string;
   labelBold?: boolean;
   value?: string | number | React.ReactNode;
+  result?: string | number | React.ReactNode;
   additionalInfo?: string | number;
 }
 
@@ -24,6 +25,7 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
   width,
   className,
 }) => {
+  const harResultat = data.some((d) => d.result);
   return (
     <div className={className} style={{ width: width }}>
       {title && <h4>{title}</h4>}
@@ -47,6 +49,7 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
                 <td>
                   <>{row.value}</>
                 </td>
+                {harResultat && row.result && <td>= {row.result}</td>}
               </tr>
               {row.additionalInfo && (
                 <tr aria-colspan={2} key={rowIndex + "2"}>

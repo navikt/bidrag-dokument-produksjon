@@ -4,9 +4,10 @@ import { useBeregningDetaljer } from "~/routes/notat.bidrag/VedleggBeregningsDet
 
 export const BeregningBegrensetRevurdering = () => {
   const { sluttberegning, samværsfradrag } = useBeregningDetaljer();
+  if (!sluttberegning.begrensetRevurderingUtført) return null;
 
   return (
-    <div style={{ width: "600px" }}>
+    <div className={"mb-2"}>
       <h4>{`Begrenset revurdering`}</h4>
       <DataViewTable
         gap={"5px"}
@@ -15,19 +16,16 @@ export const BeregningBegrensetRevurdering = () => {
             {
               label: "Løpende forskudd",
               textRight: false,
-              labelBold: true,
               value: `${formatterBeløpForBeregning(sluttberegning.løpendeForskudd ?? 0)}`,
             },
             {
               label: "Løpende bidrag",
               textRight: false,
-              labelBold: true,
               value: `${formatterBeløpForBeregning(sluttberegning.løpendeBidrag ?? 0)}`,
             },
             {
               label: "Foreløpig bidrag",
               textRight: false,
-              labelBold: true,
               value: `${formatterBeløpForBeregning(sluttberegning.løpendeForskudd ?? 0)} + ${formatterBeløpForBeregning(samværsfradrag.samværsfradrag)}`,
               result: `${formatterBeløpForBeregning(sluttberegning.bruttoBidragEtterBegrensetRevurdering)}`,
             },
