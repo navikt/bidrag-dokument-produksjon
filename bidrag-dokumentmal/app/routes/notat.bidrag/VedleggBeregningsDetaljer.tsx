@@ -17,6 +17,7 @@ import { EndeligBidragTable } from "~/routes/notat.bidrag/beregningsdetaljer/End
 import { BPsEvneTable } from "~/components/vedtak/BPsEvneTable";
 import { BarnetilleggSkattesats } from "~/routes/notat.bidrag/beregningsdetaljer/BarnetilleggSkattesats";
 import { VedleggProps } from "~/types/commonTypes";
+import { BeregningBegrensetRevurdering } from "~/routes/notat.bidrag/beregningsdetaljer/BeregningBegrensetRevurdering";
 
 export default function VedleggBeregningsDetaljer({
   vedleggNummer,
@@ -113,6 +114,7 @@ function VedleggBeregningsDetaljerInnhold() {
                           <BeregningFordeltBidragEvne />
                         </div>
 
+                        <BeregningBegrensetRevurdering />
                         {!detaljer.deltBosted &&
                           detaljer.barnetilleggBP.barnetillegg.length > 0 && (
                             <>
