@@ -26,7 +26,9 @@ export default function NotatBegrunnelse({ data }: NotatProps) {
               label: undefined,
               textRight: false,
               labelBold: true,
-              value: <PurifiedHtml text={data?.innhold} />,
+              value: (
+                <PurifiedHtml text={data?.innhold?.replaceAll("&nbsp;", " ")} />
+              ),
             },
           ].filter((d) => d != null) as DataViewTableData[]
         }
