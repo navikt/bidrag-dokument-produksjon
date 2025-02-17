@@ -64,6 +64,20 @@ export default function Virkningstidspunkt() {
             },
           ]}
         />
+        {data.roller
+          .filter((d) => d.opphørsdato != null)
+          .map((rolle) => (
+            <DataViewTable
+              key={rolle.ident}
+              labelColWidth={"100px"}
+              data={[
+                {
+                  label: "Opphørsdato",
+                  value: dateToDDMMYYYY(rolle.opphørsdato),
+                },
+              ]}
+            />
+          ))}
         <NotatBegrunnelse data={virkningstidspunkt.begrunnelse} />
       </div>
     </div>

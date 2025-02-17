@@ -392,9 +392,9 @@ export interface NotatInntektDto {
   gjelderBarn?: NotatPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
-  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
+  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -454,6 +454,10 @@ export interface NotatPersonDto {
   ident?: string;
   erBeskyttet: boolean;
   innbetaltBeløp?: number;
+  /** @format date */
+  opphørsdato?: string;
+  /** @format date */
+  virkningstidspunkt?: string;
 }
 
 export interface NotatResultatBeregningInntekterDto {
@@ -461,9 +465,9 @@ export interface NotatResultatBeregningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  totalEndeligInntekt: number;
-  inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
+  inntektBPMånedlig?: number;
+  totalEndeligInntekt: number;
   inntektBarnMånedlig?: number;
 }
 
@@ -487,8 +491,8 @@ export interface NotatResultatPeriodeDto {
   vedtakstype?: Vedtakstype;
   /** @format int32 */
   antallBarnIHusstanden: number;
-  sivilstandVisningsnavn?: string;
   resultatKodeVisningsnavn: string;
+  sivilstandVisningsnavn?: string;
 }
 
 export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResultatInnhold, "type"> & {
@@ -789,6 +793,7 @@ export interface ResultatBarnebidragsberegningPeriodeDto {
 }
 
 export enum Resultatkode {
+  OPPHOR = "OPPHØR",
   GEBYR_FRITATT = "GEBYR_FRITATT",
   GEBYR_ILAGT = "GEBYR_ILAGT",
   BARNETERSELVFORSORGET = "BARNET_ER_SELVFORSØRGET",
@@ -900,8 +905,8 @@ export enum SivilstandskodePDL {
 
 export interface SluttberegningBarnebidrag {
   periode: TypeArManedsperiode;
-  beregnetBeløp: number;
-  resultatBeløp: number;
+  beregnetBeløp?: number;
+  resultatBeløp?: number;
   uMinusNettoBarnetilleggBM?: number;
   bruttoBidragEtterBarnetilleggBM: number;
   nettoBidragEtterBarnetilleggBM: number;
@@ -922,6 +927,7 @@ export interface SluttberegningBarnebidrag {
   bidragJustertNedTil25ProsentAvInntekt: boolean;
   bidragJustertTilForskuddssats: boolean;
   begrensetRevurderingUtført: boolean;
+  ikkeOmsorgForBarnet: boolean;
   uminusNettoBarnetilleggBM: number;
 }
 
