@@ -86,6 +86,77 @@ function VedtakTable({
   data: NotatResultatBidragsberegningBarnDto[];
 }) {
   if (data.length == 0) return <div>Mangler resultat</div>;
+  function renderAvslag(d) {
+    return [{ content: "", colSpan: 5 }, { content: "Avslag" }];
+  }
+  function renderResult(d) {
+    return [
+      { content: formatterBeløpForBeregning(d.underholdskostnad) },
+      {
+        content: (
+          <table>
+            <tbody>
+              <tr>
+                <td className={"w-[25px]"} align={"right"}>
+                  {formatterProsent(d.bpsAndelU)}
+                </td>
+                <td className="w-[5px]">/</td>
+                <td>{formatterBeløpForBeregning(d.bpsAndelBeløp)}</td>
+              </tr>
+            </tbody>
+          </table>
+        ),
+      },
+      {
+        content: (
+          <table>
+            <tbody>
+              <tr>
+                <td className={"w-[25px]"} align="right">
+                  {formatterBeløpForBeregning(d.samværsfradrag)}
+                </td>
+                <td className="w-[5px]">/</td>
+                <td>
+                  {d.beregningsdetaljer != undefined
+                    ? d.beregningsdetaljer!.samværsfradrag!.samværsklasse ===
+                      Samvaersklasse.DELT_BOSTED
+                      ? "D"
+                      : d.beregningsdetaljer!.samværsfradrag
+                          ?.samværsklasseVisningsnavn
+                    : 0}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        ),
+      },
+      {
+        content: (
+          <table>
+            <tbody>
+              <tr>
+                <td className={"w-[35px]"} align="right">
+                  {formatterBeløpForBeregning(
+                    d.beregningsdetaljer?.delberegningBidragsevne
+                      ?.bidragsevne ?? 0,
+                  )}
+                </td>
+                <td className="w-[5px]">/</td>
+                <td>
+                  {formatterBeløpForBeregning(
+                    d.beregningsdetaljer?.delberegningBidragsevne
+                      ?.sumInntekt25Prosent ?? 0,
+                  )}
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        ),
+      },
+      { content: formatterBeløpForBeregning(d.beregnetBidrag) },
+      { content: formatterBeløpForBeregning(d.faktiskBidrag) },
+    ];
+  }
   return (
     <>
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
@@ -108,75 +179,10 @@ function VedtakTable({
                   d.periode!.fom,
                   deductDays(d.periode!.til, 1),
                 ),
-                columns: [
-                  { content: formatterBeløpForBeregning(d.underholdskostnad) },
-                  {
-                    content: (
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td className={"w-[25px]"} align={"right"}>
-                              {formatterProsent(d.bpsAndelU)}
-                            </td>
-                            <td className="w-[5px]">/</td>
-                            <td>
-                              {formatterBeløpForBeregning(d.bpsAndelBeløp)}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    ),
-                  },
-                  {
-                    content: (
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td className={"w-[25px]"} align="right">
-                              {formatterBeløpForBeregning(d.samværsfradrag)}
-                            </td>
-                            <td className="w-[5px]">/</td>
-                            <td>
-                              {d.beregningsdetaljer != undefined
-                                ? d.beregningsdetaljer!.samværsfradrag!
-                                    .samværsklasse ===
-                                  Samvaersklasse.DELT_BOSTED
-                                  ? "D"
-                                  : d.beregningsdetaljer!.samværsfradrag
-                                      ?.samværsklasseVisningsnavn
-                                : 0}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    ),
-                  },
-                  {
-                    content: (
-                      <table>
-                        <tbody>
-                          <tr>
-                            <td className={"w-[35px]"} align="right">
-                              {formatterBeløpForBeregning(
-                                d.beregningsdetaljer?.delberegningBidragsevne
-                                  ?.bidragsevne ?? 0,
-                              )}
-                            </td>
-                            <td className="w-[5px]">/</td>
-                            <td>
-                              {formatterBeløpForBeregning(
-                                d.beregningsdetaljer?.delberegningBidragsevne
-                                  ?.sumInntekt25Prosent ?? 0,
-                              )}
-                            </td>
-                          </tr>
-                        </tbody>
-                      </table>
-                    ),
-                  },
-                  { content: formatterBeløpForBeregning(d.beregnetBidrag) },
-                  { content: formatterBeløpForBeregning(d.faktiskBidrag) },
-                ],
+                columns: d.beregningsdetaljer?.sluttberegning
+                  ?.ikkeOmsorgForBarnet
+                  ? renderAvslag(d)
+                  : renderResult(d),
               },
               {
                 zebraStripe: false,
