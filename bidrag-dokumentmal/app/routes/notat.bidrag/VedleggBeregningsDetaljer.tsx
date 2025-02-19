@@ -66,7 +66,8 @@ function VedleggBeregningsDetaljerInnhold() {
               .filter(
                 (d) =>
                   d.beregningsdetaljer?.sluttberegning &&
-                  !d.beregningsdetaljer.sluttberegning.barnetErSelvforsørget,
+                  !d.beregningsdetaljer.sluttberegning.barnetErSelvforsørget &&
+                  !d.beregningsdetaljer.sluttberegning.ikkeOmsorgForBarnet,
               )
               .map((periode) => {
                 const detaljer = periode.beregningsdetaljer!;
