@@ -307,6 +307,12 @@ export interface NotatBeregnetInntektDto {
   summertInntektListe: DelberegningSumInntekt[];
 }
 
+export interface NotatBeregnetPrivatAvtalePeriodeDto {
+  periode: DatoperiodeDto;
+  indeksfaktor: number;
+  beløp: number;
+}
+
 export interface NotatBeregningsdetaljerSamvaersfradrag {
   samværsfradrag: number;
   samværsklasse: Samvaersklasse;
@@ -454,6 +460,26 @@ export interface NotatPersonDto {
   ident?: string;
   erBeskyttet: boolean;
   innbetaltBeløp?: number;
+  /** @format date */
+  opphørsdato?: string;
+  /** @format date */
+  virkningstidspunkt?: string;
+}
+
+export interface NotatPrivatAvtaleDto {
+  gjelderBarn: NotatPersonDto;
+  /** @format date */
+  avtaleDato?: string;
+  skalIndeksreguleres: boolean;
+  /** Notat begrunnelse skrevet av saksbehandler */
+  begrunnelse?: NotatBegrunnelseDto;
+  perioder: NotatPrivatAvtalePeriodeDto[];
+  beregnetPrivatAvtalePerioder: NotatBeregnetPrivatAvtalePeriodeDto[];
+}
+
+export interface NotatPrivatAvtalePeriodeDto {
+  periode: DatoperiodeDto;
+  beløp: number;
 }
 
 export interface NotatResultatBeregningInntekterDto {
@@ -729,8 +755,8 @@ export interface NotatVirkningstidspunktDto {
    * @deprecated
    */
   notat: NotatBegrunnelseDto;
-  avslagVisningsnavn?: string;
   årsakVisningsnavn?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatVoksenIHusstandenDetaljerDto {
@@ -789,6 +815,7 @@ export interface ResultatBarnebidragsberegningPeriodeDto {
 }
 
 export enum Resultatkode {
+  OPPHOR = "OPPHØR",
   GEBYR_FRITATT = "GEBYR_FRITATT",
   GEBYR_ILAGT = "GEBYR_ILAGT",
   BARNETERSELVFORSORGET = "BARNET_ER_SELVFORSØRGET",
@@ -900,8 +927,8 @@ export enum SivilstandskodePDL {
 
 export interface SluttberegningBarnebidrag {
   periode: TypeArManedsperiode;
-  beregnetBeløp: number;
-  resultatBeløp: number;
+  beregnetBeløp?: number;
+  resultatBeløp?: number;
   uMinusNettoBarnetilleggBM?: number;
   bruttoBidragEtterBarnetilleggBM: number;
   nettoBidragEtterBarnetilleggBM: number;
@@ -913,7 +940,6 @@ export interface SluttberegningBarnebidrag {
   bpAndelAvUVedDeltBostedBeløp: number;
   løpendeForskudd?: number;
   løpendeBidrag?: number;
-  ingenEndringUnderGrense: boolean;
   barnetErSelvforsørget: boolean;
   bidragJustertForDeltBosted: boolean;
   bidragJustertForNettoBarnetilleggBP: boolean;
@@ -922,6 +948,7 @@ export interface SluttberegningBarnebidrag {
   bidragJustertNedTil25ProsentAvInntekt: boolean;
   bidragJustertTilForskuddssats: boolean;
   begrensetRevurderingUtført: boolean;
+  ikkeOmsorgForBarnet: boolean;
   uminusNettoBarnetilleggBM: number;
 }
 
@@ -986,6 +1013,7 @@ export interface VedtakNotatDto {
   gebyr?: NotatGebyrRolleDto[];
   underholdskostnader?: NotatUnderholdDto;
   personer: NotatPersonDto[];
+  privatavtale: NotatPrivatAvtaleDto[];
   roller: NotatPersonDto[];
   inntekter: NotatInntekterDto;
   vedtak: NotatVedtakDetaljerDto;
