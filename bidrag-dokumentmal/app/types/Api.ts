@@ -307,6 +307,12 @@ export interface NotatBeregnetInntektDto {
   summertInntektListe: DelberegningSumInntekt[];
 }
 
+export interface NotatBeregnetPrivatAvtalePeriodeDto {
+  periode: DatoperiodeDto;
+  indeksfaktor: number;
+  beløp: number;
+}
+
 export interface NotatBeregningsdetaljerSamvaersfradrag {
   samværsfradrag: number;
   samværsklasse: Samvaersklasse;
@@ -392,9 +398,9 @@ export interface NotatInntektDto {
   gjelderBarn?: NotatPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
+  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
-  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -460,14 +466,30 @@ export interface NotatPersonDto {
   virkningstidspunkt?: string;
 }
 
+export interface NotatPrivatAvtaleDto {
+  gjelderBarn: NotatPersonDto;
+  /** @format date */
+  avtaleDato?: string;
+  skalIndeksreguleres: boolean;
+  /** Notat begrunnelse skrevet av saksbehandler */
+  begrunnelse?: NotatBegrunnelseDto;
+  perioder: NotatPrivatAvtalePeriodeDto[];
+  beregnetPrivatAvtalePerioder: NotatBeregnetPrivatAvtalePeriodeDto[];
+}
+
+export interface NotatPrivatAvtalePeriodeDto {
+  periode: DatoperiodeDto;
+  beløp: number;
+}
+
 export interface NotatResultatBeregningInntekterDto {
   inntektBM?: number;
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  inntektBMMånedlig?: number;
-  inntektBPMånedlig?: number;
   totalEndeligInntekt: number;
+  inntektBPMånedlig?: number;
+  inntektBMMånedlig?: number;
   inntektBarnMånedlig?: number;
 }
 
@@ -491,8 +513,8 @@ export interface NotatResultatPeriodeDto {
   vedtakstype?: Vedtakstype;
   /** @format int32 */
   antallBarnIHusstanden: number;
-  resultatKodeVisningsnavn: string;
   sivilstandVisningsnavn?: string;
+  resultatKodeVisningsnavn: string;
 }
 
 export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResultatInnhold, "type"> & {
@@ -733,8 +755,8 @@ export interface NotatVirkningstidspunktDto {
    * @deprecated
    */
   notat: NotatBegrunnelseDto;
-  avslagVisningsnavn?: string;
   årsakVisningsnavn?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatVoksenIHusstandenDetaljerDto {
@@ -918,7 +940,6 @@ export interface SluttberegningBarnebidrag {
   bpAndelAvUVedDeltBostedBeløp: number;
   løpendeForskudd?: number;
   løpendeBidrag?: number;
-  ingenEndringUnderGrense: boolean;
   barnetErSelvforsørget: boolean;
   bidragJustertForDeltBosted: boolean;
   bidragJustertForNettoBarnetilleggBP: boolean;
@@ -992,6 +1013,7 @@ export interface VedtakNotatDto {
   gebyr?: NotatGebyrRolleDto[];
   underholdskostnader?: NotatUnderholdDto;
   personer: NotatPersonDto[];
+  privatavtale: NotatPrivatAvtaleDto[];
   roller: NotatPersonDto[];
   inntekter: NotatInntekterDto;
   vedtak: NotatVedtakDetaljerDto;
