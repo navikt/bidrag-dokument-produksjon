@@ -3,6 +3,7 @@ import {
   NotatResultatBidragsberegningBarnDto,
   Rolletype,
   BidragPeriodeBeregningsdetaljer,
+  Resultatkode,
 } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable } from "~/components/DataViewTable";
@@ -18,6 +19,7 @@ import { BPsEvneTable } from "~/components/vedtak/BPsEvneTable";
 import { BarnetilleggSkattesats } from "~/routes/notat.bidrag/beregningsdetaljer/BarnetilleggSkattesats";
 import { VedleggProps } from "~/types/commonTypes";
 import { BeregningBegrensetRevurdering } from "~/routes/notat.bidrag/beregningsdetaljer/BeregningBegrensetRevurdering";
+import { EndringUnderGrense } from "~/routes/notat.bidrag/beregningsdetaljer/EndringUnderGrense";
 
 export default function VedleggBeregningsDetaljer({
   vedleggNummer,
@@ -34,13 +36,17 @@ export default function VedleggBeregningsDetaljer({
   );
 }
 
+type BeregnindDetaljerContextProps = BidragPeriodeBeregningsdetaljer & {
+  endeligBeløp: number;
+  erEndringUnderGrense: boolean;
+};
 export const BidragBeregningContext =
-  createContext<BidragPeriodeBeregningsdetaljer | null>(null);
+  createContext<BeregnindDetaljerContextProps | null>(null);
 
-export function useBeregningDetaljer(): Required<BidragPeriodeBeregningsdetaljer> {
+export function useBeregningDetaljer(): Required<BeregnindDetaljerContextProps> {
   return useContext(
     BidragBeregningContext,
-  ) as Required<BidragPeriodeBeregningsdetaljer>;
+  ) as Required<BeregnindDetaljerContextProps>;
 }
 function VedleggBeregningsDetaljerInnhold() {
   const { data } = useNotatFelles();
@@ -73,7 +79,15 @@ function VedleggBeregningsDetaljerInnhold() {
                 const detaljer = periode.beregningsdetaljer!;
                 return (
                   <>
-                    <BidragBeregningContext.Provider value={{ ...detaljer }}>
+                    <BidragBeregningContext.Provider
+                      value={{
+                        ...detaljer,
+                        endeligBeløp: periode.faktiskBidrag,
+                        erEndringUnderGrense:
+                          periode.resultatKode ===
+                          Resultatkode.INGEN_ENDRING_UNDER_GRENSE,
+                      }}
+                    >
                       <>
                         <div className={"pb-2"}>
                           <DataViewTable
@@ -125,6 +139,7 @@ function VedleggBeregningsDetaljerInnhold() {
                             </>
                           )}
                         <EndeligBidragTable />
+                        <EndringUnderGrense />
                       </>
                     </BidragBeregningContext.Provider>
                     <HorizontalLine />

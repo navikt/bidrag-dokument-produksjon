@@ -45,6 +45,7 @@ export interface BidragPeriodeBeregningsdetaljer {
   inntekter?: NotatResultatBeregningInntekterDto;
   delberegningBidragsevne?: NotatDelberegningBidragsevneDto;
   samværsfradrag?: NotatBeregningsdetaljerSamvaersfradrag;
+  endringUnderGrense?: DelberegningEndringSjekkGrensePeriode;
   sluttberegning?: SluttberegningBarnebidrag;
   delberegningUnderholdskostnad?: DelberegningUnderholdskostnad;
   delberegningBidragspliktigesBeregnedeTotalBidrag?: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto;
@@ -106,6 +107,12 @@ export interface DelberegningBoforhold {
   /** @format double */
   antallBarn: number;
   borMedAndreVoksne: boolean;
+}
+
+export interface DelberegningEndringSjekkGrensePeriode {
+  periode: TypeArManedsperiode;
+  faktiskEndringFaktor?: number;
+  endringErOverGrense: boolean;
 }
 
 export interface DelberegningSumInntekt {
@@ -398,9 +405,9 @@ export interface NotatInntektDto {
   gjelderBarn?: NotatPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
-  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
+  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -513,8 +520,8 @@ export interface NotatResultatPeriodeDto {
   vedtakstype?: Vedtakstype;
   /** @format int32 */
   antallBarnIHusstanden: number;
-  sivilstandVisningsnavn?: string;
   resultatKodeVisningsnavn: string;
+  sivilstandVisningsnavn?: string;
 }
 
 export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResultatInnhold, "type"> & {
@@ -755,8 +762,8 @@ export interface NotatVirkningstidspunktDto {
    * @deprecated
    */
   notat: NotatBegrunnelseDto;
-  årsakVisningsnavn?: string;
   avslagVisningsnavn?: string;
+  årsakVisningsnavn?: string;
 }
 
 export interface NotatVoksenIHusstandenDetaljerDto {
@@ -820,6 +827,8 @@ export enum Resultatkode {
   GEBYR_ILAGT = "GEBYR_ILAGT",
   BARNETERSELVFORSORGET = "BARNET_ER_SELVFORSØRGET",
   DIREKTEOPPJOR = "DIREKTE_OPPJØR",
+  IKKE_DOKUMENTERT_SKOLEGANG = "IKKE_DOKUMENTERT_SKOLEGANG",
+  AVSLUTTET_SKOLEGANG = "AVSLUTTET_SKOLEGANG",
   IKKE_OMSORG_FOR_BARNET = "IKKE_OMSORG_FOR_BARNET",
   BIDRAGSPLIKTIGERDOD = "BIDRAGSPLIKTIG_ER_DØD",
   BEREGNET_BIDRAG = "BEREGNET_BIDRAG",
@@ -858,6 +867,7 @@ export enum Resultatkode {
   AVSLAGPRIVATAVTALEOMSAeRBIDRAG = "AVSLAG_PRIVAT_AVTALE_OM_SÆRBIDRAG",
   ALLE_UTGIFTER_ER_FORELDET = "ALLE_UTGIFTER_ER_FORELDET",
   GODKJENTBELOPERLAVEREENNFORSKUDDSSATS = "GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS",
+  INGEN_ENDRING_UNDER_GRENSE = "INGEN_ENDRING_UNDER_GRENSE",
 }
 
 export enum Rolletype {
@@ -1069,5 +1079,6 @@ export enum TypeArsakstype {
   TREARSREGELEN = "TRE_ÅRS_REGELEN",
   FRAMANEDENETTERIPAVENTEAVBIDRAGSSAK = "FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK",
   FRAMANEDENETTERPRIVATAVTALE = "FRA_MÅNEDEN_ETTER_PRIVAT_AVTALE",
+  FRAMANEDENETTERFYLTE18AR = "FRA_MÅNEDEN_ETTER_FYLTE_18_ÅR",
   BIDRAGSPLIKTIGHARIKKEBIDRATTTILFORSORGELSE = "BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE",
 }
