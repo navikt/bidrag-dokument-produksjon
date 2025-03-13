@@ -111,6 +111,9 @@ export interface DelberegningBoforhold {
 
 export interface DelberegningEndringSjekkGrensePeriode {
   periode: TypeArManedsperiode;
+  løpendeBidragBeløp?: number;
+  løpendeBidragFraPrivatAvtale: boolean;
+  beregnetBidragBeløp?: number;
   faktiskEndringFaktor?: number;
   endringErOverGrense: boolean;
 }
@@ -299,9 +302,9 @@ export interface NotatBehandlingDetaljerDto {
   /** @format date */
   klageMottattDato?: string;
   avslagVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -405,9 +408,9 @@ export interface NotatInntektDto {
   gjelderBarn?: NotatPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
+  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
-  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -574,9 +577,9 @@ export interface NotatSkattBeregning {
   trinnskatt: number;
   trygdeavgift: number;
   skattMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface NotatStonadTilBarnetilsynDto {
@@ -829,6 +832,7 @@ export enum Resultatkode {
   DIREKTEOPPJOR = "DIREKTE_OPPJØR",
   IKKE_DOKUMENTERT_SKOLEGANG = "IKKE_DOKUMENTERT_SKOLEGANG",
   AVSLUTTET_SKOLEGANG = "AVSLUTTET_SKOLEGANG",
+  IKKESTERKNOKGRUNNOGBIDRAGETHAROPPHORT = "IKKE_STERK_NOK_GRUNN_OG_BIDRAGET_HAR_OPPHØRT",
   IKKE_OMSORG_FOR_BARNET = "IKKE_OMSORG_FOR_BARNET",
   BIDRAGSPLIKTIGERDOD = "BIDRAGSPLIKTIG_ER_DØD",
   BEREGNET_BIDRAG = "BEREGNET_BIDRAG",
@@ -1080,5 +1084,6 @@ export enum TypeArsakstype {
   FRAMANEDENETTERIPAVENTEAVBIDRAGSSAK = "FRA_MÅNEDEN_ETTER_I_PÅVENTE_AV_BIDRAGSSAK",
   FRAMANEDENETTERPRIVATAVTALE = "FRA_MÅNEDEN_ETTER_PRIVAT_AVTALE",
   FRAMANEDENETTERFYLTE18AR = "FRA_MÅNEDEN_ETTER_FYLTE_18_ÅR",
+  FRA_ENDRINGSTIDSPUNKT = "FRA_ENDRINGSTIDSPUNKT",
   BIDRAGSPLIKTIGHARIKKEBIDRATTTILFORSORGELSE = "BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE",
 }
