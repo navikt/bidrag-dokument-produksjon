@@ -70,6 +70,38 @@ export default function VedleggBoforhold({ vedleggNummer = 1 }: VedleggProps) {
             </div>
           </div>
         )}
+      {type !== NotatMalType.FORSKUDD &&
+        data.boforhold.boforholdBMSøknadsbarn &&
+        data.boforhold.boforholdBMSøknadsbarn.length > 0 && (
+          <div>
+            <h3>Boforhold bidragsmottaker</h3>
+            {groupBy(
+              data.boforhold.boforholdBMSøknadsbarn.sort((a, b) =>
+                a.gjelderBarn.ident!.localeCompare(b.gjelderBarn.ident!),
+              ),
+              (d) => d.gjelderBarn.ident ?? d.gjelderBarn.fødselsdato!,
+            ).map(([key, value]) => {
+              const gjelderBarn = value[0].gjelderBarn!;
+              const perioder = value[0].perioder;
+              return (
+                <div key={key} className="table_container mb-medium">
+                  <DataDescription
+                    style={{ marginBottom: "0px" }}
+                    label={"Søknadsbarn"}
+                    value={
+                      <Person
+                        fødselsdato={gjelderBarn.fødselsdato!}
+                        navn={gjelderBarn.navn!}
+                        erBeskyttet={gjelderBarn.erBeskyttet}
+                      />
+                    }
+                  />
+                  <BoforholdTable data={perioder} />
+                </div>
+              );
+            })}
+          </div>
+        )}
       {type == NotatMalType.FORSKUDD && (
         <div>
           <h3>Sivilstand</h3>

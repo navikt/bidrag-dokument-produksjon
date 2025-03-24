@@ -302,9 +302,9 @@ export interface NotatBehandlingDetaljerDto {
   /** @format date */
   klageMottattDato?: string;
   avslagVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -339,6 +339,7 @@ export interface NotatBidragsevneUtgifterBolig {
 export interface NotatBoforholdDto {
   barn: BoforholdBarn[];
   andreVoksneIHusstanden?: NotatAndreVoksneIHusstanden;
+  boforholdBMSøknadsbarn: NotatBoforholdTilBMMedSoknadsbarn[];
   sivilstand: NotatSivilstand;
   /** Notat begrunnelse skrevet av saksbehandler */
   begrunnelse: NotatBegrunnelseDto;
@@ -348,6 +349,11 @@ export interface NotatBoforholdDto {
    */
   notat: NotatBegrunnelseDto;
   beregnetBoforhold: DelberegningBoforhold[];
+}
+
+export interface NotatBoforholdTilBMMedSoknadsbarn {
+  gjelderBarn: NotatPersonDto;
+  perioder: OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeUnit[];
 }
 
 export interface NotatDelberegningBarnetilleggDto {
@@ -408,9 +414,9 @@ export interface NotatInntektDto {
   gjelderBarn?: NotatPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
-  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
+  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -1086,4 +1092,5 @@ export enum TypeArsakstype {
   FRAMANEDENETTERFYLTE18AR = "FRA_MÅNEDEN_ETTER_FYLTE_18_ÅR",
   FRA_ENDRINGSTIDSPUNKT = "FRA_ENDRINGSTIDSPUNKT",
   BIDRAGSPLIKTIGHARIKKEBIDRATTTILFORSORGELSE = "BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE",
+  MANEDETTERBETALTFORFALTBIDRAG = "MÅNED_ETTER_BETALT_FORFALT_BIDRAG",
 }
