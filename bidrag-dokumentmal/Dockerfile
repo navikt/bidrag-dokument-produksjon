@@ -1,4 +1,4 @@
-FROM node:21-alpine3.19
+FROM node:current-alpine3.21
 ENV NODE_ENV production
 ARG NPM_TOKEN
 LABEL maintainer="Team Bidrag"
