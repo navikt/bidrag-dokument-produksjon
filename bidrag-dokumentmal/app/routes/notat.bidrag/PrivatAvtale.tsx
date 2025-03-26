@@ -12,8 +12,7 @@ import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { formatterBeløp, formatterProsent } from "~/utils/visningsnavn";
 
 export default function PrivatAvtale() {
-  const { data, erAvslag } = useNotatFelles();
-  if (erAvslag) return null;
+  const { data } = useNotatFelles();
   const privatAvtale = data.privatavtale;
   if (privatAvtale.length == 0) return null;
   return (
