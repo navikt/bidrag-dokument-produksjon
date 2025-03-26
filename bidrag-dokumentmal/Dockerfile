@@ -19,4 +19,6 @@ FROM gcr.io/distroless/nodejs22-debian12
 COPY --from=build-env /app /app
 
 ENV PORT 8080
-CMD ["app/index.js"]
+WORKDIR app
+
+CMD ["build/server/index.js"]
