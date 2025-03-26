@@ -1,4 +1,4 @@
-FROM node:23.10.0-alpine3.21
+FROM node:23 AS build-env
 ENV NODE_ENV production
 ARG NPM_TOKEN
 LABEL maintainer="Team Bidrag"
@@ -14,6 +14,9 @@ COPY package*.json ./
 RUN npm ci --include=dev
 COPY . .
 RUN npm run build
+
+FROM gcr.io/distroless/nodejs22-debian12
+COPY --from=build-env /app /app
 
 ENV PORT 8080
 CMD ["npm", "start"]
