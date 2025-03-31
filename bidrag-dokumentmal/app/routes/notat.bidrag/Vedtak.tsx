@@ -13,7 +13,7 @@ import {
   formatterBeløpForBeregning,
   formatterProsent,
 } from "~/utils/visningsnavn";
-import { DataViewTable } from "~/components/DataViewTable";
+import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { VedleggProps } from "~/types/commonTypes";
 
 export default function Vedtak({ vedleggNummer }: VedleggProps) {
@@ -227,6 +227,19 @@ function VedtakTable({
         return (
           <>
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
+            {value[0].indeksår && (
+              <DataViewTable
+                className={"mb-1 mt-2"}
+                data={
+                  [
+                    {
+                      label: "Første indeksår",
+                      value: value[0].indeksår,
+                    },
+                  ].filter((d) => d != null) as DataViewTableData[]
+                }
+              />
+            )}
             {gjelderBarn.innbetaltBeløp && (
               <DataViewTable
                 className="mt-2 mb-2"
