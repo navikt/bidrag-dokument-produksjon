@@ -6,7 +6,7 @@ import {
 } from "~/types/Api";
 import { CommonTable } from "~/components/CommonTable";
 import tekster from "~/tekster";
-import { formatPeriode } from "~/utils/date-utils";
+import { formatPeriode, dateToDDMMYYYY } from "~/utils/date-utils";
 import { DataViewTable } from "~/components/DataViewTable";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { formatterBeløp, formatterProsent } from "~/utils/visningsnavn";
@@ -41,6 +41,16 @@ function PrivatAvtaleBarn({ data }: { data: NotatPrivatAvtaleDto }) {
             label: "Barn i saken",
             labelBold: true,
             value: data.gjelderBarn.navn,
+          },
+        ]}
+      />
+      <DataViewTable
+        className={"mt-2 mb-1"}
+        data={[
+          {
+            label: "Avtalemåned",
+            labelBold: true,
+            value: dateToDDMMYYYY(data.avtaleDato),
           },
         ]}
       />
