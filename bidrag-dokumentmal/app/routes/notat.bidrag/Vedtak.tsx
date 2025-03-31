@@ -118,7 +118,7 @@ function VedtakTable({
                 <td className="w-[5px]">/</td>
                 <td>
                   {d.beregningsdetaljer != undefined
-                    ? d.beregningsdetaljer!.samværsfradrag!.samværsklasse ===
+                    ? d.beregningsdetaljer!.samværsfradrag?.samværsklasse ===
                       Samvaersklasse.DELT_BOSTED
                       ? "D"
                       : d.beregningsdetaljer!.samværsfradrag
