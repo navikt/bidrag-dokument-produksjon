@@ -233,7 +233,7 @@ function VedtakTable({
                 data={
                   [
                     {
-                      label: "Første indeksår",
+                      label: "Neste indeksår",
                       value: value[0].indeksår,
                     },
                   ].filter((d) => d != null) as DataViewTableData[]
