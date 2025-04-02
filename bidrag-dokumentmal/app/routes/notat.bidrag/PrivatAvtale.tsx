@@ -45,12 +45,17 @@ function PrivatAvtaleBarn({ data }: { data: NotatPrivatAvtaleDto }) {
         ]}
       />
       <DataViewTable
-        className={"mt-2 mb-1"}
+        className={"mt-2"}
         data={[
           {
             label: "Avtalemåned",
-            labelBold: true,
+            labelBold: false,
             value: dateToDDMMYYYY(data.avtaleDato),
+          },
+          {
+            label: "Avtaletype",
+            labelBold: false,
+            value: data.avtaleTypeVisningsnavn,
           },
         ]}
       />
