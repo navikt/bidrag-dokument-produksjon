@@ -4,11 +4,9 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.dokument.produksjon.consumer.BidragDokumentmalConsumer
 import no.nav.bidrag.dokument.produksjon.consumer.BidragPdfGenConsumer
 import no.nav.bidrag.dokument.produksjon.consumer.Configuration
-import no.nav.bidrag.dokument.produksjon.consumer.RenderPDFVersion
 import no.nav.bidrag.transport.felles.commonObjectmapper
 import no.nav.bidrag.transport.notat.NotatMalType
 import no.nav.bidrag.transport.notat.VedtakNotatDto
-import org.springframework.beans.factory.annotation.Value
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType
@@ -27,8 +25,31 @@ private val log = KotlinLogging.logger {}
 class PdfProducerService(
     private val bidragDokumentmalConsumer: BidragDokumentmalConsumer,
     private val bidragPdfGenConsumer: BidragPdfGenConsumer,
-    @Value("\${PDFGEN_VERSION:V1}") private val pdfgenVersion: RenderPDFVersion,
 ) {
+    fun generateHTMLResponseDokument(
+        category: String,
+        dokumentmal: String,
+        payload: String?,
+        useHottemplate: Boolean = false,
+    ): ResponseEntity<String> {
+        if (payload == null && !useHottemplate) {
+            throw RuntimeException(
+                "Mangler data for å generere brev",
+            )
+        }
+        val jsonPayload = payload ?: hotTemplateData(category, dokumentmal)
+        return bidragDokumentmalConsumer
+            .hentDokumentmal(
+                category,
+                dokumentmal,
+                jsonPayload,
+                false,
+            )?.let {
+                ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
+            }
+            ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
+    }
+
     fun generateHTMLResponseV2(
         category: String,
         dokumentmal: NotatMalType,
@@ -52,6 +73,44 @@ class PdfProducerService(
                 ResponseEntity.ok().contentType(MediaType.TEXT_HTML).body(it)
             }
             ?: ResponseEntity.status(HttpStatus.NOT_FOUND).body("Template or category not found")
+    }
+
+    fun generatePDFResponseDokument(
+        category: String,
+        dokumentmal: String,
+        payload: String?,
+        useHottemplate: Boolean = false,
+    ): ResponseEntity<ByteArray> {
+        if (payload == null && !useHottemplate) {
+            throw RuntimeException(
+                "Mangler data for å generere brev",
+            )
+        }
+        val jsonPayload = payload ?: hotTemplateData(category, dokumentmal)
+        val startTime = System.currentTimeMillis()
+        return bidragDokumentmalConsumer
+            .hentDokumentmal(category, dokumentmal, jsonPayload)
+            ?.let { document ->
+                val bytes =
+                    bidragPdfGenConsumer.produserPdf(
+                        document.fjernKontrollTegn(),
+                        Configuration(BigDecimal(1), false),
+                    )
+                log.info {
+                    "Done generating PDF for category $category and template $dokumentmal in ${System.currentTimeMillis() - startTime}ms"
+                }
+                ResponseEntity
+                    .ok()
+                    .contentType(MediaType.APPLICATION_PDF)
+                    .header(
+                        HttpHeaders.CONTENT_DISPOSITION,
+                        "inline; filename=dokumenter_sammenslatt.pdf",
+                    ).body(bytes)
+            }
+            ?: ResponseEntity
+                .status(
+                    HttpStatus.NOT_FOUND,
+                ).body("Template or category not found".toByteArray())
     }
 
     fun generatePDFResponseV2(

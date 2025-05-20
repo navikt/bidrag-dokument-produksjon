@@ -103,3 +103,10 @@ To get started, please fork the repo and checkout a new branch. You can then bui
 ```
 
 See more info in [CONTRIBUTING.md](CONTRIBUTING.md)
+
+
+Build
+```shell script
+
+./gradlew shadowJar
+```
