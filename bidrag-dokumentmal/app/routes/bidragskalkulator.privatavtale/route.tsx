@@ -3,6 +3,8 @@ import "../../style/style.css";
 
 import { parseRequestAction } from "~/routes/common";
 import { ActionFunctionArgs } from "@remix-run/node";
+import HeaderFooter from "~/routes/bidragskalkulator.privatavtale/HeaderFooterKalkulator";
+import NavLogo from "~/components/NavLogo";
 
 export async function action(args: ActionFunctionArgs) {
   return await parseRequestAction(args);
@@ -32,8 +34,12 @@ export default function PrivatAvtaleBidragskalkulator() {
   const data = response.data;
   return (
     <div id="privat_avtale">
-      <h2>Privat avtale</h2>
-      <div>{data.innhold}</div>
+      <HeaderFooter />
+      <div className={"container page"}>
+        <NavLogo />
+        <h1>Privat avtale</h1>
+        <div>{data.innhold}</div>
+      </div>
     </div>
   );
 }

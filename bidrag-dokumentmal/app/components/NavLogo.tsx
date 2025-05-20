@@ -4,9 +4,9 @@ import {
 } from "~/components/notat_felles/NotatContext";
 
 export default function NavLogo() {
-  const { renderPDFVersion } = useNotatFelles();
+  const felles = useNotatFelles();
 
-  if (renderPDFVersion == RenderPDFVersion.V1) {
+  if (felles?.renderPDFVersion == RenderPDFVersion.V1) {
     return (
       <img
         style={{ position: "relative" }}
