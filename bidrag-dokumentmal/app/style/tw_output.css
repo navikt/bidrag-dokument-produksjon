@@ -212,6 +212,10 @@
   display: inline-table
 }
 
+.h-10 {
+  height: 40px
+}
+
 .w-\[--content-width\] {
   width: var(--content-width)
 }
@@ -230,6 +234,10 @@
 
 .w-\[5px\] {
   width: 5px
+}
+
+.w-full {
+  width: 100%
 }
 
 .break-before-page {
@@ -259,6 +267,10 @@
 
 .gap-3 {
   gap: 12px
+}
+
+.divide-solid > :not([hidden]) ~ :not([hidden]) {
+  border-style: solid
 }
 
 .self-center {
@@ -341,6 +353,10 @@
 
 .align-middle {
   vertical-align: middle
+}
+
+.font-bold {
+  font-weight: 700
 }
 
 .filter {
