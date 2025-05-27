@@ -29,19 +29,17 @@ export interface IBidragspliktig extends IPerson {
 }
 
 export interface IBarn extends IPerson {
+    sumBidrag: number; // Beløp i kroner
 }
 
 interface PrivatAvtaleDto {
-    data: {
         innhold: string;
         bidragsmottaker: IBidragsmottaker;
         bidragspliktig: IBidragspliktig;
         barn: IBarn;
-        sumBidrag: number;
         fraDato: string;
         nyAvtale: boolean;
         oppgjorsform: string; // TODO: Dette bør være en enum
-    };
 }
 
 export function meta() {
@@ -55,7 +53,6 @@ export function meta() {
 
 const mockIfDev = (): PrivatAvtaleDto => {
     return {
-        data: {
             innhold: "Dette er en mock av data fra bidragskalkulatoren",
             bidragsmottaker: {
                 fornavn: "Kristian",
@@ -71,13 +68,12 @@ const mockIfDev = (): PrivatAvtaleDto => {
                 fornavn: "Ola",
                 etternavn: "Hansen",
                 fodselsnummer: "12345678901",
+                sumBidrag: 5000,
             },
-            sumBidrag: 5000,
             fraDato: "2022-01-01",
             nyAvtale: true,
             oppgjorsform: "Privat",
         }
-    }
 }
 
 export default function PrivatAvtaleBidragskalkulator() {
@@ -85,7 +81,7 @@ export default function PrivatAvtaleBidragskalkulator() {
     if (response === undefined) {
         return <div>Oops</div>;
     }
-    const data =  response.data;
+    const data =  response as PrivatAvtaleDto;
     return (
         <div id="privat_avtale">
             <HeaderFooter/>
@@ -95,21 +91,13 @@ export default function PrivatAvtaleBidragskalkulator() {
                 <div>{data.innhold}</div>
                 <OpplysningerBidragsmottaker bidragsmottaker={data.bidragsmottaker}/>
                 <OpplysningerBidragspliktig bidragspliktig={data.bidragspliktig}/>
-                <OpplysningerBarnOgBidrag
-                    gjeldendeBarn={data.barn}
-                    sumBidrag={data.sumBidrag}
-                    fraDato={data.fraDato}
-                />
+                <OpplysningerBarnOgBidrag gjeldendeBarn={data.barn}  fraDato={data.fraDato} />
                 <Oppgjør nyAvtale={data.nyAvtale} oppgjorsform={data.oppgjorsform} />
                 <AndreBestemmelser />
 
                 <h2>Underskrifter</h2>
-                <br/>
-                <h3>Bidragsmottaker</h3>
-                <SignaturBoks />
-                <br/>
-                <h2>Bidragspliktige</h2>
-                <SignaturBoks />
+                <SignaturBoks title={"Bidragsmottaker"} />
+                <SignaturBoks title={"Bidragspliktige"} />
             </div>
         </div>
     );

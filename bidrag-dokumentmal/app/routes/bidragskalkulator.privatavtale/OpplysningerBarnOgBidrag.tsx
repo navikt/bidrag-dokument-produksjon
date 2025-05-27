@@ -3,12 +3,11 @@ import {PropsWithChildren } from "react";
 
 interface IProps extends PropsWithChildren {
     gjeldendeBarn: IBarn
-    sumBidrag: number;
     fraDato: string;
 }
 
 export const OpplysningerBarnOgBidrag =
-    ({ gjeldendeBarn, sumBidrag, fraDato }: IProps) => (
+    ({ gjeldendeBarn, fraDato }: IProps) => (
         <div>
             <h2>Opplysninger om barn og bidrag</h2>
             <div>
@@ -19,7 +18,7 @@ export const OpplysningerBarnOgBidrag =
                 <p className={"font-bold"}>Fødselsnummer eller D-nummer</p>
                 <p>{gjeldendeBarn.fodselsnummer}</p>
                 <p className={"font-bold"}>Beløp barnebidrag</p>
-                <p>{sumBidrag},-</p>
+                <p>{gjeldendeBarn.sumBidrag},-</p>
                 <p className={"font-bold"}>Fra dato (dd.mm.åååå)</p>
                 <p>{fraDato}</p>
             </div>
