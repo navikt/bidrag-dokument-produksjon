@@ -76,18 +76,20 @@ class ProduserDokumentApi(
         )
     }
 
-    @GetMapping(
+    @PostMapping(
         "/pdf/test/{category}/{dokumentmal}",
     )
     fun generatePDFTest(
         @PathVariable category: String,
         @PathVariable dokumentmal: String,
+        @org.springframework.web.bind.annotation.RequestBody payload: JsonNode,
     ): ResponseEntity<ByteArray> {
         log.info { "Produserer notat PDF 2 for dokumentmal $dokumentmal" }
+
         return pdfProducerService.generatePDFResponseDokument(
             category,
             dokumentmal,
-            commonObjectmapper.writeValueAsString("{}"),
+            commonObjectmapper.writeValueAsString(payload),
         )
     }
 }

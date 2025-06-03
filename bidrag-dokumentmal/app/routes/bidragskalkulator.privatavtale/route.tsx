@@ -77,11 +77,12 @@ const mockIfDev = (): PrivatAvtaleDto => {
 }
 
 export default function PrivatAvtaleBidragskalkulator() {
+    //const response = useActionData<PrivatAvtaleDto>();
     const response = process.env.NODE_ENV === "development" ? mockIfDev() : useActionData<PrivatAvtaleDto>();
     if (response === undefined) {
         return <div>Oops</div>;
     }
-    const data =  response as PrivatAvtaleDto;
+    const data = response as PrivatAvtaleDto;
     return (
         <div id="privat_avtale">
             <HeaderFooter/>
