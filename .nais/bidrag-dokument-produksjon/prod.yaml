@@ -1,8 +1,12 @@
 ingresses:
   - https://bidrag-dokument-produksjon.intern.nav.no
 azure_access_inbound:
+  - application: bidrag-dokumentmal
+    namespace: bidrag
+    cluster: prod-gcp
   - application: bidrag-ui
-  - application: bidrag-behandling
+    namespace: bidrag
+    cluster: prod-fss
 outbound-access-apps:
   - bidrag-dokumentmal
   - bidrag-pdfgen
