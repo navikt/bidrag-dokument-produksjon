@@ -14,12 +14,12 @@ export const OpplysningerBidragsmottaker = ({ bidragsmottaker }: IProps) => (
             <p className={"font-bold"}>Etternavn</p>
             <p>{bidragsmottaker.etternavn}</p>
             <p className={"font-bold"}>Har bidragsmottaker norsk fødselsnummer eller D-nummer?</p>
-            <p>{bidragsmottaker.fodselsnummer ? "Ja" : "Nei"}</p>
+            <p>{bidragsmottaker.ident ? "Ja" : "Nei"}</p>
 
-            {bidragsmottaker.fodselsnummer && (
+            {bidragsmottaker.ident && (
                 <div>
                     <p className={"font-bold"}>Fødselsnummer</p>
-                    <p>{bidragsmottaker.fodselsnummer}</p>
+                    <p>{bidragsmottaker.ident}</p>
                 </div>)}
         </div>
 );

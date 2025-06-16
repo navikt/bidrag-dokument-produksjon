@@ -19,7 +19,7 @@ export async function action(args: ActionFunctionArgs) {
 interface IPerson {
     fornavn: string,
     etternavn: string,
-    fodselsnummer: string,
+    ident: string,
 }
 
 export interface IBidragsmottaker extends IPerson {
@@ -36,7 +36,7 @@ interface PrivatAvtaleDto {
         innhold: string;
         bidragsmottaker: IBidragsmottaker;
         bidragspliktig: IBidragspliktig;
-        barn: IBarn;
+        barn: IBarn[];
         fraDato: string;
         nyAvtale: boolean;
         oppgjorsform: string; // TODO: Dette bør være en enum
@@ -57,19 +57,19 @@ const mockIfDev = (): PrivatAvtaleDto => {
             bidragsmottaker: {
                 fornavn: "Kristian",
                 etternavn: "Hansen",
-                fodselsnummer: "12345678901",
+                ident: "12345678901",
             },
             bidragspliktig: {
                 fornavn: "Kristine",
                 etternavn: "Hansen",
-                fodselsnummer: "12345678901",
+                ident: "12345678901",
             },
-            barn: {
+            barn: [{
                 fornavn: "Ola",
                 etternavn: "Hansen",
-                fodselsnummer: "12345678901",
+                ident: "12345678901",
                 sumBidrag: 5000,
-            },
+            }],
             fraDato: "2022-01-01",
             nyAvtale: true,
             oppgjorsform: "Privat",
