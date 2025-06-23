@@ -12,7 +12,7 @@ export const OpplysningerBarnOgBidrag =
             <h2>Opplysninger om barn og bidrag</h2>
             <div>
                 {gjeldendeBarn.map((barn, index) => (
-                    <div>
+                    barn && (<div>
                         <p className={"font-bold"}>Fornavn</p>
                         <p>{barn.fornavn}</p>
                         <p className={"font-bold"}>Etternavn</p>
@@ -23,7 +23,8 @@ export const OpplysningerBarnOgBidrag =
                         <p>{barn.sumBidrag},-</p>
                         <p className={"font-bold"}>Fra dato (dd.mm.åååå)</p>
                         <p>{fraDato}</p>
-                    </div>
+                    </div>)
+
                 ))}
             </div>
         </div>
