@@ -13,10 +13,8 @@ export const OpplysningerBarnOgBidrag =
             <div>
                 {gjeldendeBarn.map((barn, index) => (
                     barn && (<div>
-                        <p className={"font-bold"}>Fornavn</p>
-                        <p>{barn.fornavn}</p>
-                        <p className={"font-bold"}>Etternavn</p>
-                        <p>{barn.etternavn}</p>
+                        <p className={"font-bold"}>Fullt navn</p>
+                        <p>{barn.fulltNavn}</p>
                         <p className={"font-bold"}>Fødselsnummer eller D-nummer</p>
                         <p>{barn.ident}</p>
                         <p className={"font-bold"}>Beløp barnebidrag</p>

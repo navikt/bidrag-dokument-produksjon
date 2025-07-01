@@ -9,10 +9,8 @@ interface IProps extends PropsWithChildren {
 export const OpplysningerBidragsmottaker = ({ bidragsmottaker }: IProps) => (
         <div>
             <h2>Opplysninger om bidragsmottaker</h2>
-            <p className={"font-bold"}>Fornavn</p>
-            <p>{bidragsmottaker.fornavn}</p>
-            <p className={"font-bold"}>Etternavn</p>
-            <p>{bidragsmottaker.etternavn}</p>
+            <p className={"font-bold"}>Fullt navn</p>
+            <p>{bidragsmottaker.fulltNavn}</p>
             <p className={"font-bold"}>Har bidragsmottaker norsk fødselsnummer eller D-nummer?</p>
             <p>{bidragsmottaker.ident ? "Ja" : "Nei"}</p>
 

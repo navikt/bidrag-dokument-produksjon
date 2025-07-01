@@ -17,8 +17,7 @@ export async function action(args: ActionFunctionArgs) {
 }
 
 interface IPerson {
-    fornavn: string,
-    etternavn: string,
+    fulltNavn: string,
     ident: string,
 }
 
@@ -55,18 +54,15 @@ const mockIfDev = (): PrivatAvtaleDto => {
     return {
             innhold: "Dette er en mock av data fra bidragskalkulatoren",
             bidragsmottaker: {
-                fornavn: "Kristian",
-                etternavn: "Hansen",
+                fulltNavn: "Kristian",
                 ident: "12345678901",
             },
             bidragspliktig: {
-                fornavn: "Kristine",
-                etternavn: "Hansen",
+                fulltNavn: "Kristine",
                 ident: "12345678901",
             },
             barn: [{
-                fornavn: "Ola",
-                etternavn: "Hansen",
+                fulltNavn: "Ola",
                 ident: "12345678901",
                 sumBidrag: 5000,
             }],
