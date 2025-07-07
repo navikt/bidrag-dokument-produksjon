@@ -4,8 +4,12 @@ import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 
 type NotatProps = {
   data?: NotatBegrunnelseDto;
+  label?: string;
 };
-export default function NotatBegrunnelse({ data }: NotatProps) {
+export default function NotatBegrunnelse({
+  data,
+  label = "Begrunnelse",
+}: NotatProps) {
   return (
     <div
       className={"mt-2"}
@@ -18,7 +22,7 @@ export default function NotatBegrunnelse({ data }: NotatProps) {
         data={
           [
             {
-              label: "Begrunnelse",
+              label,
               textRight: false,
               labelBold: true,
             },

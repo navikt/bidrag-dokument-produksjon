@@ -136,6 +136,7 @@ export interface DelberegningUnderholdskostnad {
   nettoTilsynsutgift?: number;
   barnetrygd: number;
   underholdskostnad: number;
+  forpleining?: number;
 }
 
 export interface DelberegningUtgift {
@@ -230,6 +231,7 @@ export enum Inntektstype {
   BARNETILLEGG_KLP = "BARNETILLEGG_KLP",
   BARNETILLEGG_SPK = "BARNETILLEGG_SPK",
   BARNETILLEGG_TILTAKSPENGER = "BARNETILLEGG_TILTAKSPENGER",
+  BARNETILLEGG_SUMMERT = "BARNETILLEGG_SUMMERT",
 }
 
 export enum Kilde {
@@ -302,9 +304,9 @@ export interface NotatBehandlingDetaljerDto {
   /** @format date */
   klageMottattDato?: string;
   avslagVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -587,9 +589,9 @@ export interface NotatSkattBeregning {
   trinnskatt: number;
   trygdeavgift: number;
   skattMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface NotatStonadTilBarnetilsynDto {
@@ -770,6 +772,8 @@ export interface NotatVirkningstidspunktDto {
   årsak?: TypeArsakstype;
   /** Notat begrunnelse skrevet av saksbehandler */
   begrunnelse: NotatBegrunnelseDto;
+  /** Notat begrunnelse skrevet av saksbehandler */
+  begrunnelseVurderingAvSkolegang?: NotatBegrunnelseDto;
   /**
    * Bruk begrunnelse
    * @deprecated
@@ -888,6 +892,18 @@ export enum Resultatkode {
   ALLE_UTGIFTER_ER_FORELDET = "ALLE_UTGIFTER_ER_FORELDET",
   GODKJENTBELOPERLAVEREENNFORSKUDDSSATS = "GODKJENT_BELØP_ER_LAVERE_ENN_FORSKUDDSSATS",
   INGEN_ENDRING_UNDER_GRENSE = "INGEN_ENDRING_UNDER_GRENSE",
+  INNVILGET_VEDTAK = "INNVILGET_VEDTAK",
+  SKJONNUTLANDET = "SKJØNN_UTLANDET",
+  LAVERE_ENN_INNTEKTSEVNE_BEGGE_PARTER = "LAVERE_ENN_INNTEKTSEVNE_BEGGE_PARTER",
+  LAVERE_ENN_INNTEKTSEVNE_BIDRAGSPLIKTIG = "LAVERE_ENN_INNTEKTSEVNE_BIDRAGSPLIKTIG",
+  LAVERE_ENN_INNTEKTSEVNE_BIDRAGSMOTTAKER = "LAVERE_ENN_INNTEKTSEVNE_BIDRAGSMOTTAKER",
+  MANGLER_DOKUMENTASJON_AV_INNTEKT_BEGGE_PARTER = "MANGLER_DOKUMENTASJON_AV_INNTEKT_BEGGE_PARTER",
+  MANGLER_DOKUMENTASJON_AV_INNTEKT_BIDRAGSPLIKTIG = "MANGLER_DOKUMENTASJON_AV_INNTEKT_BIDRAGSPLIKTIG",
+  MANGLER_DOKUMENTASJON_AV_INNTEKT_BIDRAGSMOTTAKER = "MANGLER_DOKUMENTASJON_AV_INNTEKT_BIDRAGSMOTTAKER",
+  INNTIL1ARTILBAKE = "INNTIL_1_ÅR_TILBAKE",
+  MAKS25PROSENTAVINNTEKT = "MAKS_25_PROSENT_AV_INNTEKT",
+  MANGLER_BIDRAGSEVNE = "MANGLER_BIDRAGSEVNE",
+  KOSTNADSBEREGNET_BIDRAG = "KOSTNADSBEREGNET_BIDRAG",
 }
 
 export enum Rolletype {
@@ -900,7 +916,6 @@ export enum Rolletype {
 
 export interface SamvaerskalkulatorDetaljer {
   ferier: SamvaerskalkulatorFerie[];
-  /** @max 15 */
   regelmessigSamværNetter: number;
 }
 
@@ -977,9 +992,24 @@ export interface SluttberegningBarnebidrag {
   bidragJustertNedTilEvne: boolean;
   bidragJustertNedTil25ProsentAvInntekt: boolean;
   bidragJustertTilForskuddssats: boolean;
+  bidragJustertManueltTilForskuddssats: boolean;
   begrensetRevurderingUtført: boolean;
   ikkeOmsorgForBarnet: boolean;
+  tilleggsbidrag?: number;
+  forsvaretsBarnetillegg?: boolean;
+  bpEvneVedForholdsmessigFordeling?: number;
+  bpAndelAvUVedForholdsmessigFordelingFaktor?: number;
+  bpSumAndelAvU?: number;
   uminusNettoBarnetilleggBM: number;
+}
+
+export enum Stonadstype {
+  BIDRAG = "BIDRAG",
+  FORSKUDD = "FORSKUDD",
+  BIDRAG18AAR = "BIDRAG18AAR",
+  EKTEFELLEBIDRAG = "EKTEFELLEBIDRAG",
+  MOTREGNING = "MOTREGNING",
+  OPPFOSTRINGSBIDRAG = "OPPFOSTRINGSBIDRAG",
 }
 
 export enum Saerbidragskategori {
@@ -1032,6 +1062,7 @@ export enum Utgiftstype {
 
 export interface VedtakNotatDto {
   type: NotatMalType;
+  stønadstype?: Stonadstype;
   medInnkreving: boolean;
   saksnummer: string;
   behandling: NotatBehandlingDetaljerDto;
@@ -1111,3 +1142,5 @@ export enum TypeArsakstype {
   BIDRAGSPLIKTIGHARIKKEBIDRATTTILFORSORGELSE = "BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE",
   MANEDETTERBETALTFORFALTBIDRAG = "MÅNED_ETTER_BETALT_FORFALT_BIDRAG",
 }
+
+export type JsonNode = object;
