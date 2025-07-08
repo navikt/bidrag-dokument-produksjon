@@ -6,6 +6,7 @@ import { dateToDDMMYYYY } from "~/utils/date-utils";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable } from "~/components/DataViewTable";
+import { Stonadstype } from "~/types/Api";
 
 export default function Virkningstidspunkt() {
   const { data } = useNotatFelles();
@@ -79,6 +80,12 @@ export default function Virkningstidspunkt() {
             />
           ))}
         <NotatBegrunnelse data={virkningstidspunkt.begrunnelse} />
+        {data.stønadstype == Stonadstype.BIDRAG18AAR && (
+          <NotatBegrunnelse
+            label={"Vurdering av skolegang"}
+            data={virkningstidspunkt.begrunnelseVurderingAvSkolegang}
+          />
+        )}
       </div>
     </div>
   );
