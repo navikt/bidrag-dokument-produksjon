@@ -7,5 +7,6 @@ services:
       - "3054:3000"
     command:
       - "gotenberg"
-      - "--pdfengines-engines=libreoffice-pdfengine"
+      - "--pdfengines-convert-engines=libreoffice-pdfengine"
+      - "--pdfengines-flatten-engines=qpdf"
       - "--api-port=3000"
