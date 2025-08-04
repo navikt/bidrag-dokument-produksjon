@@ -28,7 +28,7 @@
         <logstash.encoder.version>8.0</logstash.encoder.version>
         <open.html.to.pdf.version>1.0.10</open.html.to.pdf.version>
         <prometheus.version>0.16.0</prometheus.version>
-        <junit.jupiter.version>5.11.0</junit.jupiter.version>
+        <junit.jupiter.version>5.13.4</junit.jupiter.version>
         <verapdf.version>1.26.1</verapdf.version>
         <ktfmt.version>0.44</ktfmt.version>
         <bidrag.felles.version>2025.07.07.080815</bidrag.felles.version>
