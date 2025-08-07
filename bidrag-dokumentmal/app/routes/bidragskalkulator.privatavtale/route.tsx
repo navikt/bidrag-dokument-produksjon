@@ -1,24 +1,45 @@
-import { useActionData } from "@remix-run/react";
 import "../../style/style.css";
 
 import { parseRequestAction } from "~/routes/common";
 import { ActionFunctionArgs } from "@remix-run/node";
 import HeaderFooter from "~/routes/bidragskalkulator.privatavtale/HeaderFooterKalkulator";
 import NavLogo from "~/components/NavLogo";
-import { OpplysningerBidragspliktig } from "~/routes/bidragskalkulator.privatavtale/OpplysningerBidragspliktig";
-import { OpplysningerBidragsmottaker } from "~/routes/bidragskalkulator.privatavtale/OpplysningerBidragsmottaker";
 import { OpplysningerBarnOgBidrag } from "~/routes/bidragskalkulator.privatavtale/OpplysningerBarnOgBidrag";
 import { SignaturBoks } from "~/routes/bidragskalkulator.privatavtale/SignaturBoks";
 import { Oppgjør } from "~/routes/bidragskalkulator.privatavtale/Oppgjør";
 import { AndreBestemmelser } from "~/routes/bidragskalkulator.privatavtale/AndreBestemmelser";
+import { OpplysningerPerson } from "~/features/bidragskalkulator/OpplysningerPerson";
+import { useActionData } from "@remix-run/react";
+
+const mockRequest: PrivatAvtaleDto = {
+  innhold: "Dette er en mock av data fra bidragskalkulatoren",
+  bidragsmottaker: {
+    fulltNavn: "Kristian",
+    fodselsnummer: "12345678901",
+  },
+  bidragspliktig: {
+    fulltNavn: "Kristine",
+    fodselsnummer: "12345678901",
+  },
+  barn: [
+    {
+      fulltNavn: "Ola",
+      fodselsnummer: "12345678901",
+      sumBidrag: 5000,
+    },
+  ],
+  fraDato: "01.01.2025",
+  nyAvtale: true,
+  oppgjorsform: "Privat",
+};
 
 export async function action(args: ActionFunctionArgs) {
   return await parseRequestAction(args);
 }
 
-interface IPerson {
+export interface IPerson {
   fulltNavn: string;
-  ident: string;
+  fodselsnummer: string;
 }
 
 export interface IBidragsmottaker extends IPerson {}
@@ -48,33 +69,11 @@ export function meta() {
   ];
 }
 
-const mockIfDev = (): PrivatAvtaleDto => {
-  return {
-    innhold: "Dette er en mock av data fra bidragskalkulatoren",
-    bidragsmottaker: {
-      fulltNavn: "Kristian",
-      ident: "12345678901",
-    },
-    bidragspliktig: {
-      fulltNavn: "Kristine",
-      ident: "12345678901",
-    },
-    barn: [
-      {
-        fulltNavn: "Ola",
-        ident: "12345678901",
-        sumBidrag: 5000,
-      },
-    ],
-    fraDato: "2022-01-01",
-    nyAvtale: true,
-    oppgjorsform: "Privat",
-  };
-};
-
 export default function PrivatAvtaleBidragskalkulator() {
-  const response = useActionData<{ data: PrivatAvtaleDto }>();
-  //const response = process.env.NODE_ENV === "development" ? mockIfDev() : useActionData<{ data: PrivatAvtaleDto }>();
+  const actionData = useActionData<{ data: PrivatAvtaleDto }>();
+  const response =
+    process.env.NODE_ENV === "development" ? { data: mockRequest } : actionData;
+
   if (response === undefined) {
     return <div>Oops</div>;
   }
@@ -87,8 +86,14 @@ export default function PrivatAvtaleBidragskalkulator() {
         <NavLogo />
         <h1>Privat avtale om barnebidrag</h1>
         <div>{data.innhold}</div>
-        <OpplysningerBidragsmottaker bidragsmottaker={data.bidragsmottaker} />
-        <OpplysningerBidragspliktig bidragspliktig={data.bidragspliktig} />
+        <OpplysningerPerson
+          bidragstype="MOTTAKER"
+          person={data.bidragsmottaker}
+        />
+        <OpplysningerPerson
+          bidragstype="PLIKTIG"
+          person={data.bidragspliktig}
+        />
         <OpplysningerBarnOgBidrag
           gjeldendeBarn={data.barn}
           fraDato={data.fraDato}
