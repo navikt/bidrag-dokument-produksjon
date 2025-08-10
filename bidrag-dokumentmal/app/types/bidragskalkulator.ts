@@ -2,6 +2,22 @@ import { SpråkType } from "~/utils/oversettelser";
 
 export type Bidragstype = "MOTTAKER" | "PLIKTIG";
 
+export const bidragstypeTekster: Record<
+  Bidragstype,
+  Record<SpråkType, string>
+> = {
+  PLIKTIG: {
+    nb: "Bidragspliktig",
+    nn: "Bidragspliktig",
+    en: "Obligor",
+  },
+  MOTTAKER: {
+    nb: "Bidragsmottaker",
+    nn: "Bidragsmottakar",
+    en: "Obligee",
+  },
+};
+
 export type Oppgjørsform = "PRIVAT" | "INNKREVING";
 
 export const oppgjørsformTekster: Record<

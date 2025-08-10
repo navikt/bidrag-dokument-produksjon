@@ -18,6 +18,7 @@ import {
   tilknyttetAvtaleVedleggTekster,
   annenDokumentasjonTekster,
   oppgjørsformTekster,
+  bidragstypeTekster,
 } from "~/types/bidragskalkulator";
 import { hentTekst, jaNeiTekster, SpråkType } from "~/utils/oversettelser";
 
@@ -127,81 +128,75 @@ export default function PrivatAvtaleBidragskalkulator() {
 }
 
 const tekst = {
-  opplysningerPerson: (bidragstype: Bidragstype, person: IPerson) => {
-    const rolle =
-      bidragstype === "MOTTAKER" ? "bidragsmottaker" : "bidragspliktig";
-    return {
-      nb: {
-        overskrift: `Opplysninger om ${rolle}`,
-        innhold: [
-          { label: "Fornavn", value: person.fornavn, vis: true },
-          { label: "Etternavn", value: person.etternavn, vis: true },
-          {
-            label: `Har ${rolle} norsk fødselsnummer eller D-nummer?`,
-            value: person.fodselsnummer
-              ? jaNeiTekster.JA.nb
-              : jaNeiTekster.NEI.nb,
-            vis: true,
-          },
-          ...(person.fodselsnummer
-            ? [
-                {
-                  label: "Fødselsnummer",
-                  value: person.fodselsnummer,
-                  vis: true,
-                },
-              ]
-            : []),
-        ],
-      },
-      nn: {
-        overskrift: `Opplysningar om ${rolle}`,
-        innhold: [
-          { label: "Fornamn", value: person.fornavn, vis: true },
-          { label: "Etternamn", value: person.etternavn, vis: true },
-          {
-            label: `Har ${rolle} norsk fødselsnummer eller D-nummer?`,
-            value: person.fodselsnummer
-              ? jaNeiTekster.JA.nn
-              : jaNeiTekster.NEI.nn,
-            vis: true,
-          },
-          ...(person.fodselsnummer
-            ? [
-                {
-                  label: "Fødselsnummer",
-                  value: person.fodselsnummer,
-                  vis: true,
-                },
-              ]
-            : []),
-        ],
-      },
-      en: {
-        overskrift: `Information about ${rolle}`,
-        innhold: [
-          { label: "First name", value: person.fornavn, vis: true },
-          { label: "Last name", value: person.etternavn, vis: true },
-          {
-            label: `Does the ${rolle} have a Norwegian National ID or D-number?`,
-            value: person.fodselsnummer
-              ? jaNeiTekster.JA.en
-              : jaNeiTekster.JA.en,
-            vis: true,
-          },
-          ...(person.fodselsnummer
-            ? [
-                {
-                  label: "Norwegian national identification number / D number",
-                  value: person.fodselsnummer,
-                  vis: true,
-                },
-              ]
-            : []),
-        ],
-      },
-    };
-  },
+  opplysningerPerson: (bidragstype: Bidragstype, person: IPerson) => ({
+    nb: {
+      overskrift: `Opplysninger om ${bidragstypeTekster[bidragstype].nb}`,
+      innhold: [
+        { label: "Fornavn", value: person.fornavn, vis: true },
+        { label: "Etternavn", value: person.etternavn, vis: true },
+        {
+          label: `Har ${bidragstypeTekster[bidragstype].nb} norsk fødselsnummer eller D-nummer?`,
+          value: person.fodselsnummer
+            ? jaNeiTekster.JA.nb
+            : jaNeiTekster.NEI.nb,
+          vis: true,
+        },
+        ...(person.fodselsnummer
+          ? [
+              {
+                label: "Fødselsnummer",
+                value: person.fodselsnummer,
+                vis: true,
+              },
+            ]
+          : []),
+      ],
+    },
+    nn: {
+      overskrift: `Opplysningar om ${bidragstypeTekster[bidragstype].nn}`,
+      innhold: [
+        { label: "Fornamn", value: person.fornavn, vis: true },
+        { label: "Etternamn", value: person.etternavn, vis: true },
+        {
+          label: `Har ${bidragstypeTekster[bidragstype].nn} norsk fødselsnummer eller D-nummer?`,
+          value: person.fodselsnummer
+            ? jaNeiTekster.JA.nn
+            : jaNeiTekster.NEI.nn,
+          vis: true,
+        },
+        ...(person.fodselsnummer
+          ? [
+              {
+                label: "Fødselsnummer",
+                value: person.fodselsnummer,
+                vis: true,
+              },
+            ]
+          : []),
+      ],
+    },
+    en: {
+      overskrift: `Information about ${bidragstypeTekster[bidragstype].en}`,
+      innhold: [
+        { label: "First name", value: person.fornavn, vis: true },
+        { label: "Last name", value: person.etternavn, vis: true },
+        {
+          label: `Does the ${bidragstypeTekster[bidragstype].en} have a Norwegian National ID or D-number?`,
+          value: person.fodselsnummer ? jaNeiTekster.JA.en : jaNeiTekster.JA.en,
+          vis: true,
+        },
+        ...(person.fodselsnummer
+          ? [
+              {
+                label: "Norwegian national identification number / D number",
+                value: person.fodselsnummer,
+                vis: true,
+              },
+            ]
+          : []),
+      ],
+    },
+  }),
   barnOgBidrag: (barn: IBarn[], fraDato: string) => ({
     nb: {
       overskrift: "Opplysninger om barn og bidrag",
