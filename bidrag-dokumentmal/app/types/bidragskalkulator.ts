@@ -1,8 +1,24 @@
-export type SpråkType = "nb" | "nn" | "en";
+import { SpråkType } from "~/utils/oversettelser";
 
 export type Bidragstype = "MOTTAKER" | "PLIKTIG";
 
 export type Oppgjørsform = "PRIVAT" | "INNKREVING";
+
+export const oppgjørsformTekster: Record<
+  Oppgjørsform,
+  Record<SpråkType, string>
+> = {
+  PRIVAT: {
+    nb: "Vi ønsker å gjøre opp bidraget oss i mellom (privat).",
+    nn: "Vi ønskjer å gjere opp bidraget oss imellom (privat).",
+    en: "We want to settle the support between us (privately).",
+  },
+  INNKREVING: {
+    nb: "Vi ønsker at bidraget skal betales gjennom Skatteetaten v/ NAV Innkreving.",
+    nn: "Vi ønskjer at bidraget skal betalast gjennom Skatteetaten v/ NAV Innkreving.",
+    en: "We want the support to be paid through the Tax Administration / NAV Collection.",
+  },
+};
 
 export interface IPerson {
   fornavn: string;
@@ -65,21 +81,6 @@ export interface IVedlegg {
   tilknyttetAvtale: TilknyttetAvtaleVedlegg;
   annenDokumentasjon: AnnenDokumentasjon;
 }
-
-export const tilknyttetAvtaleVedleggAlternativer = (språk: SpråkType) => [
-  {
-    value: "SENDES_MED_SKJEMA" as TilknyttetAvtaleVedlegg,
-    label: tilknyttetAvtaleVedleggTekster.SENDES_MED_SKJEMA[språk],
-  },
-  {
-    value: "ETTERSENDES" as TilknyttetAvtaleVedlegg,
-    label: tilknyttetAvtaleVedleggTekster.ETTERSENDES[språk],
-  },
-  {
-    value: "LEVERT_TIDLIGERE" as TilknyttetAvtaleVedlegg,
-    label: tilknyttetAvtaleVedleggTekster.LEVERT_TIDLIGERE[språk],
-  },
-];
 
 export const annenDokumentasjonAlternativer = (språk: SpråkType) => [
   {

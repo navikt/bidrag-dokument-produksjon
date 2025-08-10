@@ -9,7 +9,6 @@ import { useActionData } from "@remix-run/react";
 import Innholdsseksjon from "~/features/bidragskalkulator/Innholdsseksjon";
 import {
   PrivatAvtaleDto,
-  SpråkType,
   Bidragstype,
   IPerson,
   IBarn,
@@ -18,7 +17,9 @@ import {
   IVedlegg,
   tilknyttetAvtaleVedleggTekster,
   annenDokumentasjonTekster,
+  oppgjørsformTekster,
 } from "~/types/bidragskalkulator";
+import { hentTekst, jaNeiTekster, SpråkType } from "~/utils/oversettelser";
 
 // Mock data for development
 const mockRequest: PrivatAvtaleDto = {
@@ -84,6 +85,7 @@ export default function PrivatAvtaleBidragskalkulator() {
   }
   const { data } = response;
   const språk = data.språk ?? "nb";
+  const tekster = hentTekst(språk, tekst);
 
   return (
     <div
@@ -99,25 +101,21 @@ export default function PrivatAvtaleBidragskalkulator() {
         <div>{data.innhold}</div>
         <div className="flex flex-col gap-4">
           <Innholdsseksjon
-            tekst={
-              tekst.opplysningerPerson("PLIKTIG", data.bidragspliktig)[språk]
-            }
+            tekst={tekster.opplysningerPerson("PLIKTIG", data.bidragspliktig)}
           />
           <Innholdsseksjon
-            tekst={
-              tekst.opplysningerPerson("MOTTAKER", data.bidragsmottaker)[språk]
-            }
+            tekst={tekster.opplysningerPerson("MOTTAKER", data.bidragsmottaker)}
           />
           <Innholdsseksjon
-            tekst={tekst.barnOgBidrag(data.barn, data.fraDato)[språk]}
+            tekst={tekster.barnOgBidrag(data.barn, data.fraDato)}
           />
           <Innholdsseksjon
-            tekst={tekst.oppgjør(data.nyAvtale, data.oppgjorsform)[språk]}
+            tekst={tekster.oppgjør(data.nyAvtale, data.oppgjorsform)}
           />
           <Innholdsseksjon
-            tekst={tekst.andreBestemmelser(data.andreBestemmelser)[språk]}
+            tekst={tekster.andreBestemmelser(data.andreBestemmelser)}
           />
-          <Innholdsseksjon tekst={tekst.vedlegg(data.vedlegg, språk)[språk]} />
+          <Innholdsseksjon tekst={tekster.vedlegg(data.vedlegg)} />
 
           <h2>Underskrifter</h2>
           <SignaturBoks title={"Bidragsmottaker"} />
@@ -140,7 +138,9 @@ const tekst = {
           { label: "Etternavn", value: person.etternavn, vis: true },
           {
             label: `Har ${rolle} norsk fødselsnummer eller D-nummer?`,
-            value: person.fodselsnummer ? "Ja" : "Nei",
+            value: person.fodselsnummer
+              ? jaNeiTekster.JA.nb
+              : jaNeiTekster.NEI.nb,
             vis: true,
           },
           ...(person.fodselsnummer
@@ -161,7 +161,9 @@ const tekst = {
           { label: "Etternamn", value: person.etternavn, vis: true },
           {
             label: `Har ${rolle} norsk fødselsnummer eller D-nummer?`,
-            value: person.fodselsnummer ? "Ja" : "Nei",
+            value: person.fodselsnummer
+              ? jaNeiTekster.JA.nn
+              : jaNeiTekster.NEI.nn,
             vis: true,
           },
           ...(person.fodselsnummer
@@ -182,11 +184,19 @@ const tekst = {
           { label: "Last name", value: person.etternavn, vis: true },
           {
             label: `Does the ${rolle} have a Norwegian National ID or D-number?`,
-            value: person.fodselsnummer ? "Yes" : "No",
+            value: person.fodselsnummer
+              ? jaNeiTekster.JA.en
+              : jaNeiTekster.JA.en,
             vis: true,
           },
           ...(person.fodselsnummer
-            ? [{ label: "National ID", value: person.fodselsnummer, vis: true }]
+            ? [
+                {
+                  label: "Norwegian national identification number / D number",
+                  value: person.fodselsnummer,
+                  vis: true,
+                },
+              ]
             : []),
         ],
       },
@@ -222,12 +232,12 @@ const tekst = {
       ]),
     },
     en: {
-      overskrift: "Information about child and contribution",
+      overskrift: "Information about child and support",
       innhold: barn.flatMap((b) => [
         { label: "First name", value: b.fornavn, vis: true },
         { label: "Last name", value: b.etternavn, vis: true },
         {
-          label: "National ID or D-number",
+          label: "Norwegian national identification number / D number",
           value: b.fodselsnummer,
           vis: true,
         },
@@ -246,12 +256,12 @@ const tekst = {
       innhold: [
         {
           label: "Er dette en ny avtale?",
-          value: nyAvtale ? "Ja" : "Nei",
+          value: nyAvtale ? jaNeiTekster.JA.nb : jaNeiTekster.NEI.nb,
           vis: true,
         },
         {
           label: "Hvilken oppgjørsform ønskes?",
-          value: oppgjørsform === "PRIVAT" ? "Privat" : "Innkreving",
+          value: oppgjørsformTekster[oppgjørsform].nb,
           vis: true,
         },
       ],
@@ -261,12 +271,12 @@ const tekst = {
       innhold: [
         {
           label: "Er dette ein ny avtale?",
-          value: nyAvtale ? "Ja" : "Nei",
+          value: nyAvtale ? jaNeiTekster.JA.nn : jaNeiTekster.NEI.nn,
           vis: true,
         },
         {
           label: "Kva for oppgjerform ønskjast?",
-          value: oppgjørsform === "PRIVAT" ? "Privat" : "Innkreving",
+          value: oppgjørsformTekster[oppgjørsform].nn,
           vis: true,
         },
       ],
@@ -276,12 +286,12 @@ const tekst = {
       innhold: [
         {
           label: "Is this a new agreement?",
-          value: nyAvtale ? "Yes" : "No",
+          value: nyAvtale ? jaNeiTekster.JA.en : jaNeiTekster.JA.en,
           vis: true,
         },
         {
           label: "Which settlement method is desired?",
-          value: oppgjørsform === "PRIVAT" ? "Private" : "Collection",
+          value: oppgjørsformTekster[oppgjørsform].en,
           vis: true,
         },
       ],
@@ -293,7 +303,9 @@ const tekst = {
       innhold: [
         {
           label: "Er det andre bestemmelser tilknyttet avtalen?",
-          value: andreBestemmelser.harAndreBestemmelser ? "Ja" : "Nei",
+          value: andreBestemmelser.harAndreBestemmelser
+            ? jaNeiTekster.JA.nb
+            : jaNeiTekster.NEI.nb,
           vis: true,
         },
         {
@@ -311,12 +323,16 @@ const tekst = {
       innhold: [
         {
           label: "Er det andre føresegner knytt til avtalen?",
-          value: andreBestemmelser.harAndreBestemmelser ? "Ja" : "Nei",
+          value: andreBestemmelser.harAndreBestemmelser
+            ? jaNeiTekster.JA.nn
+            : jaNeiTekster.NEI.nn,
           vis: true,
         },
         {
           label: "Andre føresegner knytt til avtalen",
-          value: andreBestemmelser.harAndreBestemmelser,
+          value: andreBestemmelser.harAndreBestemmelser
+            ? jaNeiTekster.JA.en
+            : jaNeiTekster.NEI.en,
           vis:
             (andreBestemmelser.harAndreBestemmelser &&
               andreBestemmelser.beskrivelse) ??
@@ -329,7 +345,9 @@ const tekst = {
       innhold: [
         {
           label: "Are there other provisions related to the agreement?",
-          value: andreBestemmelser.harAndreBestemmelser ? "Yes" : "No",
+          value: andreBestemmelser.harAndreBestemmelser
+            ? jaNeiTekster.JA.en
+            : jaNeiTekster.JA.en,
           vis: true,
         },
         {
@@ -343,19 +361,18 @@ const tekst = {
       ],
     },
   }),
-  vedlegg: (vedlegg: IVedlegg, språk: SpråkType) => ({
+  vedlegg: (vedlegg: IVedlegg) => ({
     nb: {
       overskrift: "Vedlegg",
       innhold: [
         {
           label: "Andre bestemmelser tilknyttet avtale",
-          value:
-            tilknyttetAvtaleVedleggTekster[vedlegg.tilknyttetAvtale][språk],
+          value: tilknyttetAvtaleVedleggTekster[vedlegg.tilknyttetAvtale].nb,
           vis: true,
         },
         {
           label: "Annen dokumentasjon",
-          value: annenDokumentasjonTekster[vedlegg.annenDokumentasjon][språk],
+          value: annenDokumentasjonTekster[vedlegg.annenDokumentasjon].nb,
           vis: true,
         },
       ],
@@ -365,13 +382,12 @@ const tekst = {
       innhold: [
         {
           label: "Andre føresegner knytt til avtale",
-          value:
-            tilknyttetAvtaleVedleggTekster[vedlegg.tilknyttetAvtale][språk],
+          value: tilknyttetAvtaleVedleggTekster[vedlegg.tilknyttetAvtale].nn,
           vis: true,
         },
         {
           label: "Anna dokumentasjon",
-          value: vedlegg.annenDokumentasjon,
+          value: annenDokumentasjonTekster[vedlegg.annenDokumentasjon].nn,
           vis: true,
         },
       ],
@@ -381,22 +397,17 @@ const tekst = {
       innhold: [
         {
           label: "Other provisions related to the agreement",
-          value:
-            tilknyttetAvtaleVedleggTekster[vedlegg.tilknyttetAvtale][språk],
+          value: tilknyttetAvtaleVedleggTekster[vedlegg.tilknyttetAvtale].en,
           vis: true,
         },
         {
           label: "Other documentation",
-          value: annenDokumentasjonTekster[vedlegg.annenDokumentasjon][språk],
+          value: annenDokumentasjonTekster[vedlegg.annenDokumentasjon].en,
           vis: true,
         },
       ],
     },
   }),
-};
-
-export type TekstType = {
-  [K in keyof typeof tekst]: ReturnType<(typeof tekst)[K]>;
 };
 
 export type GeneriskInnholdType = ReturnType<
