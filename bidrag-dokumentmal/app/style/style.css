@@ -11,10 +11,10 @@
   padding-top: 0cm;
 
   @top-center {
-    content: element(header)
+    content: element(header);
   }
   @bottom-center {
-    content: element(footer)
+    content: element(footer);
   }
 }
 
@@ -31,7 +31,7 @@
 
 .footnote::footnote-call {
   /* controls the footnote markers in the main page text */
-  content: counter(footnote, symbols('*', '†', '‡'));
+  content: counter(footnote, symbols("*", "†", "‡"));
   font-size: 11px;
   vertical-align: super;
   line-height: 0;
@@ -40,7 +40,7 @@
 
 .footnote::footnote-marker {
   /* controls the footnote markers in the footnote section */
-  content: counter(footnote, symbols('*', '†', '‡'));
+  content: counter(footnote, symbols("*", "†", "‡"));
 }
 
 @media print {
@@ -107,21 +107,21 @@ dt:before {
 }
 
 .table_row_details dl {
-  margin: 0
+  margin: 0;
 }
 
 /*dl {*/
 /*  margin: 0 0 16px 0;*/
 /*}*/
 
-dt, dd {
+dt,
+dd {
   display: inline;
 }
 
 .elements_inline :first-child {
   display: inline;
   margin-right: 16px;
-
 }
 
 .elements_inline :last-child {
@@ -267,7 +267,7 @@ dt {
 }
 
 #pagecount:before {
-  content: counter(pages)
+  content: counter(pages);
 }
 
 #pageFooter {
@@ -278,7 +278,6 @@ dt {
   counter-increment: page;
   content: counter(page);
 }
-
 
 .text-heading-small p,
 .text-heading-small {
@@ -301,10 +300,13 @@ dt {
   margin-bottom: 16px;
 }
 
+.mb-10 {
+  margin-bottom: 10px;
+}
+
 .mt-large {
   margin-top: 32px;
 }
-
 
 h1 {
   font-weight: 700;
@@ -318,7 +320,6 @@ h2 {
   margin-bottom: 8px;
   font-size: 16px;
 }
-
 
 h3 {
   margin-bottom: 4px;
@@ -362,7 +363,6 @@ Topp og bunntekst
   content: attr(data-content);
 }
 
-
 div.top_bottom_text div {
   float: left;
   width: 100%;
@@ -386,7 +386,6 @@ div.header {
   position: running(header);
 }
 
-
 .custom-top_bottom_content:after {
   text-align: left;
   float: left;
@@ -398,7 +397,7 @@ div.header {
 
 .custom-page-number:after {
   text-align: right;
-  content: counter(page) ' av ' counter(pages);
+  content: counter(page) " av " counter(pages);
 }
 
 /**
