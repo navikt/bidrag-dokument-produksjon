@@ -420,14 +420,6 @@ Custom components
   color: red;
 }
 
-.text-blue-800 {
-  color: var(--a-blue-800);
-}
-
-.text-blue-600 {
-  color: var(--a-blue-600);
-}
-
 .begrunnelse p {
   padding: 0;
   margin: 0;

@@ -13,8 +13,8 @@ export default function Innholdsseksjon({ tekst }: IProps) {
           if (!linje.vis) return null;
           return (
             <div key={index} className="flex flex-col">
-              <dt className="font-bold text-lg">{linje.label}</dt>
-              <dd className="text-lg ml-0">{linje.value}</dd>
+              <p className="font-bold text-lg">{linje.label}</p>
+              <p className="text-lg ml-0">{linje.value}</p>
             </div>
           );
         })}
