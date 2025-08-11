@@ -18,13 +18,14 @@ import {
   annenDokumentasjonTekster,
   oppgjørsformTekster,
   bidragstypeTekster,
+  språkkodeTilSpråkType,
 } from "~/types/bidragskalkulator";
 import { hentTekst, jaNeiTekster, SpråkType } from "~/utils/oversettelser";
 import Underskrifter from "~/features/bidragskalkulator/Underskrifter";
 
 // Mock data for development
 const mockRequest: PrivatAvtaleDto = {
-  språk: "nb",
+  språk: "NB",
   innhold: "Dette er en mock av data fra bidragskalkulatoren",
   bidragsmottaker: {
     fornavn: "Kristian",
@@ -85,7 +86,7 @@ export default function PrivatAvtaleBidragskalkulator() {
     return <div>Oops</div>;
   }
   const { data } = response;
-  const språk = data.språk ?? "nb";
+  const språk = språkkodeTilSpråkType(data.språk) ?? "nb";
   const innhold = hentTekst(språk, innholdsseksjonTekst);
   const tekster = hentTekst(språk, tekst);
 
