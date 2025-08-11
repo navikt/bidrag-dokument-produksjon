@@ -3,7 +3,6 @@ import plugin from "tailwindcss/plugin";
 
 export default {
   content: ["./app/**/*.{js,jsx,ts,tsx}"],
-  presets: [require("@navikt/ds-tailwind")],
   theme: {
     extend: {
       padding: {

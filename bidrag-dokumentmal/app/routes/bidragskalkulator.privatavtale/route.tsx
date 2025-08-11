@@ -133,12 +133,12 @@ const tekst = {
 const innholdsseksjonTekst = {
   opplysningerPerson: (bidragstype: Bidragstype, person: IPerson) => ({
     nb: {
-      overskrift: `Opplysninger om ${bidragstypeTekster[bidragstype].nb}`,
+      overskrift: `Opplysninger om ${bidragstypeTekster[bidragstype].nb.toLowerCase()}`,
       innhold: [
         { label: "Fornavn", value: person.fornavn, vis: true },
         { label: "Etternavn", value: person.etternavn, vis: true },
         {
-          label: `Har ${bidragstypeTekster[bidragstype].nb} norsk fødselsnummer eller D-nummer?`,
+          label: `Har ${bidragstypeTekster[bidragstype].nb.toLowerCase()} norsk fødselsnummer eller D-nummer?`,
           value: person.fodselsnummer
             ? jaNeiTekster.JA.nb
             : jaNeiTekster.NEI.nb,
@@ -156,12 +156,12 @@ const innholdsseksjonTekst = {
       ],
     },
     nn: {
-      overskrift: `Opplysningar om ${bidragstypeTekster[bidragstype].nn}`,
+      overskrift: `Opplysningar om ${bidragstypeTekster[bidragstype].nn.toLowerCase()}`,
       innhold: [
         { label: "Fornamn", value: person.fornavn, vis: true },
         { label: "Etternamn", value: person.etternavn, vis: true },
         {
-          label: `Har ${bidragstypeTekster[bidragstype].nn} norsk fødselsnummer eller D-nummer?`,
+          label: `Har ${bidragstypeTekster[bidragstype].nn.toLowerCase()} norsk fødselsnummer eller D-nummer?`,
           value: person.fodselsnummer
             ? jaNeiTekster.JA.nn
             : jaNeiTekster.NEI.nn,
@@ -179,12 +179,12 @@ const innholdsseksjonTekst = {
       ],
     },
     en: {
-      overskrift: `Information about ${bidragstypeTekster[bidragstype].en}`,
+      overskrift: `Information about ${bidragstypeTekster[bidragstype].en.toLowerCase()}`,
       innhold: [
         { label: "First name", value: person.fornavn, vis: true },
         { label: "Last name", value: person.etternavn, vis: true },
         {
-          label: `Does the ${bidragstypeTekster[bidragstype].en} have a Norwegian National ID or D-number?`,
+          label: `Does the ${bidragstypeTekster[bidragstype].en.toLowerCase()} have a Norwegian National ID or D-number?`,
           value: person.fodselsnummer ? jaNeiTekster.JA.en : jaNeiTekster.JA.en,
           vis: true,
         },
