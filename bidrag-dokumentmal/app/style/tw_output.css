@@ -359,16 +359,6 @@
   vertical-align: middle
 }
 
-.text-4xl {
-  font-size: 2.25rem;
-  line-height: 2.5rem
-}
-
-.text-lg {
-  font-size: 1.125rem;
-  line-height: 1.75rem
-}
-
 .filter {
   filter: var(--tw-blur) var(--tw-brightness) var(--tw-contrast) var(--tw-grayscale) var(--tw-hue-rotate) var(--tw-invert) var(--tw-saturate) var(--tw-sepia) var(--tw-drop-shadow)
 }
