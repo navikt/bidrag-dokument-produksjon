@@ -93,7 +93,7 @@ export default function PrivatAvtaleBidragskalkulator() {
       <HeaderFooter språk={språk} />
       <div className="container page">
         <NavLogo />
-        <h1 className="text-4xl font-bold text-blue-800">{tekster.tittel}</h1>
+        <h1 className="text-4xl bold-600 text-blue-800">{tekster.tittel}</h1>
         <p className="text-lg">{data.innhold}</p>
         <div className="flex flex-col gap-4">
           <Innholdsseksjon

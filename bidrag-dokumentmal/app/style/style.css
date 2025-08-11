@@ -2,6 +2,12 @@
   --paper-width: 595px;
   --paper-height: 842px;
   --content-width: 670px;
+  --a-blue-800: rgba(0, 52, 125, 1);
+  --a-blue-600: rgba(0, 86, 180, 1);
+  --a-font-size-large: 1.125rem;
+  --a-font-size-medium: 1rem;
+  --a-font-weight-bold: 600;
+  --a-font-weight-regular: 400;
 }
 
 @page {
@@ -292,6 +298,14 @@ dt {
   font-size: 18px;
 }
 
+.text-medium {
+  font-size: var(--a-font-size-medium);
+}
+
+.text-lg {
+  font-size: var(--a-font-size-large);
+}
+
 .mt-medium {
   margin-top: 16px;
 }
@@ -302,6 +316,14 @@ dt {
 
 .mt-large {
   margin-top: 32px;
+}
+
+.bold-600 {
+  font-weight: var(--a-font-weight-bold);
+}
+
+.bold-400 {
+  font-weight: var(--a-font-weight-regular);
 }
 
 h1 {
@@ -425,4 +447,21 @@ Custom components
 .begrunnelse p {
   padding: 0;
   margin: 0;
+}
+
+.bidragskalkulatorContainer {
+  h1,
+  h2,
+  p,
+  dt,
+  dd {
+    font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
+    letter-spacing: normal;
+  }
+
+  dd {
+    margin-left: 0;
+    letter-spacing: normal;
+    line-height: 24px;
+  }
 }

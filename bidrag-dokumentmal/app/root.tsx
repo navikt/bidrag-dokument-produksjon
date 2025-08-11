@@ -6,18 +6,10 @@ import {
   Scripts,
   ScrollRestoration,
 } from "@remix-run/react";
+import fs from "fs";
 
-import navStyles from "@navikt/ds-css/dist/index.css?url";
-import appStyles from "./style/style.css?url";
-import tailwindStyles from "./style/tw_output.css?url";
-
-import { LinksFunction } from "@remix-run/node";
-
-export const links: LinksFunction = () => [
-  { rel: "stylesheet", href: navStyles },
-  { rel: "stylesheet", href: appStyles },
-  { rel: "stylesheet", href: tailwindStyles },
-];
+const styles = fs.readFileSync("app/style/style.css").toString();
+const tailwindStyles = fs.readFileSync("app/style/tw_output.css").toString();
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -26,6 +18,16 @@ export function Layout({ children }: { children: React.ReactNode }) {
         <meta charSet="utf-8" />
         <Meta />
         <Links />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: styles,
+          }}
+        />
+        <style
+          dangerouslySetInnerHTML={{
+            __html: tailwindStyles,
+          }}
+        />
       </head>
       <body>
         {children}

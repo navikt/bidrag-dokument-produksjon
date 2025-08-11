@@ -1,9 +1,7 @@
 module.exports = {
   future: {
     v2_dev: true,
-    v3_fetcherPersist: true,
   },
-  serverDependenciesToBundle: [/^@navikt/],
   browserNodeBuiltinsPolyfill: {
     modules: {
       buffer: true, // Provide a JSPM polyfill
