@@ -449,7 +449,7 @@ Custom components
   margin: 0;
 }
 
-.bidragskalkulatorContainer {
+/* .bidragskalkulatorContainer {
   h1,
   h2,
   p,
@@ -459,9 +459,82 @@ Custom components
     letter-spacing: normal;
   }
 
+  h1 {
+    font-size: 14pt; 
+  }
+
+  h2 {
+    font-size: 12pt;
+  }
+
+  h3 {
+    font-size: 11pt;
+  }
+
   dd {
     margin-left: 0;
     letter-spacing: normal;
-    line-height: 24px;
+  }
+} */
+
+.bidragskalkulatorContainer {
+  h1,
+  h2,
+  h3,
+  p,
+  dt,
+  dd {
+    font-family: "Source Sans Pro", "Source Sans 3", Arial, sans-serif;
+    letter-spacing: normal;
+    color: #000;
+  }
+
+  /* Main title */
+  h1 {
+    font-size: 14pt;
+    font-weight: 600;
+    color: var(--a-blue-800);
+  }
+
+  /* Section headings */
+  h2 {
+    font-size: 12pt;
+    font-weight: 600;
+    color: var(--a-blue-800);
+  }
+
+  /* Subheadings (SignaturBoks titles) */
+  h3 {
+    font-size: 11pt;
+    font-weight: 600;
+    color: var(--a-blue-600);
+  }
+
+  /* Definition list labels */
+  dt {
+    font-size: 10pt;
+    font-weight: 600;
+  }
+
+  /* Definition list values */
+  dd {
+    font-size: 10pt;
+    font-weight: 400;
+    margin-left: 0;
+  }
+
+  /* Paragraph text */
+  p {
+    font-size: 10pt;
+    font-weight: 400;
+  }
+
+  /* Signature lines (matching PDF appearance) */
+  .signature-line {
+    display: inline-block;
+    width: 50%;
+    height: 50px;
+    border-bottom: 1px solid #000;
+    vertical-align: bottom;
   }
 }

@@ -93,8 +93,8 @@ export default function PrivatAvtaleBidragskalkulator() {
       <HeaderFooter språk={språk} />
       <div className="container page">
         <NavLogo />
-        <h1 className="text-4xl bold-600 text-blue-800">{tekster.tittel}</h1>
-        <p className="text-lg">{data.innhold}</p>
+        <h1>{tekster.tittel}</h1>
+        <p>{data.innhold}</p>
         <div className="flex flex-col gap-4">
           <Innholdsseksjon
             tekst={innhold.opplysningerPerson("PLIKTIG", data.bidragspliktig)}
@@ -133,14 +133,20 @@ const innholdsseksjonTekst = {
     nb: {
       overskrift: `Opplysninger om ${bidragstypeTekster[bidragstype].nb.toLowerCase()}`,
       innhold: [
-        { label: "Fornavn", value: person.fornavn, vis: true },
-        { label: "Etternavn", value: person.etternavn, vis: true },
+        { label: "Fornavn", value: person.fornavn, vis: true, type: "text" },
+        {
+          label: "Etternavn",
+          value: person.etternavn,
+          vis: true,
+          type: "text",
+        },
         {
           label: `Har ${bidragstypeTekster[bidragstype].nb.toLowerCase()} norsk fødselsnummer eller D-nummer?`,
           value: person.fodselsnummer
             ? jaNeiTekster.JA.nb
             : jaNeiTekster.NEI.nb,
           vis: true,
+          type: "text",
         },
         ...(person.fodselsnummer
           ? [
@@ -148,6 +154,7 @@ const innholdsseksjonTekst = {
                 label: "Fødselsnummer",
                 value: person.fodselsnummer,
                 vis: true,
+                type: "text",
               },
             ]
           : []),
@@ -156,14 +163,20 @@ const innholdsseksjonTekst = {
     nn: {
       overskrift: `Opplysningar om ${bidragstypeTekster[bidragstype].nn.toLowerCase()}`,
       innhold: [
-        { label: "Fornamn", value: person.fornavn, vis: true },
-        { label: "Etternamn", value: person.etternavn, vis: true },
+        { label: "Fornamn", value: person.fornavn, vis: true, type: "text" },
+        {
+          label: "Etternamn",
+          value: person.etternavn,
+          vis: true,
+          type: "text",
+        },
         {
           label: `Har ${bidragstypeTekster[bidragstype].nn.toLowerCase()} norsk fødselsnummer eller D-nummer?`,
           value: person.fodselsnummer
             ? jaNeiTekster.JA.nn
             : jaNeiTekster.NEI.nn,
           vis: true,
+          type: "text",
         },
         ...(person.fodselsnummer
           ? [
@@ -171,6 +184,7 @@ const innholdsseksjonTekst = {
                 label: "Fødselsnummer",
                 value: person.fodselsnummer,
                 vis: true,
+                type: "text",
               },
             ]
           : []),
@@ -179,12 +193,18 @@ const innholdsseksjonTekst = {
     en: {
       overskrift: `Information about ${bidragstypeTekster[bidragstype].en.toLowerCase()}`,
       innhold: [
-        { label: "First name", value: person.fornavn, vis: true },
-        { label: "Last name", value: person.etternavn, vis: true },
+        { label: "First name", value: person.fornavn, vis: true, type: "text" },
+        {
+          label: "Last name",
+          value: person.etternavn,
+          vis: true,
+          type: "text",
+        },
         {
           label: `Does the ${bidragstypeTekster[bidragstype].en.toLowerCase()} have a Norwegian National ID or D-number?`,
           value: person.fodselsnummer ? jaNeiTekster.JA.en : jaNeiTekster.JA.en,
           vis: true,
+          type: "text",
         },
         ...(person.fodselsnummer
           ? [
@@ -192,6 +212,7 @@ const innholdsseksjonTekst = {
                 label: "Norwegian national identification number / D number",
                 value: person.fodselsnummer,
                 vis: true,
+                type: "text",
               },
             ]
           : []),
@@ -201,48 +222,95 @@ const innholdsseksjonTekst = {
   barnOgBidrag: (barn: IBarn[], fraDato: string) => ({
     nb: {
       overskrift: "Opplysninger om barn og bidrag",
-      innhold: barn.flatMap((b) => [
-        { label: "Fornavn", value: b.fornavn, vis: true },
-        { label: "Etternavn", value: b.etternavn, vis: true },
+      innhold: barn.flatMap((b, i) => [
+        {
+          label: `Barn ${i + 1}`,
+          value: "",
+          vis: barn.length > 1,
+          type: "heading",
+        },
+        { label: "Fornavn", value: b.fornavn, vis: true, type: "text" },
+        { label: "Etternavn", value: b.etternavn, vis: true, type: "text" },
         {
           label: "Fødselsnummer eller D-nummer",
           value: b.fodselsnummer,
           vis: true,
+          type: "text",
         },
-        { label: "Beløp barnebidrag", value: `${b.sumBidrag},-`, vis: true },
-        { label: "Fra dato (dd.mm.åååå)", value: fraDato, vis: true },
+        {
+          label: "Beløp barnebidrag",
+          value: `${b.sumBidrag},-`,
+          vis: true,
+          type: "text",
+        },
+        {
+          label: "Fra dato (dd.mm.åååå)",
+          value: fraDato,
+          vis: true,
+          type: "text",
+        },
       ]),
     },
     nn: {
       overskrift: "Opplysningar om barn og bidrag",
-      innhold: barn.flatMap((b) => [
-        { label: "Fornamn", value: b.fornavn, vis: true },
-        { label: "Etternamn", value: b.etternavn, vis: true },
+      innhold: barn.flatMap((b, i) => [
+        {
+          label: `Barn ${i + 1}`,
+          value: "",
+          vis: barn.length > 1,
+          type: "heading",
+        },
+        { label: "Fornamn", value: b.fornavn, vis: true, type: "text" },
+        { label: "Etternamn", value: b.etternavn, vis: true, type: "text" },
         {
           label: "Fødselsnummer eller D-nummer",
           value: b.fodselsnummer,
           vis: true,
+          type: "text",
         },
-        { label: "Beløp barnebidrag", value: `${b.sumBidrag},-`, vis: true },
-        { label: "Frå dato (dd.mm.åååå)", value: fraDato, vis: true },
+        {
+          label: "Beløp barnebidrag",
+          value: `${b.sumBidrag},-`,
+          vis: true,
+          type: "text",
+        },
+        {
+          label: "Frå dato (dd.mm.åååå)",
+          value: fraDato,
+          vis: true,
+          type: "text",
+        },
       ]),
     },
     en: {
       overskrift: "Information about child and support",
-      innhold: barn.flatMap((b) => [
-        { label: "First name", value: b.fornavn, vis: true },
-        { label: "Last name", value: b.etternavn, vis: true },
+      innhold: barn.flatMap((b, i) => [
+        {
+          label: `Child ${i + 1}`,
+          value: "",
+          vis: barn.length > 1,
+          type: "heading",
+        },
+        { label: "First name", value: b.fornavn, vis: true, type: "text" },
+        { label: "Last name", value: b.etternavn, vis: true, type: "text" },
         {
           label: "Norwegian national identification number / D number",
           value: b.fodselsnummer,
           vis: true,
+          type: "text",
         },
         {
           label: "Child support amount",
           value: `${b.sumBidrag},-`,
           vis: true,
+          type: "text",
         },
-        { label: "From date (dd.mm.yyyy)", value: fraDato, vis: true },
+        {
+          label: "From date (dd.mm.yyyy)",
+          value: fraDato,
+          vis: true,
+          type: "text",
+        },
       ]),
     },
   }),
@@ -254,11 +322,13 @@ const innholdsseksjonTekst = {
           label: "Er dette en ny avtale?",
           value: nyAvtale ? jaNeiTekster.JA.nb : jaNeiTekster.NEI.nb,
           vis: true,
+          type: "text",
         },
         {
           label: "Hvilken oppgjørsform ønskes?",
           value: oppgjørsformTekster[oppgjørsform].nb,
           vis: true,
+          type: "text",
         },
       ],
     },
@@ -269,11 +339,13 @@ const innholdsseksjonTekst = {
           label: "Er dette ein ny avtale?",
           value: nyAvtale ? jaNeiTekster.JA.nn : jaNeiTekster.NEI.nn,
           vis: true,
+          type: "text",
         },
         {
           label: "Kva for oppgjerform ønskjast?",
           value: oppgjørsformTekster[oppgjørsform].nn,
           vis: true,
+          type: "text",
         },
       ],
     },
@@ -284,11 +356,13 @@ const innholdsseksjonTekst = {
           label: "Is this a new agreement?",
           value: nyAvtale ? jaNeiTekster.JA.en : jaNeiTekster.JA.en,
           vis: true,
+          type: "text",
         },
         {
           label: "Which settlement method is desired?",
           value: oppgjørsformTekster[oppgjørsform].en,
           vis: true,
+          type: "text",
         },
       ],
     },
@@ -303,6 +377,7 @@ const innholdsseksjonTekst = {
             ? jaNeiTekster.JA.nb
             : jaNeiTekster.NEI.nb,
           vis: true,
+          type: "text",
         },
         {
           label: "Andre bestemmelser tilknyttet avtalen",
@@ -311,6 +386,7 @@ const innholdsseksjonTekst = {
             (andreBestemmelser.harAndreBestemmelser &&
               andreBestemmelser.beskrivelse) ??
             false,
+          type: "text",
         },
       ],
     },
@@ -323,6 +399,7 @@ const innholdsseksjonTekst = {
             ? jaNeiTekster.JA.nn
             : jaNeiTekster.NEI.nn,
           vis: true,
+          type: "text",
         },
         {
           label: "Andre føresegner knytt til avtalen",
@@ -333,6 +410,7 @@ const innholdsseksjonTekst = {
             (andreBestemmelser.harAndreBestemmelser &&
               andreBestemmelser.beskrivelse) ??
             false,
+          type: "text",
         },
       ],
     },
@@ -345,6 +423,7 @@ const innholdsseksjonTekst = {
             ? jaNeiTekster.JA.en
             : jaNeiTekster.JA.en,
           vis: true,
+          type: "text",
         },
         {
           label: "Other provisions related to the agreement",
@@ -353,6 +432,7 @@ const innholdsseksjonTekst = {
             (andreBestemmelser.harAndreBestemmelser &&
               andreBestemmelser.beskrivelse) ??
             false,
+          type: "text",
         },
       ],
     },
@@ -365,11 +445,13 @@ const innholdsseksjonTekst = {
           label: "Andre bestemmelser tilknyttet avtale",
           value: tilknyttetAvtaleVedleggTekster[vedlegg.tilknyttetAvtale].nb,
           vis: true,
+          type: "text",
         },
         {
           label: "Annen dokumentasjon",
           value: annenDokumentasjonTekster[vedlegg.annenDokumentasjon].nb,
           vis: true,
+          type: "text",
         },
       ],
     },
@@ -380,11 +462,13 @@ const innholdsseksjonTekst = {
           label: "Andre føresegner knytt til avtale",
           value: tilknyttetAvtaleVedleggTekster[vedlegg.tilknyttetAvtale].nn,
           vis: true,
+          type: "text",
         },
         {
           label: "Anna dokumentasjon",
           value: annenDokumentasjonTekster[vedlegg.annenDokumentasjon].nn,
           vis: true,
+          type: "text",
         },
       ],
     },
@@ -395,11 +479,13 @@ const innholdsseksjonTekst = {
           label: "Other provisions related to the agreement",
           value: tilknyttetAvtaleVedleggTekster[vedlegg.tilknyttetAvtale].en,
           vis: true,
+          type: "text",
         },
         {
           label: "Other documentation",
           value: annenDokumentasjonTekster[vedlegg.annenDokumentasjon].en,
           vis: true,
+          type: "text",
         },
       ],
     },
