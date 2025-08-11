@@ -2,6 +2,7 @@
 @import "@navikt/ds-css";
 @import "tailwindcss/components";
 @import "tailwindcss/utilities";
+@import "@navikt/ds-tokens";
 @config "../../tailwind.config.ts";
 
 * {
@@ -418,6 +419,14 @@ Custom components
   --tw-text-opacity: 1;
   /*color: rgb(239 68 68 / var(--tw-text-opacity));*/
   color: red;
+}
+
+.text-blue-800 {
+  color: var(--a-blue-800);
+}
+
+.text-blue-600 {
+  color: var(--a-blue-600);
 }
 
 .begrunnelse p {
