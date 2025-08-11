@@ -1,5 +1,3 @@
-import "../../style/style.css";
-
 import { parseRequestAction } from "~/routes/common";
 import { ActionFunctionArgs } from "@remix-run/node";
 import HeaderFooter from "~/features/bidragskalkulator/HeaderFooterKalkulator";
@@ -91,7 +89,7 @@ export default function PrivatAvtaleBidragskalkulator() {
   const tekster = hentTekst(språk, tekst);
 
   return (
-    <div id="privat_avtale">
+    <div id="privat_avtale" className="bidragskalkulatorContainer">
       <HeaderFooter språk={språk} />
       <div className="container page">
         <NavLogo />
