@@ -1,3 +1,5 @@
+import "../../style/style.css";
+
 import { parseRequestAction } from "~/routes/common";
 import { ActionFunctionArgs } from "@remix-run/node";
 import HeaderFooter from "~/features/bidragskalkulator/HeaderFooterKalkulator";
