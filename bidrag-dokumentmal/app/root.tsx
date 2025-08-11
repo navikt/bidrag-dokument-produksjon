@@ -1,8 +1,14 @@
-import { Meta, Outlet } from "@remix-run/react";
-import fs from "fs";
-
-const styles = fs.readFileSync("app/style/style.css").toString();
-const tailwindStyles = fs.readFileSync("app/style/tw_output.css").toString();
+import { LinksFunction } from "@remix-run/node";
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from "@remix-run/react";
+import appStylesHref from "./style/style.css?url";
+import tailwindStylesHref from "./style/tw_output.css?url";
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
@@ -10,18 +16,14 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <Meta />
-        <style
-          dangerouslySetInnerHTML={{
-            __html: styles,
-          }}
-        />
-        <style
-          dangerouslySetInnerHTML={{
-            __html: tailwindStyles,
-          }}
-        />
+        <Links />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
     </html>
   );
 }
@@ -29,3 +31,8 @@ export function Layout({ children }: { children: React.ReactNode }) {
 export default function App() {
   return <Outlet />;
 }
+
+export const links: LinksFunction = () => [
+  { rel: "stylesheet", href: appStylesHref },
+  { rel: "stylesheet", href: tailwindStylesHref },
+];

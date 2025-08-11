@@ -7,18 +7,18 @@ interface IProps {
 export default function Innholdsseksjon({ tekst }: IProps) {
   return (
     <section>
-      <h2 className="text-xl font-bold text-blue-800 mb-medium">
-        {tekst.overskrift}
-      </h2>
-      {tekst.innhold.map((linje, index) => {
-        if (!linje.vis) return null;
-        return (
-          <div key={index} className="flex flex-col mb-10">
-            <dt className="font-bold">{linje.label}</dt>
-            <dd style={{ margin: 0 }}>{linje.value}</dd>
-          </div>
-        );
-      })}
+      <h2 className="font-bold text-blue-800">{tekst.overskrift}</h2>
+      <div className="flex flex-col gap-3">
+        {tekst.innhold.map((linje, index) => {
+          if (!linje.vis) return null;
+          return (
+            <div key={index} className="flex flex-col">
+              <dt className="font-bold text-lg">{linje.label}</dt>
+              <dd className="text-lg ml-0">{linje.value}</dd>
+            </div>
+          );
+        })}
+      </div>
     </section>
   );
 }

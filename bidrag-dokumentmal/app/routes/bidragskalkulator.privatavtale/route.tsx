@@ -90,17 +90,12 @@ export default function PrivatAvtaleBidragskalkulator() {
   const tekster = hentTekst(språk, tekst);
 
   return (
-    <div
-      id="privat_avtale"
-      style={{ fontFamily: '"Source Sans 3", sans-serif' }}
-    >
+    <div id="privat_avtale" className="px-16 pb-16">
       <HeaderFooter />
-      <div className="container page">
+      <div>
         <NavLogo />
-        <h1 style={{ fontFamily: '"Source Sans 3", sans-serif' }}>
-          {tekster.tittel}
-        </h1>
-        <div>{data.innhold}</div>
+        <h1 className="text-4xl font-bold text-blue-800">{tekster.tittel}</h1>
+        <p className="text-lg">{data.innhold}</p>
         <div className="flex flex-col gap-4">
           <Innholdsseksjon
             tekst={innhold.opplysningerPerson("PLIKTIG", data.bidragspliktig)}
