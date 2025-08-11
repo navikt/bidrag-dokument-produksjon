@@ -7,7 +7,7 @@ interface IProps {
 export default function Innholdsseksjon({ tekst }: IProps) {
   return (
     <section>
-      <h2 className="bold-600 text-blue-800">{tekst.overskrift}</h2>
+      <h2>{tekst.overskrift}</h2>
       <div className="flex flex-col gap-3">
         {tekst.innhold.map((linje, index) => {
           if (!linje.vis) return null;
@@ -18,8 +18,8 @@ export default function Innholdsseksjon({ tekst }: IProps) {
 
           return (
             <div key={index} className="flex flex-col">
-              <dt className="bold-600 text-medium">{linje.label}</dt>
-              <dd className="text-medium">{linje.value}</dd>
+              <dt>{linje.label}</dt>
+              <dd>{linje.value}</dd>
             </div>
           );
         })}

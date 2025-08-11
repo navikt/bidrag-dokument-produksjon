@@ -91,7 +91,7 @@ export default function PrivatAvtaleBidragskalkulator() {
   return (
     <div id="privat_avtale" className="bidragskalkulatorContainer">
       <HeaderFooter språk={språk} />
-      <div className="container page">
+      <div>
         <NavLogo />
         <h1>{tekster.tittel}</h1>
         <p>{data.innhold}</p>

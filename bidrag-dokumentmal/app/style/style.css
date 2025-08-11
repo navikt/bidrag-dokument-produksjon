@@ -298,14 +298,6 @@ dt {
   font-size: 18px;
 }
 
-.text-medium {
-  font-size: var(--a-font-size-medium);
-}
-
-.text-lg {
-  font-size: var(--a-font-size-large);
-}
-
 .mt-medium {
   margin-top: 16px;
 }
