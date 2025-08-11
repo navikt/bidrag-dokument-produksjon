@@ -6,7 +6,7 @@ interface IProps {
 
 export default function Innholdsseksjon({ tekst }: IProps) {
   return (
-    <section className="space-y-4">
+    <section>
       <h2 className="text-xl font-bold text-blue-800 mb-medium">
         {tekst.overskrift}
       </h2>

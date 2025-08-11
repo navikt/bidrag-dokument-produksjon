@@ -4,7 +4,6 @@ import { parseRequestAction } from "~/routes/common";
 import { ActionFunctionArgs } from "@remix-run/node";
 import HeaderFooter from "~/features/bidragskalkulator/HeaderFooterKalkulator";
 import NavLogo from "~/components/NavLogo";
-import { SignaturBoks } from "~/features/bidragskalkulator/SignaturBoks";
 import { useActionData } from "@remix-run/react";
 import Innholdsseksjon from "~/features/bidragskalkulator/Innholdsseksjon";
 import {
@@ -21,6 +20,7 @@ import {
   bidragstypeTekster,
 } from "~/types/bidragskalkulator";
 import { hentTekst, jaNeiTekster, SpråkType } from "~/utils/oversettelser";
+import Underskrifter from "~/features/bidragskalkulator/Underskrifter";
 
 // Mock data for development
 const mockRequest: PrivatAvtaleDto = {
@@ -86,6 +86,7 @@ export default function PrivatAvtaleBidragskalkulator() {
   }
   const { data } = response;
   const språk = data.språk ?? "nb";
+  const innhold = hentTekst(språk, innholdsseksjonTekst);
   const tekster = hentTekst(språk, tekst);
 
   return (
@@ -97,30 +98,28 @@ export default function PrivatAvtaleBidragskalkulator() {
       <div className="container page">
         <NavLogo />
         <h1 style={{ fontFamily: '"Source Sans 3", sans-serif' }}>
-          Privat avtale om barnebidrag
+          {tekster.tittel}
         </h1>
         <div>{data.innhold}</div>
         <div className="flex flex-col gap-4">
           <Innholdsseksjon
-            tekst={tekster.opplysningerPerson("PLIKTIG", data.bidragspliktig)}
+            tekst={innhold.opplysningerPerson("PLIKTIG", data.bidragspliktig)}
           />
           <Innholdsseksjon
-            tekst={tekster.opplysningerPerson("MOTTAKER", data.bidragsmottaker)}
+            tekst={innhold.opplysningerPerson("MOTTAKER", data.bidragsmottaker)}
           />
           <Innholdsseksjon
-            tekst={tekster.barnOgBidrag(data.barn, data.fraDato)}
+            tekst={innhold.barnOgBidrag(data.barn, data.fraDato)}
           />
           <Innholdsseksjon
-            tekst={tekster.oppgjør(data.nyAvtale, data.oppgjorsform)}
+            tekst={innhold.oppgjør(data.nyAvtale, data.oppgjorsform)}
           />
           <Innholdsseksjon
-            tekst={tekster.andreBestemmelser(data.andreBestemmelser)}
+            tekst={innhold.andreBestemmelser(data.andreBestemmelser)}
           />
-          <Innholdsseksjon tekst={tekster.vedlegg(data.vedlegg)} />
+          <Innholdsseksjon tekst={innhold.vedlegg(data.vedlegg)} />
 
-          <h2>Underskrifter</h2>
-          <SignaturBoks title={"Bidragsmottaker"} />
-          <SignaturBoks title={"Bidragspliktige"} />
+          <Underskrifter språk={språk} />
         </div>
       </div>
     </div>
@@ -128,6 +127,14 @@ export default function PrivatAvtaleBidragskalkulator() {
 }
 
 const tekst = {
+  tittel: {
+    nb: "Privat avtale om barnebidrag",
+    nn: "Privat avtale om barnebidrag",
+    en: "Private agreement on child support",
+  },
+};
+
+const innholdsseksjonTekst = {
   opplysningerPerson: (bidragstype: Bidragstype, person: IPerson) => ({
     nb: {
       overskrift: `Opplysninger om ${bidragstypeTekster[bidragstype].nb}`,
@@ -406,5 +413,5 @@ const tekst = {
 };
 
 export type GeneriskInnholdType = ReturnType<
-  (typeof tekst)[keyof typeof tekst]
+  (typeof innholdsseksjonTekst)[keyof typeof innholdsseksjonTekst]
 >[SpråkType];

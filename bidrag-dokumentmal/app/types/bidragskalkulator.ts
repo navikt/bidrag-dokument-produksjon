@@ -9,12 +9,12 @@ export const bidragstypeTekster: Record<
   PLIKTIG: {
     nb: "Bidragspliktig",
     nn: "Bidragspliktig",
-    en: "Obligor",
+    en: "Support debtor",
   },
   MOTTAKER: {
     nb: "Bidragsmottaker",
     nn: "Bidragsmottakar",
-    en: "Obligee",
+    en: "Support recipient",
   },
 };
 
