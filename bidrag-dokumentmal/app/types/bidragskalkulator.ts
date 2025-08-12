@@ -116,7 +116,6 @@ export interface IBarn extends IPerson {
 export interface PrivatAvtaleDto {
   språk: SpråkkodeIdKey;
   navSkjemaId: NavSkjemaIdKey;
-  innhold: string;
   bidragsmottaker: IPerson;
   bidragspliktig: IPerson;
   barn: IBarn[];

@@ -31,7 +31,6 @@ import Underskrifter from "~/features/bidragskalkulator/Underskrifter";
 // Mock data for development
 const mockRequest: PrivatAvtaleDto = {
   språk: "NB",
-  innhold: "Dette er en mock av data fra bidragskalkulatoren",
   bidragsmottaker: {
     fornavn: "Kristian",
     etternavn: "Etternavnesen",
@@ -104,7 +103,6 @@ export default function PrivatAvtaleBidragskalkulator() {
         <NavLogo />
         <h1>{tekster.tittel}</h1>
         <p>{kodeOfNavSkjemaIdKey(data.navSkjemaId)}</p>
-        <p>{data.innhold}</p>
         <div className="flex flex-col gap-4">
           <Innholdsseksjon
             tekst={innhold.opplysningerPerson("PLIKTIG", data.bidragspliktig)}
