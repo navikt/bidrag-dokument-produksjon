@@ -85,6 +85,7 @@ export default function PrivatAvtaleBidragskalkulator() {
   if (response === undefined) {
     return <div>Oops</div>;
   }
+
   const { data } = response;
   const språk = språkkodeTilSpråkType(data.språk) ?? "nb";
   const innhold = hentTekst(språk, innholdsseksjonTekst);
@@ -93,7 +94,7 @@ export default function PrivatAvtaleBidragskalkulator() {
   return (
     <div id="privat_avtale" className="bidragskalkulatorContainer">
       <HeaderFooter språk={språk} />
-      <div>
+      <div className="container page">
         <NavLogo />
         <h1>{tekster.tittel}</h1>
         <p>{data.innhold}</p>
