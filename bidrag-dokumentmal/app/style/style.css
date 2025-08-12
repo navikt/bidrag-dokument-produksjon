@@ -526,3 +526,10 @@ Custom components
     vertical-align: bottom;
   }
 }
+
+@media print {
+  .bidragskalkulatorContainer .flex {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
+}
