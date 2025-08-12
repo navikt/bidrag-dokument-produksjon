@@ -269,6 +269,10 @@
   gap: 12px
 }
 
+.gap-4 {
+  gap: 16px
+}
+
 .divide-solid > :not([hidden]) ~ :not([hidden]) {
   border-style: solid
 }
@@ -353,10 +357,6 @@
 
 .align-middle {
   vertical-align: middle
-}
-
-.font-bold {
-  font-weight: 700
 }
 
 .filter {

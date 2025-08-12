@@ -2,6 +2,12 @@
   --paper-width: 595px;
   --paper-height: 842px;
   --content-width: 670px;
+  --a-blue-800: rgba(0, 52, 125, 1);
+  --a-blue-600: rgba(0, 86, 180, 1);
+  --a-font-size-large: 1.125rem;
+  --a-font-size-medium: 1rem;
+  --a-font-weight-bold: 600;
+  --a-font-weight-regular: 400;
 }
 
 @page {
@@ -11,10 +17,10 @@
   padding-top: 0cm;
 
   @top-center {
-    content: element(header)
+    content: element(header);
   }
   @bottom-center {
-    content: element(footer)
+    content: element(footer);
   }
 }
 
@@ -31,7 +37,7 @@
 
 .footnote::footnote-call {
   /* controls the footnote markers in the main page text */
-  content: counter(footnote, symbols('*', '†', '‡'));
+  content: counter(footnote, symbols("*", "†", "‡"));
   font-size: 11px;
   vertical-align: super;
   line-height: 0;
@@ -40,7 +46,7 @@
 
 .footnote::footnote-marker {
   /* controls the footnote markers in the footnote section */
-  content: counter(footnote, symbols('*', '†', '‡'));
+  content: counter(footnote, symbols("*", "†", "‡"));
 }
 
 @media print {
@@ -107,21 +113,21 @@ dt:before {
 }
 
 .table_row_details dl {
-  margin: 0
+  margin: 0;
 }
 
 /*dl {*/
 /*  margin: 0 0 16px 0;*/
 /*}*/
 
-dt, dd {
+dt,
+dd {
   display: inline;
 }
 
 .elements_inline :first-child {
   display: inline;
   margin-right: 16px;
-
 }
 
 .elements_inline :last-child {
@@ -267,7 +273,7 @@ dt {
 }
 
 #pagecount:before {
-  content: counter(pages)
+  content: counter(pages);
 }
 
 #pageFooter {
@@ -278,7 +284,6 @@ dt {
   counter-increment: page;
   content: counter(page);
 }
-
 
 .text-heading-small p,
 .text-heading-small {
@@ -305,6 +310,13 @@ dt {
   margin-top: 32px;
 }
 
+.bold-600 {
+  font-weight: var(--a-font-weight-bold);
+}
+
+.bold-400 {
+  font-weight: var(--a-font-weight-regular);
+}
 
 h1 {
   font-weight: 700;
@@ -318,7 +330,6 @@ h2 {
   margin-bottom: 8px;
   font-size: 16px;
 }
-
 
 h3 {
   margin-bottom: 4px;
@@ -362,7 +373,6 @@ Topp og bunntekst
   content: attr(data-content);
 }
 
-
 div.top_bottom_text div {
   float: left;
   width: 100%;
@@ -386,7 +396,6 @@ div.header {
   position: running(header);
 }
 
-
 .custom-top_bottom_content:after {
   text-align: left;
   float: left;
@@ -398,7 +407,7 @@ div.header {
 
 .custom-page-number:after {
   text-align: right;
-  content: counter(page) ' av ' counter(pages);
+  content: counter(page) " av " counter(pages);
 }
 
 /**
@@ -419,7 +428,108 @@ Custom components
   color: red;
 }
 
+.text-blue-800 {
+  color: var(--a-blue-800);
+}
+
+.text-blue-600 {
+  color: var(--a-blue-600);
+}
+
 .begrunnelse p {
   padding: 0;
   margin: 0;
+}
+
+/* .bidragskalkulatorContainer {
+  h1,
+  h2,
+  p,
+  dt,
+  dd {
+    font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
+    letter-spacing: normal;
+  }
+
+  h1 {
+    font-size: 14pt; 
+  }
+
+  h2 {
+    font-size: 12pt;
+  }
+
+  h3 {
+    font-size: 11pt;
+  }
+
+  dd {
+    margin-left: 0;
+    letter-spacing: normal;
+  }
+} */
+
+.bidragskalkulatorContainer {
+  width: 100%;
+
+  h1,
+  h2,
+  h3,
+  p,
+  dt,
+  dd {
+    font-family: "Source Sans Pro", "Source Sans 3", Arial, sans-serif;
+    letter-spacing: normal;
+    color: #000;
+  }
+
+  /* Main title */
+  h1 {
+    font-weight: 600;
+    color: var(--a-blue-800);
+  }
+
+  /* Section headings */
+  h2 {
+    font-weight: 600;
+    color: var(--a-blue-800);
+  }
+
+  /* Subheadings (SignaturBoks titles) */
+  h3 {
+    font-weight: 600;
+    color: var(--a-blue-600);
+  }
+
+  /* Definition list labels */
+  dt {
+    font-weight: 600;
+  }
+
+  /* Definition list values */
+  dd {
+    font-weight: 400;
+    margin-left: 0;
+  }
+
+  /* Paragraph text */
+  p {
+    font-weight: 400;
+  }
+
+  /* Signature lines (matching PDF appearance) */
+  .signature-line {
+    display: inline-block;
+    width: 80%;
+    height: 50px;
+    border-bottom: 1px solid #000;
+    vertical-align: bottom;
+  }
+}
+
+@media print {
+  .bidragskalkulatorContainer .flex {
+    break-inside: auto !important;
+    page-break-inside: auto !important;
+  }
 }

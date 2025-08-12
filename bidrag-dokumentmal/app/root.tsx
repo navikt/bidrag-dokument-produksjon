@@ -1,4 +1,11 @@
-import { Meta, Outlet } from "@remix-run/react";
+import {
+  Links,
+  LiveReload,
+  Meta,
+  Outlet,
+  Scripts,
+  ScrollRestoration,
+} from "@remix-run/react";
 import fs from "fs";
 
 const styles = fs.readFileSync("app/style/style.css").toString();
@@ -6,10 +13,11 @@ const tailwindStyles = fs.readFileSync("app/style/tw_output.css").toString();
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="nb">
+    <html lang="nb-NO">
       <head>
         <meta charSet="utf-8" />
         <Meta />
+        <Links />
         <style
           dangerouslySetInnerHTML={{
             __html: styles,
@@ -21,7 +29,12 @@ export function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
       </head>
-      <body>{children}</body>
+      <body>
+        {children}
+        <ScrollRestoration />
+        <Scripts />
+        <LiveReload />
+      </body>
     </html>
   );
 }
