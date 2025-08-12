@@ -17,15 +17,12 @@ export const SignaturBoks = ({ bidragstype, språk }: SignaturBoksProps) => {
   return (
     <div>
       <h3>{bidragstypeTekster[bidragstype][språk]}</h3>
-      {sections.map((label, i) => (
-        <div key={label}>
+      {sections.map((label) => (
+        <div key={label} className="flex flex-col gap-4">
           <div className="flex flex-col">
             <p>{label}</p>
             <div className="signature-line" />
           </div>
-          {i < sections.length - 1 && (
-            <div className="w-full h-10 divide divide-solid"></div>
-          )}
         </div>
       ))}
     </div>

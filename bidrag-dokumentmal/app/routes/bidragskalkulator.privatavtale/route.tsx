@@ -98,14 +98,14 @@ export default function PrivatAvtaleBidragskalkulator() {
   const tekster = hentTekst(språk, tekst);
 
   return (
-    <div id="privat_avtale">
+    <div id="privat_avtale" className="w-full">
       <HeaderFooter språk={språk} />
-      <div className="container page">
+      <div className="bidragskalkulatorContainer">
         <NavLogo />
         <h1>{tekster.tittel}</h1>
         <p>{kodeOfNavSkjemaIdKey(data.navSkjemaId)}</p>
         <p>{data.innhold}</p>
-        <div className="flex flex-col gap-4 bidragskalkulatorContainer">
+        <div className="flex flex-col gap-4">
           <Innholdsseksjon
             tekst={innhold.opplysningerPerson("PLIKTIG", data.bidragspliktig)}
           />

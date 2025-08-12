@@ -6,7 +6,7 @@ interface IProps {
 
 export default function Innholdsseksjon({ tekst }: IProps) {
   return (
-    <section>
+    <div>
       <h2>{tekst.overskrift}</h2>
       <div className="flex flex-col gap-3">
         {tekst.innhold.map((linje, index) => {
@@ -24,6 +24,6 @@ export default function Innholdsseksjon({ tekst }: IProps) {
           );
         })}
       </div>
-    </section>
+    </div>
   );
 }
