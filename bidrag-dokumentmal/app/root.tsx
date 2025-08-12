@@ -1,11 +1,4 @@
-import {
-  Links,
-  LiveReload,
-  Meta,
-  Outlet,
-  Scripts,
-  ScrollRestoration,
-} from "@remix-run/react";
+import { Meta, Outlet } from "@remix-run/react";
 import fs from "fs";
 
 const styles = fs.readFileSync("app/style/style.css").toString();
@@ -17,7 +10,6 @@ export function Layout({ children }: { children: React.ReactNode }) {
       <head>
         <meta charSet="utf-8" />
         <Meta />
-        <Links />
         <style
           dangerouslySetInnerHTML={{
             __html: styles,
@@ -29,12 +21,7 @@ export function Layout({ children }: { children: React.ReactNode }) {
           }}
         />
       </head>
-      <body>
-        {children}
-        <ScrollRestoration />
-        <Scripts />
-        <LiveReload />
-      </body>
+      <body>{children}</body>
     </html>
   );
 }
