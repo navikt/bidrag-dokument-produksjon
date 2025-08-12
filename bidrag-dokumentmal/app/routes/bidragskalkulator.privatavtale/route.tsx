@@ -100,7 +100,7 @@ export default function PrivatAvtaleBidragskalkulator() {
   return (
     <div id="privat_avtale" className="w-full">
       <HeaderFooter språk={språk} />
-      <div className="bidragskalkulatorContainer">
+      <div className="bidragskalkulatorContainer w-full">
         <NavLogo />
         <h1>{tekster.tittel}</h1>
         <p>{kodeOfNavSkjemaIdKey(data.navSkjemaId)}</p>
