@@ -7,7 +7,6 @@ import NavLogo from "~/components/NavLogo";
 import { useActionData } from "@remix-run/react";
 import Innholdsseksjon from "~/features/bidragskalkulator/Innholdsseksjon";
 import {
-  PrivatAvtaleDto,
   Bidragstype,
   IPerson,
   IBarn,
@@ -19,6 +18,8 @@ import {
   oppgjørsformTekster,
   bidragstypeTekster,
   språkkodeTilSpråkType,
+  NavSkjemaId,
+  PrivatAvtaleDto,
 } from "~/types/bidragskalkulator";
 import { hentTekst, jaNeiTekster, SpråkType } from "~/utils/oversettelser";
 import Underskrifter from "~/features/bidragskalkulator/Underskrifter";
@@ -62,6 +63,7 @@ const mockRequest: PrivatAvtaleDto = {
     tilknyttetAvtale: "SENDES_MED_SKJEMA",
     annenDokumentasjon: "INGEN_EKSTRA_DOKUMENTASJON",
   },
+  navSkjemaId: NavSkjemaId.AVTALE_OM_BARNEBIDRAG_OVER_18,
 };
 
 export function meta() {
@@ -92,11 +94,12 @@ export default function PrivatAvtaleBidragskalkulator() {
   const tekster = hentTekst(språk, tekst);
 
   return (
-    <div id="privat_avtale" className="bidragskalkulatorContainer">
+    <div id="privat_avtale">
       <HeaderFooter språk={språk} />
-      <div className="container page">
+      <div className="container page bidragskalkulatorContainer">
         <NavLogo />
         <h1>{tekster.tittel}</h1>
+        <p>{data.navSkjemaId}</p>
         <p>{data.innhold}</p>
         <div className="flex flex-col gap-4">
           <Innholdsseksjon

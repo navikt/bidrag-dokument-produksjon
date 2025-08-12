@@ -129,6 +129,7 @@ export interface IBarn extends IPerson {
 
 export interface PrivatAvtaleDto {
   språk: Språkkode;
+  navSkjemaId: NavSkjemaId;
   innhold: string;
   bidragsmottaker: IPerson;
   bidragspliktig: IPerson;
@@ -138,4 +139,15 @@ export interface PrivatAvtaleDto {
   oppgjorsform: Oppgjørsform;
   andreBestemmelser: IAndreBestemmelser;
   vedlegg: IVedlegg;
+}
+
+export enum NavSkjemaId {
+  AVTALE_OM_BARNEBIDRAG_UNDER_18 = "NAV 55-00.63",
+  AVTALE_OM_BARNEBIDRAG_OVER_18 = "NAV 55-00.50",
+}
+
+export type NavSkjemaIdKey = keyof typeof NavSkjemaId;
+
+export function kodeOf(id: NavSkjemaIdKey): string {
+  return NavSkjemaId[id];
 }

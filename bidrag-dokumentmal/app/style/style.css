@@ -470,6 +470,8 @@ Custom components
 } */
 
 .bidragskalkulatorContainer {
+  width: 100%;
+
   h1,
   h2,
   h3,
@@ -483,41 +485,35 @@ Custom components
 
   /* Main title */
   h1 {
-    font-size: 14pt;
     font-weight: 600;
     color: var(--a-blue-800);
   }
 
   /* Section headings */
   h2 {
-    font-size: 12pt;
     font-weight: 600;
     color: var(--a-blue-800);
   }
 
   /* Subheadings (SignaturBoks titles) */
   h3 {
-    font-size: 11pt;
     font-weight: 600;
     color: var(--a-blue-600);
   }
 
   /* Definition list labels */
   dt {
-    font-size: 10pt;
     font-weight: 600;
   }
 
   /* Definition list values */
   dd {
-    font-size: 10pt;
     font-weight: 400;
     margin-left: 0;
   }
 
   /* Paragraph text */
   p {
-    font-size: 10pt;
     font-weight: 400;
   }
 

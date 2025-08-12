@@ -13,7 +13,7 @@ const tailwindStyles = fs.readFileSync("app/style/tw_output.css").toString();
 
 export function Layout({ children }: { children: React.ReactNode }) {
   return (
-    <html lang="nb">
+    <html lang="nb-NO">
       <head>
         <meta charSet="utf-8" />
         <Meta />
