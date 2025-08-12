@@ -1,4 +1,16 @@
-export type SpråkType = "nb" | "nn" | "en";
+export enum Språkkode {
+  NB = "nb",
+  NN = "nn",
+  EN = "en",
+}
+
+export type SpråkType = `${Språkkode}`;
+
+export type SpråkkodeIdKey = keyof typeof Språkkode;
+
+export function språkkodeTilSpråkType(id: SpråkkodeIdKey): SpråkType {
+  return Språkkode[id];
+}
 
 // Et språkmap: { nb|nn|en: V }
 type SpråkMap<V> = Record<SpråkType, V>;

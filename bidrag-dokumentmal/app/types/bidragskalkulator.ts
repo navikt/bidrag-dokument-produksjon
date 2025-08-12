@@ -1,20 +1,6 @@
-import { SpråkType } from "~/utils/oversettelser";
+import { SpråkkodeIdKey, SpråkType } from "~/utils/oversettelser";
 
 export type Bidragstype = "MOTTAKER" | "PLIKTIG";
-export type Språkkode = "NB" | "NN" | "EN";
-
-export const språkkodeTilSpråkType = (språkkode: Språkkode): SpråkType => {
-  switch (språkkode) {
-    case "NB":
-      return "nb";
-    case "NN":
-      return "nn";
-    case "EN":
-      return "en";
-    default:
-      throw new Error(`Ukjent språkkode: ${språkkode}`);
-  }
-};
 
 export const bidragstypeTekster: Record<
   Bidragstype,
@@ -128,8 +114,8 @@ export interface IBarn extends IPerson {
 }
 
 export interface PrivatAvtaleDto {
-  språk: Språkkode;
-  navSkjemaId: NavSkjemaId;
+  språk: SpråkkodeIdKey;
+  navSkjemaId: NavSkjemaIdKey;
   innhold: string;
   bidragsmottaker: IPerson;
   bidragspliktig: IPerson;
@@ -148,6 +134,6 @@ export enum NavSkjemaId {
 
 export type NavSkjemaIdKey = keyof typeof NavSkjemaId;
 
-export function kodeOf(id: NavSkjemaIdKey): string {
+export function kodeOfNavSkjemaIdKey(id: NavSkjemaIdKey): string {
   return NavSkjemaId[id];
 }

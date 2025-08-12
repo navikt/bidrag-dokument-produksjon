@@ -17,11 +17,15 @@ import {
   annenDokumentasjonTekster,
   oppgjørsformTekster,
   bidragstypeTekster,
-  språkkodeTilSpråkType,
-  NavSkjemaId,
   PrivatAvtaleDto,
+  kodeOfNavSkjemaIdKey,
 } from "~/types/bidragskalkulator";
-import { hentTekst, jaNeiTekster, SpråkType } from "~/utils/oversettelser";
+import {
+  hentTekst,
+  jaNeiTekster,
+  språkkodeTilSpråkType,
+  SpråkType,
+} from "~/utils/oversettelser";
 import Underskrifter from "~/features/bidragskalkulator/Underskrifter";
 
 // Mock data for development
@@ -63,7 +67,7 @@ const mockRequest: PrivatAvtaleDto = {
     tilknyttetAvtale: "SENDES_MED_SKJEMA",
     annenDokumentasjon: "INGEN_EKSTRA_DOKUMENTASJON",
   },
-  navSkjemaId: NavSkjemaId.AVTALE_OM_BARNEBIDRAG_OVER_18,
+  navSkjemaId: "AVTALE_OM_BARNEBIDRAG_UNDER_18",
 };
 
 export function meta() {
@@ -96,12 +100,12 @@ export default function PrivatAvtaleBidragskalkulator() {
   return (
     <div id="privat_avtale">
       <HeaderFooter språk={språk} />
-      <div className="container page bidragskalkulatorContainer">
+      <div className="container page">
         <NavLogo />
         <h1>{tekster.tittel}</h1>
-        <p>{data.navSkjemaId}</p>
+        <p>{kodeOfNavSkjemaIdKey(data.navSkjemaId)}</p>
         <p>{data.innhold}</p>
-        <div className="flex flex-col gap-4">
+        <div className="flex flex-col gap-4 bidragskalkulatorContainer">
           <Innholdsseksjon
             tekst={innhold.opplysningerPerson("PLIKTIG", data.bidragspliktig)}
           />
