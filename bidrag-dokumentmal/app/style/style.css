@@ -441,34 +441,6 @@ Custom components
   margin: 0;
 }
 
-/* .bidragskalkulatorContainer {
-  h1,
-  h2,
-  p,
-  dt,
-  dd {
-    font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
-    letter-spacing: normal;
-  }
-
-  h1 {
-    font-size: 14pt; 
-  }
-
-  h2 {
-    font-size: 12pt;
-  }
-
-  h3 {
-    font-size: 11pt;
-  }
-
-  dd {
-    margin-left: 0;
-    letter-spacing: normal;
-  }
-} */
-
 .bidragskalkulatorContainer {
   width: 100%;
 
@@ -517,11 +489,17 @@ Custom components
     font-weight: 400;
   }
 
+  .signatur-seksjon {
+    display: flex;
+    flex-direction: column;
+    gap: 40px;
+  }
+
   /* Signature lines (matching PDF appearance) */
   .signature-line {
     display: inline-block;
     width: 80%;
-    height: 50px;
+    height: 30px;
     border-bottom: 1px solid #000;
     vertical-align: bottom;
   }
@@ -531,5 +509,10 @@ Custom components
   .bidragskalkulatorContainer .flex {
     break-inside: auto !important;
     page-break-inside: auto !important;
+  }
+
+  .underskrifter {
+    page-break-before: always;
+    break-before: page;
   }
 }

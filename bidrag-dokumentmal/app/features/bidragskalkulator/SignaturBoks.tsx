@@ -8,7 +8,7 @@ interface SignaturBoksProps {
 
 export const SignaturBoks = ({ bidragstype, språk }: SignaturBoksProps) => {
   const tekster = hentTekst(språk, tekst);
-  const sections = [
+  const seksjoner = [
     tekster.stedOgDato,
     tekster.signatur,
     tekster.navnMedBlokkbokstaver,
@@ -17,14 +17,14 @@ export const SignaturBoks = ({ bidragstype, språk }: SignaturBoksProps) => {
   return (
     <div>
       <h3>{bidragstypeTekster[bidragstype][språk]}</h3>
-      {sections.map((label) => (
-        <div key={label} className="flex flex-col gap-4">
-          <div className="flex flex-col">
+      <div className="signatur-seksjon">
+        {seksjoner.map((label) => (
+          <div className="flex flex-col" key={label}>
             <p>{label}</p>
             <div className="signature-line" />
           </div>
-        </div>
-      ))}
+        ))}
+      </div>
     </div>
   );
 };
