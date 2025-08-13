@@ -47,10 +47,10 @@ export interface IAndreBestemmelser {
   beskrivelse?: string;
 }
 
-export type VedleggType = "SENDES_MED_SKJEMA" | "INGEN_EKSTRA_DOKUMENTASJON";
+export type Vedleggskrav = "SENDES_MED_SKJEMA" | "INGEN_EKSTRA_DOKUMENTASJON";
 
-export const vedleggTypeTekster: Record<
-  VedleggType,
+export const vedleggskravTekster: Record<
+  Vedleggskrav,
   Record<SpråkType, string>
 > = {
   SENDES_MED_SKJEMA: {
@@ -79,7 +79,7 @@ export interface PrivatAvtaleDto {
   nyAvtale: boolean;
   oppgjorsform: Oppgjørsform;
   andreBestemmelser: IAndreBestemmelser;
-  vedlegg: VedleggType;
+  vedlegg: Vedleggskrav;
 }
 
 export enum NavSkjemaId {

@@ -16,8 +16,8 @@ import {
   bidragstypeTekster,
   PrivatAvtaleDto,
   kodeOfNavSkjemaIdKey,
-  VedleggType,
-  vedleggTypeTekster,
+  Vedleggskrav,
+  vedleggskravTekster,
 } from "~/types/bidragskalkulator";
 import {
   hentTekst,
@@ -424,13 +424,13 @@ const innholdsseksjonTekst = {
       ],
     },
   }),
-  vedlegg: (vedlegg: VedleggType) => ({
+  vedlegg: (vedlegg: Vedleggskrav) => ({
     nb: {
       overskrift: "Vedlegg",
       innhold: [
         {
           label: "Har du noen annen dokumentasjon du ønsker å legge ved?",
-          value: vedleggTypeTekster[vedlegg].nb,
+          value: vedleggskravTekster[vedlegg].nb,
           vis: true,
           type: "text",
         },
@@ -441,7 +441,7 @@ const innholdsseksjonTekst = {
       innhold: [
         {
           label: "Annan dokumentasjon",
-          value: vedleggTypeTekster[vedlegg].nn,
+          value: vedleggskravTekster[vedlegg].nn,
           vis: true,
           type: "text",
         },
@@ -452,7 +452,7 @@ const innholdsseksjonTekst = {
       innhold: [
         {
           label: "Other documentation",
-          value: vedleggTypeTekster[vedlegg].en,
+          value: vedleggskravTekster[vedlegg].en,
           vis: true,
           type: "text",
         },
