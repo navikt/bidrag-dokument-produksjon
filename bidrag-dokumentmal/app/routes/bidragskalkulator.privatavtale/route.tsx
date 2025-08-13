@@ -10,7 +10,6 @@ import {
   Bidragstype,
   IPerson,
   IBarnOgBidrag,
-  Oppgjørsform,
   IAndreBestemmelser,
   oppgjørsformTekster,
   bidragstypeTekster,
@@ -18,6 +17,7 @@ import {
   kodeOfNavSkjemaIdKey,
   Vedleggskrav,
   vedleggskravTekster,
+  IOppgjør,
 } from "~/types/bidragskalkulator";
 import {
   hentTekst,
@@ -56,8 +56,11 @@ const mockRequest: PrivatAvtaleDto = {
       fraDato: "01.01.2025",
     },
   ],
-  nyAvtale: true,
-  oppgjorsform: "PRIVAT",
+  oppgjør: {
+    nyAvtale: true,
+    oppgjørsformØnsket: "PRIVAT",
+    oppgjørsformIdag: "PRIVAT",
+  },
   andreBestemmelser: {
     harAndreBestemmelser: true,
     beskrivelse: "Dette er en beskrivelse av andre bestemmelser.",
@@ -108,9 +111,7 @@ export default function PrivatAvtaleBidragskalkulator() {
             tekst={innhold.opplysningerPerson("PLIKTIG", data.bidragspliktig)}
           />
           <Innholdsseksjon tekst={innhold.barnOgBidrag(data.barn)} />
-          <Innholdsseksjon
-            tekst={innhold.oppgjør(data.nyAvtale, data.oppgjorsform)}
-          />
+          <Innholdsseksjon tekst={innhold.oppgjør(data.oppgjør)} />
           <Innholdsseksjon
             tekst={innhold.andreBestemmelser(data.andreBestemmelser)}
           />
@@ -295,13 +296,13 @@ const innholdsseksjonTekst = {
       ]),
     },
   }),
-  oppgjør: (nyAvtale: boolean, oppgjørsform: Oppgjørsform) => ({
+  oppgjør: (oppgjør: IOppgjør) => ({
     nb: {
       overskrift: "Oppgjør",
       innhold: [
         {
           label: "Er dette en ny avtale?",
-          value: nyAvtale
+          value: oppgjør.nyAvtale
             ? "Ja"
             : "Nei, dette er en endring av en eksisterende avtale",
           vis: true,
@@ -309,7 +310,7 @@ const innholdsseksjonTekst = {
         },
         {
           label: "Hvilken oppgjørsform ønskes?",
-          value: oppgjørsformTekster[oppgjørsform].nb,
+          value: oppgjørsformTekster[oppgjør.oppgjørsformØnsket].nb,
           vis: true,
           type: "text",
         },
@@ -320,7 +321,7 @@ const innholdsseksjonTekst = {
       innhold: [
         {
           label: "Er dette ein ny avtale?",
-          value: nyAvtale
+          value: oppgjør.nyAvtale
             ? "Ja"
             : "Nei, det er ei endring av eksisterande avtale.",
           vis: true,
@@ -328,7 +329,7 @@ const innholdsseksjonTekst = {
         },
         {
           label: "Kva type oppgjer ønskjer de?",
-          value: oppgjørsformTekster[oppgjørsform].nn,
+          value: oppgjørsformTekster[oppgjør.oppgjørsformØnsket].nn,
           vis: true,
           type: "text",
         },
@@ -339,7 +340,7 @@ const innholdsseksjonTekst = {
       innhold: [
         {
           label: "Is this a new agreement?",
-          value: nyAvtale
+          value: oppgjør.nyAvtale
             ? "Yes"
             : "No, this is an adjustment of an existing agreement.",
           vis: true,
@@ -347,7 +348,7 @@ const innholdsseksjonTekst = {
         },
         {
           label: "Which settlement method is desired?",
-          value: oppgjørsformTekster[oppgjørsform].en,
+          value: oppgjørsformTekster[oppgjør.oppgjørsformØnsket].en,
           vis: true,
           type: "text",
         },

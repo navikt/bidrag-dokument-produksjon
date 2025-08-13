@@ -70,14 +70,19 @@ export interface IBarnOgBidrag extends IPerson {
   fraDato: string;
 }
 
+export interface IOppgjør {
+  nyAvtale: boolean;
+  oppgjørsformØnsket: Oppgjørsform;
+  oppgjørsformIdag: Oppgjørsform;
+}
+
 export interface PrivatAvtaleDto {
   språk: SpråkkodeIdKey;
   navSkjemaId: NavSkjemaIdKey;
   bidragsmottaker: IPerson;
   bidragspliktig: IPerson;
   barn: IBarnOgBidrag[];
-  nyAvtale: boolean;
-  oppgjorsform: Oppgjørsform;
+  oppgjør: IOppgjør;
   andreBestemmelser: IAndreBestemmelser;
   vedlegg: Vedleggskrav;
 }
