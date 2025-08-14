@@ -4,6 +4,7 @@
   --content-width: 670px;
   --a-blue-800: rgba(0, 52, 125, 1);
   --a-blue-600: rgba(0, 86, 180, 1);
+  --a-blue-700: rgba(0, 69, 156, 1);
   --a-font-size-large: 1.125rem;
   --a-font-size-medium: 1rem;
   --a-font-weight-bold: 600;
@@ -441,6 +442,7 @@ Custom components
   margin: 0;
 }
 
+/* Privat avtale for bidragskalkulator */
 .bidragskalkulatorContainer {
   width: 100%;
 
@@ -470,7 +472,7 @@ Custom components
   /* Subheadings (SignaturBoks titles) */
   h3 {
     font-weight: 600;
-    color: var(--a-blue-600);
+    color: var(--a-blue-700);
   }
 
   /* Definition list labels */
@@ -489,30 +491,58 @@ Custom components
     font-weight: 400;
   }
 
-  .signatur-seksjon {
-    display: flex;
-    flex-direction: column;
-    gap: 40px;
+  .underskrifter h3 {
+    margin-top: 16px;
+    margin-bottom: 12px;
   }
 
-  /* Signature lines (matching PDF appearance) */
+  .signatur-seksjon {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .signatur-element {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .signature-label {
+    white-space: nowrap;
+  }
+
   .signature-line {
-    display: inline-block;
-    width: 80%;
-    height: 30px;
-    border-bottom: 1px solid #000;
-    vertical-align: bottom;
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 1.2em;
+    border-bottom: 1px dotted #000;
+    line-height: 0;
   }
 }
 
 @media print {
-  .bidragskalkulatorContainer .flex {
-    break-inside: auto !important;
-    page-break-inside: auto !important;
-  }
+  .bidragskalkulatorContainer {
+    page: bidragskalkulatorPage;
 
-  .underskrifter {
-    page-break-before: always;
-    break-before: page;
+    .flex {
+      break-inside: auto !important;
+      page-break-inside: auto !important;
+    }
+  }
+}
+
+@page bidragskalkulatorPage {
+  size: auto;
+  margin: 64px 64px 74px 64px;
+  padding-bottom: 0cm;
+  padding-top: 0cm;
+
+  @top-center {
+    content: element(header);
+  }
+  @bottom-center {
+    content: element(footer);
   }
 }

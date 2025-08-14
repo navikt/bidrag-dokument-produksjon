@@ -97,9 +97,9 @@ export default function PrivatAvtaleBidragskalkulator() {
   const tekster = hentTekst(språk, tekst);
 
   return (
-    <div id="privat_avtale" className="w-full">
+    <div id="privat_avtale" lang={språk}>
       <HeaderFooter språk={språk} />
-      <div className="bidragskalkulatorContainer w-full">
+      <div className="bidragskalkulatorContainer">
         <NavLogo />
         <h1>{tekster.tittel}</h1>
         <p>{kodeOfNavSkjemaIdKey(data.navSkjemaId)}</p>

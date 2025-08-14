@@ -19,9 +19,9 @@ export const SignaturBoks = ({ bidragstype, språk }: SignaturBoksProps) => {
       <h3>{bidragstypeTekster[bidragstype][språk]}</h3>
       <div className="signatur-seksjon">
         {seksjoner.map((label) => (
-          <div className="flex flex-col" key={label}>
-            <p>{label}</p>
-            <div className="signature-line" />
+          <div className="signatur-element" key={label}>
+            <span className="signature-label">{label}</span>
+            <div className="signature-line" aria-hidden></div>
           </div>
         ))}
       </div>
