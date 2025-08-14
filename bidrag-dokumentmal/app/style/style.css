@@ -4,6 +4,7 @@
   --content-width: 670px;
   --a-blue-800: rgba(0, 52, 125, 1);
   --a-blue-600: rgba(0, 86, 180, 1);
+  --a-blue-700: rgba(0, 69, 156, 1);
   --a-font-size-large: 1.125rem;
   --a-font-size-medium: 1rem;
   --a-font-weight-bold: 600;
@@ -441,34 +442,7 @@ Custom components
   margin: 0;
 }
 
-/* .bidragskalkulatorContainer {
-  h1,
-  h2,
-  p,
-  dt,
-  dd {
-    font-family: "Source Sans 3", "Source Sans Pro", Arial, sans-serif;
-    letter-spacing: normal;
-  }
-
-  h1 {
-    font-size: 14pt; 
-  }
-
-  h2 {
-    font-size: 12pt;
-  }
-
-  h3 {
-    font-size: 11pt;
-  }
-
-  dd {
-    margin-left: 0;
-    letter-spacing: normal;
-  }
-} */
-
+/* Privat avtale for bidragskalkulator */
 .bidragskalkulatorContainer {
   width: 100%;
 
@@ -498,7 +472,7 @@ Custom components
   /* Subheadings (SignaturBoks titles) */
   h3 {
     font-weight: 600;
-    color: var(--a-blue-600);
+    color: var(--a-blue-700);
   }
 
   /* Definition list labels */
@@ -517,19 +491,58 @@ Custom components
     font-weight: 400;
   }
 
-  /* Signature lines (matching PDF appearance) */
+  .underskrifter h3 {
+    margin-top: 16px;
+    margin-bottom: 12px;
+  }
+
+  .signatur-seksjon {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+  }
+
+  .signatur-element {
+    display: flex;
+    align-items: center;
+    gap: 15px;
+  }
+
+  .signature-label {
+    white-space: nowrap;
+  }
+
   .signature-line {
-    display: inline-block;
-    width: 80%;
-    height: 50px;
-    border-bottom: 1px solid #000;
-    vertical-align: bottom;
+    flex: 1 1 auto;
+    min-width: 0;
+    height: 1.2em;
+    border-bottom: 1px dotted #000;
+    line-height: 0;
   }
 }
 
 @media print {
-  .bidragskalkulatorContainer .flex {
-    break-inside: auto !important;
-    page-break-inside: auto !important;
+  .bidragskalkulatorContainer {
+    page: bidragskalkulatorPage;
+
+    .flex {
+      break-inside: auto !important;
+      page-break-inside: auto !important;
+    }
+  }
+}
+
+@page bidragskalkulatorPage {
+  size: auto;
+  margin: 64px 64px 74px 64px;
+  padding-bottom: 0cm;
+  padding-top: 0cm;
+
+  @top-center {
+    content: element(header);
+  }
+  @bottom-center {
+    content: element(footer);
   }
 }
