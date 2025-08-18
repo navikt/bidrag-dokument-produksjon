@@ -26,7 +26,7 @@ export const oppgjørsformTekster: Record<
 > = {
   PRIVAT: {
     nb: "Vi ønsker å gjøre opp bidraget oss i mellom (privat).",
-    nn: "Vi ønskjer å gjere opp bidraget oss imellom (privat).",
+    nn: "Vi ønskjer å gjere opp bidraget oss i mellom (privat).",
     en: "We want to settle the support between us (privately).",
   },
   INNKREVING: {
@@ -39,7 +39,7 @@ export const oppgjørsformTekster: Record<
 export interface IPerson {
   fornavn: string;
   etternavn: string;
-  fodselsnummer: string;
+  ident: string;
 }
 
 export interface IAndreBestemmelser {
@@ -47,38 +47,10 @@ export interface IAndreBestemmelser {
   beskrivelse?: string;
 }
 
-export type TilknyttetAvtaleVedlegg =
-  | "SENDES_MED_SKJEMA"
-  | "ETTERSENDES"
-  | "LEVERT_TIDLIGERE";
+export type Vedleggskrav = "SENDES_MED_SKJEMA" | "INGEN_EKSTRA_DOKUMENTASJON";
 
-export const tilknyttetAvtaleVedleggTekster: Record<
-  TilknyttetAvtaleVedlegg,
-  Record<SpråkType, string>
-> = {
-  SENDES_MED_SKJEMA: {
-    nb: "Jeg legger det ved dette skjemaet",
-    nn: "Eg legg det ved dette skjemaet",
-    en: "I'll attach it to this form",
-  },
-  ETTERSENDES: {
-    nb: "Jeg ettersender dokumentasjonen senere",
-    nn: "Eg ettersender dokumentasjonen seinare",
-    en: "I'll send the documentation later",
-  },
-  LEVERT_TIDLIGERE: {
-    nb: "Jeg har levert denne dokumentasjonen tidligere",
-    nn: "Eg har levert denne dokumentasjonen tidlegare",
-    en: "I have submitted this documentation earlier",
-  },
-};
-
-export type AnnenDokumentasjon =
-  | "SENDES_MED_SKJEMA"
-  | "INGEN_EKSTRA_DOKUMENTASJON";
-
-export const annenDokumentasjonTekster: Record<
-  AnnenDokumentasjon,
+export const vedleggskravTekster: Record<
+  Vedleggskrav,
   Record<SpråkType, string>
 > = {
   SENDES_MED_SKJEMA: {
@@ -93,24 +65,15 @@ export const annenDokumentasjonTekster: Record<
   },
 };
 
-export interface IVedlegg {
-  tilknyttetAvtale: TilknyttetAvtaleVedlegg;
-  annenDokumentasjon: AnnenDokumentasjon;
+export interface IBarnOgBidrag extends IPerson {
+  sumBidrag: number; // Beløp i kroner
+  fraDato: string;
 }
 
-export const annenDokumentasjonAlternativer = (språk: SpråkType) => [
-  {
-    value: "SENDES_MED_SKJEMA" as AnnenDokumentasjon,
-    label: annenDokumentasjonTekster.SENDES_MED_SKJEMA[språk],
-  },
-  {
-    value: "INGEN_EKSTRA_DOKUMENTASJON" as AnnenDokumentasjon,
-    label: annenDokumentasjonTekster.INGEN_EKSTRA_DOKUMENTASJON[språk],
-  },
-];
-
-export interface IBarn extends IPerson {
-  sumBidrag: number; // Beløp i kroner
+export interface IOppgjør {
+  nyAvtale: boolean;
+  oppgjørsformØnsket: Oppgjørsform;
+  oppgjørsformIdag: Oppgjørsform;
 }
 
 export interface PrivatAvtaleDto {
@@ -118,12 +81,10 @@ export interface PrivatAvtaleDto {
   navSkjemaId: NavSkjemaIdKey;
   bidragsmottaker: IPerson;
   bidragspliktig: IPerson;
-  barn: IBarn[];
-  fraDato: string;
-  nyAvtale: boolean;
-  oppgjorsform: Oppgjørsform;
+  barn: IBarnOgBidrag[];
+  oppgjør: IOppgjør;
   andreBestemmelser: IAndreBestemmelser;
-  vedlegg: IVedlegg;
+  vedlegg: Vedleggskrav;
 }
 
 export enum NavSkjemaId {
