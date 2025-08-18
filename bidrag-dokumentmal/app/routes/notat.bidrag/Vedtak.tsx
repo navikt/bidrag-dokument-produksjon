@@ -4,10 +4,15 @@ import {
 } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
-import { formatPeriode, deductDays } from "~/utils/date-utils";
+import { deductDays, formatPeriode } from "~/utils/date-utils";
 import elementIds from "~/utils/elementIds";
 import { groupBy } from "~/utils/array-utils";
-import { TableData, CommonTable, TableRow } from "~/components/CommonTable";
+import {
+  CommonTable,
+  TableData,
+  TableRow,
+  TableHeader,
+} from "~/components/CommonTable";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
 import {
   formatterBeløpForBeregning,
@@ -21,7 +26,9 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
   return (
     <>
       <div className={"elements_inline section-title break-before-page"}>
-        <h2 className={"section-title"}>Vedtak</h2>
+        <h2 className={"section-title"}>
+          {data.erOrkestrertVedtak ? "Klagevedtak" : "Vedtak"}
+        </h2>
         {!erAvslag && (
           <a href={`#${elementIds.vedleggBeregningsdetaljer}`}>
             se vedlegg nr. {vedleggNummer} for beregningsdetaljer
@@ -33,9 +40,25 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
           data={data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]}
         />
       ) : (
-        <VedtakTable
-          data={data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]}
-        />
+        <>
+          <VedtakTable
+            data={
+              data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]
+            }
+          />
+        </>
+      )}
+      {data.erOrkestrertVedtak && (
+        <>
+          <div className={"elements_inline section-title break-before-page"}>
+            <h2 className={"section-title"}>Endelig vedtak</h2>
+          </div>
+          <VedtakEndeligTable
+            data={
+              data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]
+            }
+          />
+        </>
       )}
       <VedtakFattetDetaljer data={data.vedtak} />
     </>
@@ -86,9 +109,11 @@ function VedtakTable({
   data: NotatResultatBidragsberegningBarnDto[];
 }) {
   if (data.length == 0) return <div>Mangler resultat</div>;
+
   function renderAvslag(d) {
     return [{ content: "", colSpan: 5 }, { content: "Avslag" }];
   }
+
   function renderResult(d) {
     return [
       { content: formatterBeløpForBeregning(d.underholdskostnad) },
@@ -157,6 +182,7 @@ function VedtakTable({
       { content: formatterBeløpForBeregning(d.faktiskBidrag) },
     ];
   }
+
   return (
     <>
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
@@ -223,6 +249,121 @@ function VedtakTable({
                 ],
               } as TableRow,
             ]) as TableRow[],
+        };
+        return (
+          <>
+            <TableGjelderBarn gjelderBarn={gjelderBarn} />
+            {value[0].indeksår && (
+              <DataViewTable
+                className={"mb-1 mt-2"}
+                data={
+                  [
+                    {
+                      label: "Neste indeksår",
+                      value: value[0].indeksår,
+                    },
+                  ].filter((d) => d != null) as DataViewTableData[]
+                }
+              />
+            )}
+            {gjelderBarn.innbetaltBeløp && (
+              <DataViewTable
+                className="mt-2 mb-2"
+                data={[
+                  {
+                    label: "Innbetalt beløp",
+                    labelBold: true,
+                    value: gjelderBarn.innbetaltBeløp,
+                  },
+                ]}
+              />
+            )}
+            <CommonTable data={tableData} />
+          </>
+        );
+      })}
+    </>
+  );
+}
+
+function VedtakEndeligTable({
+  data,
+}: {
+  data: NotatResultatBidragsberegningBarnDto[];
+}) {
+  if (data.length == 0) return null;
+  if (data.every((e) => e.orkestrertVedtak === null)) return null;
+
+  return (
+    <>
+      {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
+        const gjelderBarn = value[0].barn!;
+        const perioder = value[0].orkestrertVedtak.perioder;
+        const vurderUgyldighet = perioder.some(
+          (e) => e.klageOmgjøringDetaljer?.kanOpprette35c === true,
+        );
+        console.log("vurderUgyldighet", vurderUgyldighet);
+        const tableData: TableData = {
+          headers: (vurderUgyldighet
+            ? [
+                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                //@ts-ignore
+                { name: "Vurder ugyldighet", width: "20px" } as TableHeader,
+              ]
+            : []
+          ).concat([
+            { name: "Periode", width: "120px" },
+            { name: "Type", width: "100px" },
+            { name: "Beløp", width: "120px" },
+            { name: "Resultat", width: "130px" },
+          ]),
+          rows: perioder
+            .flatMap((d) => [
+              {
+                skipBorderBottom: true,
+                columns: [
+                  vurderUgyldighet
+                    ? {
+                        content: d.klageOmgjøringDetaljer?.kanOpprette35c
+                          ? d.klageOmgjøringDetaljer?.skalOpprette35c
+                            ? "Ja"
+                            : "Nei"
+                          : "",
+                      }
+                    : null,
+                  { content: formatPeriode(d.periode.fom, d.periode.til) },
+                  {
+                    content: d.delvedtakstypeVisningsnavn,
+                  },
+                  {
+                    content: d.erOpphør
+                      ? "-"
+                      : formatterBeløpForBeregning(d.faktiskBidrag),
+                  },
+                  {
+                    content: d.resultatkodeVisningsnavn,
+                  },
+                ].filter((d) => d != null),
+              },
+            ])
+            .concat([
+              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+              //@ts-ignore
+              {
+                skipBorderBottom: true,
+                zebraStripe: false,
+                skipPadding: true,
+                className: "pt-2",
+                columns: [
+                  {
+                    fullSpan: true,
+                    content:
+                      "U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
+                  },
+                ],
+              } as TableRow,
+            ])
+            .filter((d) => d != null) as TableRow[],
         };
         return (
           <>

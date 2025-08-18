@@ -188,6 +188,10 @@
   margin-top: 16px
 }
 
+.ml-10 {
+  margin-left: 40px
+}
+
 .block {
   display: block
 }
@@ -210,10 +214,6 @@
 
 .inline-table {
   display: inline-table
-}
-
-.h-10 {
-  height: 40px
 }
 
 .w-\[--content-width\] {
@@ -273,8 +273,8 @@
   gap: 16px
 }
 
-.divide-solid > :not([hidden]) ~ :not([hidden]) {
-  border-style: solid
+.gap-5 {
+  gap: 20px
 }
 
 .self-center {

@@ -6,6 +6,7 @@ export const EndeligBidragTable = () => {
   const {
     deltBosted,
     sluttberegning,
+    sluttberegningAldersjustering,
     samværsfradrag: beregning,
   } = useBeregningDetaljer();
 
@@ -20,13 +21,13 @@ export const EndeligBidragTable = () => {
               ? {
                   label: "Etter samværsfradraget",
                   textRight: false,
-                  value: `${formatterBeløpForBeregning(sluttberegning.bruttoBidragEtterBarnetilleggBP)} - ${formatterBeløpForBeregning(beregning.samværsfradrag)} = ${formatterBeløpForBeregning(sluttberegning.beregnetBeløp)}`,
+                  value: `${formatterBeløpForBeregning(sluttberegningAldersjustering?.bpAndelBeløp ?? sluttberegning?.bruttoBidragEtterBarnetilleggBP)} - ${formatterBeløpForBeregning(beregning.samværsfradrag)} = ${formatterBeløpForBeregning(sluttberegningAldersjustering?.beregnetBeløp ?? sluttberegning?.beregnetBeløp)}`,
                 }
               : null,
             {
               label: "Avrundet beløp",
               textRight: false,
-              value: `${formatterBeløpForBeregning(sluttberegning.resultatBeløp)}`,
+              value: `${formatterBeløpForBeregning(sluttberegningAldersjustering?.resultatBeløp ?? sluttberegning?.resultatBeløp)}`,
             },
           ].filter((d) => d != null) as DataViewTableData[]
         }

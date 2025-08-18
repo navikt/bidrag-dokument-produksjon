@@ -19,6 +19,11 @@ export interface Arbeidsforhold {
   lønnsendringDato?: string;
 }
 
+export interface Belop {
+  verdi: number;
+  valutakode?: Valutakode;
+}
+
 export interface BeregnetBidragPerBarn {
   gjelderBarn: string;
   saksnummer: string;
@@ -48,6 +53,8 @@ export interface BidragPeriodeBeregningsdetaljer {
   endringUnderGrense?: DelberegningEndringSjekkGrensePeriode;
   sluttberegning?: SluttberegningBarnebidrag;
   delberegningUnderholdskostnad?: DelberegningUnderholdskostnad;
+  indeksreguleringDetaljer?: IndeksreguleringDetaljer;
+  sluttberegningAldersjustering?: SluttberegningBarnebidragAldersjustering;
   delberegningBidragspliktigesBeregnedeTotalBidrag?: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto;
   deltBosted: boolean;
 }
@@ -145,6 +152,16 @@ export interface DelberegningUtgift {
   sumGodkjent: number;
 }
 
+export interface EndeligOrkestrertVedtak {
+  type?: Vedtakstype;
+  perioder: ResultatBarnebidragsberegningPeriodeDto[];
+}
+
+export interface IndeksreguleringDetaljer {
+  sluttberegning?: SluttberegningIndeksregulering;
+  faktor: number;
+}
+
 export interface InntekterPerRolle {
   gjelder: NotatPersonDto;
   arbeidsforhold: Arbeidsforhold[];
@@ -239,6 +256,35 @@ export enum Kilde {
   OFFENTLIG = "OFFENTLIG",
 }
 
+export interface KlageOmgjoringDetaljer {
+  /** @format date-time */
+  resultatFraVedtakVedtakstidspunkt?: string;
+  beregnTilDato?: {
+    /** @format int32 */
+    year?: number;
+    month?:
+      | "JANUARY"
+      | "FEBRUARY"
+      | "MARCH"
+      | "APRIL"
+      | "MAY"
+      | "JUNE"
+      | "JULY"
+      | "AUGUST"
+      | "SEPTEMBER"
+      | "OCTOBER"
+      | "NOVEMBER"
+      | "DECEMBER";
+    /** @format int32 */
+    monthValue?: number;
+    leapYear?: boolean;
+  };
+  manuellAldersjustering: boolean;
+  delAvVedtaket: boolean;
+  kanOpprette35c: boolean;
+  skalOpprette35c: boolean;
+}
+
 export interface NotatAndreVoksneIHusstanden {
   opplysningerFraFolkeregisteret: OpplysningerFraFolkeregisteretMedDetaljerBostatuskodeNotatAndreVoksneIHusstandenDetaljerDto[];
   opplysningerBruktTilBeregning: OpplysningerBruktTilBeregningBostatuskode[];
@@ -304,9 +350,9 @@ export interface NotatBehandlingDetaljerDto {
   /** @format date */
   klageMottattDato?: string;
   avslagVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -517,6 +563,27 @@ export type NotatResultatBidragsberegningBarnDto = UtilRequiredKeys<VedtakResult
   barn: NotatPersonDto;
   /** @format int32 */
   indeksår?: number;
+  innkrevesFraDato?: {
+    /** @format int32 */
+    year?: number;
+    month?:
+      | "JANUARY"
+      | "FEBRUARY"
+      | "MARCH"
+      | "APRIL"
+      | "MAY"
+      | "JUNE"
+      | "JULY"
+      | "AUGUST"
+      | "SEPTEMBER"
+      | "OCTOBER"
+      | "NOVEMBER"
+      | "DECEMBER";
+    /** @format int32 */
+    monthValue?: number;
+    leapYear?: boolean;
+  };
+  orkestrertVedtak?: EndeligOrkestrertVedtak;
   perioder: ResultatBarnebidragsberegningPeriodeDto[];
 };
 
@@ -589,9 +656,9 @@ export interface NotatSkattBeregning {
   trinnskatt: number;
   trygdeavgift: number;
   skattMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface NotatStonadTilBarnetilsynDto {
@@ -839,9 +906,13 @@ export interface ResultatBarnebidragsberegningPeriodeDto {
   beregnetBidrag: number;
   faktiskBidrag: number;
   resultatKode?: Resultatkode;
+  erOpphør: boolean;
   erDirekteAvslag: boolean;
+  vedtakstype: Vedtakstype;
   beregningsdetaljer?: BidragPeriodeBeregningsdetaljer;
-  resultatkodeVisningsnavn?: string;
+  klageOmgjøringDetaljer?: KlageOmgjoringDetaljer;
+  delvedtakstypeVisningsnavn: string;
+  resultatkodeVisningsnavn: string;
 }
 
 export enum Resultatkode {
@@ -1003,6 +1074,26 @@ export interface SluttberegningBarnebidrag {
   uminusNettoBarnetilleggBM: number;
 }
 
+export interface SluttberegningBarnebidragAldersjustering {
+  periode: TypeArManedsperiode;
+  beregnetBeløp: number;
+  resultatBeløp: number;
+  bpAndelBeløp: number;
+  bpAndelFaktorVedDeltBosted?: number;
+  deltBosted: boolean;
+}
+
+export interface SluttberegningIndeksregulering {
+  periode: TypeArManedsperiode;
+  beløp: Belop;
+  originaltBeløp: Belop;
+  nesteIndeksreguleringsår?: {
+    /** @format int32 */
+    value?: number;
+    leap?: boolean;
+  };
+}
+
 export enum Stonadstype {
   BIDRAG = "BIDRAG",
   FORSKUDD = "FORSKUDD",
@@ -1060,8 +1151,50 @@ export enum Utgiftstype {
   ANNET = "ANNET",
 }
 
+export enum Valutakode {
+  ALL = "ALL",
+  ANG = "ANG",
+  AUD = "AUD",
+  BAM = "BAM",
+  BGN = "BGN",
+  BRL = "BRL",
+  CAD = "CAD",
+  CHF = "CHF",
+  CNY = "CNY",
+  CZK = "CZK",
+  DKK = "DKK",
+  EEK = "EEK",
+  EUR = "EUR",
+  GBP = "GBP",
+  HKD = "HKD",
+  HRK = "HRK",
+  HUF = "HUF",
+  INR = "INR",
+  ISK = "ISK",
+  JPY = "JPY",
+  LTL = "LTL",
+  LVL = "LVL",
+  MAD = "MAD",
+  NOK = "NOK",
+  NZD = "NZD",
+  PKR = "PKR",
+  PLN = "PLN",
+  RON = "RON",
+  RSD = "RSD",
+  SEK = "SEK",
+  THB = "THB",
+  TND = "TND",
+  TRY = "TRY",
+  UAH = "UAH",
+  USD = "USD",
+  VND = "VND",
+  ZAR = "ZAR",
+  PHP = "PHP",
+}
+
 export interface VedtakNotatDto {
   type: NotatMalType;
+  erOrkestrertVedtak: boolean;
   stønadstype?: Stonadstype;
   medInnkreving: boolean;
   saksnummer: string;
