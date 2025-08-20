@@ -1,3 +1,4 @@
+/* eslint-disable prettier/prettier */
 import "../../style/style.css";
 
 import { parseRequestAction } from "~/routes/common";
@@ -13,11 +14,11 @@ import {
   IAndreBestemmelser,
   oppgjørsformTekster,
   bidragstypeTekster,
-  PrivatAvtaleDto,
   kodeOfNavSkjemaIdKey,
   Vedleggskrav,
   vedleggskravTekster,
   IOppgjør,
+  GenererPrivatAvtalePdfRequest,
 } from "~/types/bidragskalkulator";
 import {
   hentTekst,
@@ -28,44 +29,46 @@ import {
 import Underskrifter from "~/features/bidragskalkulator/Underskrifter";
 
 // Mock data for development
-const mockRequest: PrivatAvtaleDto = {
-  språk: "NB",
-  bidragsmottaker: {
-    fornavn: "Kristian",
-    etternavn: "Etternavnesen",
-    ident: "12345678901",
-  },
-  bidragspliktig: {
-    fornavn: "Kristine",
-    etternavn: "Etternavnesen",
-    ident: "12345678901",
-  },
-  barn: [
-    {
-      fornavn: "Ola",
+const mockRequest: GenererPrivatAvtalePdfRequest = {
+  privatAvtalePdf: {
+    språk: "NB",
+    bidragsmottaker: {
+      fornavn: "Kristian",
       etternavn: "Etternavnesen",
       ident: "12345678901",
-      sumBidrag: 5000,
-      fraDato: "01.01.2025",
     },
-    {
-      fornavn: "Ola2",
-      etternavn: "Etternavnesen2",
+    bidragspliktig: {
+      fornavn: "Kristine",
+      etternavn: "Etternavnesen",
       ident: "12345678901",
-      sumBidrag: 5000,
-      fraDato: "01.01.2025",
     },
-  ],
-  oppgjør: {
-    nyAvtale: true,
-    oppgjørsformØnsket: "PRIVAT",
-    oppgjørsformIdag: "PRIVAT",
+    barn: [
+      {
+        fornavn: "Ola",
+        etternavn: "Etternavnesen",
+        ident: "12345678901",
+        sumBidrag: 5000,
+        fraDato: "01.01.2025",
+      },
+      {
+        fornavn: "Ola2",
+        etternavn: "Etternavnesen2",
+        ident: "12345678901",
+        sumBidrag: 5000,
+        fraDato: "01.01.2025",
+      },
+    ],
+    oppgjør: {
+      nyAvtale: true,
+      oppgjørsformØnsket: "PRIVAT",
+      oppgjørsformIdag: "PRIVAT",
+    },
+    andreBestemmelser: {
+      harAndreBestemmelser: true,
+      beskrivelse: "Dette er en beskrivelse av andre bestemmelser.",
+    },
+    vedlegg: "INGEN_EKSTRA_DOKUMENTASJON",
   },
-  andreBestemmelser: {
-    harAndreBestemmelser: true,
-    beskrivelse: "Dette er en beskrivelse av andre bestemmelser.",
-  },
-  vedlegg: "INGEN_EKSTRA_DOKUMENTASJON",
   navSkjemaId: "AVTALE_OM_BARNEBIDRAG_UNDER_18",
 };
 
@@ -83,7 +86,7 @@ export async function action(args: ActionFunctionArgs) {
 }
 
 export default function PrivatAvtaleBidragskalkulator() {
-  const actionData = useActionData<{ data: PrivatAvtaleDto }>();
+  const actionData = useActionData<{ data: GenererPrivatAvtalePdfRequest }>();
   const response =
     process.env.NODE_ENV === "development" ? { data: mockRequest } : actionData;
 
@@ -91,8 +94,10 @@ export default function PrivatAvtaleBidragskalkulator() {
     return <div>Oops</div>;
   }
 
-  const { data } = response;
-  const språk = språkkodeTilSpråkType(data.språk) ?? "nb";
+  const {
+    data: { privatAvtalePdf, navSkjemaId },
+  } = response;
+  const språk = språkkodeTilSpråkType(privatAvtalePdf.språk) ?? "nb";
   const innhold = hentTekst(språk, innholdsseksjonTekst);
   const tekster = hentTekst(språk, tekst);
 
@@ -102,20 +107,26 @@ export default function PrivatAvtaleBidragskalkulator() {
       <div className="bidragskalkulatorContainer">
         <NavLogo />
         <h1>{tekster.tittel}</h1>
-        <p>{kodeOfNavSkjemaIdKey(data.navSkjemaId)}</p>
+        <p>{kodeOfNavSkjemaIdKey(navSkjemaId)}</p>
         <div className="flex flex-col gap-4">
           <Innholdsseksjon
-            tekst={innhold.opplysningerPerson("MOTTAKER", data.bidragsmottaker)}
+            tekst={innhold.opplysningerPerson(
+              "MOTTAKER",
+              privatAvtalePdf.bidragsmottaker
+            )}
           />
           <Innholdsseksjon
-            tekst={innhold.opplysningerPerson("PLIKTIG", data.bidragspliktig)}
+            tekst={innhold.opplysningerPerson(
+              "PLIKTIG",
+              privatAvtalePdf.bidragspliktig
+            )}
           />
-          <Innholdsseksjon tekst={innhold.barnOgBidrag(data.barn)} />
-          <Innholdsseksjon tekst={innhold.oppgjør(data.oppgjør)} />
+          <Innholdsseksjon tekst={innhold.barnOgBidrag(privatAvtalePdf.barn)} />
+          <Innholdsseksjon tekst={innhold.oppgjør(privatAvtalePdf.oppgjør)} />
           <Innholdsseksjon
-            tekst={innhold.andreBestemmelser(data.andreBestemmelser)}
+            tekst={innhold.andreBestemmelser(privatAvtalePdf.andreBestemmelser)}
           />
-          <Innholdsseksjon tekst={innhold.vedlegg(data.vedlegg)} />
+          <Innholdsseksjon tekst={innhold.vedlegg(privatAvtalePdf.vedlegg)} />
           <Underskrifter språk={språk} />
         </div>
       </div>

@@ -78,13 +78,17 @@ export interface IOppgjør {
 
 export interface PrivatAvtaleDto {
   språk: SpråkkodeIdKey;
-  navSkjemaId: NavSkjemaIdKey;
   bidragsmottaker: IPerson;
   bidragspliktig: IPerson;
   barn: IBarnOgBidrag[];
   oppgjør: IOppgjør;
   andreBestemmelser: IAndreBestemmelser;
   vedlegg: Vedleggskrav;
+}
+
+export interface GenererPrivatAvtalePdfRequest {
+  privatAvtalePdf: PrivatAvtaleDto;
+  navSkjemaId: NavSkjemaIdKey;
 }
 
 export enum NavSkjemaId {
