@@ -69,7 +69,7 @@ const mockRequest: GenererPrivatAvtalePdfRequest = {
     },
     vedlegg: "INGEN_EKSTRA_DOKUMENTASJON",
   },
-  navSkjemaId: "AVTALE_OM_BARNEBIDRAG_UNDER_18",
+  navSkjemaId: "AVTALE_OM_BARNEBIDRAG_OVER_18",
 };
 
 export function meta() {
@@ -97,6 +97,8 @@ export default function PrivatAvtaleBidragskalkulator() {
   const {
     data: { privatAvtalePdf, navSkjemaId },
   } = response;
+  const erPrivatAvtaleBarnOver18 =
+    navSkjemaId === "AVTALE_OM_BARNEBIDRAG_OVER_18";
   const språk = språkkodeTilSpråkType(privatAvtalePdf.språk) ?? "nb";
   const innhold = hentTekst(språk, innholdsseksjonTekst);
   const tekster = hentTekst(språk, tekst);
@@ -106,13 +108,18 @@ export default function PrivatAvtaleBidragskalkulator() {
       <HeaderFooter språk={språk} />
       <div className="bidragskalkulatorContainer">
         <NavLogo />
-        <h1>{tekster.tittel}</h1>
+        <h1>
+          {erPrivatAvtaleBarnOver18
+            ? tekster.barnOver18.tittel
+            : tekster.barnUnder18.tittel}
+        </h1>
         <p>{kodeOfNavSkjemaIdKey(navSkjemaId)}</p>
         <div className="flex flex-col gap-4">
           <Innholdsseksjon
             tekst={innhold.opplysningerPerson(
               "MOTTAKER",
-              privatAvtalePdf.bidragsmottaker
+              privatAvtalePdf.bidragsmottaker,
+              true
             )}
           />
           <Innholdsseksjon
@@ -133,85 +140,113 @@ export default function PrivatAvtaleBidragskalkulator() {
     </div>
   );
 }
-
 const tekst = {
-  tittel: {
-    nb: "Privat avtale om barnebidrag",
-    nn: "Privat avtale om barnebidrag",
-    en: "Private agreement on child support",
+  barnUnder18: {
+    nb: {
+      tittel: "Privat avtale om barnebidrag",
+    },
+    nn: {
+      tittel: "Privat avtale om barnebidrag",
+    },
+    en: {
+      tittel: "Private agreement on child support",
+    },
+  },
+  barnOver18: {
+    nb: {
+      tittel: "Privat avtale om barnebidrag for barn over 18 år",
+    },
+    nn: {
+      tittel: "Privat avtale om barnebidrag for barn over 18 år",
+    },
+    en: {
+      tittel: "Private agreement on child support for children over 18 years",
+    },
   },
 };
 
 const innholdsseksjonTekst = {
-  opplysningerPerson: (bidragstype: Bidragstype, person: IPerson) => ({
-    nb: {
-      overskrift: `Opplysninger om ${bidragstypeTekster[bidragstype].nb.toLowerCase()}`,
-      innhold: [
-        { label: "Fornavn", value: person.fornavn, vis: true, type: "text" },
-        {
-          label: "Etternavn",
-          value: person.etternavn,
-          vis: true,
-          type: "text",
-        },
-        ...(person.ident
-          ? [
-              {
-                label: "Fødselsnummer eller D-nummer (11 siffer)",
-                value: person.ident,
-                vis: true,
-                type: "text",
-              },
-            ]
-          : []),
-      ],
-    },
-    nn: {
-      overskrift: `Opplysningar om ${bidragstypeTekster[bidragstype].nn.toLowerCase()}`,
-      innhold: [
-        { label: "Fornamn", value: person.fornavn, vis: true, type: "text" },
-        {
-          label: "Etternamn",
-          value: person.etternavn,
-          vis: true,
-          type: "text",
-        },
-        ...(person.ident
-          ? [
-              {
-                label: "Fødselsnummer eller D-nummer (11 siffer)",
-                value: person.ident,
-                vis: true,
-                type: "text",
-              },
-            ]
-          : []),
-      ],
-    },
-    en: {
-      overskrift: `Information about ${bidragstypeTekster[bidragstype].en.toLowerCase()}`,
-      innhold: [
-        { label: "First name", value: person.fornavn, vis: true, type: "text" },
-        {
-          label: "Last name",
-          value: person.etternavn,
-          vis: true,
-          type: "text",
-        },
-        ...(person.ident
-          ? [
-              {
-                label:
-                  "Norwegian national identification number or D-number (11 digits)",
-                value: person.ident,
-                vis: true,
-                type: "text",
-              },
-            ]
-          : []),
-      ],
-    },
-  }),
+  opplysningerPerson: (
+    bidragstype: Bidragstype,
+    person: IPerson,
+    erOver18: boolean = false
+  ) => {
+    const rolle = bidragstypeTekster[bidragstype];
+    return {
+      nb: {
+        overskrift: `Opplysninger om ${rolle.nb.toLowerCase()} ${erOver18 ? "(barnet over 18 år)" : ""}`,
+        innhold: [
+          { label: "Fornavn", value: person.fornavn, vis: true, type: "text" },
+          {
+            label: "Etternavn",
+            value: person.etternavn,
+            vis: true,
+            type: "text",
+          },
+          ...(person.ident
+            ? [
+                {
+                  label: "Fødselsnummer eller D-nummer (11 siffer)",
+                  value: person.ident,
+                  vis: true,
+                  type: "text",
+                },
+              ]
+            : []),
+        ],
+      },
+      nn: {
+        overskrift: `Opplysningar om ${rolle.nn.toLowerCase()} ${erOver18 ? "(barnet over 18 år)" : ""}`,
+        innhold: [
+          { label: "Fornamn", value: person.fornavn, vis: true, type: "text" },
+          {
+            label: "Etternamn",
+            value: person.etternavn,
+            vis: true,
+            type: "text",
+          },
+          ...(person.ident
+            ? [
+                {
+                  label: "Fødselsnummer eller D-nummer (11 siffer)",
+                  value: person.ident,
+                  vis: true,
+                  type: "text",
+                },
+              ]
+            : []),
+        ],
+      },
+      en: {
+        overskrift: `Information about ${rolle.en.toLowerCase()} ${erOver18 ? "(children over 18 years)" : ""}`,
+        innhold: [
+          {
+            label: "First name",
+            value: person.fornavn,
+            vis: true,
+            type: "text",
+          },
+          {
+            label: "Last name",
+            value: person.etternavn,
+            vis: true,
+            type: "text",
+          },
+          ...(person.ident
+            ? [
+                {
+                  label:
+                    "Norwegian national identification number or D-number (11 digits)",
+                  value: person.ident,
+                  vis: true,
+                  type: "text",
+                },
+              ]
+            : []),
+        ],
+      },
+    };
+  },
   barnOgBidrag: (barn: IBarnOgBidrag[]) => ({
     nb: {
       overskrift: "Opplysninger om barn og bidrag",
