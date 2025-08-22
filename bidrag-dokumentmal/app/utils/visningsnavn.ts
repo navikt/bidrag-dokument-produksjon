@@ -87,6 +87,14 @@ export const formatterProsent = (
   });
 };
 
+/** Formatterer et beløp med språkstøtte.
+ * @param sum - Beløpet som skal formateres.
+ * @param språk - Språkkode for formatering (standard er 'nb').
+ * @returns Formatert beløp som en streng.
+ * @example
+ * formatterBeløpMedSpråk(2000, 'nb'); // Returneres "2 000 kr"
+ * formatterBeløpMedSpråk(2000, 'en'); // Returneres "2,000 NOK"
+ */
 export const formatterBeløpMedSpråk = (
   sum: number,
   språk: SpråkType = "nb",

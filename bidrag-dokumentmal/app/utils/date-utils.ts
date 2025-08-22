@@ -225,6 +225,15 @@ export const formatPeriode = (
   return `${dateToDDMMYYYY(dateFom)} - ${dateToDDMMYYYY(lastDayOfMonth(dateTom))}`;
 };
 
+/** Formatter for år og måned i formatet "MMMM, ÅÅÅÅ" */
+/**
+ * @param årMånedStr - Input streng i formatet 'ÅÅÅÅ-MM'
+ * @param språkKode - Språkkode for formatering (standard er 'nb')
+ * @returns Formatert streng i formatet "MMMM, ÅÅÅÅ"
+ * @example
+ * formatterÅrMåned('2023-10', 'nb'); // Returneres "Oktober, 2023"
+ * formatterÅrMåned('2023-10', 'en'); // Returneres "October, 2023"
+ */
 export function formatterÅrMåned(
   årMånedStr: string,
   språkKode: SpråkType = "nb",
