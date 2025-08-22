@@ -59,7 +59,7 @@ const mockUnder18Request: GenererPrivatAvtalePdfRequest = {
 };
 const mockOver18Request: GenererPrivatAvtalePdfRequest = {
   privatAvtalePdf: {
-    språk: "EN",
+    språk: "NB",
     bidragsmottaker: {
       fornavn: "Kristian",
       etternavn: "Etternavnesen",
