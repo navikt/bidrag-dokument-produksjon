@@ -70,13 +70,19 @@ export interface IBarnOgBidrag extends IPerson {
   fraDato: string;
 }
 
+export interface IBidrag {
+  bidragPerMåned: number;
+  fraDato: string;
+  tilDato: string;
+}
+
 export interface IOppgjør {
   nyAvtale: boolean;
   oppgjørsformØnsket: Oppgjørsform;
   oppgjørsformIdag: Oppgjørsform;
 }
 
-export interface PrivatAvtaleDto {
+export interface PrivatAvtaleBarnUnder18Dto {
   språk: SpråkkodeIdKey;
   bidragsmottaker: IPerson;
   bidragspliktig: IPerson;
@@ -86,10 +92,20 @@ export interface PrivatAvtaleDto {
   vedlegg: Vedleggskrav;
 }
 
-export interface GenererPrivatAvtalePdfRequest {
-  privatAvtalePdf: PrivatAvtaleDto;
-  navSkjemaId: NavSkjemaIdKey;
+export interface PrivatAvtaleBarnOver18Dto
+  extends Omit<PrivatAvtaleBarnUnder18Dto, "barn"> {
+  bidrag: IBidrag[];
 }
+
+export type GenererPrivatAvtalePdfRequest =
+  | {
+      navSkjemaId: "AVTALE_OM_BARNEBIDRAG_UNDER_18";
+      privatAvtalePdf: PrivatAvtaleBarnUnder18Dto;
+    }
+  | {
+      navSkjemaId: "AVTALE_OM_BARNEBIDRAG_OVER_18";
+      privatAvtalePdf: PrivatAvtaleBarnOver18Dto;
+    };
 
 export enum NavSkjemaId {
   AVTALE_OM_BARNEBIDRAG_UNDER_18 = "NAV 55-00.63",
