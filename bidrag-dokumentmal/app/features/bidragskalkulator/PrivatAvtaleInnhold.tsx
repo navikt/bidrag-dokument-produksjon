@@ -120,7 +120,7 @@ const innholdsseksjonTekst = {
         ],
       },
       en: {
-        overskrift: `Information about ${rolle.en.toLowerCase()} ${erOver18 ? "(children over 18 years)" : ""}`,
+        overskrift: `Information about ${rolle.en.toLowerCase()} ${erOver18 ? "(child over 18 years)" : ""}`,
         innhold: [
           {
             label: "First name",
@@ -193,7 +193,7 @@ const innholdsseksjonTekst = {
         { label: "Fornamn", value: b.fornavn, vis: true, type: "text" },
         { label: "Etternamn", value: b.etternavn, vis: true, type: "text" },
         {
-          label: "Fødselsnummer eller D-nummer",
+          label: "Fødselsnummer eller D-nummer (11 siffer)",
           value: b.ident,
           vis: true,
           type: "text",
@@ -429,8 +429,8 @@ const innholdsseksjonTekst = {
         {
           label: "Andre bestemmingar knytt til avtalen",
           value: andreBestemmelser.harAndreBestemmelser
-            ? jaNeiTekster.JA.en
-            : jaNeiTekster.NEI.en,
+            ? jaNeiTekster.JA.nn
+            : jaNeiTekster.NEI.nn,
           vis:
             (andreBestemmelser.harAndreBestemmelser &&
               andreBestemmelser.beskrivelse) ??
@@ -446,7 +446,7 @@ const innholdsseksjonTekst = {
           label: "Are there any other conditions that apply to the agreement?",
           value: andreBestemmelser.harAndreBestemmelser
             ? jaNeiTekster.JA.en
-            : jaNeiTekster.JA.en,
+            : jaNeiTekster.NEI.en,
           vis: true,
           type: "text",
         },
