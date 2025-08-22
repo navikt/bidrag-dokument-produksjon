@@ -59,7 +59,7 @@ const mockUnder18Request: GenererPrivatAvtalePdfRequest = {
 };
 const mockOver18Request: GenererPrivatAvtalePdfRequest = {
   privatAvtalePdf: {
-    språk: "NB",
+    språk: "EN",
     bidragsmottaker: {
       fornavn: "Kristian",
       etternavn: "Etternavnesen",
@@ -73,13 +73,13 @@ const mockOver18Request: GenererPrivatAvtalePdfRequest = {
     bidrag: [
       {
         bidragPerMåned: 2000,
-        fraDato: "Januar, 2025",
-        tilDato: "Februar, 2025",
+        fraDato: "2025-01",
+        tilDato: "2025-02",
       },
       {
         bidragPerMåned: 3000,
-        fraDato: "Mars, 2025",
-        tilDato: "April, 2025",
+        fraDato: "2025-03",
+        tilDato: "2025-06",
       },
     ],
     oppgjør: {

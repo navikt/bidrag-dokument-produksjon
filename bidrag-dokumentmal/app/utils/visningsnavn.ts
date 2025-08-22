@@ -1,5 +1,6 @@
 import { Rolletype, SoktAvType } from "~/types/Api";
 import { konverterRolletype } from "~/utils/converter-utils";
+import { localeMap, SpråkType } from "./oversettelser";
 
 export const sammenlignRoller = (rolle?: Rolletype, erLikRolle?: Rolletype) =>
   rolle != undefined &&
@@ -84,4 +85,26 @@ export const formatterProsent = (
     minimumFractionDigits: 0,
     maximumFractionDigits: 2,
   });
+};
+
+export const formatterBeløpMedSpråk = (
+  sum: number,
+  språk: SpråkType = "nb",
+): string => {
+  const locale = localeMap[språk] ?? "nb-NO";
+
+  const formatted = sum.toLocaleString(locale, {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 0,
+  });
+
+  switch (språk) {
+    case "nb":
+    case "nn":
+      return `${formatted} kr`; // Norsk bokmål/nynorsk → "2 000 kr"
+    case "en":
+      return `${formatted} NOK`; // Engelsk → "2,000 NOK"
+    default:
+      return `${formatted} kr`;
+  }
 };

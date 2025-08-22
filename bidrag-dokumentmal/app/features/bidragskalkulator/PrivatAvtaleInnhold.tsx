@@ -15,7 +15,8 @@ import {
   vedleggskravTekster,
   GenererPrivatAvtalePdfRequest,
 } from "~/types/bidragskalkulator";
-import { formatterSum } from "~/utils/tall";
+import { formatterBeløpMedSpråk } from "~/utils/visningsnavn";
+import { formatterÅrMåned } from "~/utils/date-utils";
 
 type Props = {
   språk: SpråkType;
@@ -168,7 +169,7 @@ const innholdsseksjonTekst = {
         },
         {
           label: "Beløp per måned",
-          value: formatterSum(b.sumBidrag),
+          value: formatterBeløpMedSpråk(b.sumBidrag),
           vis: true,
           type: "text",
         },
@@ -199,7 +200,7 @@ const innholdsseksjonTekst = {
         },
         {
           label: "Beløp per månad",
-          value: formatterSum(b.sumBidrag),
+          value: formatterBeløpMedSpråk(b.sumBidrag),
           vis: true,
           type: "text",
         },
@@ -230,7 +231,7 @@ const innholdsseksjonTekst = {
         },
         {
           label: "Child support amount",
-          value: formatterSum(b.sumBidrag, "en"),
+          value: formatterBeløpMedSpråk(b.sumBidrag, "en"),
           vis: true,
           type: "text",
         },
@@ -255,19 +256,19 @@ const innholdsseksjonTekst = {
         },
         {
           label: "Bidrag per måned",
-          value: formatterSum(b.bidragPerMåned),
+          value: formatterBeløpMedSpråk(b.bidragPerMåned),
           vis: true,
           type: "text",
         },
         {
           label: "Bidraget skal betales f.o.m.",
-          value: b.fraDato,
+          value: formatterÅrMåned(b.fraDato),
           vis: true,
           type: "text",
         },
         {
           label: "Bidraget skal betales t.o.m.",
-          value: b.tilDato,
+          value: formatterÅrMåned(b.tilDato),
           vis: true,
           type: "text",
         },
@@ -284,19 +285,19 @@ const innholdsseksjonTekst = {
         },
         {
           label: "Bidrag per månad",
-          value: formatterSum(b.bidragPerMåned),
+          value: formatterBeløpMedSpråk(b.bidragPerMåned),
           vis: true,
           type: "text",
         },
         {
           label: "Bidraget skal betalast f.o.m.",
-          value: b.fraDato,
+          value: formatterÅrMåned(b.fraDato),
           vis: true,
           type: "text",
         },
         {
           label: "Bidraget skal betalast t.o.m.",
-          value: b.tilDato,
+          value: formatterÅrMåned(b.tilDato),
           vis: true,
           type: "text",
         },
@@ -313,19 +314,19 @@ const innholdsseksjonTekst = {
         },
         {
           label: "Support per month",
-          value: formatterSum(b.bidragPerMåned, "en"),
+          value: formatterBeløpMedSpråk(b.bidragPerMåned, "en"),
           vis: true,
           type: "text",
         },
         {
           label: "Support is to be paid from",
-          value: b.fraDato,
+          value: formatterÅrMåned(b.fraDato, "en"),
           vis: true,
           type: "text",
         },
         {
           label: "Support is to be paid until",
-          value: b.tilDato,
+          value: formatterÅrMåned(b.tilDato, "en"),
           vis: true,
           type: "text",
         },
