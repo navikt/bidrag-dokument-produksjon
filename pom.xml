@@ -25,7 +25,7 @@
         <jsoup.version>1.18.1</jsoup.version>
         <kluent.version>1.72</kluent.version>
         <logback.version>1.5.6</logback.version>
-        <logstash.encoder.version>8.0</logstash.encoder.version>
+        <logstash.encoder.version>8.1</logstash.encoder.version>
         <open.html.to.pdf.version>1.0.10</open.html.to.pdf.version>
         <prometheus.version>0.16.0</prometheus.version>
         <junit.jupiter.version>5.11.0</junit.jupiter.version>
