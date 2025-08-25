@@ -8,6 +8,12 @@ export type SpråkType = `${Språkkode}`;
 
 export type SpråkkodeIdKey = keyof typeof Språkkode;
 
+export const localeMap: Record<SpråkType, string> = {
+  nb: "nb-NO",
+  nn: "nn-NO",
+  en: "en-US",
+};
+
 export function språkkodeTilSpråkType(id: SpråkkodeIdKey): SpråkType {
   return Språkkode[id];
 }

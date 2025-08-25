@@ -461,33 +461,45 @@ Custom components
   h1 {
     font-weight: 600;
     color: var(--a-blue-800);
+    font-size: 24px;
+    line-height: 26px;
   }
 
   /* Section headings */
   h2 {
+    font-size: 18px;
+    line-height: 22px;
     font-weight: 600;
     color: var(--a-blue-800);
   }
 
   /* Subheadings (SignaturBoks titles) */
   h3 {
+    font-size: 15px;
+    line-height: 20px;
     font-weight: 600;
     color: var(--a-blue-700);
   }
 
   /* Definition list labels */
   dt {
+    font-size: 12px;
+    line-height: 18px;
     font-weight: 600;
   }
 
   /* Definition list values */
   dd {
+    font-size: 12px;
+    line-height: 18px;
     font-weight: 400;
     margin-left: 0;
   }
 
   /* Paragraph text */
   p {
+    font-size: 12px;
+    line-height: 18px;
     font-weight: 400;
   }
 
@@ -510,6 +522,8 @@ Custom components
   }
 
   .signature-label {
+    font-size: 11px;
+    line-height: 16px;
     white-space: nowrap;
   }
 

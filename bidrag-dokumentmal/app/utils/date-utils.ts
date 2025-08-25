@@ -1,3 +1,5 @@
+import { localeMap, SpråkType } from "./oversettelser";
+
 export const dateOrNull = (dateString?: string | null): Date | null =>
   dateString ? new Date(dateString) : null;
 export const toISODateString = (date?: Date): string | null =>
@@ -222,3 +224,32 @@ export const formatPeriode = (
   if (dateTom == undefined) return dateToDDMMYYYY(dateFom);
   return `${dateToDDMMYYYY(dateFom)} - ${dateToDDMMYYYY(lastDayOfMonth(dateTom))}`;
 };
+
+/** Formatter for år og måned i formatet "MMMM, ÅÅÅÅ" */
+/**
+ * @param årMånedStr - Input streng i formatet 'ÅÅÅÅ-MM'
+ * @param språkKode - Språkkode for formatering (standard er 'nb')
+ * @returns Formatert streng i formatet "MMMM, ÅÅÅÅ"
+ * @example
+ * formatterÅrMåned('2023-10', 'nb'); // Returneres "Oktober, 2023"
+ * formatterÅrMåned('2023-10', 'en'); // Returneres "October, 2023"
+ */
+export function formatterÅrMåned(
+  årMånedStr: string,
+  språkKode: SpråkType = "nb",
+): string {
+  // Forventer input på formatet 'YYYY-MM'
+  const locale = localeMap[språkKode] ?? "nb-NO";
+  const [årstall, månedNr] = årMånedStr.split("-").map((v) => Number(v));
+
+  const date = new Date(Date.UTC(årstall, månedNr - 1, 1));
+
+  // Hent bare månedsnavn, så legger vi på år og komma selv
+  const månedsNavn = new Intl.DateTimeFormat(locale, { month: "long" }).format(
+    date,
+  );
+
+  return `${capitalize(månedsNavn)}, ${årstall}`;
+}
+
+const capitalize = (s: string) => s.charAt(0).toUpperCase() + s.slice(1);
