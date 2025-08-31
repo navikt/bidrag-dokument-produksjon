@@ -37,6 +37,33 @@ export default function NotatBegrunnelse({
           ].filter((d) => d != null) as DataViewTableData[]
         }
       />
+      {data?.innholdFraOpprinneligVedtak && (
+        <DataViewTable
+          className={"pt-1"}
+          data={
+            [
+              {
+                label: "Begrunnelse (opprinnelig vedtak)",
+                textRight: false,
+                labelBold: true,
+              },
+              {
+                label: undefined,
+                textRight: false,
+                labelBold: true,
+                value: (
+                  <PurifiedHtml
+                    text={data?.innholdFraOpprinneligVedtak?.replaceAll(
+                      "&nbsp;",
+                      " ",
+                    )}
+                  />
+                ),
+              },
+            ].filter((d) => d != null) as DataViewTableData[]
+          }
+        />
+      )}
     </div>
   );
 }

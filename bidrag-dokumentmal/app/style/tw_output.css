@@ -188,10 +188,6 @@
   margin-top: 16px
 }
 
-.ml-10 {
-  margin-left: 40px
-}
-
 .block {
   display: block
 }
@@ -234,10 +230,6 @@
 
 .w-\[5px\] {
   width: 5px
-}
-
-.w-full {
-  width: 100%
 }
 
 .break-before-page {
@@ -357,6 +349,10 @@
 
 .align-middle {
   vertical-align: middle
+}
+
+.capitalize {
+  text-transform: capitalize
 }
 
 .filter {

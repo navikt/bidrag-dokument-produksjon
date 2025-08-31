@@ -7,6 +7,7 @@ import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable } from "~/components/DataViewTable";
 import { Stonadstype } from "~/types/Api";
+import Beregningsperiode from "~/routes/notat.bidrag/Beregningsperiode";
 
 export default function Virkningstidspunkt() {
   const { data } = useNotatFelles();
@@ -79,6 +80,7 @@ export default function Virkningstidspunkt() {
               ]}
             />
           ))}
+        <Beregningsperiode />
         <NotatBegrunnelse data={virkningstidspunkt.begrunnelse} />
         {data.stønadstype == Stonadstype.BIDRAG18AAR && (
           <NotatBegrunnelse

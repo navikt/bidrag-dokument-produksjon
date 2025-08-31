@@ -200,7 +200,9 @@ export const getYearFromDate = (date?: Date | string): number | undefined => {
   if (typeof date == "string") return new Date(date).getFullYear();
   return date.getFullYear();
 };
-export const dateToDDMMYYYY = (date?: Date | string): string | undefined => {
+export const dateToDDMMYYYY = (
+  date?: Date | string | null,
+): string | undefined => {
   if (!date) return;
   if (typeof date == "string") {
     if (isNaN(Date.parse(date))) return "";
