@@ -24,7 +24,7 @@ export default function Beregningsperiode() {
       <div>
         <div className={"flex flex-row justify-between w-[500px]"}>
           <DataViewTable
-            labelColWidth={"130px"}
+            labelColWidth={"140px"}
             data={[
               {
                 label: "Periode vedtaket vurderes",
