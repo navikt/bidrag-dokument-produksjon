@@ -37,7 +37,7 @@ export default function NotatBegrunnelse({
           ].filter((d) => d != null) as DataViewTableData[]
         }
       />
-      {data?.innholdFraOpprinneligVedtak && (
+      {data?.innholdFraOmgjortVedtak && (
         <DataViewTable
           className={"pt-1"}
           data={
@@ -53,7 +53,7 @@ export default function NotatBegrunnelse({
                 labelBold: true,
                 value: (
                   <PurifiedHtml
-                    text={data?.innholdFraOpprinneligVedtak?.replaceAll(
+                    text={data?.innholdFraOmgjortVedtak?.replaceAll(
                       "&nbsp;",
                       " ",
                     )}

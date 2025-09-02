@@ -317,7 +317,7 @@ export interface NotatBarnetilsynOffentligeOpplysninger {
 /** Notat begrunnelse skrevet av saksbehandler */
 export interface NotatBegrunnelseDto {
   innhold?: string;
-  innholdFraOpprinneligVedtak?: string;
+  innholdFraOmgjortVedtak?: string;
   /** @deprecated */
   intern?: string;
   gjelder?: NotatPersonDto;
@@ -561,8 +561,8 @@ export interface NotatResultatBeregningInntekterDto {
   inntektBarn?: number;
   barnEndeligInntekt?: number;
   totalEndeligInntekt: number;
-  inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
+  inntektBPMånedlig?: number;
   inntektBarnMånedlig?: number;
 }
 
