@@ -75,7 +75,7 @@ function VedleggBeregningsDetaljerEndeligVedtakInnhold() {
         d.vedtakstype == Vedtakstype.ALDERSJUSTERING,
     ),
   );
-  if (perioder.every((p) => p.length === 0))
+  if (perioder.every((p) => p?.length === 0))
     return <div>Ingen beregningsdetaljer å vise</div>;
 
   return (
