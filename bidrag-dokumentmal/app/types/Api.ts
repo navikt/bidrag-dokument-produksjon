@@ -24,6 +24,12 @@ export interface Belop {
   valutakode?: Valutakode;
 }
 
+export enum BeregnTil {
+  OPPRINNELIG_VEDTAKSTIDSPUNKT = "OPPRINNELIG_VEDTAKSTIDSPUNKT",
+  INNEVAeRENDEMANED = "INNEVÆRENDE_MÅNED",
+  ETTERFOLGENDEMANUELLVEDTAK = "ETTERFØLGENDE_MANUELL_VEDTAK",
+}
+
 export interface BeregnetBidragPerBarn {
   gjelderBarn: string;
   saksnummer: string;
@@ -311,6 +317,7 @@ export interface NotatBarnetilsynOffentligeOpplysninger {
 /** Notat begrunnelse skrevet av saksbehandler */
 export interface NotatBegrunnelseDto {
   innhold?: string;
+  innholdFraOmgjortVedtak?: string;
   /** @deprecated */
   intern?: string;
   gjelder?: NotatPersonDto;
@@ -462,9 +469,9 @@ export interface NotatInntektDto {
   gjelderBarn?: NotatPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
-  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
+  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -554,8 +561,8 @@ export interface NotatResultatBeregningInntekterDto {
   inntektBarn?: number;
   barnEndeligInntekt?: number;
   totalEndeligInntekt: number;
-  inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
+  inntektBPMånedlig?: number;
   inntektBarnMånedlig?: number;
 }
 
@@ -830,6 +837,47 @@ export interface NotatVirkningstidspunktDto {
    * @example "01.12.2025"
    */
   søktFraDato?: string;
+  beregnTilDato?: {
+    /** @format int32 */
+    year?: number;
+    month?:
+      | "JANUARY"
+      | "FEBRUARY"
+      | "MARCH"
+      | "APRIL"
+      | "MAY"
+      | "JUNE"
+      | "JULY"
+      | "AUGUST"
+      | "SEPTEMBER"
+      | "OCTOBER"
+      | "NOVEMBER"
+      | "DECEMBER";
+    /** @format int32 */
+    monthValue?: number;
+    leapYear?: boolean;
+  };
+  beregnTil?: BeregnTil;
+  etterfølgendeVedtakVirkningstidspunkt?: {
+    /** @format int32 */
+    year?: number;
+    month?:
+      | "JANUARY"
+      | "FEBRUARY"
+      | "MARCH"
+      | "APRIL"
+      | "MAY"
+      | "JUNE"
+      | "JULY"
+      | "AUGUST"
+      | "SEPTEMBER"
+      | "OCTOBER"
+      | "NOVEMBER"
+      | "DECEMBER";
+    /** @format int32 */
+    monthValue?: number;
+    leapYear?: boolean;
+  };
   /**
    * @format date
    * @example "01.12.2025"
@@ -975,6 +1023,7 @@ export enum Resultatkode {
   MAKS25PROSENTAVINNTEKT = "MAKS_25_PROSENT_AV_INNTEKT",
   MANGLER_BIDRAGSEVNE = "MANGLER_BIDRAGSEVNE",
   KOSTNADSBEREGNET_BIDRAG = "KOSTNADSBEREGNET_BIDRAG",
+  INDEKSREGULERING = "INDEKSREGULERING",
 }
 
 export enum Rolletype {
