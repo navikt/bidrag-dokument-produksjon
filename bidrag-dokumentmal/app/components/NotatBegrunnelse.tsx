@@ -43,7 +43,9 @@ export default function NotatBegrunnelse({
           data={
             [
               {
-                label: "Begrunnelse (opprinnelig vedtak)",
+                label: label
+                  ? `${label} (opprinnelig vedtak)`
+                  : "Begrunnelse (opprinnelig vedtak)",
                 textRight: false,
                 labelBold: true,
               },
