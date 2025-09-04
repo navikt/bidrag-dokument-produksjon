@@ -1,7 +1,7 @@
 import { dateToDDMMYYYY, deductDays } from "~/utils/date-utils";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable } from "~/components/DataViewTable";
-import { BeregnTil, NotatMalType } from "~/types/Api";
+import { BeregnTil, NotatMalType, Vedtakstype } from "~/types/Api";
 
 export default function Beregningsperiode() {
   const { data, type } = useNotatFelles();
@@ -9,6 +9,7 @@ export default function Beregningsperiode() {
   const skalViseBeregningsperiode =
     type == NotatMalType.BIDRAG && data.erOrkestrertVedtak;
   if (!skalViseBeregningsperiode) return null;
+  const erKlage = data.behandling.vedtakstype === Vedtakstype.KLAGE;
   function beregningsperiodeVisningsnavn() {
     switch (virkningstidspunkt.beregnTil) {
       case BeregnTil.ETTERFOLGENDEMANUELLVEDTAK:
@@ -16,7 +17,7 @@ export default function Beregningsperiode() {
       case BeregnTil.INNEVAeRENDEMANED:
         return "Ut inneværende måned";
       case BeregnTil.OPPRINNELIG_VEDTAKSTIDSPUNKT:
-        return "Ut måneden påklagd vedtak ble fattet";
+        return `Ut måneden ${erKlage ? "påklagd" : "omgjort"} vedtak ble fattet`;
     }
   }
   return (
