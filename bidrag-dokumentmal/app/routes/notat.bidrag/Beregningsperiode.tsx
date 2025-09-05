@@ -16,8 +16,10 @@ export default function Beregningsperiode() {
         return `Til etterfølgende vedtak med virkningstidspunkt ${dateToDDMMYYYY(virkningstidspunkt.etterfølgendeVedtakVirkningstidspunkt as string)}`;
       case BeregnTil.INNEVAeRENDEMANED:
         return "Ut inneværende måned";
-      case BeregnTil.OPPRINNELIG_VEDTAKSTIDSPUNKT:
+      case BeregnTil.OMGJORT_VEDTAK_VEDTAKSTIDSPUNKT:
         return `Ut måneden ${erKlage ? "påklagd" : "omgjort"} vedtak ble fattet`;
+      case BeregnTil.OPPRINNELIG_VEDTAKSTIDSPUNKT:
+        return `Ut måneden opprinnelig vedtak ble fattet`;
     }
   }
   return (

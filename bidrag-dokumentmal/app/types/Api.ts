@@ -26,6 +26,7 @@ export interface Belop {
 
 export enum BeregnTil {
   OPPRINNELIG_VEDTAKSTIDSPUNKT = "OPPRINNELIG_VEDTAKSTIDSPUNKT",
+  OMGJORT_VEDTAK_VEDTAKSTIDSPUNKT = "OMGJORT_VEDTAK_VEDTAKSTIDSPUNKT",
   INNEVAeRENDEMANED = "INNEVÆRENDE_MÅNED",
   ETTERFOLGENDEMANUELLVEDTAK = "ETTERFØLGENDE_MANUELL_VEDTAK",
 }
@@ -469,9 +470,9 @@ export interface NotatInntektDto {
   gjelderBarn?: NotatPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
+  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
-  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -561,8 +562,8 @@ export interface NotatResultatBeregningInntekterDto {
   inntektBarn?: number;
   barnEndeligInntekt?: number;
   totalEndeligInntekt: number;
-  inntektBMMånedlig?: number;
   inntektBPMånedlig?: number;
+  inntektBMMånedlig?: number;
   inntektBarnMånedlig?: number;
 }
 
