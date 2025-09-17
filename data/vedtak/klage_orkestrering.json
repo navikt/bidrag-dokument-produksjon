@@ -1,0 +1,1673 @@
+{
+  "bestillBatch" : false,
+  "mottaker" : {
+    "fodselsnummer" : "05033333373",
+    "navn" : "Ænåtop Jady Onæzapdl-Test",
+    "spraak" : "NB",
+    "adresse" : {
+      "adresselinje1" : "Kirkelia 21",
+      "adresselinje2" : null,
+      "adresselinje3" : "4817 HIS",
+      "adresselinje4" : null,
+      "bruksenhetsnummer" : null,
+      "postnummer" : "4817",
+      "poststed" : "HIS",
+      "landkode" : "NO",
+      "landkode3" : "NOR",
+      "land" : "NORGE"
+    },
+    "rolle" : "BP",
+    "fodselsdato" : "1982-04-05"
+  },
+  "gjelder" : {
+    "fodselsnummer" : "25111111186",
+    "navn" : null,
+    "adresse" : null,
+    "rolle" : "BM"
+  },
+  "kontaktInfo" : {
+    "navn" : "Nav familie- og pensjonsytelser Bidrag utland",
+    "telefonnummer" : "21073700",
+    "postadresse" : {
+      "adresselinje1" : "Postboks 6600 Etterstad",
+      "adresselinje2" : null,
+      "adresselinje3" : null,
+      "adresselinje4" : null,
+      "bruksenhetsnummer" : null,
+      "postnummer" : "0607",
+      "poststed" : "Oslo",
+      "landkode" : null,
+      "landkode3" : null,
+      "land" : null
+    },
+    "enhetId" : "4865"
+  },
+  "saksbehandler" : {
+    "ident" : "Z994977",
+    "navn" : "F_Z994977 E_Z994977",
+    "fornavnEtternavn" : "F_Z994977 E_Z994977"
+  },
+  "dokumentreferanse" : "BIF100001724",
+  "tittel" : "Dette var opprettet via bidrag-dokument-bestilling",
+  "enhet" : "4865",
+  "saksnummer" : "1906750",
+  "datoSakOpprettet" : "2019-06-19",
+  "spraak" : "NB",
+  "roller" : [ {
+    "type" : "PartInfo",
+    "type" : null,
+    "rolle" : "BM",
+    "fodselsnummer" : "25111111186",
+    "navn" : "Nyz Wuvecujupdl-Test",
+    "fodselsdato" : "1981-07-15",
+    "doedsdato" : null,
+    "landkode" : "NO",
+    "landkode3" : "NOR",
+    "datoDod" : null,
+    "gebyr" : null,
+    "kravFremAv" : null
+  }, {
+    "type" : "PartInfo",
+    "type" : null,
+    "rolle" : "BP",
+    "fodselsnummer" : "05033333373",
+    "navn" : "Ænåtop Jady Onæzapdl-Test",
+    "fodselsdato" : "1982-04-05",
+    "doedsdato" : null,
+    "landkode" : "NO",
+    "landkode3" : "NOR",
+    "datoDod" : null,
+    "gebyr" : null,
+    "kravFremAv" : null
+  }, {
+    "type" : "BA",
+    "type" : "BA",
+    "rolle" : "BA",
+    "fodselsnummer" : "0906144444282",
+    "navn" : "Wågem Åzåh Adæzakpdl-Test",
+    "fodselsdato" : "2019-06-09",
+    "fornavn" : "Wågem",
+    "bidragsbelop" : null,
+    "forskuddsbelop" : null,
+    "gebyrRm" : null,
+    "fodselsnummerRm" : null
+  } ],
+  "rollerV2" : [ {
+    "rolle" : "BM",
+    "navn" : "Nyz Wuvecujupdl-Test",
+    "fødselsdato" : "1981-07-15",
+    "ident" : "25111111186",
+    "erBeskyttet" : false,
+    "innbetaltBeløp" : null,
+    "opphørsdato" : null,
+    "virkningstidspunkt" : null
+  }, {
+    "rolle" : "BP",
+    "navn" : "Ænåtop Jady Onæzapdl-Test",
+    "fødselsdato" : "1982-04-05",
+    "ident" : "05033333373",
+    "erBeskyttet" : false,
+    "innbetaltBeløp" : null,
+    "opphørsdato" : null,
+    "virkningstidspunkt" : null
+  }, {
+    "rolle" : "BA",
+    "navn" : "Wågem Åzåh Adæzakpdl-Test",
+    "fødselsdato" : "2019-06-09",
+    "ident" : "0906144444282",
+    "erBeskyttet" : false,
+    "innbetaltBeløp" : null,
+    "opphørsdato" : null,
+    "virkningstidspunkt" : null
+  } ],
+  "rmISak" : false,
+  "vedtakDetaljer" : {
+    "årsakKode" : "ANNET",
+    "avslagsKode" : null,
+    "type" : "BIDRAG",
+    "gebyr" : {
+      "bmGebyr" : null,
+      "bpGebyr" : null
+    },
+    "virkningstidspunkt" : "2019-06-01",
+    "mottattDato" : "2024-09-09",
+    "soktFraDato" : "2019-06-01",
+    "vedtattDato" : "2025-09-17",
+    "saksbehandlerInfo" : {
+      "navn" : "F_Z994977 E_Z994977",
+      "ident" : "Z994977"
+    },
+    "vedtakstype" : "KLAGE",
+    "stønadstype" : "BIDRAG",
+    "engangsbeløptype" : null,
+    "søknadFra" : "BIDRAGSMOTTAKER",
+    "kilde" : "MANUELT",
+    "vedtakBarn" : [ ],
+    "resultat" : [ {
+      "type" : "BIDRAG",
+      "barn" : {
+        "rolle" : "BA",
+        "navn" : "Wågem Åzåh Adæzakpdl-Test",
+        "fødselsdato" : "2019-06-09",
+        "ident" : "0906144444282",
+        "erBeskyttet" : false,
+        "innbetaltBeløp" : null,
+        "opphørsdato" : null,
+        "virkningstidspunkt" : null
+      },
+      "indeksår" : null,
+      "innkrevesFraDato" : null,
+      "orkestrertVedtak" : {
+        "type" : "KLAGE",
+        "perioder" : [ {
+          "periode" : {
+            "fom" : "2019-06",
+            "til" : "2019-07"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 4770,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : false,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "KLAGE",
+          "beregningsdetaljer" : {
+            "bpHarEvne" : true,
+            "antallBarnIHusstanden" : null,
+            "forskuddssats" : 0,
+            "barnetilleggBM" : null,
+            "barnetilleggBP" : null,
+            "voksenIHusstanden" : null,
+            "enesteVoksenIHusstandenErEgetBarn" : null,
+            "bpsAndel" : null,
+            "inntekter" : null,
+            "delberegningBidragsevne" : null,
+            "samværsfradrag" : null,
+            "endringUnderGrense" : null,
+            "sluttberegning" : {
+              "periode" : {
+                "fom" : "2019-06",
+                "til" : "2019-07"
+              },
+              "beregnetBeløp" : 4772.22,
+              "resultatBeløp" : 4770,
+              "bruttoBidragEtterBarnetilleggBM" : 4772.22,
+              "nettoBidragEtterBarnetilleggBM" : 4772.22,
+              "bruttoBidragJustertForEvneOg25Prosent" : 4772.22,
+              "bruttoBidragEtterBegrensetRevurdering" : 4772.22,
+              "bruttoBidragEtterBarnetilleggBP" : 4772.22,
+              "nettoBidragEtterSamværsfradrag" : 4772.22,
+              "bpAndelAvUVedDeltBostedFaktor" : 0.0,
+              "bpAndelAvUVedDeltBostedBeløp" : 0.0,
+              "løpendeForskudd" : null,
+              "løpendeBidrag" : null,
+              "barnetErSelvforsørget" : false,
+              "bidragJustertForDeltBosted" : false,
+              "bidragJustertForNettoBarnetilleggBP" : false,
+              "bidragJustertForNettoBarnetilleggBM" : false,
+              "bidragJustertNedTilEvne" : false,
+              "bidragJustertNedTil25ProsentAvInntekt" : false,
+              "bidragJustertTilForskuddssats" : false,
+              "bidragJustertManueltTilForskuddssats" : false,
+              "begrensetRevurderingUtført" : false,
+              "ikkeOmsorgForBarnet" : false,
+              "tilleggsbidrag" : null,
+              "forsvaretsBarnetillegg" : null,
+              "bpEvneVedForholdsmessigFordeling" : null,
+              "bpAndelAvUVedForholdsmessigFordelingFaktor" : null,
+              "bpSumAndelAvU" : null,
+              "uminusNettoBarnetilleggBM" : 6254.0
+            },
+            "delberegningUnderholdskostnad" : null,
+            "indeksreguleringDetaljer" : null,
+            "sluttberegningAldersjustering" : null,
+            "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+            "deltBosted" : false
+          },
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Klagevedtak",
+          "resultatkodeVisningsnavn" : "Kostnadsberegnet bidrag",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5125040,
+            "omgjøringsvedtak" : true,
+            "beregnet" : true,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-17T15:11:11.960828",
+            "vedtakstype" : "KLAGE"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2019-07",
+            "til" : "2020-01"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 3970,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : false,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "KLAGE",
+          "beregningsdetaljer" : {
+            "bpHarEvne" : true,
+            "antallBarnIHusstanden" : null,
+            "forskuddssats" : 0,
+            "barnetilleggBM" : null,
+            "barnetilleggBP" : null,
+            "voksenIHusstanden" : null,
+            "enesteVoksenIHusstandenErEgetBarn" : null,
+            "bpsAndel" : null,
+            "inntekter" : null,
+            "delberegningBidragsevne" : null,
+            "samværsfradrag" : null,
+            "endringUnderGrense" : null,
+            "sluttberegning" : {
+              "periode" : {
+                "fom" : "2019-07",
+                "til" : "2020-01"
+              },
+              "beregnetBeløp" : 3966.51,
+              "resultatBeløp" : 3970,
+              "bruttoBidragEtterBarnetilleggBM" : 3966.51,
+              "nettoBidragEtterBarnetilleggBM" : 3966.51,
+              "bruttoBidragJustertForEvneOg25Prosent" : 3966.51,
+              "bruttoBidragEtterBegrensetRevurdering" : 3966.51,
+              "bruttoBidragEtterBarnetilleggBP" : 3966.51,
+              "nettoBidragEtterSamværsfradrag" : 3966.51,
+              "bpAndelAvUVedDeltBostedFaktor" : 0.0,
+              "bpAndelAvUVedDeltBostedBeløp" : 0.0,
+              "løpendeForskudd" : null,
+              "løpendeBidrag" : null,
+              "barnetErSelvforsørget" : false,
+              "bidragJustertForDeltBosted" : false,
+              "bidragJustertForNettoBarnetilleggBP" : false,
+              "bidragJustertForNettoBarnetilleggBM" : false,
+              "bidragJustertNedTilEvne" : false,
+              "bidragJustertNedTil25ProsentAvInntekt" : false,
+              "bidragJustertTilForskuddssats" : false,
+              "bidragJustertManueltTilForskuddssats" : false,
+              "begrensetRevurderingUtført" : false,
+              "ikkeOmsorgForBarnet" : false,
+              "tilleggsbidrag" : null,
+              "forsvaretsBarnetillegg" : null,
+              "bpEvneVedForholdsmessigFordeling" : null,
+              "bpAndelAvUVedForholdsmessigFordelingFaktor" : null,
+              "bpSumAndelAvU" : null,
+              "uminusNettoBarnetilleggBM" : 5382.0
+            },
+            "delberegningUnderholdskostnad" : null,
+            "indeksreguleringDetaljer" : null,
+            "sluttberegningAldersjustering" : null,
+            "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+            "deltBosted" : false
+          },
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Klagevedtak",
+          "resultatkodeVisningsnavn" : "Kostnadsberegnet bidrag",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5125040,
+            "omgjøringsvedtak" : true,
+            "beregnet" : true,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-17T15:11:11.960828",
+            "vedtakstype" : "KLAGE"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2020-01",
+            "til" : "2020-07"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 3970,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : false,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "KLAGE",
+          "beregningsdetaljer" : {
+            "bpHarEvne" : true,
+            "antallBarnIHusstanden" : null,
+            "forskuddssats" : 0,
+            "barnetilleggBM" : null,
+            "barnetilleggBP" : null,
+            "voksenIHusstanden" : null,
+            "enesteVoksenIHusstandenErEgetBarn" : null,
+            "bpsAndel" : null,
+            "inntekter" : null,
+            "delberegningBidragsevne" : null,
+            "samværsfradrag" : null,
+            "endringUnderGrense" : null,
+            "sluttberegning" : {
+              "periode" : {
+                "fom" : "2020-01",
+                "til" : null
+              },
+              "beregnetBeløp" : 3966.51,
+              "resultatBeløp" : 3970,
+              "bruttoBidragEtterBarnetilleggBM" : 3966.51,
+              "nettoBidragEtterBarnetilleggBM" : 3966.51,
+              "bruttoBidragJustertForEvneOg25Prosent" : 3966.51,
+              "bruttoBidragEtterBegrensetRevurdering" : 3966.51,
+              "bruttoBidragEtterBarnetilleggBP" : 3966.51,
+              "nettoBidragEtterSamværsfradrag" : 3966.51,
+              "bpAndelAvUVedDeltBostedFaktor" : 0.0,
+              "bpAndelAvUVedDeltBostedBeløp" : 0.0,
+              "løpendeForskudd" : null,
+              "løpendeBidrag" : null,
+              "barnetErSelvforsørget" : false,
+              "bidragJustertForDeltBosted" : false,
+              "bidragJustertForNettoBarnetilleggBP" : false,
+              "bidragJustertForNettoBarnetilleggBM" : false,
+              "bidragJustertNedTilEvne" : false,
+              "bidragJustertNedTil25ProsentAvInntekt" : false,
+              "bidragJustertTilForskuddssats" : false,
+              "bidragJustertManueltTilForskuddssats" : false,
+              "begrensetRevurderingUtført" : false,
+              "ikkeOmsorgForBarnet" : false,
+              "tilleggsbidrag" : null,
+              "forsvaretsBarnetillegg" : null,
+              "bpEvneVedForholdsmessigFordeling" : null,
+              "bpAndelAvUVedForholdsmessigFordelingFaktor" : null,
+              "bpSumAndelAvU" : null,
+              "uminusNettoBarnetilleggBM" : 5382.0
+            },
+            "delberegningUnderholdskostnad" : null,
+            "indeksreguleringDetaljer" : null,
+            "sluttberegningAldersjustering" : null,
+            "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+            "deltBosted" : false
+          },
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Klagevedtak",
+          "resultatkodeVisningsnavn" : "Kostnadsberegnet bidrag",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5125040,
+            "omgjøringsvedtak" : true,
+            "beregnet" : true,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-17T15:11:11.960828",
+            "vedtakstype" : "KLAGE"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2020-07",
+            "til" : "2021-07"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 4040,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : false,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "INDEKSREGULERING",
+          "beregningsdetaljer" : null,
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Beregnet indeksregulering",
+          "resultatkodeVisningsnavn" : "Indeksregulering",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5125041,
+            "omgjøringsvedtak" : false,
+            "beregnet" : true,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-17T15:11:11.979472",
+            "vedtakstype" : "INDEKSREGULERING"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2021-07",
+            "til" : "2022-07"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 4070,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : false,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "INDEKSREGULERING",
+          "beregningsdetaljer" : null,
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Beregnet indeksregulering",
+          "resultatkodeVisningsnavn" : "Indeksregulering",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5125042,
+            "omgjøringsvedtak" : false,
+            "beregnet" : true,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-17T15:11:11.992431",
+            "vedtakstype" : "INDEKSREGULERING"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2022-07",
+            "til" : "2023-07"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 4200,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : false,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "INDEKSREGULERING",
+          "beregningsdetaljer" : null,
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Beregnet indeksregulering",
+          "resultatkodeVisningsnavn" : "Indeksregulering",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5125043,
+            "omgjøringsvedtak" : false,
+            "beregnet" : true,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-17T15:11:12.002178",
+            "vedtakstype" : "INDEKSREGULERING"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2023-07",
+            "til" : "2024-07"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 4490.0,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : false,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "INDEKSREGULERING",
+          "beregningsdetaljer" : null,
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Beregnet indeksregulering",
+          "resultatkodeVisningsnavn" : "Indeksregulering",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5125044,
+            "omgjøringsvedtak" : false,
+            "beregnet" : true,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-17T15:11:12.013007",
+            "vedtakstype" : "INDEKSREGULERING"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2024-07",
+            "til" : "2025-07"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 4700.0,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : false,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "INDEKSREGULERING",
+          "beregningsdetaljer" : null,
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Beregnet indeksregulering",
+          "resultatkodeVisningsnavn" : "Indeksregulering",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5125045,
+            "omgjøringsvedtak" : false,
+            "beregnet" : true,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-17T15:11:12.022131",
+            "vedtakstype" : "INDEKSREGULERING"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2025-07",
+            "til" : "2025-08"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 6381.65,
+          "samværsfradrag" : 0.0,
+          "beregnetBidrag" : 6381.65,
+          "faktiskBidrag" : 6380.0,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : false,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "ALDERSJUSTERING",
+          "beregningsdetaljer" : null,
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Beregnet aldersjustering",
+          "resultatkodeVisningsnavn" : "Aldersjustering",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5125046,
+            "omgjøringsvedtak" : false,
+            "beregnet" : true,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-17T15:11:12.0333",
+            "vedtakstype" : "ALDERSJUSTERING"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2025-08",
+            "til" : "2025-09"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 0,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : true,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "OPPHØR",
+          "beregningsdetaljer" : {
+            "bpHarEvne" : false,
+            "antallBarnIHusstanden" : null,
+            "forskuddssats" : 0,
+            "barnetilleggBM" : null,
+            "barnetilleggBP" : null,
+            "voksenIHusstanden" : null,
+            "enesteVoksenIHusstandenErEgetBarn" : null,
+            "bpsAndel" : null,
+            "inntekter" : null,
+            "delberegningBidragsevne" : null,
+            "samværsfradrag" : null,
+            "endringUnderGrense" : null,
+            "sluttberegning" : {
+              "periode" : {
+                "fom" : "2025-08",
+                "til" : null
+              },
+              "beregnetBeløp" : 0,
+              "resultatBeløp" : 0,
+              "bruttoBidragEtterBarnetilleggBM" : 0,
+              "nettoBidragEtterBarnetilleggBM" : 0,
+              "bruttoBidragJustertForEvneOg25Prosent" : 0,
+              "bruttoBidragEtterBegrensetRevurdering" : 0,
+              "bruttoBidragEtterBarnetilleggBP" : 0,
+              "nettoBidragEtterSamværsfradrag" : 0,
+              "bpAndelAvUVedDeltBostedFaktor" : 0,
+              "bpAndelAvUVedDeltBostedBeløp" : 0,
+              "løpendeForskudd" : 0,
+              "løpendeBidrag" : 0,
+              "barnetErSelvforsørget" : false,
+              "bidragJustertForDeltBosted" : false,
+              "bidragJustertForNettoBarnetilleggBP" : false,
+              "bidragJustertForNettoBarnetilleggBM" : false,
+              "bidragJustertNedTilEvne" : true,
+              "bidragJustertNedTil25ProsentAvInntekt" : true,
+              "bidragJustertTilForskuddssats" : false,
+              "bidragJustertManueltTilForskuddssats" : false,
+              "begrensetRevurderingUtført" : false,
+              "ikkeOmsorgForBarnet" : false,
+              "tilleggsbidrag" : 0,
+              "forsvaretsBarnetillegg" : false,
+              "bpEvneVedForholdsmessigFordeling" : 0,
+              "bpAndelAvUVedForholdsmessigFordelingFaktor" : 1,
+              "bpSumAndelAvU" : 0,
+              "uminusNettoBarnetilleggBM" : 0
+            },
+            "delberegningUnderholdskostnad" : null,
+            "indeksreguleringDetaljer" : null,
+            "sluttberegningAldersjustering" : null,
+            "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+            "deltBosted" : false
+          },
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Vedtak (03.09.2025)",
+          "resultatkodeVisningsnavn" : "Opphør",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5119314,
+            "omgjøringsvedtak" : false,
+            "beregnet" : false,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-03T08:08:22.000753",
+            "vedtakstype" : "OPPHØR"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2025-09",
+            "til" : "2025-11"
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 4190.0,
+          "resultatKode" : "BEREGNET_BIDRAG",
+          "erOpphør" : false,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "FASTSETTELSE",
+          "beregningsdetaljer" : {
+            "bpHarEvne" : true,
+            "antallBarnIHusstanden" : null,
+            "forskuddssats" : 0,
+            "barnetilleggBM" : null,
+            "barnetilleggBP" : null,
+            "voksenIHusstanden" : null,
+            "enesteVoksenIHusstandenErEgetBarn" : null,
+            "bpsAndel" : null,
+            "inntekter" : null,
+            "delberegningBidragsevne" : null,
+            "samværsfradrag" : null,
+            "endringUnderGrense" : null,
+            "sluttberegning" : {
+              "periode" : {
+                "fom" : "2025-09",
+                "til" : null
+              },
+              "beregnetBeløp" : 4193.54,
+              "resultatBeløp" : 4190,
+              "bruttoBidragEtterBarnetilleggBM" : 4662.54,
+              "nettoBidragEtterBarnetilleggBM" : 4193.54,
+              "bruttoBidragJustertForEvneOg25Prosent" : 4662.54,
+              "bruttoBidragEtterBegrensetRevurdering" : 4662.54,
+              "bruttoBidragEtterBarnetilleggBP" : 4662.54,
+              "nettoBidragEtterSamværsfradrag" : 4193.54,
+              "bpAndelAvUVedDeltBostedFaktor" : 0.0,
+              "bpAndelAvUVedDeltBostedBeløp" : 0.0,
+              "løpendeForskudd" : null,
+              "løpendeBidrag" : null,
+              "barnetErSelvforsørget" : false,
+              "bidragJustertForDeltBosted" : false,
+              "bidragJustertForNettoBarnetilleggBP" : false,
+              "bidragJustertForNettoBarnetilleggBM" : false,
+              "bidragJustertNedTilEvne" : false,
+              "bidragJustertNedTil25ProsentAvInntekt" : false,
+              "bidragJustertTilForskuddssats" : false,
+              "bidragJustertManueltTilForskuddssats" : false,
+              "begrensetRevurderingUtført" : false,
+              "ikkeOmsorgForBarnet" : false,
+              "tilleggsbidrag" : null,
+              "forsvaretsBarnetillegg" : null,
+              "bpEvneVedForholdsmessigFordeling" : null,
+              "bpAndelAvUVedForholdsmessigFordelingFaktor" : null,
+              "bpSumAndelAvU" : null,
+              "uminusNettoBarnetilleggBM" : 8659.0
+            },
+            "delberegningUnderholdskostnad" : null,
+            "indeksreguleringDetaljer" : null,
+            "sluttberegningAldersjustering" : null,
+            "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+            "deltBosted" : false
+          },
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Vedtak (03.09.2025)",
+          "resultatkodeVisningsnavn" : "Kostnadsberegnet bidrag",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5119315,
+            "omgjøringsvedtak" : false,
+            "beregnet" : false,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-03T10:15:21.906057",
+            "vedtakstype" : "FASTSETTELSE"
+          }
+        }, {
+          "periode" : {
+            "fom" : "2025-11",
+            "til" : null
+          },
+          "underholdskostnad" : 0,
+          "bpsAndelU" : 0,
+          "bpsAndelBeløp" : 0,
+          "samværsfradrag" : 0,
+          "beregnetBidrag" : 0,
+          "faktiskBidrag" : 0,
+          "resultatKode" : "IKKE_OMSORG_FOR_BARNET",
+          "erOpphør" : true,
+          "erDirekteAvslag" : false,
+          "vedtakstype" : "ENDRING",
+          "beregningsdetaljer" : {
+            "bpHarEvne" : false,
+            "antallBarnIHusstanden" : null,
+            "forskuddssats" : 0,
+            "barnetilleggBM" : null,
+            "barnetilleggBP" : null,
+            "voksenIHusstanden" : null,
+            "enesteVoksenIHusstandenErEgetBarn" : null,
+            "bpsAndel" : null,
+            "inntekter" : null,
+            "delberegningBidragsevne" : null,
+            "samværsfradrag" : null,
+            "endringUnderGrense" : null,
+            "sluttberegning" : null,
+            "delberegningUnderholdskostnad" : null,
+            "indeksreguleringDetaljer" : null,
+            "sluttberegningAldersjustering" : null,
+            "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+            "deltBosted" : false
+          },
+          "klageOmgjøringDetaljer" : {
+            "resultatFraVedtakVedtakstidspunkt" : null,
+            "beregnTilDato" : "2020-07",
+            "manuellAldersjustering" : false,
+            "delAvVedtaket" : true,
+            "kanOpprette35c" : false,
+            "skalOpprette35c" : false
+          },
+          "delvedtakstypeVisningsnavn" : "Vedtak (15.09.2025)",
+          "resultatkodeVisningsnavn" : "Opphør",
+          "resultatFraVedtak" : {
+            "vedtaksid" : 5125016,
+            "omgjøringsvedtak" : false,
+            "beregnet" : false,
+            "opprettParagraf35c" : false,
+            "vedtakstidspunkt" : "2025-09-15T10:28:20.656052",
+            "vedtakstype" : "ENDRING"
+          }
+        } ]
+      },
+      "perioder" : [ {
+        "periode" : {
+          "fom" : "2019-06",
+          "til" : "2019-07"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 4770,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : false,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "KLAGE",
+        "beregningsdetaljer" : {
+          "bpHarEvne" : true,
+          "antallBarnIHusstanden" : null,
+          "forskuddssats" : 0,
+          "barnetilleggBM" : null,
+          "barnetilleggBP" : null,
+          "voksenIHusstanden" : null,
+          "enesteVoksenIHusstandenErEgetBarn" : null,
+          "bpsAndel" : null,
+          "inntekter" : null,
+          "delberegningBidragsevne" : null,
+          "samværsfradrag" : null,
+          "endringUnderGrense" : null,
+          "sluttberegning" : {
+            "periode" : {
+              "fom" : "2019-06",
+              "til" : "2019-07"
+            },
+            "beregnetBeløp" : 4772.22,
+            "resultatBeløp" : 4770,
+            "bruttoBidragEtterBarnetilleggBM" : 4772.22,
+            "nettoBidragEtterBarnetilleggBM" : 4772.22,
+            "bruttoBidragJustertForEvneOg25Prosent" : 4772.22,
+            "bruttoBidragEtterBegrensetRevurdering" : 4772.22,
+            "bruttoBidragEtterBarnetilleggBP" : 4772.22,
+            "nettoBidragEtterSamværsfradrag" : 4772.22,
+            "bpAndelAvUVedDeltBostedFaktor" : 0.0,
+            "bpAndelAvUVedDeltBostedBeløp" : 0.0,
+            "løpendeForskudd" : null,
+            "løpendeBidrag" : null,
+            "barnetErSelvforsørget" : false,
+            "bidragJustertForDeltBosted" : false,
+            "bidragJustertForNettoBarnetilleggBP" : false,
+            "bidragJustertForNettoBarnetilleggBM" : false,
+            "bidragJustertNedTilEvne" : false,
+            "bidragJustertNedTil25ProsentAvInntekt" : false,
+            "bidragJustertTilForskuddssats" : false,
+            "bidragJustertManueltTilForskuddssats" : false,
+            "begrensetRevurderingUtført" : false,
+            "ikkeOmsorgForBarnet" : false,
+            "tilleggsbidrag" : null,
+            "forsvaretsBarnetillegg" : null,
+            "bpEvneVedForholdsmessigFordeling" : null,
+            "bpAndelAvUVedForholdsmessigFordelingFaktor" : null,
+            "bpSumAndelAvU" : null,
+            "uminusNettoBarnetilleggBM" : 6254.0
+          },
+          "delberegningUnderholdskostnad" : null,
+          "indeksreguleringDetaljer" : null,
+          "sluttberegningAldersjustering" : null,
+          "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+          "deltBosted" : false
+        },
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Klagevedtak",
+        "resultatkodeVisningsnavn" : "Kostnadsberegnet bidrag",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5125040,
+          "omgjøringsvedtak" : true,
+          "beregnet" : true,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-17T15:11:11.960828",
+          "vedtakstype" : "KLAGE"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2019-07",
+          "til" : "2020-01"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 3970,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : false,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "KLAGE",
+        "beregningsdetaljer" : {
+          "bpHarEvne" : true,
+          "antallBarnIHusstanden" : null,
+          "forskuddssats" : 0,
+          "barnetilleggBM" : null,
+          "barnetilleggBP" : null,
+          "voksenIHusstanden" : null,
+          "enesteVoksenIHusstandenErEgetBarn" : null,
+          "bpsAndel" : null,
+          "inntekter" : null,
+          "delberegningBidragsevne" : null,
+          "samværsfradrag" : null,
+          "endringUnderGrense" : null,
+          "sluttberegning" : {
+            "periode" : {
+              "fom" : "2019-07",
+              "til" : "2020-01"
+            },
+            "beregnetBeløp" : 3966.51,
+            "resultatBeløp" : 3970,
+            "bruttoBidragEtterBarnetilleggBM" : 3966.51,
+            "nettoBidragEtterBarnetilleggBM" : 3966.51,
+            "bruttoBidragJustertForEvneOg25Prosent" : 3966.51,
+            "bruttoBidragEtterBegrensetRevurdering" : 3966.51,
+            "bruttoBidragEtterBarnetilleggBP" : 3966.51,
+            "nettoBidragEtterSamværsfradrag" : 3966.51,
+            "bpAndelAvUVedDeltBostedFaktor" : 0.0,
+            "bpAndelAvUVedDeltBostedBeløp" : 0.0,
+            "løpendeForskudd" : null,
+            "løpendeBidrag" : null,
+            "barnetErSelvforsørget" : false,
+            "bidragJustertForDeltBosted" : false,
+            "bidragJustertForNettoBarnetilleggBP" : false,
+            "bidragJustertForNettoBarnetilleggBM" : false,
+            "bidragJustertNedTilEvne" : false,
+            "bidragJustertNedTil25ProsentAvInntekt" : false,
+            "bidragJustertTilForskuddssats" : false,
+            "bidragJustertManueltTilForskuddssats" : false,
+            "begrensetRevurderingUtført" : false,
+            "ikkeOmsorgForBarnet" : false,
+            "tilleggsbidrag" : null,
+            "forsvaretsBarnetillegg" : null,
+            "bpEvneVedForholdsmessigFordeling" : null,
+            "bpAndelAvUVedForholdsmessigFordelingFaktor" : null,
+            "bpSumAndelAvU" : null,
+            "uminusNettoBarnetilleggBM" : 5382.0
+          },
+          "delberegningUnderholdskostnad" : null,
+          "indeksreguleringDetaljer" : null,
+          "sluttberegningAldersjustering" : null,
+          "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+          "deltBosted" : false
+        },
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Klagevedtak",
+        "resultatkodeVisningsnavn" : "Kostnadsberegnet bidrag",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5125040,
+          "omgjøringsvedtak" : true,
+          "beregnet" : true,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-17T15:11:11.960828",
+          "vedtakstype" : "KLAGE"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2020-01",
+          "til" : "2020-07"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 3970,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : false,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "KLAGE",
+        "beregningsdetaljer" : {
+          "bpHarEvne" : true,
+          "antallBarnIHusstanden" : null,
+          "forskuddssats" : 0,
+          "barnetilleggBM" : null,
+          "barnetilleggBP" : null,
+          "voksenIHusstanden" : null,
+          "enesteVoksenIHusstandenErEgetBarn" : null,
+          "bpsAndel" : null,
+          "inntekter" : null,
+          "delberegningBidragsevne" : null,
+          "samværsfradrag" : null,
+          "endringUnderGrense" : null,
+          "sluttberegning" : {
+            "periode" : {
+              "fom" : "2020-01",
+              "til" : null
+            },
+            "beregnetBeløp" : 3966.51,
+            "resultatBeløp" : 3970,
+            "bruttoBidragEtterBarnetilleggBM" : 3966.51,
+            "nettoBidragEtterBarnetilleggBM" : 3966.51,
+            "bruttoBidragJustertForEvneOg25Prosent" : 3966.51,
+            "bruttoBidragEtterBegrensetRevurdering" : 3966.51,
+            "bruttoBidragEtterBarnetilleggBP" : 3966.51,
+            "nettoBidragEtterSamværsfradrag" : 3966.51,
+            "bpAndelAvUVedDeltBostedFaktor" : 0.0,
+            "bpAndelAvUVedDeltBostedBeløp" : 0.0,
+            "løpendeForskudd" : null,
+            "løpendeBidrag" : null,
+            "barnetErSelvforsørget" : false,
+            "bidragJustertForDeltBosted" : false,
+            "bidragJustertForNettoBarnetilleggBP" : false,
+            "bidragJustertForNettoBarnetilleggBM" : false,
+            "bidragJustertNedTilEvne" : false,
+            "bidragJustertNedTil25ProsentAvInntekt" : false,
+            "bidragJustertTilForskuddssats" : false,
+            "bidragJustertManueltTilForskuddssats" : false,
+            "begrensetRevurderingUtført" : false,
+            "ikkeOmsorgForBarnet" : false,
+            "tilleggsbidrag" : null,
+            "forsvaretsBarnetillegg" : null,
+            "bpEvneVedForholdsmessigFordeling" : null,
+            "bpAndelAvUVedForholdsmessigFordelingFaktor" : null,
+            "bpSumAndelAvU" : null,
+            "uminusNettoBarnetilleggBM" : 5382.0
+          },
+          "delberegningUnderholdskostnad" : null,
+          "indeksreguleringDetaljer" : null,
+          "sluttberegningAldersjustering" : null,
+          "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+          "deltBosted" : false
+        },
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Klagevedtak",
+        "resultatkodeVisningsnavn" : "Kostnadsberegnet bidrag",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5125040,
+          "omgjøringsvedtak" : true,
+          "beregnet" : true,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-17T15:11:11.960828",
+          "vedtakstype" : "KLAGE"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2020-07",
+          "til" : "2021-07"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 4040,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : false,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "INDEKSREGULERING",
+        "beregningsdetaljer" : null,
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Beregnet indeksregulering",
+        "resultatkodeVisningsnavn" : "Indeksregulering",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5125041,
+          "omgjøringsvedtak" : false,
+          "beregnet" : true,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-17T15:11:11.979472",
+          "vedtakstype" : "INDEKSREGULERING"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2021-07",
+          "til" : "2022-07"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 4070,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : false,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "INDEKSREGULERING",
+        "beregningsdetaljer" : null,
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Beregnet indeksregulering",
+        "resultatkodeVisningsnavn" : "Indeksregulering",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5125042,
+          "omgjøringsvedtak" : false,
+          "beregnet" : true,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-17T15:11:11.992431",
+          "vedtakstype" : "INDEKSREGULERING"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2022-07",
+          "til" : "2023-07"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 4200,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : false,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "INDEKSREGULERING",
+        "beregningsdetaljer" : null,
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Beregnet indeksregulering",
+        "resultatkodeVisningsnavn" : "Indeksregulering",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5125043,
+          "omgjøringsvedtak" : false,
+          "beregnet" : true,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-17T15:11:12.002178",
+          "vedtakstype" : "INDEKSREGULERING"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2023-07",
+          "til" : "2024-07"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 4490.0,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : false,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "INDEKSREGULERING",
+        "beregningsdetaljer" : null,
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Beregnet indeksregulering",
+        "resultatkodeVisningsnavn" : "Indeksregulering",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5125044,
+          "omgjøringsvedtak" : false,
+          "beregnet" : true,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-17T15:11:12.013007",
+          "vedtakstype" : "INDEKSREGULERING"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2024-07",
+          "til" : "2025-07"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 4700.0,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : false,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "INDEKSREGULERING",
+        "beregningsdetaljer" : null,
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Beregnet indeksregulering",
+        "resultatkodeVisningsnavn" : "Indeksregulering",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5125045,
+          "omgjøringsvedtak" : false,
+          "beregnet" : true,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-17T15:11:12.022131",
+          "vedtakstype" : "INDEKSREGULERING"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2025-07",
+          "til" : "2025-08"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 6381.65,
+        "samværsfradrag" : 0.0,
+        "beregnetBidrag" : 6381.65,
+        "faktiskBidrag" : 6380.0,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : false,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "ALDERSJUSTERING",
+        "beregningsdetaljer" : null,
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Beregnet aldersjustering",
+        "resultatkodeVisningsnavn" : "Aldersjustering",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5125046,
+          "omgjøringsvedtak" : false,
+          "beregnet" : true,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-17T15:11:12.0333",
+          "vedtakstype" : "ALDERSJUSTERING"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2025-08",
+          "til" : "2025-09"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 0,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : true,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "OPPHØR",
+        "beregningsdetaljer" : {
+          "bpHarEvne" : false,
+          "antallBarnIHusstanden" : null,
+          "forskuddssats" : 0,
+          "barnetilleggBM" : null,
+          "barnetilleggBP" : null,
+          "voksenIHusstanden" : null,
+          "enesteVoksenIHusstandenErEgetBarn" : null,
+          "bpsAndel" : null,
+          "inntekter" : null,
+          "delberegningBidragsevne" : null,
+          "samværsfradrag" : null,
+          "endringUnderGrense" : null,
+          "sluttberegning" : {
+            "periode" : {
+              "fom" : "2025-08",
+              "til" : null
+            },
+            "beregnetBeløp" : 0,
+            "resultatBeløp" : 0,
+            "bruttoBidragEtterBarnetilleggBM" : 0,
+            "nettoBidragEtterBarnetilleggBM" : 0,
+            "bruttoBidragJustertForEvneOg25Prosent" : 0,
+            "bruttoBidragEtterBegrensetRevurdering" : 0,
+            "bruttoBidragEtterBarnetilleggBP" : 0,
+            "nettoBidragEtterSamværsfradrag" : 0,
+            "bpAndelAvUVedDeltBostedFaktor" : 0,
+            "bpAndelAvUVedDeltBostedBeløp" : 0,
+            "løpendeForskudd" : 0,
+            "løpendeBidrag" : 0,
+            "barnetErSelvforsørget" : false,
+            "bidragJustertForDeltBosted" : false,
+            "bidragJustertForNettoBarnetilleggBP" : false,
+            "bidragJustertForNettoBarnetilleggBM" : false,
+            "bidragJustertNedTilEvne" : true,
+            "bidragJustertNedTil25ProsentAvInntekt" : true,
+            "bidragJustertTilForskuddssats" : false,
+            "bidragJustertManueltTilForskuddssats" : false,
+            "begrensetRevurderingUtført" : false,
+            "ikkeOmsorgForBarnet" : false,
+            "tilleggsbidrag" : 0,
+            "forsvaretsBarnetillegg" : false,
+            "bpEvneVedForholdsmessigFordeling" : 0,
+            "bpAndelAvUVedForholdsmessigFordelingFaktor" : 1,
+            "bpSumAndelAvU" : 0,
+            "uminusNettoBarnetilleggBM" : 0
+          },
+          "delberegningUnderholdskostnad" : null,
+          "indeksreguleringDetaljer" : null,
+          "sluttberegningAldersjustering" : null,
+          "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+          "deltBosted" : false
+        },
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Vedtak (03.09.2025)",
+        "resultatkodeVisningsnavn" : "Opphør",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5119314,
+          "omgjøringsvedtak" : false,
+          "beregnet" : false,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-03T08:08:22.000753",
+          "vedtakstype" : "OPPHØR"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2025-09",
+          "til" : "2025-11"
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 4190.0,
+        "resultatKode" : "BEREGNET_BIDRAG",
+        "erOpphør" : false,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "FASTSETTELSE",
+        "beregningsdetaljer" : {
+          "bpHarEvne" : true,
+          "antallBarnIHusstanden" : null,
+          "forskuddssats" : 0,
+          "barnetilleggBM" : null,
+          "barnetilleggBP" : null,
+          "voksenIHusstanden" : null,
+          "enesteVoksenIHusstandenErEgetBarn" : null,
+          "bpsAndel" : null,
+          "inntekter" : null,
+          "delberegningBidragsevne" : null,
+          "samværsfradrag" : null,
+          "endringUnderGrense" : null,
+          "sluttberegning" : {
+            "periode" : {
+              "fom" : "2025-09",
+              "til" : null
+            },
+            "beregnetBeløp" : 4193.54,
+            "resultatBeløp" : 4190,
+            "bruttoBidragEtterBarnetilleggBM" : 4662.54,
+            "nettoBidragEtterBarnetilleggBM" : 4193.54,
+            "bruttoBidragJustertForEvneOg25Prosent" : 4662.54,
+            "bruttoBidragEtterBegrensetRevurdering" : 4662.54,
+            "bruttoBidragEtterBarnetilleggBP" : 4662.54,
+            "nettoBidragEtterSamværsfradrag" : 4193.54,
+            "bpAndelAvUVedDeltBostedFaktor" : 0.0,
+            "bpAndelAvUVedDeltBostedBeløp" : 0.0,
+            "løpendeForskudd" : null,
+            "løpendeBidrag" : null,
+            "barnetErSelvforsørget" : false,
+            "bidragJustertForDeltBosted" : false,
+            "bidragJustertForNettoBarnetilleggBP" : false,
+            "bidragJustertForNettoBarnetilleggBM" : false,
+            "bidragJustertNedTilEvne" : false,
+            "bidragJustertNedTil25ProsentAvInntekt" : false,
+            "bidragJustertTilForskuddssats" : false,
+            "bidragJustertManueltTilForskuddssats" : false,
+            "begrensetRevurderingUtført" : false,
+            "ikkeOmsorgForBarnet" : false,
+            "tilleggsbidrag" : null,
+            "forsvaretsBarnetillegg" : null,
+            "bpEvneVedForholdsmessigFordeling" : null,
+            "bpAndelAvUVedForholdsmessigFordelingFaktor" : null,
+            "bpSumAndelAvU" : null,
+            "uminusNettoBarnetilleggBM" : 8659.0
+          },
+          "delberegningUnderholdskostnad" : null,
+          "indeksreguleringDetaljer" : null,
+          "sluttberegningAldersjustering" : null,
+          "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+          "deltBosted" : false
+        },
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Vedtak (03.09.2025)",
+        "resultatkodeVisningsnavn" : "Kostnadsberegnet bidrag",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5119315,
+          "omgjøringsvedtak" : false,
+          "beregnet" : false,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-03T10:15:21.906057",
+          "vedtakstype" : "FASTSETTELSE"
+        }
+      }, {
+        "periode" : {
+          "fom" : "2025-11",
+          "til" : null
+        },
+        "underholdskostnad" : 0,
+        "bpsAndelU" : 0,
+        "bpsAndelBeløp" : 0,
+        "samværsfradrag" : 0,
+        "beregnetBidrag" : 0,
+        "faktiskBidrag" : 0,
+        "resultatKode" : "IKKE_OMSORG_FOR_BARNET",
+        "erOpphør" : true,
+        "erDirekteAvslag" : false,
+        "vedtakstype" : "ENDRING",
+        "beregningsdetaljer" : {
+          "bpHarEvne" : false,
+          "antallBarnIHusstanden" : null,
+          "forskuddssats" : 0,
+          "barnetilleggBM" : null,
+          "barnetilleggBP" : null,
+          "voksenIHusstanden" : null,
+          "enesteVoksenIHusstandenErEgetBarn" : null,
+          "bpsAndel" : null,
+          "inntekter" : null,
+          "delberegningBidragsevne" : null,
+          "samværsfradrag" : null,
+          "endringUnderGrense" : null,
+          "sluttberegning" : null,
+          "delberegningUnderholdskostnad" : null,
+          "indeksreguleringDetaljer" : null,
+          "sluttberegningAldersjustering" : null,
+          "delberegningBidragspliktigesBeregnedeTotalBidrag" : null,
+          "deltBosted" : false
+        },
+        "klageOmgjøringDetaljer" : {
+          "resultatFraVedtakVedtakstidspunkt" : null,
+          "beregnTilDato" : "2020-07",
+          "manuellAldersjustering" : false,
+          "delAvVedtaket" : true,
+          "kanOpprette35c" : false,
+          "skalOpprette35c" : false
+        },
+        "delvedtakstypeVisningsnavn" : "Vedtak (15.09.2025)",
+        "resultatkodeVisningsnavn" : "Opphør",
+        "resultatFraVedtak" : {
+          "vedtaksid" : 5125016,
+          "omgjøringsvedtak" : false,
+          "beregnet" : false,
+          "opprettParagraf35c" : false,
+          "vedtakstidspunkt" : "2025-09-15T10:28:20.656052",
+          "vedtakstype" : "ENDRING"
+        }
+      } ],
+      "type" : "BIDRAG"
+    } ],
+    "barnIHusstandPerioder" : [ ],
+    "sivilstandPerioder" : [ ],
+    "erDirekteAvslagForAlleBarn" : true
+  },
+  "sjablonDetaljer" : {
+    "multiplikatorInntekstgrenseForskudd" : 330.0,
+    "fastsettelseGebyr" : 1314.0,
+    "forskuddInntektIntervall" : 76600.0,
+    "forskuddSats" : 2010.0,
+    "inntektsintervallTillegsbidrag" : 50000.0,
+    "multiplikatorHøyInntektBp" : 550.0,
+    "multiplikatorMaksBidrag" : 5.0,
+    "multiplikatorInnteksinslagBarn" : 30.0,
+    "multiplikatorMaksInntekBarn" : 100.0,
+    "nedreInntekstgrenseGebyr" : 355800.0,
+    "prosentsatsTilleggsbidrag" : 0.0,
+    "maksProsentAvInntektBp" : 25.0,
+    "forskuddInntektgrensePerioder" : [ {
+      "fomDato" : "2025-09-17",
+      "tomDato" : null,
+      "forsorgerType" : "ENSLIG",
+      "antallBarn" : 1,
+      "beløp50Prosent" : {
+        "first" : 556901.0,
+        "second" : 663300.00
+      },
+      "beløp75Prosent" : {
+        "first" : 375901.0,
+        "second" : 556900.0
+      }
+    }, {
+      "fomDato" : "2025-09-17",
+      "tomDato" : null,
+      "forsorgerType" : "ENSLIG",
+      "antallBarn" : 2,
+      "beløp50Prosent" : {
+        "first" : 633501.0,
+        "second" : 663300.00
+      },
+      "beløp75Prosent" : {
+        "first" : 375901.0,
+        "second" : 633500.0
+      }
+    }, {
+      "fomDato" : "2025-09-17",
+      "tomDato" : null,
+      "forsorgerType" : "ENSLIG",
+      "antallBarn" : 3,
+      "beløp50Prosent" : {
+        "first" : 663300.00,
+        "second" : 663300.00
+      },
+      "beløp75Prosent" : {
+        "first" : 375901.0,
+        "second" : 663300.00
+      }
+    }, {
+      "fomDato" : "2025-09-17",
+      "tomDato" : null,
+      "forsorgerType" : "ENSLIG",
+      "antallBarn" : 4,
+      "beløp50Prosent" : {
+        "first" : 663300.00,
+        "second" : 663300.00
+      },
+      "beløp75Prosent" : {
+        "first" : 375901.0,
+        "second" : 663300.00
+      }
+    }, {
+      "fomDato" : "2025-09-17",
+      "tomDato" : null,
+      "forsorgerType" : "GIFT_SAMBOER",
+      "antallBarn" : 1,
+      "beløp50Prosent" : {
+        "first" : 459301.0,
+        "second" : 663300.00
+      },
+      "beløp75Prosent" : {
+        "first" : 375901.0,
+        "second" : 459300.0
+      }
+    }, {
+      "fomDato" : "2025-09-17",
+      "tomDato" : null,
+      "forsorgerType" : "GIFT_SAMBOER",
+      "antallBarn" : 2,
+      "beløp50Prosent" : {
+        "first" : 535901.0,
+        "second" : 663300.00
+      },
+      "beløp75Prosent" : {
+        "first" : 375901.0,
+        "second" : 535900.0
+      }
+    }, {
+      "fomDato" : "2025-09-17",
+      "tomDato" : null,
+      "forsorgerType" : "GIFT_SAMBOER",
+      "antallBarn" : 3,
+      "beløp50Prosent" : {
+        "first" : 612501.0,
+        "second" : 663300.00
+      },
+      "beløp75Prosent" : {
+        "first" : 375901.0,
+        "second" : 612500.0
+      }
+    }, {
+      "fomDato" : "2025-09-17",
+      "tomDato" : null,
+      "forsorgerType" : "GIFT_SAMBOER",
+      "antallBarn" : 4,
+      "beløp50Prosent" : {
+        "first" : 663300.00,
+        "second" : 663300.00
+      },
+      "beløp75Prosent" : {
+        "first" : 375901.0,
+        "second" : 663300.00
+      }
+    } ],
+    "maksgrenseHøyInntekt" : 1105500.00,
+    "maksBidragsgrense" : 10050.00,
+    "maksInntektsgrense" : 201000.00,
+    "maksForskuddsgrense" : 663300.00,
+    "maksInntektsgebyr" : 715158000.00
+  },
+  "sakDetaljer" : {
+    "harUkjentPart" : false,
+    "levdeAdskilt" : false
+  }
+}
