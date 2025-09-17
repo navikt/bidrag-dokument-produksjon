@@ -1,28 +1,34 @@
-import { sammenlignRoller, rolleTilVisningsnavn } from "~/utils/visningsnavn";
+import { rolleTilVisningsnavn, sammenlignRoller } from "~/utils/visningsnavn";
 import { Rolletype } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import NavLogo from "~/components/NavLogo";
-import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable } from "~/components/DataViewTable";
+import {
+  useDokumentFelles,
+  TypeInnhold,
+} from "~/components/vedtak_felles/FellesContext";
 
 export default function Soknaddetaljer() {
-  const { data } = useNotatFelles();
-  const rollerIkkeBarn = data.roller.filter(
+  const { roller, saksnummer, typeInnhold } = useDokumentFelles();
+  const rollerIkkeBarn = roller.filter(
     (rolle) => !sammenlignRoller(rolle.rolle, Rolletype.BA),
   );
-  const rollerBarn = data.roller.filter((rolle) =>
+  const rollerBarn = roller.filter((rolle) =>
     sammenlignRoller(rolle.rolle, Rolletype.BA),
   );
   return (
     <div className={"soknad_detaljer"}>
       <div>
-        <NavLogo />
+        {typeInnhold == TypeInnhold.NOTAT && <NavLogo />}
         <DataViewTable
           labelColWidth={"98px"}
           data={[
             {
               label: "Saksnummer",
-              value: data.saksnummer,
+              value:
+                typeInnhold == TypeInnhold.NOTAT
+                  ? saksnummer
+                  : `${saksnummer} (Oppgi saksnummeret ved henvendelse til oss.)`,
             },
 
             ...rollerIkkeBarn

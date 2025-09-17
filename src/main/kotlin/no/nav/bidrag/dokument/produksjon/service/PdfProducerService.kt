@@ -52,7 +52,7 @@ class PdfProducerService(
 
     fun generateHTMLResponseV2(
         category: String,
-        dokumentmal: NotatMalType,
+        dokumentmal: String,
         payload: String?,
         useHottemplate: Boolean = false,
     ): ResponseEntity<String> {
@@ -61,12 +61,11 @@ class PdfProducerService(
                 "Mangler data for å generere brev",
             )
         }
-        val type = dokumentmal.name.lowercase()
-        val jsonPayload = payload ?: hotTemplateData(category, type)
+        val jsonPayload = payload ?: hotTemplateData(category, dokumentmal)
         return bidragDokumentmalConsumer
             .hentDokumentmal(
                 category,
-                type,
+                dokumentmal,
                 jsonPayload,
                 false,
             )?.let {
@@ -115,7 +114,7 @@ class PdfProducerService(
 
     fun generatePDFResponseV2(
         category: String,
-        dokumentmal: NotatMalType,
+        dokumentmal: String,
         payload: String?,
         useHottemplate: Boolean = false,
     ): ResponseEntity<ByteArray> {
@@ -124,11 +123,10 @@ class PdfProducerService(
                 "Mangler data for å generere brev",
             )
         }
-        val type = dokumentmal.name.lowercase()
-        val jsonPayload = payload ?: hotTemplateData(category, type)
+        val jsonPayload = payload ?: hotTemplateData(category, dokumentmal)
         val startTime = System.currentTimeMillis()
         return bidragDokumentmalConsumer
-            .hentDokumentmal(category, type, jsonPayload)
+            .hentDokumentmal(category, dokumentmal, jsonPayload)
             ?.let { document ->
                 val bytes =
                     bidragPdfGenConsumer.produserPdf(
@@ -136,7 +134,7 @@ class PdfProducerService(
                         Configuration(BigDecimal(1), false),
                     )
                 log.info {
-                    "Done generating PDF for category $category and template $type in ${System.currentTimeMillis() - startTime}ms"
+                    "Done generating PDF for category $category and template $dokumentmal in ${System.currentTimeMillis() - startTime}ms"
                 }
                 ResponseEntity
                     .ok()
@@ -150,6 +148,21 @@ class PdfProducerService(
                 .status(
                     HttpStatus.NOT_FOUND,
                 ).body("Template or category not found".toByteArray())
+    }
+
+    fun flattenPDF(payload: ByteArray): ResponseEntity<ByteArray> {
+        val bytes =
+            bidragPdfGenConsumer.flattenPDF(
+                payload.toString(Charsets.UTF_8),
+            )
+
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.APPLICATION_PDF)
+            .header(
+                HttpHeaders.CONTENT_DISPOSITION,
+                "inline; filename=flattened_pdf.pdf",
+            ).body(bytes)
     }
 
     fun htmlToPDF(payload: ByteArray): ResponseEntity<ByteArray> {

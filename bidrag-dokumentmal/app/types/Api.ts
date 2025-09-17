@@ -26,7 +26,6 @@ export interface Belop {
 
 export enum BeregnTil {
   OPPRINNELIG_VEDTAKSTIDSPUNKT = "OPPRINNELIG_VEDTAKSTIDSPUNKT",
-  OMGJORT_VEDTAK_VEDTAKSTIDSPUNKT = "OMGJORT_VEDTAK_VEDTAKSTIDSPUNKT",
   INNEVAeRENDEMANED = "INNEVÆRENDE_MÅNED",
   ETTERFOLGENDEMANUELLVEDTAK = "ETTERFØLGENDE_MANUELL_VEDTAK",
 }
@@ -49,8 +48,8 @@ export interface BidragPeriodeBeregningsdetaljer {
   /** @format double */
   antallBarnIHusstanden?: number;
   forskuddssats: number;
-  barnetilleggBM: NotatDelberegningBarnetilleggDto;
-  barnetilleggBP: NotatDelberegningBarnetilleggDto;
+  barnetilleggBM?: NotatDelberegningBarnetilleggDto;
+  barnetilleggBP?: NotatDelberegningBarnetilleggDto;
   voksenIHusstanden?: boolean;
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   bpsAndel?: DelberegningBidragspliktigesAndel;
@@ -358,9 +357,9 @@ export interface NotatBehandlingDetaljerDto {
   /** @format date */
   klageMottattDato?: string;
   avslagVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -470,9 +469,9 @@ export interface NotatInntektDto {
   gjelderBarn?: NotatPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
-  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
+  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -664,9 +663,9 @@ export interface NotatSkattBeregning {
   trinnskatt: number;
   trygdeavgift: number;
   skattMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface NotatStonadTilBarnetilsynDto {
@@ -895,8 +894,8 @@ export interface NotatVirkningstidspunktDto {
    * @deprecated
    */
   notat: NotatBegrunnelseDto;
-  avslagVisningsnavn?: string;
   årsakVisningsnavn?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatVoksenIHusstandenDetaljerDto {
@@ -962,6 +961,18 @@ export interface ResultatBarnebidragsberegningPeriodeDto {
   klageOmgjøringDetaljer?: KlageOmgjoringDetaljer;
   delvedtakstypeVisningsnavn: string;
   resultatkodeVisningsnavn: string;
+  resultatFraVedtak?: ResultatFraVedtakGrunnlag;
+}
+
+export interface ResultatFraVedtakGrunnlag {
+  /** @format int32 */
+  vedtaksid?: number;
+  omgjøringsvedtak: boolean;
+  beregnet: boolean;
+  opprettParagraf35c: boolean;
+  /** @format date-time */
+  vedtakstidspunkt?: string;
+  vedtakstype?: Vedtakstype;
 }
 
 export enum Resultatkode {
@@ -1024,6 +1035,7 @@ export enum Resultatkode {
   MAKS25PROSENTAVINNTEKT = "MAKS_25_PROSENT_AV_INNTEKT",
   MANGLER_BIDRAGSEVNE = "MANGLER_BIDRAGSEVNE",
   KOSTNADSBEREGNET_BIDRAG = "KOSTNADSBEREGNET_BIDRAG",
+  INNKREVINGSGRUNNLAG = "INNKREVINGSGRUNNLAG",
   INDEKSREGULERING = "INDEKSREGULERING",
 }
 
@@ -1324,6 +1336,414 @@ export enum TypeArsakstype {
   FRA_ENDRINGSTIDSPUNKT = "FRA_ENDRINGSTIDSPUNKT",
   BIDRAGSPLIKTIGHARIKKEBIDRATTTILFORSORGELSE = "BIDRAGSPLIKTIG_HAR_IKKE_BIDRATT_TIL_FORSØRGELSE",
   MANEDETTERBETALTFORFALTBIDRAG = "MÅNED_ETTER_BETALT_FORFALT_BIDRAG",
+}
+
+export interface Adresse {
+  adresselinje1: string;
+  adresselinje2?: string;
+  adresselinje3?: string;
+  adresselinje4?: string;
+  bruksenhetsnummer?: string;
+  postnummer?: string;
+  poststed?: string;
+  landkode?: string;
+  landkode3?: string;
+  land?: string;
+}
+
+export interface AndelUnderholdskostnadPeriode {
+  periode: TypeArManedsperiode;
+  inntektBM?: number;
+  inntektBP?: number;
+  inntektBarn?: number;
+  barnEndeligInntekt?: number;
+  andelFaktor?: number;
+  beløpUnderholdskostnad?: number;
+  beløpBpsAndel: number;
+  totalEndeligInntekt: number;
+}
+
+export interface Barn {
+  type: Rolletype;
+  rolle: Rolletype;
+  fodselsnummer?: string;
+  navn: string;
+  /** @format date */
+  fodselsdato?: string;
+  fornavn?: string;
+  /** @format int32 */
+  bidragsbelop?: number;
+  /** @format int32 */
+  forskuddsbelop?: number;
+  /** @format int32 */
+  gebyrRm?: number;
+  fodselsnummerRm?: string;
+}
+
+export interface BarnIHusstandPeriode {
+  periode: TypeArManedsperiode;
+  /** @format double */
+  antall: number;
+}
+
+export interface BidragsevnePeriode {
+  periode: TypeArManedsperiode;
+  sjabloner: BidragsevneSjabloner;
+  bidragsevne: number;
+  beløpBidrag: number;
+  harFullEvne: boolean;
+  harDelvisEvne: boolean;
+  inntektBP: number;
+  underholdEgneBarnIHusstand: UnderholdEgneBarnIHusstand;
+  skatt: Skatt;
+  borMedAndreVoksne: boolean;
+}
+
+export interface BidragsevneSjabloner {
+  beløpMinstefradrag: number;
+  beløpKlassfradrag: number;
+  beløpUnderholdEgneBarnIHusstanden: number;
+  boutgiftBeløp: number;
+  underholdBeløp: number;
+}
+
+/** Bostatus for person */
+export interface BostatusPeriode {
+  periode: TypeArManedsperiode;
+  bostatus: Bostatuskode;
+  /** Referanse til BM eller BP som bostatus for personen gjelder for */
+  relatertTilPart: string;
+  /** Om grunnlaget er manuelt registrert av saksbehandler eller om det er innhentet fra ekstern kilde (skatt/folkregisteret...) */
+  manueltRegistrert: boolean;
+}
+
+export interface BrevSjablonVerdier {
+  forskuddSats: number;
+  inntektsgrense: number;
+}
+
+export interface Datoperiode {
+  /** @format date */
+  fom: string;
+  /** @format date */
+  til?: string;
+}
+
+export interface DokumentBestilling {
+  bestillBatch: boolean;
+  mottaker?: Mottaker;
+  gjelder?: Gjelder;
+  kontaktInfo?: EnhetKontaktInfo;
+  saksbehandler?: Saksbehandler;
+  dokumentreferanse?: string;
+  tittel?: string;
+  enhet?: string;
+  saksnummer?: string;
+  /** @format date */
+  datoSakOpprettet?: string;
+  spraak?: string;
+  roller: {
+    isEmpty: boolean;
+    /** @format int32 */
+    size: number;
+    bidragsmottaker?: PartInfo;
+    bidragspliktig?: PartInfo;
+    barn: Barn[];
+    first?: Barn;
+    last?: Barn;
+  };
+  rollerV2: NotatPersonDto[];
+  rmISak?: boolean;
+  vedtakDetaljer?: VedtakDetaljer;
+  sjablonDetaljer: SjablonDetaljer;
+  sakDetaljer: SakDetaljer;
+}
+
+export enum Engangsbeloptype {
+  DIREKTE_OPPGJOR = "DIREKTE_OPPGJOR",
+  DIREKTEOPPGJOR = "DIREKTE_OPPGJØR",
+  ETTERGIVELSE = "ETTERGIVELSE",
+  ETTERGIVELSE_TILBAKEKREVING = "ETTERGIVELSE_TILBAKEKREVING",
+  GEBYR_MOTTAKER = "GEBYR_MOTTAKER",
+  GEBYR_SKYLDNER = "GEBYR_SKYLDNER",
+  INNKREVING_GJELD = "INNKREVING_GJELD",
+  TILBAKEKREVING = "TILBAKEKREVING",
+  SAERTILSKUDD = "SAERTILSKUDD",
+  SAeRTILSKUDD = "SÆRTILSKUDD",
+  SAeRBIDRAG = "SÆRBIDRAG",
+}
+
+export interface EnhetKontaktInfo {
+  navn: string;
+  telefonnummer: string;
+  postadresse: Adresse;
+  enhetId: string;
+}
+
+export interface ForskuddInntektgrensePeriode {
+  /** @format date */
+  fomDato: string;
+  /** @format date */
+  tomDato?: string;
+  forsorgerType: Sivilstandskode;
+  /** @format int32 */
+  antallBarn: number;
+  beløp50Prosent: PairBigDecimalBigDecimal;
+  beløp75Prosent: PairBigDecimalBigDecimal;
+}
+
+export interface GebyrInfoDto {
+  bmGebyr?: number;
+  bpGebyr?: number;
+}
+
+export interface Gjelder {
+  fodselsnummer: string;
+  navn?: string;
+  adresse?: Adresse;
+  rolle?: Rolletype;
+}
+
+export interface Inntekt {
+  bmInntekt: number;
+  bpInntekt: number;
+  barnInntekt: number;
+  totalInntekt: number;
+}
+
+export interface InntektPeriode {
+  /** @uniqueItems true */
+  inntektPerioder: TypeArManedsperiode[];
+  /** @uniqueItems true */
+  inntektOpprinneligPerioder: TypeArManedsperiode[];
+  periode: TypeArManedsperiode;
+  /** @uniqueItems true */
+  typer: Inntektsrapportering[];
+  periodeTotalinntekt?: boolean;
+  nettoKapitalInntekt?: boolean;
+  /** @format int32 */
+  beløpÅr?: number;
+  fødselsnummer?: string;
+  beløp: number;
+  rolle: Rolletype;
+  innteksgrense: number;
+  type?: Inntektsrapportering;
+}
+
+export interface Mottaker {
+  fodselsnummer: string;
+  navn: string;
+  spraak: string;
+  adresse?: Adresse;
+  rolle?: Rolletype;
+  /** @format date */
+  fodselsdato?: string;
+}
+
+export interface PairBigDecimalBigDecimal {
+  first: number;
+  second: number;
+}
+
+export interface PairIntegerInteger {
+  /** @format int32 */
+  first: number;
+  /** @format int32 */
+  second: number;
+}
+
+export interface PartInfo {
+  type?: Rolletype;
+  rolle: Rolletype;
+  fodselsnummer?: string;
+  navn: string;
+  /** @format date */
+  fodselsdato?: string;
+  /** @format date */
+  doedsdato?: string;
+  landkode?: string;
+  landkode3?: string;
+  /** @format date */
+  datoDod?: string;
+  gebyr?: number;
+  kravFremAv?: string;
+}
+
+export interface SakDetaljer {
+  harUkjentPart: boolean;
+  levdeAdskilt: boolean;
+}
+
+export interface Saksbehandler {
+  ident?: string;
+  navn?: string;
+  fornavnEtternavn: string;
+}
+
+export interface Samvaersperiode {
+  periode: TypeArManedsperiode;
+  samværsklasse: Samvaersklasse;
+  aldersgruppe?: PairIntegerInteger;
+  samværsfradragBeløp: number;
+}
+
+/** Sivilstand for person */
+export interface SivilstandPeriode {
+  periode: TypeArManedsperiode;
+  sivilstand: Sivilstandskode;
+  /** Om grunnlaget er manuelt registrert av saksbehandler eller om det er innhentet fra ekstern kilde (skatt/folkregisteret...) */
+  manueltRegistrert: boolean;
+}
+
+export interface SjablonDetaljer {
+  multiplikatorInntekstgrenseForskudd: number;
+  fastsettelseGebyr: number;
+  forskuddInntektIntervall: number;
+  forskuddSats: number;
+  inntektsintervallTillegsbidrag: number;
+  multiplikatorHøyInntektBp: number;
+  multiplikatorMaksBidrag: number;
+  multiplikatorInnteksinslagBarn: number;
+  multiplikatorMaksInntekBarn: number;
+  nedreInntekstgrenseGebyr: number;
+  prosentsatsTilleggsbidrag: number;
+  maksProsentAvInntektBp: number;
+  forskuddInntektgrensePerioder: ForskuddInntektgrensePeriode[];
+  maksgrenseHøyInntekt: number;
+  maksBidragsgrense: number;
+  maksInntektsgrense: number;
+  maksForskuddsgrense: number;
+  maksInntektsgebyr: number;
+}
+
+export interface Skatt {
+  sumSkattFaktor: number;
+  sumSkatt: number;
+  skattAlminneligInntekt: number;
+  trinnskatt: number;
+  trygdeavgift: number;
+  skattMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
+  trinnskattMånedsbeløp: number;
+  trygdeavgiftMånedsbeløp: number;
+}
+
+export interface SaerbidragBeregning {
+  kravbeløp: number;
+  godkjentbeløp: number;
+  resultat: number;
+  resultatKode: Resultatkode;
+  beløpDirekteBetaltAvBp: number;
+  andelProsent: number;
+  inntekt: Inntekt;
+}
+
+export enum TypeBehandling {
+  FORSKUDD = "FORSKUDD",
+  SAeRBIDRAG = "SÆRBIDRAG",
+  BIDRAG = "BIDRAG",
+  BIDRAG18AR = "BIDRAG_18_ÅR",
+}
+
+export interface UnderholdEgneBarnIHusstand {
+  getårsbeløp: number;
+  sjablon: number;
+  /** @format double */
+  antallBarnIHusstanden: number;
+  /** @format int32 */
+  antallBarnDeltBossted: number;
+  måndesbeløp: number;
+}
+
+export interface UnderholdskostnaderPeriode {
+  periode: TypeArManedsperiode;
+  tilsynstype?: "HELTID" | "DELTID" | "IKKE_ANGITT";
+  skolealder?: "OVER" | "UNDER" | "IKKE_ANGITT";
+  harBarnetilsyn: boolean;
+  delberegning: DelberegningUnderholdskostnad;
+  gjelderIdent: string;
+  rolletype?: Rolletype;
+}
+
+export interface VedtakBarn {
+  fødselsnummer: string;
+  navn?: string;
+  sumAvregning: number;
+  løpendeBidrag?: number;
+  bostatusPerioder: BostatusPeriode[];
+  stønadsendringer: VedtakBarnStonad[];
+  engangsbeløper: VedtakBarnEngangsbelop[];
+  erDirekteAvslag: boolean;
+}
+
+export interface VedtakBarnEngangsbelop {
+  type: Engangsbeloptype;
+  sjablon: BrevSjablonVerdier;
+  periode: Datoperiode;
+  medInnkreving: boolean;
+  erDirekteAvslag: boolean;
+  særbidragBeregning?: SaerbidragBeregning;
+  inntekter: InntektPeriode[];
+}
+
+export interface VedtakBarnStonad {
+  type: Stonadstype;
+  innkreving: boolean;
+  direkteAvslag: boolean;
+  vedtakPerioder: VedtakPeriode[];
+  forskuddInntektgrensePerioder: ForskuddInntektgrensePeriode[];
+}
+
+export interface VedtakDetaljer {
+  getårsakKode?: TypeArsakstype;
+  avslagsKode?: Resultatkode;
+  type: TypeBehandling;
+  gebyr?: GebyrInfoDto;
+  /** @format date */
+  virkningstidspunkt?: string;
+  /** @format date */
+  mottattDato?: string;
+  /** @format date */
+  soktFraDato?: string;
+  /** @format date */
+  vedtattDato?: string;
+  saksbehandlerInfo: VedtakSaksbehandlerInfo;
+  vedtakstype: Vedtakstype;
+  stønadstype?: Stonadstype;
+  engangsbeløptype?: Engangsbeloptype;
+  søknadFra?: SoktAvType;
+  kilde: "MANUELT" | "AUTOMATISK";
+  vedtakBarn: VedtakBarn[];
+  resultat: (
+    | NotatResultatBidragsberegningBarnDto
+    | NotatResultatForskuddBeregningBarnDto
+    | NotatResultatSaerbidragsberegningDto
+  )[];
+  barnIHusstandPerioder: BarnIHusstandPeriode[];
+  sivilstandPerioder: SivilstandPeriode[];
+  erDirekteAvslagForAlleBarn: boolean;
+}
+
+export interface VedtakPeriode {
+  /** @format date */
+  fomDato: string;
+  /** @format date */
+  tomDato?: string;
+  beløp: number;
+  innkreving?: string;
+  resultatKode: string;
+  inntektGrense: number;
+  maksInntekt: number;
+  inntekter: InntektPeriode[];
+  samvær?: Samvaersperiode;
+  bidragsevne?: BidragsevnePeriode;
+  underhold?: UnderholdskostnaderPeriode;
+  andelUnderhold?: AndelUnderholdskostnadPeriode;
+}
+
+export interface VedtakSaksbehandlerInfo {
+  navn: string;
+  ident: string;
 }
 
 export type JsonNode = object;

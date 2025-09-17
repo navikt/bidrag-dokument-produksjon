@@ -8,6 +8,7 @@ import {
 } from "~/types/Api";
 import { konverterRolletype, erRolle } from "~/utils/converter-utils";
 import { ThemeProvider, Styling } from "~/components/notat_felles/ThemeContext";
+import { DokumentFellesProvider } from "~/components/vedtak_felles/FellesContext";
 export enum RenderPDFVersion {
   V1 = "V1",
   V2 = "V2",
@@ -55,23 +56,26 @@ export function NotatProvider({
   };
   return (
     <ThemeProvider styling={styling}>
-      <NotatContext.Provider
-        value={{
-          renderMode,
-          renderPDFVersion,
-          data: dataCorrected,
-          type: dataCorrected.type,
-          bidragsmottaker: dataCorrected.roller.find(erRolle(Rolletype.BM))!,
-          bidragspliktig: dataCorrected.roller.find(erRolle(Rolletype.BP)),
-          søknadsbarn: dataCorrected.roller.filter(erRolle(Rolletype.BA)),
-          harFlereEnnEttSøknadsbarn:
-            dataCorrected.roller.filter(erRolle(Rolletype.BA)).length > 1,
-          erAvslag: dataCorrected.behandling.avslag != null,
-          erOpphør: dataCorrected.behandling.vedtakstype == Vedtakstype.OPPHOR,
-        }}
-      >
-        {children}
-      </NotatContext.Provider>
+      <DokumentFellesProvider styling={styling} notat={data}>
+        <NotatContext.Provider
+          value={{
+            renderMode,
+            renderPDFVersion,
+            data: dataCorrected,
+            type: dataCorrected.type,
+            bidragsmottaker: dataCorrected.roller.find(erRolle(Rolletype.BM))!,
+            bidragspliktig: dataCorrected.roller.find(erRolle(Rolletype.BP)),
+            søknadsbarn: dataCorrected.roller.filter(erRolle(Rolletype.BA)),
+            harFlereEnnEttSøknadsbarn:
+              dataCorrected.roller.filter(erRolle(Rolletype.BA)).length > 1,
+            erAvslag: dataCorrected.behandling.avslag != null,
+            erOpphør:
+              dataCorrected.behandling.vedtakstype == Vedtakstype.OPPHOR,
+          }}
+        >
+          {children}
+        </NotatContext.Provider>
+      </DokumentFellesProvider>
     </ThemeProvider>
   );
 }

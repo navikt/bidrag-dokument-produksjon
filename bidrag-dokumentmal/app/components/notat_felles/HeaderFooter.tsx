@@ -1,8 +1,4 @@
-import {
-  RenderMode,
-  useNotatFelles,
-  RenderPDFVersion,
-} from "~/components/notat_felles/NotatContext";
+import { RenderMode } from "~/components/notat_felles/NotatContext";
 const contentWithCustomStyles = `
       body {
         font-family: "Source Sans 3";
@@ -10,17 +6,13 @@ const contentWithCustomStyles = `
         line-height: 16px;
       }
 `;
-export default function HeaderFooter() {
-  const { renderMode, data, renderPDFVersion } = useNotatFelles();
-  const renderHeaderFooterV1 = () => (
-    <div>
-      <div
-        className={"custom-top_bottom_content"}
-        data-content={`Saksnummer ${data.saksnummer}`}
-      ></div>
-      <div className={"custom-page-number"}></div>
-    </div>
-  );
+export default function HeaderFooter({
+  renderMode,
+  saksnummer,
+}: {
+  renderMode: RenderMode;
+  saksnummer: string;
+}) {
   const renderHeaderFooterV2 = (isHeader: boolean) => (
     <>
       <div id={isHeader ? "header" : "footer"}>
@@ -37,7 +29,7 @@ export default function HeaderFooter() {
             bottom: isHeader ? "auto" : "40px",
           }}
         >
-          Saksnummer {data.saksnummer}
+          Saksnummer {saksnummer}
         </span>
         <span
           style={{
@@ -56,24 +48,12 @@ export default function HeaderFooter() {
   );
   return (
     <>
-      {renderMode == RenderMode.PDF &&
-        renderPDFVersion == RenderPDFVersion.V1 && (
-          <>
-            <div className="header top_bottom_text">
-              {renderHeaderFooterV1()}
-            </div>
-            <div className="footer top_bottom_text">
-              {renderHeaderFooterV1()}
-            </div>
-          </>
-        )}
-      {renderMode == RenderMode.PDF &&
-        renderPDFVersion == RenderPDFVersion.V2 && (
-          <>
-            {renderHeaderFooterV2(true)}
-            {renderHeaderFooterV2(false)}
-          </>
-        )}
+      {renderMode == RenderMode.PDF && (
+        <>
+          {renderHeaderFooterV2(true)}
+          {renderHeaderFooterV2(false)}
+        </>
+      )}
     </>
   );
 }

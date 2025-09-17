@@ -11,9 +11,10 @@
     "typecheck": "tsc",
     "icons": "npx @svgr/cli --out-dir app/components/icons -- app/icons",
     "icons:watch": "npm-watch icons",
-    "dev:svg": "run-s icons icons:watch",
+    "dev3:svg": "run-s icons icons:watch",
     "dev": "remix dev",
     "tailwind_dev": "tailwindcss build -i app/tailwind.css -o app/style/tw_output.css --watch",
+    "dev:tailwind_dev": "tailwindcss build -i app/tailwind.css -o app/style/tw_output.css --watch",
     "tailwind_build": "tailwindcss build -i app/tailwind.css -o app/style/tw_output.css",
     "gen_api": "swagger-typescript-api -p http://localhost:8183/v3/api-docs --no-client -n Api.ts -o app/types"
   },

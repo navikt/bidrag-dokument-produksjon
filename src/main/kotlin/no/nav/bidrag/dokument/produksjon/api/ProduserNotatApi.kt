@@ -38,7 +38,7 @@ class ProduserNotatApi(
         log.info { "Produserer notat PDF 2 for dokumentmal ${payload.type}" }
         return pdfProducerService.generatePDFResponseV2(
             "notat",
-            payload.type,
+            payload.type.name.lowercase(),
             commonObjectmapper.writeValueAsString(payload),
         )
     }
@@ -54,7 +54,7 @@ class ProduserNotatApi(
         log.info { "Produserer notat HTML for dokumentmal ${payload.type}" }
         return pdfProducerService.generateHTMLResponseV2(
             "notat",
-            payload.type,
+            payload.type.name.lowercase(),
             getObjectmapper().writeValueAsString(payload),
         )
     }

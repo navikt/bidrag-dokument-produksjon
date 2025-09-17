@@ -44,6 +44,7 @@ export default function NotatBidrag() {
   }
 
   const data = response.data;
+  const renderMode = response.renderForPdf ? RenderMode.PDF : RenderMode.HTML;
   return (
     <div id="bidrag_notat">
       <NotatProvider
@@ -52,7 +53,10 @@ export default function NotatBidrag() {
         renderPDFVersion={response.renderPDFVersion}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >
-        <HeaderFooter />
+        <HeaderFooter
+          saksnummer={response.data.saksnummer}
+          renderMode={renderMode}
+        />
         <div className={"container page"}>
           <Soknaddetaljer />
           <NotatTittel title={tekster.titler.bidrag} />
