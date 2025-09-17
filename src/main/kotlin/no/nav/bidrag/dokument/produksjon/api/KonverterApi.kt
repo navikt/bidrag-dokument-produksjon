@@ -25,4 +25,12 @@ class KonverterApi(
         log.info { "Produserer notat HTML for dokumentmal" }
         return pdfProducerService.htmlToPDF(payload)
     }
+
+    @PostMapping("/flatten")
+    fun flattenPDF(
+        @org.springframework.web.bind.annotation.RequestBody payload: ByteArray,
+    ): ResponseEntity<ByteArray> {
+        log.info { "Flattening PDF" }
+        return pdfProducerService.flattenPDF(payload)
+    }
 }
