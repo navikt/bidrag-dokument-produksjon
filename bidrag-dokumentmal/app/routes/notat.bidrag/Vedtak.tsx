@@ -353,23 +353,29 @@ export function VedtakEndeligTable({
                 ].filter((d) => d != null),
               },
             ])
-            .concat([
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            .concat(
               //@ts-ignore
-              {
-                skipBorderBottom: true,
-                zebraStripe: false,
-                skipPadding: true,
-                className: "pt-2",
-                columns: [
-                  {
-                    fullSpan: true,
-                    content:
-                      "U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
-                  },
-                ],
-              } as TableRow,
-            ])
+              visResultat
+                ? [
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-ignore
+
+                    {
+                      skipBorderBottom: true,
+                      zebraStripe: false,
+                      skipPadding: true,
+                      className: "pt-2",
+                      columns: [
+                        {
+                          fullSpan: true,
+                          content:
+                            "U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
+                        },
+                      ],
+                    } as TableRow,
+                  ]
+                : [],
+            )
             .filter((d) => d != null) as TableRow[],
         };
         return (

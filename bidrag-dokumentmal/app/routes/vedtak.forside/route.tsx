@@ -41,7 +41,7 @@ export default function ForsideOrkestrertBidragsvedtak() {
         <div className={"container page"}>
           <BrevAdresseKontaktinfo />
           <Soknaddetaljer />
-          <div>
+          <div className={"mb-4"}>
             <h4>Informasjon om klage</h4>
             <p>
               Behandlingen av klagen har ført til endringer utover
@@ -56,7 +56,7 @@ export default function ForsideOrkestrertBidragsvedtak() {
             </p>
           </div>
           <VedtakEndeligTable data={data.vedtakDetaljer?.resultat} />
-          <div className={"pt-2"}>
+          <div className={"pt-4"}>
             <h4>Endringer etter vedtaket</h4>
             <p>
               Hvis det har skjedd faktiske endringer etter at det påklagede
@@ -64,7 +64,7 @@ export default function ForsideOrkestrertBidragsvedtak() {
               forhold som kan ha betydning for bidraget, må du sende en ny
               søknad om endring av barnebidraget.
             </p>
-            <h4>Har du spørsmål?</h4>
+            <h4 className={"pt-2"}>Har du spørsmål?</h4>
             <p>
               Du kan finne nyttig generell informasjon på nav.no/barnebidrag.
             </p>

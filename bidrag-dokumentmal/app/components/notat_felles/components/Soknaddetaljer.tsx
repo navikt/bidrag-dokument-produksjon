@@ -17,7 +17,7 @@ export default function Soknaddetaljer() {
     sammenlignRoller(rolle.rolle, Rolletype.BA),
   );
   return (
-    <div className={"soknad_detaljer"}>
+    <div className={"soknad_detaljer mb-[30px]"}>
       <div>
         {typeInnhold == TypeInnhold.NOTAT && <NavLogo />}
         <DataViewTable
