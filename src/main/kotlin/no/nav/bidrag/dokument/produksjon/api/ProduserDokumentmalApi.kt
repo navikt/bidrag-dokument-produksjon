@@ -2,7 +2,6 @@ package no.nav.bidrag.dokument.produksjon.api
 
 import io.github.oshai.kotlinlogging.KotlinLogging
 import io.swagger.v3.oas.annotations.Operation
-import io.swagger.v3.oas.annotations.Parameter
 import io.swagger.v3.oas.annotations.media.Content
 import io.swagger.v3.oas.annotations.media.ExampleObject
 import io.swagger.v3.oas.annotations.parameters.RequestBody
@@ -13,14 +12,12 @@ import no.nav.bidrag.dokument.produksjon.service.PdfProducerService
 import no.nav.bidrag.dokument.produksjon.util.getObjectmapper
 import no.nav.bidrag.transport.dokumentmaler.DokumentBestilling
 import no.nav.bidrag.transport.felles.commonObjectmapper
-import no.nav.bidrag.transport.notat.VedtakNotatDto
 import org.springframework.context.annotation.Bean
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.GetMapping
 import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
-import org.springframework.web.bind.annotation.RequestParam
 import org.springframework.web.bind.annotation.RestController
 import java.nio.file.Paths
 import kotlin.io.path.readText
