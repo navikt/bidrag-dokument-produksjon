@@ -307,7 +307,7 @@ export function VedtakEndeligTable({
         const vurderUgyldighet = perioder.some(
           (e) => e.klageOmgjøringDetaljer?.kanOpprette35c === true,
         );
-        const visResultat = typeInnhold == TypeInnhold.NOTAT;
+        const visningForSaksbehandler = typeInnhold == TypeInnhold.NOTAT;
         const tableData: TableData = {
           headers: (vurderUgyldighet
             ? [
@@ -317,10 +317,16 @@ export function VedtakEndeligTable({
               ]
             : []
           ).concat([
-            { name: "Periode", width: visResultat ? "120px" : "30%" },
-            { name: "Type", width: visResultat ? "100px" : "40%" },
-            { name: "Beløp", width: visResultat ? "120px" : "30%" },
-            visResultat && { name: "Resultat", width: "130px" },
+            {
+              name: "Periode",
+              width: visningForSaksbehandler ? "120px" : "30%",
+            },
+            {
+              name: visningForSaksbehandler ? "Type" : "Fastsatt av",
+              width: visningForSaksbehandler ? "100px" : "40%",
+            },
+            { name: "Beløp", width: visningForSaksbehandler ? "120px" : "30%" },
+            visningForSaksbehandler && { name: "Resultat", width: "130px" },
           ]),
           rows: perioder
             .flatMap((d) => [
@@ -342,12 +348,12 @@ export function VedtakEndeligTable({
                   },
                   {
                     content: d.erOpphør
-                      ? visResultat
+                      ? visningForSaksbehandler
                         ? "-"
                         : "Opphør"
                       : formatterBeløpForBeregning(d.faktiskBidrag),
                   },
-                  visResultat && {
+                  visningForSaksbehandler && {
                     content: d.resultatkodeVisningsnavn,
                   },
                 ].filter((d) => d != null),
@@ -355,7 +361,7 @@ export function VedtakEndeligTable({
             ])
             .concat(
               //@ts-ignore
-              visResultat
+              visningForSaksbehandler
                 ? [
                     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                     //@ts-ignore
