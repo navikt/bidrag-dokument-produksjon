@@ -188,6 +188,14 @@
   margin-top: 16px
 }
 
+.mb-\[30px\] {
+  margin-bottom: 30px
+}
+
+.mb-\[20px\] {
+  margin-bottom: 20px
+}
+
 .block {
   display: block
 }
@@ -337,6 +345,10 @@
 
 .pt-2 {
   padding-top: 8px
+}
+
+.pt-4 {
+  padding-top: 16px
 }
 
 .text-left {

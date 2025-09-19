@@ -10,8 +10,8 @@ import { groupBy } from "~/utils/array-utils";
 import {
   CommonTable,
   TableData,
-  TableRow,
   TableHeader,
+  TableRow,
 } from "~/components/CommonTable";
 import TableGjelderBarn from "~/components/TableGjelderBarn";
 import {
@@ -20,6 +20,10 @@ import {
 } from "~/utils/visningsnavn";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { VedleggProps } from "~/types/commonTypes";
+import {
+  useDokumentFelles,
+  TypeInnhold,
+} from "~/components/vedtak_felles/FellesContext";
 
 export default function Vedtak({ vedleggNummer }: VedleggProps) {
   const { erAvslag, data } = useNotatFelles();
@@ -286,11 +290,12 @@ function VedtakTable({
   );
 }
 
-function VedtakEndeligTable({
+export function VedtakEndeligTable({
   data,
 }: {
   data: NotatResultatBidragsberegningBarnDto[];
 }) {
+  const { typeInnhold } = useDokumentFelles();
   if (data.length == 0) return null;
   if (data.every((e) => e.orkestrertVedtak === null)) return null;
 
@@ -302,7 +307,7 @@ function VedtakEndeligTable({
         const vurderUgyldighet = perioder.some(
           (e) => e.klageOmgjøringDetaljer?.kanOpprette35c === true,
         );
-        console.log("vurderUgyldighet", vurderUgyldighet);
+        const visResultat = typeInnhold == TypeInnhold.NOTAT;
         const tableData: TableData = {
           headers: (vurderUgyldighet
             ? [
@@ -312,10 +317,10 @@ function VedtakEndeligTable({
               ]
             : []
           ).concat([
-            { name: "Periode", width: "120px" },
-            { name: "Type", width: "100px" },
-            { name: "Beløp", width: "120px" },
-            { name: "Resultat", width: "130px" },
+            { name: "Periode", width: visResultat ? "120px" : "30%" },
+            { name: "Type", width: visResultat ? "100px" : "40%" },
+            { name: "Beløp", width: visResultat ? "120px" : "30%" },
+            visResultat && { name: "Resultat", width: "130px" },
           ]),
           rows: perioder
             .flatMap((d) => [
@@ -337,32 +342,40 @@ function VedtakEndeligTable({
                   },
                   {
                     content: d.erOpphør
-                      ? "-"
+                      ? visResultat
+                        ? "-"
+                        : "Opphør"
                       : formatterBeløpForBeregning(d.faktiskBidrag),
                   },
-                  {
+                  visResultat && {
                     content: d.resultatkodeVisningsnavn,
                   },
                 ].filter((d) => d != null),
               },
             ])
-            .concat([
-              // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            .concat(
               //@ts-ignore
-              {
-                skipBorderBottom: true,
-                zebraStripe: false,
-                skipPadding: true,
-                className: "pt-2",
-                columns: [
-                  {
-                    fullSpan: true,
-                    content:
-                      "U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
-                  },
-                ],
-              } as TableRow,
-            ])
+              visResultat
+                ? [
+                    // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+                    //@ts-ignore
+
+                    {
+                      skipBorderBottom: true,
+                      zebraStripe: false,
+                      skipPadding: true,
+                      className: "pt-2",
+                      columns: [
+                        {
+                          fullSpan: true,
+                          content:
+                            "U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
+                        },
+                      ],
+                    } as TableRow,
+                  ]
+                : [],
+            )
             .filter((d) => d != null) as TableRow[],
         };
         return (

@@ -31,6 +31,26 @@ class BidragPdfGenConsumer(
     private final val headerId = "header"
     private final val footerId = "footer"
 
+    fun flattenPDF(pdf: String): ByteArray? =
+        try {
+            val url = "$url/forms/pdfengines/flatten"
+            val restTemplate: RestTemplate = RestTemplateBuilder().build()
+
+            val headers = HttpHeaders()
+            headers.contentType = MediaType.MULTIPART_FORM_DATA
+            headers["Gotenberg-Output-Filename"] = "output.pdf"
+            val requestEntity =
+                HttpEntity(
+                    LinkedMultiValueMap<String, Any>()
+                        .addPDF(pdf),
+                    headers,
+                )
+            restTemplate.postForEntity<ByteArray>(url, requestEntity).body
+        } catch (e: Exception) {
+            log.error(e) { "Det skjedde en feil ved henting av dokumentmal fra url $url" }
+            null
+        }
+
     fun produserPdf(
         html: String,
         configuration: Configuration = Configuration(),
@@ -53,6 +73,11 @@ class BidragPdfGenConsumer(
         } catch (e: Exception) {
             log.error(e) { "Det skjedde en feil ved henting av dokumentmal fra url $url" }
             null
+        }
+
+    fun String.toPDFResource(name: String) =
+        object : ByteArrayResource(toByteArray()) {
+            override fun getFilename(): String = "$name.pdf"
         }
 
     fun String.toHtmlResource(name: String) =
@@ -93,6 +118,18 @@ class BidragPdfGenConsumer(
         add("files", htmlContent)
         header?.let { add("files", header) }
         footer?.let { add("files", footer) }
+        return this
+    }
+
+    private fun MultiValueMap<String, Any>.addPDF(pdf: String): MultiValueMap<String, Any> {
+        val pdfContent =
+            removeElementByIdFromString(
+                pdf,
+                headerId,
+                footerId,
+            ).html().toPDFResource("input")
+        add("files", pdfContent)
+
         return this
     }
 

@@ -46,7 +46,10 @@ export default function NotatSærbidrag() {
         renderPDFVersion={response.renderPDFVersion}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >
-        <HeaderFooter />
+        <HeaderFooter
+          saksnummer={response.data.saksnummer}
+          renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
+        />
         <div className={"container page"}>
           <Soknaddetaljer />
           <NotatTittel title={tekster.titler.særbidrag} />
