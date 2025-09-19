@@ -322,7 +322,7 @@ export function VedtakEndeligTable({
               width: visningForSaksbehandler ? "120px" : "30%",
             },
             {
-              name: visningForSaksbehandler ? "Type" : "Vedtak/Justering",
+              name: visningForSaksbehandler ? "Type" : "Vedtak/justering",
               width: visningForSaksbehandler ? "100px" : "40%",
             },
             { name: "Beløp", width: visningForSaksbehandler ? "120px" : "30%" },
