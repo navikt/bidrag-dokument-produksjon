@@ -203,7 +203,7 @@ export const getYearFromDate = (date?: Date | string): number | undefined => {
 export const dateToDDMMYYYY = (
   date?: Date | string | null,
 ): string | undefined => {
-  if (!date) return;
+  if (!date) return "";
   if (typeof date == "string") {
     if (isNaN(Date.parse(date))) return "";
     return new Date(date).toLocaleDateString("nb-NB", {
