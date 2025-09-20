@@ -1,5 +1,5 @@
 import { rolleTilVisningsnavn, sammenlignRoller } from "~/utils/visningsnavn";
-import { Rolletype } from "~/types/Api";
+import { Rolletype, NotatPersonDto } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import NavLogo from "~/components/NavLogo";
 import { DataViewTable } from "~/components/DataViewTable";
@@ -7,6 +7,7 @@ import {
   useDokumentFelles,
   TypeInnhold,
 } from "~/components/vedtak_felles/FellesContext";
+import { isNullOrEmpty } from "~/utils/string-utils";
 
 export default function Soknaddetaljer() {
   const { roller, saksnummer, typeInnhold } = useDokumentFelles();
@@ -16,6 +17,16 @@ export default function Soknaddetaljer() {
   const rollerBarn = roller.filter((rolle) =>
     sammenlignRoller(rolle.rolle, Rolletype.BA),
   );
+
+  function tilNavnOgFødselsdato(rolle: NotatPersonDto) {
+    if (isNullOrEmpty(rolle.navn)) {
+      return dateToDDMMYYYY(rolle.fødselsdato);
+    }
+    if (isNullOrEmpty(dateToDDMMYYYY(rolle.fødselsdato))) {
+      return rolle.navn;
+    }
+    return rolle.navn + " / " + dateToDDMMYYYY(rolle.fødselsdato);
+  }
   return (
     <div className={"soknad_detaljer mb-[30px]"}>
       <div>
@@ -43,7 +54,7 @@ export default function Soknaddetaljer() {
               })
               .map((rolle) => ({
                 label: rolleTilVisningsnavn(rolle.rolle!)!,
-                value: rolle.navn + " / " + dateToDDMMYYYY(rolle.fødselsdato),
+                value: tilNavnOgFødselsdato(rolle),
               })),
             {
               label: "Søknadsbarn",
@@ -57,7 +68,7 @@ export default function Soknaddetaljer() {
                         display: "block",
                       }}
                     >
-                      {rolle.navn + " / " + dateToDDMMYYYY(rolle.fødselsdato)}
+                      {tilNavnOgFødselsdato(rolle)}
                     </span>
                   ))}
                 </div>

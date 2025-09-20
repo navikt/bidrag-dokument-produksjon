@@ -49,9 +49,8 @@ export default function ForsideOrkestrertBidragsvedtak() {
               indeksregulering eller aldersjustering av bidraget. Eventuelt
               begge deler.
               <p>
-                Nedenfor har vi laget en oversikt over nye perioder,
-                bidragsbeløp og årsaker til endring. Du finner relevante vedtak
-                vedlagt
+                Nedenfor har vi laget en oversikt over nye perioder og
+                bidragsbeløp. Du finner relevante vedtak vedlagt
               </p>
             </p>
           </div>
