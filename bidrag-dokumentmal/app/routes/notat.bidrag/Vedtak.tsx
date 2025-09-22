@@ -322,7 +322,7 @@ export function VedtakEndeligTable({
               width: visningForSaksbehandler ? "120px" : "30%",
             },
             {
-              name: visningForSaksbehandler ? "Type" : "Vedtak/justering",
+              name: visningForSaksbehandler ? "Type" : "Årsak",
               width: visningForSaksbehandler ? "100px" : "40%",
             },
             { name: "Beløp", width: visningForSaksbehandler ? "120px" : "30%" },
@@ -342,7 +342,12 @@ export function VedtakEndeligTable({
                           : "",
                       }
                     : null,
-                  { content: formatPeriode(d.periode.fom, d.periode.til) },
+                  {
+                    content: formatPeriode(
+                      d.periode!.fom,
+                      deductDays(d.periode!.til, 1),
+                    ),
+                  },
                   {
                     content: d.delvedtakstypeVisningsnavn,
                   },

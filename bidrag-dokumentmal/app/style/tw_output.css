@@ -172,6 +172,10 @@
   margin-bottom: 16px
 }
 
+.mb-\[30px\] {
+  margin-bottom: 30px
+}
+
 .ml-2 {
   margin-left: 8px
 }
@@ -186,14 +190,6 @@
 
 .mt-4 {
   margin-top: 16px
-}
-
-.mb-\[30px\] {
-  margin-bottom: 30px
-}
-
-.mb-\[20px\] {
-  margin-bottom: 20px
 }
 
 .block {
