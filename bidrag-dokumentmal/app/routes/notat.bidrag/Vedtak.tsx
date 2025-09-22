@@ -342,7 +342,12 @@ export function VedtakEndeligTable({
                           : "",
                       }
                     : null,
-                  { content: formatPeriode(d.periode.fom, d.periode.til) },
+                  {
+                    content: formatPeriode(
+                      d.periode!.fom,
+                      deductDays(d.periode!.til, 1),
+                    ),
+                  },
                   {
                     content: d.delvedtakstypeVisningsnavn,
                   },
