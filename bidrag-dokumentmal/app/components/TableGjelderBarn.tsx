@@ -1,4 +1,4 @@
-import { NotatPersonDto } from "~/types/Api";
+import { DokumentmalPersonDto } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
@@ -8,7 +8,7 @@ import Person from "~/components/Person";
 export default function TableGjelderBarn({
   gjelderBarn,
 }: {
-  gjelderBarn: NotatPersonDto;
+  gjelderBarn: DokumentmalPersonDto;
 }) {
   const { styling } = useTheme();
   if (styling == "V2") {

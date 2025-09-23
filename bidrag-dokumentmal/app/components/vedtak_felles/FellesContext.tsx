@@ -2,17 +2,17 @@ import { createContext, PropsWithChildren, useContext } from "react";
 import {
   Rolletype,
   DokumentBestilling,
-  NotatPersonDto,
+  DokumentmalPersonDto,
   VedtakNotatDto,
 } from "~/types/Api";
 import { konverterRolletype, erRolle } from "~/utils/converter-utils";
 import { ThemeProvider, Styling } from "~/components/notat_felles/ThemeContext";
 
 interface IDokumentFellesContext {
-  bidragsmottaker: NotatPersonDto;
-  bidragspliktig?: NotatPersonDto;
-  søknadsbarn: NotatPersonDto[];
-  roller: NotatPersonDto[];
+  bidragsmottaker: DokumentmalPersonDto;
+  bidragspliktig?: DokumentmalPersonDto;
+  søknadsbarn: DokumentmalPersonDto[];
+  roller: DokumentmalPersonDto[];
   saksnummer: string;
   typeInnhold: TypeInnhold;
 }

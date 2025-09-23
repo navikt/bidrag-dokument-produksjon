@@ -6,8 +6,8 @@ import io.swagger.v3.oas.models.examples.Example
 import no.nav.bidrag.dokument.produksjon.SIKKER_LOGG
 import no.nav.bidrag.dokument.produksjon.service.PdfProducerService
 import no.nav.bidrag.dokument.produksjon.util.getObjectmapper
+import no.nav.bidrag.transport.dokumentmaler.notat.VedtakNotatDto
 import no.nav.bidrag.transport.felles.commonObjectmapper
-import no.nav.bidrag.transport.notat.VedtakNotatDto
 import org.springframework.context.annotation.Bean
 import org.springframework.http.ResponseEntity
 import org.springframework.web.bind.annotation.PostMapping

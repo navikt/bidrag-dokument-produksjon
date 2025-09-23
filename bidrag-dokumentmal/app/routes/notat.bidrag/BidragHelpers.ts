@@ -1,10 +1,10 @@
 import {
-  NotatResultatBidragsberegningBarnDto,
+  DokumentmalResultatBidragsberegningBarnDto,
   ResultatBarnebidragsberegningPeriodeDto,
 } from "~/types/Api";
 
 export function erResutlatMedBeregning(
-  data: NotatResultatBidragsberegningBarnDto,
+  data: DokumentmalResultatBidragsberegningBarnDto,
 ): boolean {
   return data?.perioder.length === 1 && data.perioder[0].erDirekteAvslag;
 }

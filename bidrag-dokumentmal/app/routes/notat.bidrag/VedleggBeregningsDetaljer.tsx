@@ -1,7 +1,7 @@
 import elementIds from "~/utils/elementIds";
 import {
   BidragPeriodeBeregningsdetaljer,
-  NotatResultatBidragsberegningBarnDto,
+  DokumentmalResultatBidragsberegningBarnDto,
   ResultatBarnebidragsberegningPeriodeDto,
   Resultatkode,
   Rolletype,
@@ -67,7 +67,7 @@ export function useBeregningDetaljer(): Required<BeregnindDetaljerContextProps> 
 function VedleggBeregningsDetaljerEndeligVedtakInnhold() {
   const { data } = useNotatFelles();
   const resultatPerioder = data.vedtak
-    ?.resultat as NotatResultatBidragsberegningBarnDto[];
+    ?.resultat as DokumentmalResultatBidragsberegningBarnDto[];
   const perioder = resultatPerioder.map((d) =>
     d.orkestrertVedtak?.perioder.filter(
       (d) =>
@@ -81,7 +81,7 @@ function VedleggBeregningsDetaljerEndeligVedtakInnhold() {
   return (
     <>
       {resultatPerioder?.map(
-        (resultat: NotatResultatBidragsberegningBarnDto) => (
+        (resultat: DokumentmalResultatBidragsberegningBarnDto) => (
           <>
             <DataViewTable
               data={[
@@ -158,13 +158,13 @@ function VedleggBeregningsDetaljerEndeligVedtakInnhold() {
 function VedleggBeregningsDetaljerInnhold() {
   const { data } = useNotatFelles();
   const resultatPerioder = data.vedtak
-    ?.resultat as NotatResultatBidragsberegningBarnDto[];
+    ?.resultat as DokumentmalResultatBidragsberegningBarnDto[];
   if (resultatPerioder.length == 0) return <div>Mangler resultat</div>;
 
   return (
     <>
       {resultatPerioder?.map(
-        (resultat: NotatResultatBidragsberegningBarnDto) => (
+        (resultat: DokumentmalResultatBidragsberegningBarnDto) => (
           <>
             <DataViewTable
               data={[
@@ -220,6 +220,7 @@ function VedleggBeregningsDetaljerInnhold() {
                           </>
                         )}
                         {!detaljer.deltBosted &&
+                          detaljer.barnetilleggBM &&
                           detaljer.barnetilleggBM.barnetillegg.length > 0 && (
                             <>
                               <BarnetilleggSkattesats rolle={Rolletype.BM} />
@@ -239,7 +240,8 @@ function VedleggBeregningsDetaljerInnhold() {
 
                         <BeregningBegrensetRevurdering />
                         {!detaljer.deltBosted &&
-                          detaljer.barnetilleggBP.barnetillegg.length > 0 && (
+                          detaljer.barnetilleggBP?.barnetillegg &&
+                          detaljer.barnetilleggBP?.barnetillegg?.length > 0 && (
                             <>
                               <BarnetilleggSkattesats rolle={Rolletype.BP} />
                               <NettoBarnetilleggTable rolle={Rolletype.BP} />

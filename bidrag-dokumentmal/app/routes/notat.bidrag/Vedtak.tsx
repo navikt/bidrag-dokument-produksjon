@@ -1,5 +1,5 @@
 import {
-  NotatResultatBidragsberegningBarnDto,
+  DokumentmalResultatBidragsberegningBarnDto,
   Samvaersklasse,
 } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
@@ -41,13 +41,16 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
       </div>
       {erAvslag ? (
         <VedtakTableAvslag
-          data={data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]}
+          data={
+            data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
+          }
         />
       ) : (
         <>
           <VedtakTable
             data={
-              data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]
+              data.vedtak
+                .resultat as DokumentmalResultatBidragsberegningBarnDto[]
             }
           />
         </>
@@ -59,7 +62,8 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
           </div>
           <VedtakEndeligTable
             data={
-              data.vedtak.resultat as NotatResultatBidragsberegningBarnDto[]
+              data.vedtak
+                .resultat as DokumentmalResultatBidragsberegningBarnDto[]
             }
           />
         </>
@@ -72,7 +76,7 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
 function VedtakTableAvslag({
   data,
 }: {
-  data: NotatResultatBidragsberegningBarnDto[];
+  data: DokumentmalResultatBidragsberegningBarnDto[];
 }) {
   const { erOpphør } = useNotatFelles();
 
@@ -110,11 +114,11 @@ function VedtakTableAvslag({
 function VedtakTable({
   data,
 }: {
-  data: NotatResultatBidragsberegningBarnDto[];
+  data: DokumentmalResultatBidragsberegningBarnDto[];
 }) {
   if (data.length == 0) return <div>Mangler resultat</div>;
 
-  function renderAvslag(d) {
+  function renderAvslag(_) {
     return [{ content: "", colSpan: 5 }, { content: "Avslag" }];
   }
 
@@ -189,7 +193,7 @@ function VedtakTable({
 
   return (
     <>
-      {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
+      {groupBy(data, (d) => d.barn?.ident!).map(([_, value]) => {
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
         const tableData: TableData = {
@@ -293,7 +297,7 @@ function VedtakTable({
 export function VedtakEndeligTable({
   data,
 }: {
-  data: NotatResultatBidragsberegningBarnDto[];
+  data: DokumentmalResultatBidragsberegningBarnDto[];
 }) {
   const { typeInnhold } = useDokumentFelles();
   if (data.length == 0) return null;
@@ -303,7 +307,7 @@ export function VedtakEndeligTable({
     <>
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
         const gjelderBarn = value[0].barn!;
-        const perioder = value[0].orkestrertVedtak.perioder;
+        const perioder = value[0].orkestrertVedtak?.perioder ?? [];
         const vurderUgyldighet = perioder.some(
           (e) => e.klageOmgjøringDetaljer?.kanOpprette35c === true,
         );

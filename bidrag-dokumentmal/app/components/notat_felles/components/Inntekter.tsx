@@ -4,7 +4,7 @@ import {
   NotatBeregnetInntektDto,
   NotatInntektDto,
   NotatMalType,
-  NotatPersonDto,
+  DokumentmalPersonDto,
   Rolletype,
   Kilde,
 } from "~/types/Api";
@@ -77,7 +77,7 @@ function InntekterForRolle({
   rolle,
   showRole = true,
 }: {
-  rolle: NotatPersonDto;
+  rolle: DokumentmalPersonDto;
   showRole?: boolean;
 }) {
   const { data } = useNotatFelles();
@@ -289,7 +289,7 @@ function InntektPerBarnTable({
 
 type BeregnetInntektTableProps = {
   data: NotatBeregnetInntektDto[];
-  rolle: NotatPersonDto;
+  rolle: DokumentmalPersonDto;
 };
 
 function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
@@ -307,7 +307,7 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
     beregnetInntekterColumnWidth[type][rolle.rolle as BehandlingRolletype];
   function renderTable(
     inntekter: DelberegningSumInntekt[],
-    gjelderBarn?: NotatPersonDto,
+    gjelderBarn?: DokumentmalPersonDto,
   ) {
     return (
       <>
