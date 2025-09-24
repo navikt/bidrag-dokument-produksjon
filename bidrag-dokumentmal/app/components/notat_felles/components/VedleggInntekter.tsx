@@ -5,7 +5,7 @@ import {
   Kilde,
   NotatInntektDto,
   NotatMalType,
-  NotatPersonDto,
+  DokumentmalPersonDto,
 } from "~/types/Api";
 import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
 import { groupBy } from "~/utils/array-utils";
@@ -67,7 +67,7 @@ function OpplysningerForRolle({
   showRole = true,
   vedleggNummer,
 }: {
-  rolle: NotatPersonDto;
+  rolle: DokumentmalPersonDto;
   showRole?: boolean;
   vedleggNummer?: number;
 }) {

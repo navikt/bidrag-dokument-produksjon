@@ -13,7 +13,7 @@ import VedleggBoforhold from "~/components/notat_felles/components/VedleggBoforh
 import VedleggInntekter from "~/components/notat_felles/components/VedleggInntekter";
 import NotatTittel from "~/components/NotatTittel";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";
-import { parseRequestAction, NotatRequest } from "~/routes/common";
+import { NotatRequest, parseRequestAction } from "~/routes/common";
 import Virkningstidspunkt from "~/components/notat_felles/components/Virkningstidspunkt";
 import Underholdskostnad from "~/routes/notat.bidrag/Underholdskostnad";
 import Samvær from "~/routes/notat.bidrag/Samvær";
@@ -23,6 +23,7 @@ import VedleggSamvær from "~/routes/notat.bidrag/VedleggSamvær";
 import Gebyr from "~/routes/notat.bidrag/Gebyr";
 import VedleggUnderholdskostnader from "~/routes/notat.bidrag/VedleggUnderholdskostnader";
 import PrivatAvtale from "~/routes/notat.bidrag/PrivatAvtale";
+import { Vedtakstype } from "~/types/Api";
 
 export async function action(args: ActionFunctionArgs) {
   return await parseRequestAction(args);
@@ -61,20 +62,38 @@ export default function NotatBidrag() {
           <Soknaddetaljer />
           <NotatTittel title={tekster.titler.bidrag} />
           <Virkningstidspunkt />
-          <PrivatAvtale />
-          <Underholdskostnad vedleggNummer={1} />
-          <Inntekter vedleggNummer={2} />
-          <Gebyr />
-          <Boforhold vedleggNummer={3} />
-          <Samvær vedleggNummer={4} />
-          <Vedtak vedleggNummer={5} />
-          <VedleggUnderholdskostnader vedleggNummer={1} />
-          <VedleggBoforhold vedleggNummer={2} />
-          <VedleggInntekter vedleggNummer={3} />
-          <VedleggSamvær vedleggNummer={4} />
-          <VedleggBeregningsDetaljer vedleggNummer={5} />
+          {data.behandling.vedtakstype === Vedtakstype.INNKREVING
+            ? renderVisningInnkrevingsgrunnlag()
+            : renderBidrag()}
         </div>
       </NotatProvider>
     </div>
+  );
+}
+function renderBidrag() {
+  return (
+    <>
+      <PrivatAvtale />
+      <Underholdskostnad vedleggNummer={1} />
+      <Inntekter vedleggNummer={2} />
+      <Gebyr />
+      <Boforhold vedleggNummer={3} />
+      <Samvær vedleggNummer={4} />
+      <Vedtak vedleggNummer={5} />
+      <VedleggUnderholdskostnader vedleggNummer={1} />
+      <VedleggBoforhold vedleggNummer={2} />
+      <VedleggInntekter vedleggNummer={3} />
+      <VedleggSamvær vedleggNummer={4} />
+      <VedleggBeregningsDetaljer vedleggNummer={5} />
+    </>
+  );
+}
+function renderVisningInnkrevingsgrunnlag() {
+  return (
+    <>
+      <PrivatAvtale />
+      <Vedtak vedleggNummer={1} />
+      <VedleggBeregningsDetaljer vedleggNummer={1} />
+    </>
   );
 }

@@ -1,4 +1,4 @@
-import { NotatPersonDto, Rolletype } from "~/types/Api";
+import { DokumentmalPersonDto, Rolletype } from "~/types/Api";
 import { useTheme } from "~/components/notat_felles/ThemeContext";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
@@ -8,7 +8,7 @@ export default function GjelderPerson({
   rolle,
   visFødselsdato,
 }: {
-  rolle: NotatPersonDto;
+  rolle: DokumentmalPersonDto;
   visFødselsdato?: boolean;
 }) {
   const { styling } = useTheme();

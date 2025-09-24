@@ -3,7 +3,7 @@ import elementIds from "~/utils/elementIds";
 import {
   DatoperiodeDto,
   NotatOffentligeOpplysningerUnderholdBarn,
-  NotatPersonDto,
+  DokumentmalPersonDto,
   NotatUnderholdskostnadPeriodeBeregningsdetaljer,
   Rolletype,
 } from "~/types/Api";
@@ -76,7 +76,7 @@ function InnhentetAndreBarnTilBidragsmottaker({
   opplysninger,
   vedleggNummer,
 }: {
-  opplysninger: NotatPersonDto[];
+  opplysninger: DokumentmalPersonDto[];
   vedleggNummer: number;
 }) {
   return (

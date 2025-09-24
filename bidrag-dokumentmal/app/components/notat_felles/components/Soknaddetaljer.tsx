@@ -1,5 +1,5 @@
 import { rolleTilVisningsnavn, sammenlignRoller } from "~/utils/visningsnavn";
-import { Rolletype, NotatPersonDto } from "~/types/Api";
+import { Rolletype, DokumentmalPersonDto } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import NavLogo from "~/components/NavLogo";
 import { DataViewTable } from "~/components/DataViewTable";
@@ -18,7 +18,7 @@ export default function Soknaddetaljer() {
     sammenlignRoller(rolle.rolle, Rolletype.BA),
   );
 
-  function tilNavnOgFødselsdato(rolle: NotatPersonDto) {
+  function tilNavnOgFødselsdato(rolle: DokumentmalPersonDto) {
     if (isNullOrEmpty(rolle.navn)) {
       return dateToDDMMYYYY(rolle.fødselsdato);
     }

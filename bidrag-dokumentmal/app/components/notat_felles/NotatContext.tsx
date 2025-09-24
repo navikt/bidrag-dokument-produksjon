@@ -4,7 +4,7 @@ import {
   Vedtakstype,
   Rolletype,
   VedtakNotatDto,
-  NotatPersonDto,
+  DokumentmalPersonDto,
 } from "~/types/Api";
 import { konverterRolletype, erRolle } from "~/utils/converter-utils";
 import { ThemeProvider, Styling } from "~/components/notat_felles/ThemeContext";
@@ -21,9 +21,9 @@ interface INotatContext {
   erAvslag: boolean;
   erOpphør: boolean;
   harFlereEnnEttSøknadsbarn: boolean;
-  bidragsmottaker: NotatPersonDto;
-  bidragspliktig?: NotatPersonDto;
-  søknadsbarn: NotatPersonDto[];
+  bidragsmottaker: DokumentmalPersonDto;
+  bidragspliktig?: DokumentmalPersonDto;
+  søknadsbarn: DokumentmalPersonDto[];
   data: VedtakNotatDto;
   type: NotatMalType;
   renderMode: RenderMode;

@@ -4,8 +4,8 @@ import io.github.oshai.kotlinlogging.KotlinLogging
 import no.nav.bidrag.dokument.produksjon.consumer.BidragDokumentmalConsumer
 import no.nav.bidrag.dokument.produksjon.consumer.BidragPdfGenConsumer
 import no.nav.bidrag.dokument.produksjon.consumer.Configuration
+import no.nav.bidrag.transport.dokumentmaler.notat.VedtakNotatDto
 import no.nav.bidrag.transport.felles.commonObjectmapper
-import no.nav.bidrag.transport.notat.VedtakNotatDto
 import org.springframework.http.HttpHeaders
 import org.springframework.http.HttpStatus
 import org.springframework.http.MediaType

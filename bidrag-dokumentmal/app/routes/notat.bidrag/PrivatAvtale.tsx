@@ -1,12 +1,15 @@
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import {
+  DokumentmalManuellVedtak,
+  NotatBeregnetPrivatAvtalePeriodeDto,
   NotatPrivatAvtaleDto,
   NotatPrivatAvtalePeriodeDto,
-  NotatBeregnetPrivatAvtalePeriodeDto,
+  PrivatAvtaleType,
+  Vedtakstype,
 } from "~/types/Api";
 import { CommonTable } from "~/components/CommonTable";
 import tekster from "~/tekster";
-import { formatPeriode, dateToDDMMYYYY } from "~/utils/date-utils";
+import { dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
 import { DataViewTable } from "~/components/DataViewTable";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { formatterBeløp, formatterProsent } from "~/utils/visningsnavn";
@@ -23,7 +26,13 @@ export default function PrivatAvtale() {
       <>
         {privatAvtale.map((barn, i) => (
           <>
-            <PrivatAvtaleBarn data={barn} key={i + barn.gjelderBarn.ident!} />
+            <PrivatAvtaleBarn
+              data={barn}
+              key={i + barn.gjelderBarn.ident!}
+              vedtakInnkreving={
+                data.behandling.vedtakstype === Vedtakstype.INNKREVING
+              }
+            />
           </>
         ))}
       </>
@@ -31,7 +40,13 @@ export default function PrivatAvtale() {
   );
 }
 
-function PrivatAvtaleBarn({ data }: { data: NotatPrivatAvtaleDto }) {
+function PrivatAvtaleBarn({
+  data,
+  vedtakInnkreving,
+}: {
+  data: NotatPrivatAvtaleDto;
+  vedtakInnkreving: boolean;
+}) {
   return (
     <div className={"mb-medium"}>
       <DataViewTable
@@ -59,12 +74,64 @@ function PrivatAvtaleBarn({ data }: { data: NotatPrivatAvtaleDto }) {
           },
         ]}
       />
-      <PrivatAvtaleTabell data={data.perioder} />
+      {data.avtaleType == PrivatAvtaleType.VEDTAK_FRA_NAV &&
+      vedtakInnkreving ? (
+        <PrivatAvtaleManuelleVedtakTabell
+          data={data.vedtakslisteUtenInnkreving}
+        />
+      ) : (
+        <PrivatAvtaleTabell data={data.perioder} />
+      )}
+
       <PrivatAvtaleBeregnetTabell data={data.beregnetPrivatAvtalePerioder} />
       <NotatBegrunnelse data={data?.begrunnelse} />
     </div>
   );
 }
+function PrivatAvtaleManuelleVedtakTabell({
+  data,
+}: {
+  data: DokumentmalManuellVedtak[];
+}) {
+  return (
+    <div className={"pt-2"}>
+      <h4>Vedtak fra Nav</h4>
+      <CommonTable
+        layoutAuto
+        width={"350px"}
+        data={{
+          headers: [
+            {
+              name: "Valgt",
+            },
+            {
+              name: "Virkningsdato",
+            },
+            {
+              name: "Vedtaksdato",
+            },
+            {
+              name: "Søknadstype",
+            },
+            {
+              name: "Resultat siste periode",
+            },
+          ],
+          rows: data.map((d) => ({
+            columns: [
+              { content: d.valgt ? "Ja" : "Nei" },
+              { content: dateToDDMMYYYY(d.virkningsDato) },
+              { content: dateToDDMMYYYY(d.fattetTidspunkt) },
+              { content: d.søknadstype },
+              { content: d.resultatSistePeriode },
+            ],
+          })),
+        }}
+      />
+    </div>
+  );
+}
+
 function PrivatAvtaleTabell({ data }: { data: NotatPrivatAvtalePeriodeDto[] }) {
   return (
     <CommonTable
