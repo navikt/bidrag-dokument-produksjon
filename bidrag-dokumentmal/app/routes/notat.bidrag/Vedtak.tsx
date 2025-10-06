@@ -26,7 +26,7 @@ import {
 } from "~/components/vedtak_felles/FellesContext";
 
 export default function Vedtak({ vedleggNummer }: VedleggProps) {
-  const { erAvslag, data } = useNotatFelles();
+  const { erAvslag, data, erAvvisning } = useNotatFelles();
   return (
     <>
       <div className={"elements_inline section-title break-before-page"}>
@@ -78,7 +78,7 @@ function VedtakTableAvslag({
 }: {
   data: DokumentmalResultatBidragsberegningBarnDto[];
 }) {
-  const { erOpphør } = useNotatFelles();
+  const { erOpphør, erAvvisning } = useNotatFelles();
 
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
@@ -103,7 +103,11 @@ function VedtakTableAvslag({
         return (
           <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            <CommonTable data={tableData} />
+            {perioder.length == 0 && erAvvisning ? (
+              <div>Resultat er avslag av behandling</div>
+            ) : (
+              <CommonTable data={tableData} />
+            )}
           </div>
         );
       })}
