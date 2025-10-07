@@ -181,7 +181,7 @@ export const BPsEvneTable = ({
             {
               columns: [
                 {
-                  content: `Botugift`,
+                  content: `Bougift`,
                 },
                 {
                   content: delberegningBidragsevne.utgifter.borMedAndreVoksne
