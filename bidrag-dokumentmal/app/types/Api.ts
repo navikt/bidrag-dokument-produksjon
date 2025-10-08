@@ -263,10 +263,10 @@ export interface DokumentmalSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
+  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
   skattMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface DokumentmalUnderholdEgneBarnIHusstand {
@@ -469,11 +469,11 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavn?: string;
   erAvvisning: boolean;
-  avslagVisningsnavnUtenPrefiks?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -1000,7 +1000,8 @@ export enum Resultatkode {
   AVSLUTTET_SKOLEGANG = "AVSLUTTET_SKOLEGANG",
   IKKESTERKNOKGRUNNOGBIDRAGETHAROPPHORT = "IKKE_STERK_NOK_GRUNN_OG_BIDRAGET_HAR_OPPHØRT",
   IKKE_OMSORG_FOR_BARNET = "IKKE_OMSORG_FOR_BARNET",
-  BM_HAR_OMSORG_FOR_BARNET = "BM_HAR_OMSORG_FOR_BARNET",
+  BARNETERDOD = "BARNET_ER_DØD",
+  BIDRAGSMOTTAKER_HAR_OMSORG_FOR_BARNET = "BIDRAGSMOTTAKER_HAR_OMSORG_FOR_BARNET",
   BIDRAGSPLIKTIGERDOD = "BIDRAGSPLIKTIG_ER_DØD",
   BEREGNET_BIDRAG = "BEREGNET_BIDRAG",
   REDUSERTFORSKUDD50PROSENT = "REDUSERT_FORSKUDD_50_PROSENT",
@@ -1638,10 +1639,10 @@ export interface Skatt {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
+  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
   skattMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface SaerbidragBeregning {
