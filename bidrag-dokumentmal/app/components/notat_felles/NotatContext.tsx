@@ -18,6 +18,7 @@ export enum RenderMode {
   HTML,
 }
 interface INotatContext {
+  erAvvisning: boolean;
   erAvslag: boolean;
   erOpphør: boolean;
   harFlereEnnEttSøknadsbarn: boolean;
@@ -69,6 +70,7 @@ export function NotatProvider({
             harFlereEnnEttSøknadsbarn:
               dataCorrected.roller.filter(erRolle(Rolletype.BA)).length > 1,
             erAvslag: dataCorrected.behandling.avslag != null,
+            erAvvisning: dataCorrected.behandling.erAvvisning,
             erOpphør:
               dataCorrected.behandling.vedtakstype == Vedtakstype.OPPHOR,
           }}

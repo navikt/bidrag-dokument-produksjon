@@ -78,7 +78,7 @@ function VedtakTableAvslag({
 }: {
   data: DokumentmalResultatBidragsberegningBarnDto[];
 }) {
-  const { erOpphør } = useNotatFelles();
+  const { erOpphør, erAvvisning } = useNotatFelles();
 
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
@@ -103,7 +103,13 @@ function VedtakTableAvslag({
         return (
           <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            <CommonTable data={tableData} />
+            {perioder.length == 0 && erAvvisning ? (
+              <div>
+                Vedtak er avslag på behandling og har derfor ingen perioder
+              </div>
+            ) : (
+              <CommonTable data={tableData} />
+            )}
           </div>
         );
       })}
