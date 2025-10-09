@@ -26,7 +26,7 @@ import {
 } from "~/components/vedtak_felles/FellesContext";
 
 export default function Vedtak({ vedleggNummer }: VedleggProps) {
-  const { erAvslag, data, erAvvisning } = useNotatFelles();
+  const { erAvslag, data } = useNotatFelles();
   return (
     <>
       <div className={"elements_inline section-title break-before-page"}>
@@ -104,7 +104,7 @@ function VedtakTableAvslag({
           <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
             {perioder.length == 0 && erAvvisning ? (
-              <div>Vedtak er avslag av behandling</div>
+              <div>Vedtak er avslag på behandling</div>
             ) : (
               <CommonTable data={tableData} />
             )}
