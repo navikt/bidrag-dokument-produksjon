@@ -104,7 +104,9 @@ function VedtakTableAvslag({
           <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
             {perioder.length == 0 && erAvvisning ? (
-              <div>Vedtak er avslag på behandling</div>
+              <div>
+                Vedtak er avslag på behandling og har derfor ingen perioder
+              </div>
             ) : (
               <CommonTable data={tableData} />
             )}
