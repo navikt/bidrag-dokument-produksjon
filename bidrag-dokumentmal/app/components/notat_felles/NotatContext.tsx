@@ -1,14 +1,15 @@
 import { createContext, PropsWithChildren, useContext } from "react";
 import {
+  DokumentmalPersonDto,
   NotatMalType,
-  Vedtakstype,
   Rolletype,
   VedtakNotatDto,
-  DokumentmalPersonDto,
+  Vedtakstype,
 } from "~/types/Api";
-import { konverterRolletype, erRolle } from "~/utils/converter-utils";
-import { ThemeProvider, Styling } from "~/components/notat_felles/ThemeContext";
+import { erRolle, konverterRolletype } from "~/utils/converter-utils";
+import { Styling, ThemeProvider } from "~/components/notat_felles/ThemeContext";
 import { DokumentFellesProvider } from "~/components/vedtak_felles/FellesContext";
+
 export enum RenderPDFVersion {
   V1 = "V1",
   V2 = "V2",
@@ -22,6 +23,7 @@ interface INotatContext {
   erAvslag: boolean;
   erOpphør: boolean;
   harFlereEnnEttSøknadsbarn: boolean;
+  erInnkrevingsgrunnlag: boolean;
   bidragsmottaker: DokumentmalPersonDto;
   bidragspliktig?: DokumentmalPersonDto;
   søknadsbarn: DokumentmalPersonDto[];
@@ -64,6 +66,8 @@ export function NotatProvider({
             renderPDFVersion,
             data: dataCorrected,
             type: dataCorrected.type,
+            erInnkrevingsgrunnlag:
+              dataCorrected.behandling.vedtakstype === Vedtakstype.INNKREVING,
             bidragsmottaker: dataCorrected.roller.find(erRolle(Rolletype.BM))!,
             bidragspliktig: dataCorrected.roller.find(erRolle(Rolletype.BP)),
             søknadsbarn: dataCorrected.roller.filter(erRolle(Rolletype.BA)),

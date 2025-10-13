@@ -28,8 +28,8 @@ import { IndeksreguleringDetaljer } from "~/routes/notat.bidrag/beregningsdetalj
 export default function VedleggBeregningsDetaljer({
   vedleggNummer,
 }: VedleggProps) {
-  const { erAvslag, data } = useNotatFelles();
-  if (erAvslag) return null;
+  const { erAvslag, data, erInnkrevingsgrunnlag } = useNotatFelles();
+  if (erAvslag || erInnkrevingsgrunnlag) return null;
   return (
     <>
       <div className={`${vedleggNummer == 1 ? "break-before-page" : ""}`}>

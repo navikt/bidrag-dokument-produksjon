@@ -26,20 +26,26 @@ import {
 } from "~/components/vedtak_felles/FellesContext";
 
 export default function Vedtak({ vedleggNummer }: VedleggProps) {
-  const { erAvslag, data } = useNotatFelles();
+  const { erAvslag, data, erInnkrevingsgrunnlag } = useNotatFelles();
   return (
     <>
       <div className={"elements_inline section-title break-before-page"}>
         <h2 className={"section-title"}>
           {data.erOrkestrertVedtak ? "Klagevedtak" : "Vedtak"}
         </h2>
-        {!erAvslag && (
+        {!erAvslag && !erInnkrevingsgrunnlag && (
           <a href={`#${elementIds.vedleggBeregningsdetaljer}`}>
             se vedlegg nr. {vedleggNummer} for beregningsdetaljer
           </a>
         )}
       </div>
-      {erAvslag ? (
+      {erInnkrevingsgrunnlag ? (
+        <VedtakTableInnkreving
+          data={
+            data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
+          }
+        />
+      ) : erAvslag ? (
         <VedtakTableAvslag
           data={
             data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
@@ -70,6 +76,42 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
       )}
       <VedtakFattetDetaljer data={data.vedtak} />
     </>
+  );
+}
+
+function VedtakTableInnkreving({
+  data,
+}: {
+  data: DokumentmalResultatBidragsberegningBarnDto[];
+}) {
+  if (data.length == 0) return <div>Mangler resultat</div>;
+  return (
+    <div style={{ paddingTop: "0px" }}>
+      {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
+        const gjelderBarn = value[0].barn!;
+        const perioder = value[0].perioder;
+        const tableData: TableData = {
+          headers: [
+            { name: "Periode", width: "170px" },
+            { name: "Beløp", width: "150px" },
+            { name: "Resultat", width: "250px" },
+          ],
+          rows: perioder.map((d) => ({
+            columns: [
+              { content: formatPeriode(d.periode!.fom, d.periode!.til) },
+              { content: formatterBeløpForBeregning(d.faktiskBidrag) },
+              { content: d.resultatkodeVisningsnavn },
+            ],
+          })),
+        };
+        return (
+          <div key={key} className="table_container">
+            <TableGjelderBarn gjelderBarn={gjelderBarn} />
+            <CommonTable data={tableData} />
+          </div>
+        );
+      })}
+    </div>
   );
 }
 
