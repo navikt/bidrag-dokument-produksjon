@@ -27,6 +27,34 @@ import {
 
 export default function Vedtak({ vedleggNummer }: VedleggProps) {
   const { erAvslag, data, erInnkrevingsgrunnlag } = useNotatFelles();
+  function renderTable() {
+    if (erInnkrevingsgrunnlag) {
+      return (
+        <VedtakTableInnkreving
+          data={
+            data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
+          }
+        />
+      );
+    }
+    if (erAvslag) {
+      return (
+        <VedtakTableAvslag
+          data={
+            data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
+          }
+        />
+      );
+    }
+
+    return (
+      <VedtakTable
+        data={
+          data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
+        }
+      />
+    );
+  }
   return (
     <>
       <div className={"elements_inline section-title break-before-page"}>
@@ -39,28 +67,7 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
           </a>
         )}
       </div>
-      {erInnkrevingsgrunnlag ? (
-        <VedtakTableInnkreving
-          data={
-            data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
-          }
-        />
-      ) : erAvslag ? (
-        <VedtakTableAvslag
-          data={
-            data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
-          }
-        />
-      ) : (
-        <>
-          <VedtakTable
-            data={
-              data.vedtak
-                .resultat as DokumentmalResultatBidragsberegningBarnDto[]
-            }
-          />
-        </>
-      )}
+      {renderTable()}
       {data.erOrkestrertVedtak && (
         <>
           <div className={"elements_inline section-title break-before-page"}>

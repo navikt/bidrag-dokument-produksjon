@@ -12,7 +12,6 @@ import Beregningsperiode from "~/routes/notat.bidrag/Beregningsperiode";
 export default function Virkningstidspunkt() {
   const { data } = useNotatFelles();
   const virkningstidspunkt = data.virkningstidspunktV2;
-  const behandling = data.behandling;
   return (
     <div className={"virkningstidspunkt"}>
       <h2>Virkningstidspunkt</h2>
@@ -93,11 +92,11 @@ function VirkningstidspunktPerBarn() {
                 ]}
               />
               <Beregningsperiode virkningstidspunkt={barn} />
-              <NotatBegrunnelse data={virkningstidspunkt.begrunnelse} />
+              <NotatBegrunnelse data={barn.begrunnelse} />
               {data.stønadstype == Stonadstype.BIDRAG18AAR && (
                 <NotatBegrunnelse
                   label={"Vurdering av skolegang"}
-                  data={virkningstidspunkt.begrunnelseVurderingAvSkolegang}
+                  data={barn.begrunnelseVurderingAvSkolegang}
                 />
               )}
             </div>
