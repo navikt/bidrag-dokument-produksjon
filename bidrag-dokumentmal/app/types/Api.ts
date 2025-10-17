@@ -263,9 +263,9 @@ export interface DokumentmalSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
   skattMånedsbeløp: number;
 }
 
@@ -470,8 +470,8 @@ export interface NotatBehandlingDetaljerDto {
   /** @format date */
   klageMottattDato?: string;
   avslagVisningsnavnUtenPrefiks?: string;
-  kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
+  kategoriVisningsnavn?: string;
   erAvvisning: boolean;
   avslagVisningsnavn?: string;
 }
@@ -838,7 +838,8 @@ export interface NotatVedtakDetaljerDto {
   )[];
 }
 
-export interface NotatVirkningstidspunktDto {
+export interface NotatVirkningstidspunktBarnDto {
+  rolle: DokumentmalPersonDto;
   søknadstype?: string;
   vedtakstype?: Vedtakstype;
   søktAv?: SoktAvType;
@@ -853,6 +854,26 @@ export interface NotatVirkningstidspunktDto {
    */
   søktFraDato?: string;
   beregnTilDato?: {
+    /** @format int32 */
+    year?: number;
+    month?:
+      | "JANUARY"
+      | "FEBRUARY"
+      | "MARCH"
+      | "APRIL"
+      | "MAY"
+      | "JUNE"
+      | "JULY"
+      | "AUGUST"
+      | "SEPTEMBER"
+      | "OCTOBER"
+      | "NOVEMBER"
+      | "DECEMBER";
+    /** @format int32 */
+    monthValue?: number;
+    leapYear?: boolean;
+  };
+  opphørsdato?: {
     /** @format int32 */
     year?: number;
     month?:
@@ -911,6 +932,11 @@ export interface NotatVirkningstidspunktDto {
   notat: NotatBegrunnelseDto;
   avslagVisningsnavn?: string;
   årsakVisningsnavn?: string;
+}
+
+export interface NotatVirkningstidspunktDto {
+  erLikForAlle: boolean;
+  barn: NotatVirkningstidspunktBarnDto[];
 }
 
 export interface NotatVoksenIHusstandenDetaljerDto {
@@ -1000,7 +1026,7 @@ export enum Resultatkode {
   AVSLUTTET_SKOLEGANG = "AVSLUTTET_SKOLEGANG",
   IKKESTERKNOKGRUNNOGBIDRAGETHAROPPHORT = "IKKE_STERK_NOK_GRUNN_OG_BIDRAGET_HAR_OPPHØRT",
   IKKE_OMSORG_FOR_BARNET = "IKKE_OMSORG_FOR_BARNET",
-  BARNETERDOD = "BARNET_ER_DØD",
+  BARNETERDODT = "BARNET_ER_DØDT",
   BIDRAGSMOTTAKER_HAR_OMSORG_FOR_BARNET = "BIDRAGSMOTTAKER_HAR_OMSORG_FOR_BARNET",
   BIDRAGSPLIKTIGERDOD = "BIDRAGSPLIKTIG_ER_DØD",
   BEREGNET_BIDRAG = "BEREGNET_BIDRAG",
@@ -1279,7 +1305,8 @@ export interface VedtakNotatDto {
   saksnummer: string;
   behandling: NotatBehandlingDetaljerDto;
   saksbehandlerNavn?: string;
-  virkningstidspunkt: NotatVirkningstidspunktDto;
+  virkningstidspunkt: NotatVirkningstidspunktBarnDto;
+  virkningstidspunktV2: NotatVirkningstidspunktDto;
   utgift?: NotatSaerbidragUtgifterDto;
   boforhold: NotatBoforholdDto;
   samvær: NotatSamvaerDto[];
@@ -1639,9 +1666,9 @@ export interface Skatt {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
   skattMånedsbeløp: number;
 }
 
