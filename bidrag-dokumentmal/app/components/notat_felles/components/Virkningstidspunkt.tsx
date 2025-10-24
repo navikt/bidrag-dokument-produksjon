@@ -26,7 +26,6 @@ export default function Virkningstidspunkt() {
 
 function VirkningstidspunktPerBarn() {
   const { data } = useNotatFelles();
-  const virkningstidspunkt = data.virkningstidspunkt;
   const behandling = data.behandling;
   return (
     <div>
