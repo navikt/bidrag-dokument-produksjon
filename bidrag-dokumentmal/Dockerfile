@@ -16,7 +16,7 @@ RUN npm ci --include=dev
 COPY . .
 RUN npm run build
 
-FROM gcr.io/distroless/nodejs22-debian12
+FROM gcr.io/distroless/nodejs24-debian12
 COPY --from=build-env /app /app
 COPY --from=build-env /usr/local/lib/node_modules /app/node_modules
 
