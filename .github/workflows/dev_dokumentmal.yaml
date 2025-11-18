@@ -1,5 +1,6 @@
 name: bidrag-dokumentmal - Build and deploy dev
 on:
+  workflow_dispatch:
   push:
     branches:
       - '**'

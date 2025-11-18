@@ -1,5 +1,6 @@
 name: bidrag-pdfgen - Build and deploy dev
 on:
+  workflow_dispatch:
   push:
     branches:
       - '**'
