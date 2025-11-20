@@ -1,11 +1,13 @@
 name: bidrag-pdfgen - Build and deploy prod
 on:
+  workflow_dispatch:
   push:
     branches:
       - 'main'
     paths:
       - '.nais/bidrag-pdfgen/**.yaml'
       - '**/bidrag-pdfgen/**'
+      - 'pom.xml'
 
 jobs:
 
