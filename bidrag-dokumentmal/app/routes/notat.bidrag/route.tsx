@@ -20,10 +20,10 @@ import Samvær from "~/routes/notat.bidrag/Samvær";
 import Vedtak from "~/routes/notat.bidrag/Vedtak";
 import VedleggBeregningsDetaljer from "~/routes/notat.bidrag/VedleggBeregningsDetaljer";
 import VedleggSamvær from "~/routes/notat.bidrag/VedleggSamvær";
-import Gebyr from "~/routes/notat.bidrag/Gebyr";
 import VedleggUnderholdskostnader from "~/routes/notat.bidrag/VedleggUnderholdskostnader";
 import PrivatAvtale from "~/routes/notat.bidrag/PrivatAvtale";
 import { Vedtakstype } from "~/types/Api";
+import GebyrV2 from "~/routes/notat.bidrag/GebyrV2";
 
 export async function action(args: ActionFunctionArgs) {
   return await parseRequestAction(args);
@@ -76,7 +76,7 @@ function renderBidrag() {
       <PrivatAvtale />
       <Underholdskostnad vedleggNummer={1} />
       <Inntekter vedleggNummer={2} />
-      <Gebyr />
+      <GebyrV2 />
       <Boforhold vedleggNummer={3} />
       <Samvær vedleggNummer={4} />
       <Vedtak vedleggNummer={5} />

@@ -39,7 +39,7 @@ import GjelderPerson from "~/components/GjelderPerson";
 import { VedleggProps } from "~/types/commonTypes";
 
 export default function Inntekter({ vedleggNummer = 2 }: VedleggProps) {
-  const { erAvslag, bidragsmottaker, bidragspliktig, søknadsbarn, type } =
+  const { erAvslag, bidragsmottakere, bidragspliktig, søknadsbarn, type } =
     useNotatFelles();
   if (erAvslag) return null;
   return (
@@ -51,10 +51,11 @@ export default function Inntekter({ vedleggNummer = 2 }: VedleggProps) {
           registre
         </a>
       </div>
-      <InntekterForRolle
-        rolle={bidragsmottaker}
-        showRole={type !== NotatMalType.FORSKUDD}
-      />
+      {bidragsmottakere.map((bidragsmottaker) => (
+        <div key={bidragsmottaker.ident} className={"mt-medium"}>
+          <InntekterForRolle rolle={bidragsmottaker} />
+        </div>
+      ))}
       {type !== NotatMalType.FORSKUDD && bidragspliktig && (
         <>
           <div className={"mt-medium"}>

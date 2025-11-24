@@ -1,4 +1,4 @@
-import { rolleTilVisningsnavn, sammenlignRoller } from "~/utils/visningsnavn";
+import { sammenlignRoller, rolleTilVisningsnavnV2 } from "~/utils/visningsnavn";
 import { Rolletype, DokumentmalPersonDto } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import NavLogo from "~/components/NavLogo";
@@ -44,8 +44,8 @@ export default function Soknaddetaljer() {
 
             ...rollerIkkeBarn
               .sort((a, b) => {
-                const rolleA = rolleTilVisningsnavn(a.rolle!);
-                const rolleB = rolleTilVisningsnavn(b.rolle!);
+                const rolleA = rolleTilVisningsnavnV2(a);
+                const rolleB = rolleTilVisningsnavnV2(b);
                 if (rolleA === "BM" && rolleB !== "BM") return -1;
                 if (rolleA !== "BM" && rolleB === "BM") return 1;
                 if (rolleA === "BP" && rolleB !== "BP") return -1;
@@ -53,7 +53,7 @@ export default function Soknaddetaljer() {
                 return rolleA.localeCompare(rolleB);
               })
               .map((rolle) => ({
-                label: rolleTilVisningsnavn(rolle.rolle!)!,
+                label: rolleTilVisningsnavnV2(rolle)!,
                 value: tilNavnOgFødselsdato(rolle),
               })),
             {

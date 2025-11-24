@@ -26,52 +26,51 @@ export default function Virkningstidspunkt() {
 
 function VirkningstidspunktPerBarn() {
   const { data } = useNotatFelles();
-  const virkningstidspunkt = data.virkningstidspunkt;
   const behandling = data.behandling;
   return (
-    <div>
-      <div className={"flex flex-row justify-between w-[500px]"}>
-        <DataViewTable
-          labelColWidth={"70px"}
-          data={[
-            {
-              label: "Søknadstype",
-              value: capitalizeFirstLetter(behandling.søknadstype),
-            },
-            {
-              label: "Søknad fra",
-              value: søktAvTilVisningsnavn(behandling.søktAv),
-            },
-          ]}
-        />
-        <DataViewTable
-          labelColWidth={"100px"}
-          className={"mb-4"}
-          data={[
-            {
-              label: "Mottatt dato",
-              value: dateToDDMMYYYY(behandling.mottattDato as string),
-            },
-            {
-              label: "Søkt fra dato",
-              value: dateToDDMMYYYY(behandling.søktFraDato as string),
-            },
-          ]}
-        />
-      </div>
-      <div className={"flex flex-col gap-2"}>
-        {data.virkningstidspunktV2.barn.map((barn) => {
-          return (
-            <div>
+    <div className={"flex flex-col gap-2"}>
+      {data.virkningstidspunktV2.barn.map((barn) => {
+        return (
+          <div key={barn.rolle.ident}>
+            <DataViewTable
+              data={[
+                {
+                  label: "Barn i saken",
+                  labelBold: true,
+                  value: barn.rolle.navn,
+                },
+              ]}
+            />
+            <div className={"flex flex-row justify-between w-[500px]"}>
               <DataViewTable
+                labelColWidth={"70px"}
                 data={[
                   {
-                    label: "Barn i saken",
-                    labelBold: true,
-                    value: barn.rolle.navn,
+                    label: "Søknadstype",
+                    value: capitalizeFirstLetter(behandling.søknadstype),
+                  },
+                  {
+                    label: "Søknad fra",
+                    value: søktAvTilVisningsnavn(behandling.søktAv),
                   },
                 ]}
               />
+              <DataViewTable
+                labelColWidth={"100px"}
+                className={"mb-2"}
+                data={[
+                  {
+                    label: "Mottatt dato",
+                    value: dateToDDMMYYYY(behandling.mottattDato as string),
+                  },
+                  {
+                    label: "Søkt fra dato",
+                    value: dateToDDMMYYYY(behandling.søktFraDato as string),
+                  },
+                ]}
+              />
+            </div>
+            <div>
               <DataViewTable
                 labelColWidth={"100px"}
                 data={[
@@ -100,16 +99,16 @@ function VirkningstidspunktPerBarn() {
                 />
               )}
             </div>
-          );
-        })}
-      </div>
+          </div>
+        );
+      })}
     </div>
   );
 }
 
 function VirkningstidspunktFelles() {
   const { data } = useNotatFelles();
-  const virkningstidspunkt = data.virkningstidspunkt;
+  const virkningstidspunkt = data.virkningstidspunktV2.barn[0];
   const behandling = data.behandling;
   return (
     <div>

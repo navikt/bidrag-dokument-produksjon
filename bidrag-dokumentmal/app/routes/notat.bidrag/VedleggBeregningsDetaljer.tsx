@@ -24,6 +24,8 @@ import { BeregningBegrensetRevurdering } from "~/routes/notat.bidrag/beregningsd
 import { EndringUnderGrense } from "~/routes/notat.bidrag/beregningsdetaljer/EndringUnderGrense";
 import { AldersjusteringDetaljer } from "~/routes/notat.bidrag/beregningsdetaljer/AldersjusteringDetaljer";
 import { IndeksreguleringDetaljer } from "~/routes/notat.bidrag/beregningsdetaljer/IndeksreguleringDetaljer";
+import { BeregningForholdsmessigFordeling } from "~/routes/notat.bidrag/beregningsdetaljer/BeregningForholdsmessigFordelingDetaljer";
+import { PersonV2 } from "~/components/Person";
 
 export default function VedleggBeregningsDetaljer({
   vedleggNummer,
@@ -88,7 +90,7 @@ function VedleggBeregningsDetaljerEndeligVedtakInnhold() {
                 {
                   label: "Barn i saken",
                   labelBold: true,
-                  value: resultat.barn.navn,
+                  value: <PersonV2 {...resultat.barn} visFødselsdato={false} />,
                 },
               ]}
             />
@@ -161,8 +163,34 @@ function VedleggBeregningsDetaljerInnhold() {
     ?.resultat as DokumentmalResultatBidragsberegningBarnDto[];
   if (resultatPerioder.length == 0) return <div>Mangler resultat</div>;
 
+  const erForholdsmessigFordelt = resultatPerioder.some(
+    (b) => b.minstEnPeriodeHarSlåttUtTilFF,
+  );
+  const enPeriodeHarSlåttUtTilFFPgaRedusertEvne = resultatPerioder.some(
+    (b) =>
+      b.minstEnPeriodeHarSlåttUtTilFF &&
+      b.perioderSlåttUtTilFF.some(
+        (b) => !b.erEvneJustertNedTil25ProsentAvInntekt,
+      ),
+  );
+  const enPeriodeHarSlåttUtTilFFPga25Prosent = resultatPerioder.some(
+    (b) =>
+      b.minstEnPeriodeHarSlåttUtTilFF &&
+      b.perioderSlåttUtTilFF.some(
+        (b) => b.erEvneJustertNedTil25ProsentAvInntekt,
+      ),
+  );
   return (
     <>
+      {erForholdsmessigFordelt && (
+        <div className={"pb-2"}>
+          <h4>Forholdsmessig fordeling</h4>
+          {enPeriodeHarSlåttUtTilFFPga25Prosent &&
+            "BPs totale andel av U overstiger 25% av inntekten. Bidraget er derfor forholdsmessig fordelt i minst en av periodene"}
+          {enPeriodeHarSlåttUtTilFFPgaRedusertEvne &&
+            "BP har ikke full bidragsevne. Bidraget er derfor forholdsmessig fordelt i minst en av periodene"}
+        </div>
+      )}
       {resultatPerioder?.map(
         (resultat: DokumentmalResultatBidragsberegningBarnDto) => (
           <>
@@ -179,8 +207,8 @@ function VedleggBeregningsDetaljerInnhold() {
               .filter(
                 (d) =>
                   d.beregningsdetaljer?.sluttberegning &&
-                  !d.beregningsdetaljer.sluttberegning.barnetErSelvforsørget &&
-                  !d.beregningsdetaljer.sluttberegning.ikkeOmsorgForBarnet,
+                  !d.beregningsdetaljer.sluttberegning!.barnetErSelvforsørget &&
+                  !d.beregningsdetaljer.sluttberegning!.ikkeOmsorgForBarnet,
               )
               .map((periode) => {
                 const detaljer = periode.beregningsdetaljer!;
@@ -236,6 +264,7 @@ function VedleggBeregningsDetaljerInnhold() {
                             }
                           />
                           <BeregningFordeltBidragEvne />
+                          <BeregningForholdsmessigFordeling />
                         </div>
 
                         <BeregningBegrensetRevurdering />

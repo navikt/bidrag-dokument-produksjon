@@ -100,7 +100,9 @@ function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
           [
             {
               label: data.medIBehandling
-                ? tekster.titler.boforhold.søknadsbarn
+                ? data.gjelder.revurdering
+                  ? tekster.titler.boforhold.revurderingsbarn
+                  : tekster.titler.boforhold.søknadsbarn
                 : tekster.titler.boforhold.egetBarnIHusstanden,
               labelBold: true,
               value: (

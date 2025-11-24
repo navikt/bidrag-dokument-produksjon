@@ -5,9 +5,9 @@ import {
 } from "~/utils/visningsnavn";
 import {
   DelberegningUnderholdskostnad,
-  NotatDelberegningBarnetilleggDto,
+  DokumentmalDelberegningBarnetilleggDto,
   Rolletype,
-  SluttberegningBarnebidrag,
+  NotatSluttberegningBarnebidragDetaljer,
 } from "~/types/Api";
 import {
   CommonTable,
@@ -104,7 +104,7 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
 export const BeregningJusterBPsBarnetillegg = ({
   sluttberegning,
 }: {
-  sluttberegning: SluttberegningBarnebidrag;
+  sluttberegning: NotatSluttberegningBarnebidragDetaljer;
 }) => {
   function renderResult() {
     if (sluttberegning.bidragJustertForNettoBarnetilleggBP) {
@@ -141,8 +141,8 @@ export const BeregningJusterBMsBarnetillegg = ({
   underholdskostnad,
 }: {
   underholdskostnad: DelberegningUnderholdskostnad;
-  sluttberegning: SluttberegningBarnebidrag;
-  barnetilleggBM: NotatDelberegningBarnetilleggDto;
+  sluttberegning: NotatSluttberegningBarnebidragDetaljer;
+  barnetilleggBM: DokumentmalDelberegningBarnetilleggDto;
 }) => {
   function renderResult() {
     if (sluttberegning.bidragJustertForNettoBarnetilleggBM) {

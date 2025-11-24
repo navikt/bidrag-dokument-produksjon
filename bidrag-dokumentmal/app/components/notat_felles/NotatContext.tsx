@@ -24,7 +24,9 @@ interface INotatContext {
   erOpphør: boolean;
   harFlereEnnEttSøknadsbarn: boolean;
   erInnkrevingsgrunnlag: boolean;
+  gjelderFlereSaker: boolean;
   bidragsmottaker: DokumentmalPersonDto;
+  bidragsmottakere: DokumentmalPersonDto[];
   bidragspliktig?: DokumentmalPersonDto;
   søknadsbarn: DokumentmalPersonDto[];
   data: VedtakNotatDto;
@@ -66,9 +68,14 @@ export function NotatProvider({
             renderPDFVersion,
             data: dataCorrected,
             type: dataCorrected.type,
+            gjelderFlereSaker:
+              new Set(dataCorrected.roller.map((b) => b.saksnummer)).size > 1,
             erInnkrevingsgrunnlag:
               dataCorrected.behandling.vedtakstype === Vedtakstype.INNKREVING,
             bidragsmottaker: dataCorrected.roller.find(erRolle(Rolletype.BM))!,
+            bidragsmottakere: dataCorrected.roller.filter(
+              erRolle(Rolletype.BM),
+            )!,
             bidragspliktig: dataCorrected.roller.find(erRolle(Rolletype.BP)),
             søknadsbarn: dataCorrected.roller.filter(erRolle(Rolletype.BA)),
             harFlereEnnEttSøknadsbarn:
