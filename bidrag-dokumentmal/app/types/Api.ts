@@ -110,7 +110,7 @@ export interface BidragPeriodeBeregningsdetaljer {
   delberegningBidragsevne?: DokumentmalDelberegningBidragsevneDto;
   samværsfradrag?: NotatBeregningsdetaljerSamvaersfradrag;
   endringUnderGrense?: DelberegningEndringSjekkGrensePeriode;
-  sluttberegning?: NotatSluttberegningBarnebidragDetaljer;
+  sluttberegning?: DokumentmalSluttberegningBarnebidragDetaljer;
   delberegningUnderholdskostnad?: DelberegningUnderholdskostnad;
   indeksreguleringDetaljer?: IndeksreguleringDetaljer;
   sluttberegningAldersjustering?: SluttberegningBarnebidragAldersjustering;
@@ -301,8 +301,8 @@ export interface DokumentmalResultatBeregningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  inntektBarnMånedlig?: number;
   totalEndeligInntekt: number;
+  inntektBarnMånedlig?: number;
   inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
 }
@@ -343,9 +343,41 @@ export interface DokumentmalSkattBeregning {
   trinnskatt: number;
   trygdeavgift: number;
   skattAlminneligInntektMånedsbeløp: number;
+  skattMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattMånedsbeløp: number;
+}
+
+export interface DokumentmalSluttberegningBarnebidragDetaljer {
+  beregnetBeløp?: number;
+  resultatBeløp?: number;
+  uMinusNettoBarnetilleggBM?: number;
+  bruttoBidragEtterBarnetilleggBM: number;
+  nettoBidragEtterBarnetilleggBM: number;
+  bruttoBidragJustertForEvneOg25Prosent: number;
+  bruttoBidragEtterBegrensetRevurdering: number;
+  bruttoBidragEtterBarnetilleggBP: number;
+  nettoBidragEtterSamværsfradrag: number;
+  bpAndelAvUVedDeltBostedFaktor: number;
+  bpAndelAvUVedDeltBostedBeløp: number;
+  løpendeForskudd?: number;
+  løpendeBidrag?: number;
+  barnetErSelvforsørget: boolean;
+  bidragJustertForDeltBosted: boolean;
+  bidragJustertForNettoBarnetilleggBP: boolean;
+  bidragJustertForNettoBarnetilleggBM: boolean;
+  bidragJustertNedTilEvne: boolean;
+  bidragJustertNedTil25ProsentAvInntekt: boolean;
+  bidragJustertTilForskuddssats: boolean;
+  bidragJustertManueltTilForskuddssats: boolean;
+  begrensetRevurderingUtført: boolean;
+  ikkeOmsorgForBarnet: boolean;
+  bpEvneVedForholdsmessigFordeling?: number;
+  bpAndelAvUVedForholdsmessigFordelingFaktor?: number;
+  bpSumAndelAvU?: number;
+  resultat?: Resultatkode;
+  resultatVisningsnavn?: Visningsnavn;
+  uminusNettoBarnetilleggBM: number;
 }
 
 export interface DokumentmalUnderholdEgneBarnIHusstand {
@@ -548,11 +580,11 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
-  erAvvisning: boolean;
   avslagVisningsnavnUtenPrefiks?: string;
+  erAvvisning: boolean;
+  avslagVisningsnavn?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  avslagVisningsnavn?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -616,8 +648,8 @@ export interface NotatGebyrDetaljerDto {
   beløpGebyrsats: number;
   /** @deprecated */
   rolle: DokumentmalPersonDto;
-  gebyrResultatVisningsnavn: string;
   erManueltOverstyrt: boolean;
+  gebyrResultatVisningsnavn: string;
 }
 
 export interface NotatGebyrInntektDto {
@@ -661,9 +693,9 @@ export interface NotatInntektDto {
   gjelderBarn?: DokumentmalPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
-  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
+  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -774,8 +806,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
   bpHarEvne: boolean;
-  resultatVisningsnavn: string;
   beløpSomInnkreves: number;
+  resultatVisningsnavn: string;
 };
 
 export interface NotatSamvaerDto {
@@ -798,38 +830,6 @@ export interface NotatSamvaersperiodeDto {
 export interface NotatSivilstand {
   opplysningerFraFolkeregisteret: OpplysningerFraFolkeregisteretMedDetaljerSivilstandskodePDLUnit[];
   opplysningerBruktTilBeregning: OpplysningerBruktTilBeregningSivilstandskode[];
-}
-
-export interface NotatSluttberegningBarnebidragDetaljer {
-  beregnetBeløp?: number;
-  resultatBeløp?: number;
-  uMinusNettoBarnetilleggBM?: number;
-  bruttoBidragEtterBarnetilleggBM: number;
-  nettoBidragEtterBarnetilleggBM: number;
-  bruttoBidragJustertForEvneOg25Prosent: number;
-  bruttoBidragEtterBegrensetRevurdering: number;
-  bruttoBidragEtterBarnetilleggBP: number;
-  nettoBidragEtterSamværsfradrag: number;
-  bpAndelAvUVedDeltBostedFaktor: number;
-  bpAndelAvUVedDeltBostedBeløp: number;
-  løpendeForskudd?: number;
-  løpendeBidrag?: number;
-  barnetErSelvforsørget: boolean;
-  bidragJustertForDeltBosted: boolean;
-  bidragJustertForNettoBarnetilleggBP: boolean;
-  bidragJustertForNettoBarnetilleggBM: boolean;
-  bidragJustertNedTilEvne: boolean;
-  bidragJustertNedTil25ProsentAvInntekt: boolean;
-  bidragJustertTilForskuddssats: boolean;
-  bidragJustertManueltTilForskuddssats: boolean;
-  begrensetRevurderingUtført: boolean;
-  ikkeOmsorgForBarnet: boolean;
-  bpEvneVedForholdsmessigFordeling?: number;
-  bpAndelAvUVedForholdsmessigFordelingFaktor?: number;
-  bpSumAndelAvU?: number;
-  resultat?: Resultatkode;
-  resultatVisningsnavn?: Visningsnavn;
-  uminusNettoBarnetilleggBM: number;
 }
 
 export interface NotatStonadTilBarnetilsynDto {
@@ -1611,9 +1611,9 @@ export interface DokumentBestilling {
   datoSakOpprettet?: string;
   spraak?: string;
   roller: {
-    barn: Barn[];
     bidragsmottaker?: PartInfo;
     bidragspliktig?: PartInfo;
+    barn: Barn[];
     isEmpty: boolean;
     /** @format int32 */
     size: number;
@@ -1792,9 +1792,9 @@ export interface Skatt {
   trinnskatt: number;
   trygdeavgift: number;
   skattAlminneligInntektMånedsbeløp: number;
+  skattMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattMånedsbeløp: number;
 }
 
 export interface SaerbidragBeregning {
