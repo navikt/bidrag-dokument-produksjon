@@ -1,5 +1,15 @@
 import { localeMap, SpråkType } from "./oversettelser";
+import { DokumentmalPersonDto } from "~/types/Api";
 
+export function sortByAge(
+  rolleA: DokumentmalPersonDto,
+  rolleB: DokumentmalPersonDto,
+) {
+  return (
+    (dateOrNull(rolleB.fødselsdato)?.getTime() ?? 1) -
+    (dateOrNull(rolleA.fødselsdato)?.getTime() ?? 1)
+  );
+}
 export const dateOrNull = (dateString?: string | null): Date | null =>
   dateString ? new Date(dateString) : null;
 export const toISODateString = (date?: Date): string | null =>

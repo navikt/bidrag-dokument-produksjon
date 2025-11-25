@@ -1,16 +1,18 @@
-import { sammenlignRoller, rolleTilVisningsnavnV2 } from "~/utils/visningsnavn";
-import { Rolletype, DokumentmalPersonDto } from "~/types/Api";
-import { dateToDDMMYYYY } from "~/utils/date-utils";
+import { rolleTilVisningsnavnV2, sammenlignRoller } from "~/utils/visningsnavn";
+import { DokumentmalPersonDto, Rolletype } from "~/types/Api";
+import { dateToDDMMYYYY, sortByAge } from "~/utils/date-utils";
 import NavLogo from "~/components/NavLogo";
-import { DataViewTable } from "~/components/DataViewTable";
+import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import {
-  useDokumentFelles,
   TypeInnhold,
+  useDokumentFelles,
 } from "~/components/vedtak_felles/FellesContext";
 import { isNullOrEmpty } from "~/utils/string-utils";
+import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 
 export default function Soknaddetaljer() {
   const { roller, saksnummer, typeInnhold } = useDokumentFelles();
+  const { gjelderFlereSaker } = useNotatFelles();
   const rollerIkkeBarn = roller.filter(
     (rolle) => !sammenlignRoller(rolle.rolle, Rolletype.BA),
   );
@@ -34,13 +36,13 @@ export default function Soknaddetaljer() {
         <DataViewTable
           labelColWidth={"98px"}
           data={[
-            {
+            (!gjelderFlereSaker && {
               label: "Saksnummer",
               value:
                 typeInnhold == TypeInnhold.NOTAT
                   ? saksnummer
                   : `${saksnummer} (Oppgi saksnummeret ved henvendelse til oss.)`,
-            },
+            }) as unknown as DataViewTableData,
 
             ...rollerIkkeBarn
               .sort((a, b) => {
@@ -54,13 +56,13 @@ export default function Soknaddetaljer() {
               })
               .map((rolle) => ({
                 label: rolleTilVisningsnavnV2(rolle)!,
-                value: tilNavnOgFødselsdato(rolle),
+                value: `${tilNavnOgFødselsdato(rolle)}${gjelderFlereSaker && rolle.rolle != Rolletype.BP ? ` /${rolle.saksnummer}` : ""}`,
               })),
             {
               label: "Søknadsbarn",
               value: (
                 <div style={{ display: "inline-table" }}>
-                  {rollerBarn.map((rolle) => (
+                  {rollerBarn.sort(sortByAge).map((rolle) => (
                     <span
                       key={rolle.ident}
                       style={{
@@ -68,7 +70,7 @@ export default function Soknaddetaljer() {
                         display: "block",
                       }}
                     >
-                      {tilNavnOgFødselsdato(rolle)}
+                      {`${tilNavnOgFødselsdato(rolle)}${gjelderFlereSaker && rolle.rolle != Rolletype.BP ? ` /${rolle.saksnummer}` : ""}`}
                     </span>
                   ))}
                 </div>

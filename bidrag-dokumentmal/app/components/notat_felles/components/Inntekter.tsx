@@ -8,7 +8,7 @@ import {
   Rolletype,
   Kilde,
 } from "~/types/Api";
-import { deductDays, formatPeriode } from "~/utils/date-utils";
+import { deductDays, formatPeriode, sortByAge } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
 import { groupBy, hasValue } from "~/utils/array-utils";
 import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
@@ -65,11 +65,13 @@ export default function Inntekter({ vedleggNummer = 2 }: VedleggProps) {
       )}
 
       {type !== NotatMalType.FORSKUDD &&
-        søknadsbarn.map((barn) => (
-          <div key={barn.ident} className={"mt-medium"}>
-            <InntekterForRolle rolle={barn} />
-          </div>
-        ))}
+        søknadsbarn
+          .sort((a, b) => sortByAge(a, b))
+          .map((barn) => (
+            <div key={barn.ident} className={"mt-medium"}>
+              <InntekterForRolle rolle={barn} />
+            </div>
+          ))}
     </>
   );
 }
@@ -225,65 +227,73 @@ function InntektPerBarnTable({
   return (
     <div className={"mt-medium"}>
       <InntektTableTitle title={title} subtitle={subtitle} />
-      {inntekterBarn.map(([key, value], i) => {
-        const gjelderBarn = value[0].gjelderBarn!;
-        const erBarnetillegg =
-          value[0].type == Inntektsrapportering.BARNETILLEGG;
-        const addMargin = inntekterBarn.length > i + 1;
-        return (
-          <div
-            key={gjelderBarn + key + i.toString()}
-            className="table_container"
-            style={{
-              marginBottom: addMargin ? "16px" : "0px",
-            }}
-          >
-            <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            <CommonTable
-              width={"580px"}
-              data={{
-                headers: getInntektTableHeaders(erBarnetillegg, true, styling),
-                rows: value
-                  .filter((d) => !bareMedIBeregning || d.medIBeregning)
-                  .map((d) => {
-                    const periode = d.periode ?? d.opprinneligPeriode;
-                    const visningsnavnInntektstype =
-                      d.inntektsposter.length > 0
-                        ? d.inntektsposter[0].visningsnavn
-                        : "";
-
-                    return {
-                      periodColumn:
-                        styling == "V2" && erBarnetillegg
-                          ? formatPeriode(periode!.fom, periode!.til)
-                          : undefined,
-                      columns: [
-                        (styling == "V1" || !erBarnetillegg) && {
-                          content: formatPeriode(periode!.fom, periode!.til),
-                        },
-                        { content: <KildeIcon kilde={d.kilde} /> },
-                        erBarnetillegg
-                          ? [
-                              { content: visningsnavnInntektstype },
-                              {
-                                content:
-                                  d.kilde == Kilde.OFFENTLIG
-                                    ? Number(d.beløp / 12)
-                                    : formatterBeløp(d.månedsbeløp),
-                              },
-                              { content: formatterBeløp(d.beløp) },
-                            ]
-                          : [{ content: formatterBeløp(d.beløp) }],
-                      ]
-                        .filter((d) => typeof d != "boolean")
-                        .flatMap((d) => d as TableColumn),
-                    };
-                  }),
+      {inntekterBarn
+        .sort(([_, a], [d2, b]) =>
+          sortByAge(a[0].gjelderBarn, b[0].gjelderBarn),
+        )
+        .map(([key, value], i) => {
+          const gjelderBarn = value[0].gjelderBarn!;
+          const erBarnetillegg =
+            value[0].type == Inntektsrapportering.BARNETILLEGG;
+          const addMargin = inntekterBarn.length > i + 1;
+          return (
+            <div
+              key={gjelderBarn + key + i.toString()}
+              className="table_container"
+              style={{
+                marginBottom: addMargin ? "16px" : "0px",
               }}
-            />
-          </div>
-        );
-      })}
+            >
+              <TableGjelderBarn gjelderBarn={gjelderBarn} />
+              <CommonTable
+                width={"580px"}
+                data={{
+                  headers: getInntektTableHeaders(
+                    erBarnetillegg,
+                    true,
+                    styling,
+                  ),
+                  rows: value
+                    .filter((d) => !bareMedIBeregning || d.medIBeregning)
+                    .map((d) => {
+                      const periode = d.periode ?? d.opprinneligPeriode;
+                      const visningsnavnInntektstype =
+                        d.inntektsposter.length > 0
+                          ? d.inntektsposter[0].visningsnavn
+                          : "";
+
+                      return {
+                        periodColumn:
+                          styling == "V2" && erBarnetillegg
+                            ? formatPeriode(periode!.fom, periode!.til)
+                            : undefined,
+                        columns: [
+                          (styling == "V1" || !erBarnetillegg) && {
+                            content: formatPeriode(periode!.fom, periode!.til),
+                          },
+                          { content: <KildeIcon kilde={d.kilde} /> },
+                          erBarnetillegg
+                            ? [
+                                { content: visningsnavnInntektstype },
+                                {
+                                  content:
+                                    d.kilde == Kilde.OFFENTLIG
+                                      ? Number(d.beløp / 12)
+                                      : formatterBeløp(d.månedsbeløp),
+                                },
+                                { content: formatterBeløp(d.beløp) },
+                              ]
+                            : [{ content: formatterBeløp(d.beløp) }],
+                        ]
+                          .filter((d) => typeof d != "boolean")
+                          .flatMap((d) => d as TableColumn),
+                      };
+                    }),
+                }}
+              />
+            </div>
+          );
+        })}
     </div>
   );
 }
@@ -388,7 +398,9 @@ function BeregnetInntektTable({ data, rolle }: BeregnetInntektTableProps) {
   }
 
   function renderForAllChildren() {
-    const inntekterBarn = groupBy(data, (d) => d.gjelderBarn?.ident!);
+    const inntekterBarn = groupBy(data, (d) => d.gjelderBarn?.ident!).sort(
+      ([_, a], [d2, b]) => sortByAge(a[0].gjelderBarn, b[0].gjelderBarn),
+    );
     return inntekterBarn.map(([key, value], i) => {
       const gjelderBarn = value[0].gjelderBarn!;
       const inntekter = value[0].summertInntektListe;

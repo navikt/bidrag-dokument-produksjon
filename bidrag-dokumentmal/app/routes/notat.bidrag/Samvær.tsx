@@ -2,11 +2,12 @@ import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { NotatSamvaerDto, NotatSamvaersperiodeDto } from "~/types/Api";
 import { CommonTable } from "~/components/CommonTable";
 import tekster from "~/tekster";
-import { formatPeriode } from "~/utils/date-utils";
+import { formatPeriode, sortByAge } from "~/utils/date-utils";
 import { DataViewTable } from "~/components/DataViewTable";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import elementIds from "~/utils/elementIds";
 import { VedleggProps } from "~/types/commonTypes";
+import { rolleTilVisningsnavnV2 } from "~/utils/visningsnavn";
 
 export default function Samvær({ vedleggNummer }: VedleggProps) {
   const { data, erAvslag } = useNotatFelles();
@@ -22,9 +23,11 @@ export default function Samvær({ vedleggNummer }: VedleggProps) {
         </a>
       </div>
       <>
-        {samvær.map((barn, i) => (
-          <SamværBarn data={barn} key={i + barn.gjelderBarn.ident!} />
-        ))}
+        {samvær
+          .sort((a, b) => sortByAge(a.gjelderBarn, b.gjelderBarn))
+          .map((barn, i) => (
+            <SamværBarn data={barn} key={i + barn.gjelderBarn.ident!} />
+          ))}
       </>
     </div>
   );
@@ -37,7 +40,7 @@ function SamværBarn({ data }: { data: NotatSamvaerDto }) {
         gap={"5px"}
         data={[
           {
-            label: "Barn i saken",
+            label: rolleTilVisningsnavnV2(data.gjelderBarn),
             labelBold: true,
             value: data.gjelderBarn.navn,
           },
