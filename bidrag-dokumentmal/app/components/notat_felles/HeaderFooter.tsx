@@ -9,10 +9,13 @@ const contentWithCustomStyles = `
 export default function HeaderFooter({
   renderMode,
   saksnummer,
+  saker,
 }: {
   renderMode: RenderMode;
-  saksnummer: string;
+  saksnummer?: string;
+  saker?: string[];
 }) {
+  const flereSaker = saker && saker.length > 1;
   const renderHeaderFooterV2 = (isHeader: boolean) => (
     <>
       <div id={isHeader ? "header" : "footer"}>
@@ -29,7 +32,9 @@ export default function HeaderFooter({
             bottom: isHeader ? "auto" : "40px",
           }}
         >
-          Saksnummer {saksnummer}
+          {flereSaker
+            ? `Saker ${saker.join(", ")}`
+            : `Saksnummer ${saksnummer}`}
         </span>
         <span
           style={{
