@@ -1,6 +1,7 @@
 import {
   capitalizeFirstLetter,
   søktAvTilVisningsnavn,
+  rolleTilVisningsnavnV2,
 } from "~/utils/visningsnavn";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
@@ -35,7 +36,7 @@ function VirkningstidspunktPerBarn() {
             <DataViewTable
               data={[
                 {
-                  label: "Barn i saken",
+                  label: rolleTilVisningsnavnV2(barn.rolle),
                   labelBold: true,
                   value: barn.rolle.navn,
                 },
