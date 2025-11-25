@@ -56,7 +56,7 @@ export default function Soknaddetaljer() {
               })
               .map((rolle) => ({
                 label: rolleTilVisningsnavnV2(rolle)!,
-                value: `${tilNavnOgFødselsdato(rolle)}${gjelderFlereSaker && rolle.rolle != Rolletype.BP ? ` /${rolle.saksnummer}` : ""}`,
+                value: `${tilNavnOgFødselsdato(rolle)}${gjelderFlereSaker && rolle.rolle != Rolletype.BP ? ` / ${rolle.saksnummer}` : ""}`,
               })),
             {
               label: "Søknadsbarn",
@@ -70,7 +70,7 @@ export default function Soknaddetaljer() {
                         display: "block",
                       }}
                     >
-                      {`${tilNavnOgFødselsdato(rolle)}${gjelderFlereSaker && rolle.rolle != Rolletype.BP ? ` /${rolle.saksnummer}` : ""}`}
+                      {`${tilNavnOgFødselsdato(rolle)}${gjelderFlereSaker && rolle.rolle != Rolletype.BP ? ` / ${rolle.saksnummer}` : ""}`}
                     </span>
                   ))}
                 </div>
