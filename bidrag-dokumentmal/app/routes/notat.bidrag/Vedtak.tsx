@@ -173,8 +173,6 @@ function VedtakTable({
 }) {
   if (data.length == 0) return <div>Mangler resultat</div>;
 
-  // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   function renderAvslag(_) {
     return [{ content: "", colSpan: 5 }, { content: "Avslag" }];
   }
@@ -256,6 +254,8 @@ function VedtakTable({
         .map(([_, value]) => {
           const gjelderBarn = value[0].barn!;
           const perioder = value[0].perioder;
+          const ingenFFSlåttUtForRevurderingsbarn =
+            gjelderBarn.revurdering && !value[0].minstEnPeriodeHarSlåttUtTilFF;
           const tableData: TableData = {
             headers: [
               { name: "U", width: "50px" },
@@ -326,7 +326,7 @@ function VedtakTable({
                   className={"mb-1 mt-2"}
                   data={
                     [
-                      {
+                      !ingenFFSlåttUtForRevurderingsbarn && {
                         label: "Neste indeksår",
                         value: value[0].indeksår,
                       },
@@ -346,7 +346,14 @@ function VedtakTable({
                   ]}
                 />
               )}
-              <CommonTable data={tableData} />
+              {ingenFFSlåttUtForRevurderingsbarn ? (
+                <div>
+                  Ingen perioder har slått ut til FF. Det vil derfor ikke fattes
+                  noe vedtak for revurderingsbarnet.
+                </div>
+              ) : (
+                <CommonTable data={tableData} />
+              )}
             </>
           );
         })}
@@ -434,7 +441,7 @@ export function VedtakEndeligTable({
                 },
               ])
               .concat(
-                visningForSaksbehandler
+                (visningForSaksbehandler
                   ? [
                       // eslint-disable-next-line @typescript-eslint/ban-ts-comment
                       //@ts-ignore
@@ -451,9 +458,9 @@ export function VedtakEndeligTable({
                               "U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
                           },
                         ],
-                      } as TableRow,
+                      },
                     ]
-                  : [],
+                  : []) as unknown as TableRow[],
               )
               .filter((d) => d != null) as TableRow[],
           };

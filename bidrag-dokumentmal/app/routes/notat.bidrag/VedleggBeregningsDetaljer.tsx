@@ -26,6 +26,7 @@ import { AldersjusteringDetaljer } from "~/routes/notat.bidrag/beregningsdetalje
 import { IndeksreguleringDetaljer } from "~/routes/notat.bidrag/beregningsdetaljer/IndeksreguleringDetaljer";
 import { BeregningForholdsmessigFordeling } from "~/routes/notat.bidrag/beregningsdetaljer/BeregningForholdsmessigFordelingDetaljer";
 import { PersonV2 } from "~/components/Person";
+import { rolleTilVisningsnavnV2 } from "~/utils/visningsnavn";
 
 export default function VedleggBeregningsDetaljer({
   vedleggNummer,
@@ -83,76 +84,84 @@ function VedleggBeregningsDetaljerEndeligVedtakInnhold() {
   return (
     <>
       {resultatPerioder?.map(
-        (resultat: DokumentmalResultatBidragsberegningBarnDto) => (
-          <>
-            <DataViewTable
-              data={[
-                {
-                  label: "Barn i saken",
-                  labelBold: true,
-                  value: <PersonV2 {...resultat.barn} visFødselsdato={false} />,
-                },
-              ]}
-            />
-            {resultat.orkestrertVedtak?.perioder
-              .filter(
-                (d) =>
-                  d.vedtakstype == Vedtakstype.INDEKSREGULERING ||
-                  d.vedtakstype == Vedtakstype.ALDERSJUSTERING,
-              )
-              .map((periode) => {
-                const detaljer = periode.beregningsdetaljer!;
+        (resultat: DokumentmalResultatBidragsberegningBarnDto) => {
+          return (
+            <>
+              <DataViewTable
+                data={[
+                  {
+                    label: rolleTilVisningsnavnV2(resultat.barn),
+                    labelBold: true,
+                    value: (
+                      <PersonV2 {...resultat.barn} visFødselsdato={false} />
+                    ),
+                  },
+                ]}
+              />
+              {resultat.orkestrertVedtak?.perioder.length === 0 ? (
+                <div>resultat.orkestrertVedtak?.perioder</div>
+              ) : (
+                resultat.orkestrertVedtak?.perioder
+                  .filter(
+                    (d) =>
+                      d.vedtakstype == Vedtakstype.INDEKSREGULERING ||
+                      d.vedtakstype == Vedtakstype.ALDERSJUSTERING,
+                  )
+                  .map((periode) => {
+                    const detaljer = periode.beregningsdetaljer!;
 
-                function renderTables() {
-                  if (periode.vedtakstype == Vedtakstype.ALDERSJUSTERING) {
+                    function renderTables() {
+                      if (periode.vedtakstype == Vedtakstype.ALDERSJUSTERING) {
+                        return (
+                          <>
+                            <AldersjusteringDetaljer />
+                            <EndeligBidragTable />
+                          </>
+                        );
+                      }
+                      if (periode.vedtakstype == Vedtakstype.INDEKSREGULERING) {
+                        return <IndeksreguleringDetaljer />;
+                      }
+                    }
                     return (
                       <>
-                        <AldersjusteringDetaljer />
-                        <EndeligBidragTable />
+                        <BidragBeregningContext.Provider
+                          value={{
+                            ...detaljer,
+                            periode,
+                            endeligBeløp: periode.faktiskBidrag,
+                            erEndringUnderGrense:
+                              periode.resultatKode ===
+                              Resultatkode.INGEN_ENDRING_UNDER_GRENSE,
+                          }}
+                        >
+                          <>
+                            <div className={"pb-2"}>
+                              <DataViewTable
+                                className={"mb-2"}
+                                data={[
+                                  {
+                                    label: "Periode",
+                                    labelBold: true,
+                                    value: formatPeriode(
+                                      periode.periode.fom,
+                                      deductDays(periode.periode!.til, 1),
+                                    ),
+                                  },
+                                ]}
+                              />
+                              {renderTables()}
+                            </div>
+                          </>
+                        </BidragBeregningContext.Provider>
+                        <HorizontalLine />
                       </>
                     );
-                  }
-                  if (periode.vedtakstype == Vedtakstype.INDEKSREGULERING) {
-                    return <IndeksreguleringDetaljer />;
-                  }
-                }
-                return (
-                  <>
-                    <BidragBeregningContext.Provider
-                      value={{
-                        ...detaljer,
-                        periode,
-                        endeligBeløp: periode.faktiskBidrag,
-                        erEndringUnderGrense:
-                          periode.resultatKode ===
-                          Resultatkode.INGEN_ENDRING_UNDER_GRENSE,
-                      }}
-                    >
-                      <>
-                        <div className={"pb-2"}>
-                          <DataViewTable
-                            className={"mb-2"}
-                            data={[
-                              {
-                                label: "Periode",
-                                labelBold: true,
-                                value: formatPeriode(
-                                  periode.periode.fom,
-                                  deductDays(periode.periode!.til, 1),
-                                ),
-                              },
-                            ]}
-                          />
-                          {renderTables()}
-                        </div>
-                      </>
-                    </BidragBeregningContext.Provider>
-                    <HorizontalLine />
-                  </>
-                );
-              })}
-          </>
-        ),
+                  })
+              )}
+            </>
+          );
+        },
       )}
     </>
   );
@@ -197,94 +206,100 @@ function VedleggBeregningsDetaljerInnhold() {
             <DataViewTable
               data={[
                 {
-                  label: "Barn i saken",
+                  label: rolleTilVisningsnavnV2(resultat.barn),
                   labelBold: true,
                   value: resultat.barn.navn,
                 },
               ]}
             />
-            {resultat.perioder
-              .filter(
-                (d) =>
-                  d.beregningsdetaljer?.sluttberegning &&
-                  !d.beregningsdetaljer.sluttberegning!.barnetErSelvforsørget &&
-                  !d.beregningsdetaljer.sluttberegning!.ikkeOmsorgForBarnet,
-              )
-              .map((periode) => {
-                const detaljer = periode.beregningsdetaljer!;
-                return (
-                  <>
-                    <BidragBeregningContext.Provider
-                      value={{
-                        ...detaljer,
-                        periode,
-                        endeligBeløp: periode.faktiskBidrag,
-                        erEndringUnderGrense:
-                          periode.resultatKode ===
-                          Resultatkode.INGEN_ENDRING_UNDER_GRENSE,
-                      }}
-                    >
-                      <>
-                        <div className={"pb-2"}>
-                          <DataViewTable
-                            className={"mb-2"}
-                            data={[
-                              {
-                                label: "Periode",
-                                labelBold: true,
-                                value: formatPeriode(
-                                  periode.periode.fom,
-                                  deductDays(periode.periode!.til, 1),
-                                ),
-                              },
-                            ]}
-                          />
-                          <BPAndelUnderholdskostnad />
-                        </div>
-                        {!detaljer.deltBosted && (
-                          <>
-                            <Samværsfradrag />
-                            <div className={"pt-2 pb-2"} />
-                          </>
-                        )}
-                        {!detaljer.deltBosted &&
-                          detaljer.barnetilleggBM &&
-                          detaljer.barnetilleggBM.barnetillegg.length > 0 && (
+            {resultat.perioder.length === 0 ? (
+              <div>Ingen beregningsdetaljer å vise</div>
+            ) : (
+              resultat.perioder
+                .filter(
+                  (d) =>
+                    d.beregningsdetaljer?.sluttberegning &&
+                    !d.beregningsdetaljer.sluttberegning!
+                      .barnetErSelvforsørget &&
+                    !d.beregningsdetaljer.sluttberegning!.ikkeOmsorgForBarnet,
+                )
+                .map((periode) => {
+                  const detaljer = periode.beregningsdetaljer!;
+                  return (
+                    <>
+                      <BidragBeregningContext.Provider
+                        value={{
+                          ...detaljer,
+                          periode,
+                          endeligBeløp: periode.faktiskBidrag,
+                          erEndringUnderGrense:
+                            periode.resultatKode ===
+                            Resultatkode.INGEN_ENDRING_UNDER_GRENSE,
+                        }}
+                      >
+                        <>
+                          <div className={"pb-2"}>
+                            <DataViewTable
+                              className={"mb-2"}
+                              data={[
+                                {
+                                  label: "Periode",
+                                  labelBold: true,
+                                  value: formatPeriode(
+                                    periode.periode.fom,
+                                    deductDays(periode.periode!.til, 1),
+                                  ),
+                                },
+                              ]}
+                            />
+                            <BPAndelUnderholdskostnad />
+                          </div>
+                          {!detaljer.deltBosted && (
                             <>
-                              <BarnetilleggSkattesats rolle={Rolletype.BM} />
-                              <NettoBarnetilleggTable rolle={Rolletype.BM} />
+                              <Samværsfradrag />
                               <div className={"pt-2 pb-2"} />
                             </>
                           )}
-                        <div className={"pt-2 pb-2"}>
-                          <BPsEvneTable
-                            inntekter={detaljer!.inntekter!}
-                            delberegningBidragsevne={
-                              detaljer!.delberegningBidragsevne!
-                            }
-                          />
-                          <BeregningFordeltBidragEvne />
-                          <BeregningForholdsmessigFordeling />
-                        </div>
+                          {!detaljer.deltBosted &&
+                            detaljer.barnetilleggBM &&
+                            detaljer.barnetilleggBM.barnetillegg.length > 0 && (
+                              <>
+                                <BarnetilleggSkattesats rolle={Rolletype.BM} />
+                                <NettoBarnetilleggTable rolle={Rolletype.BM} />
+                                <div className={"pt-2 pb-2"} />
+                              </>
+                            )}
+                          <div className={"pt-2 pb-2"}>
+                            <BPsEvneTable
+                              inntekter={detaljer!.inntekter!}
+                              delberegningBidragsevne={
+                                detaljer!.delberegningBidragsevne!
+                              }
+                            />
+                            <BeregningFordeltBidragEvne />
+                            <BeregningForholdsmessigFordeling />
+                          </div>
 
-                        <BeregningBegrensetRevurdering />
-                        {!detaljer.deltBosted &&
-                          detaljer.barnetilleggBP?.barnetillegg &&
-                          detaljer.barnetilleggBP?.barnetillegg?.length > 0 && (
-                            <>
-                              <BarnetilleggSkattesats rolle={Rolletype.BP} />
-                              <NettoBarnetilleggTable rolle={Rolletype.BP} />
-                              <div className={"pt-2 pb-2"} />
-                            </>
-                          )}
-                        <EndeligBidragTable />
-                        <EndringUnderGrense />
-                      </>
-                    </BidragBeregningContext.Provider>
-                    <HorizontalLine />
-                  </>
-                );
-              })}
+                          <BeregningBegrensetRevurdering />
+                          {!detaljer.deltBosted &&
+                            detaljer.barnetilleggBP?.barnetillegg &&
+                            detaljer.barnetilleggBP?.barnetillegg?.length >
+                              0 && (
+                              <>
+                                <BarnetilleggSkattesats rolle={Rolletype.BP} />
+                                <NettoBarnetilleggTable rolle={Rolletype.BP} />
+                                <div className={"pt-2 pb-2"} />
+                              </>
+                            )}
+                          <EndeligBidragTable />
+                          <EndringUnderGrense />
+                        </>
+                      </BidragBeregningContext.Provider>
+                      <HorizontalLine />
+                    </>
+                  );
+                })
+            )}
           </>
         ),
       )}

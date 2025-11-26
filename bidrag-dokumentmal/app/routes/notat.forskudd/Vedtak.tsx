@@ -105,7 +105,10 @@ function VedtakTable({
           })),
         };
         return (
-          <div key={key} className="table_container mb-medium">
+          <div
+            key={key + gjelderBarn.ident}
+            className="table_container mb-medium"
+          >
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
             <CommonTable data={tableData} width={"550px"} />
           </div>
