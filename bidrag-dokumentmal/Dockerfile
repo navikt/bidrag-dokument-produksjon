@@ -15,7 +15,7 @@ RUN npm ci --include=dev
 COPY . .
 RUN npm run build
 
-FROM node:current-alpine3.22
+FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/node:22-slim
 COPY --from=build-env /app /app
 COPY --from=build-env /usr/local/lib/node_modules /app/node_modules
 
