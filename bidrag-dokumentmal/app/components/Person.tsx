@@ -1,5 +1,5 @@
 import { dateToDDMMYYYY } from "~/utils/date-utils";
-import { DokumentmalPersonDto } from "~/types/Api";
+import { DokumentmalPersonDto, Rolletype } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 
 type PersonProps = {
@@ -29,12 +29,15 @@ export function PersonV2(
 ) {
   const { visFødselsdato = false, ...person } = props;
   const { gjelderFlereSaker } = useNotatFelles();
+  const erBp = person.rolle === Rolletype.BP;
+  const sakDetaljer =
+    gjelderFlereSaker && !erBp ? ` (sak ${person.saksnummer})` : "";
   if (person.erBeskyttet) {
     //TODO: Visning av beskyttelse
     return (
       <span>
         {person.navn}
-        {gjelderFlereSaker ? ` (sak ${person.saksnummer})` : ""}
+        {sakDetaljer}
       </span>
     );
   }
@@ -42,14 +45,14 @@ export function PersonV2(
     return (
       <span>
         {person.navn} / {dateToDDMMYYYY(person.fødselsdato)}
-        {gjelderFlereSaker ? ` (sak ${person.saksnummer})` : ""}
+        {sakDetaljer}
       </span>
     );
   }
   return (
     <span>
       {person.navn}
-      {gjelderFlereSaker ? ` (sak ${person.saksnummer})` : ""}
+      {sakDetaljer}
     </span>
   );
 }
