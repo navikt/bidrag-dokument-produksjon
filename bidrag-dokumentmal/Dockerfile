@@ -1,6 +1,5 @@
 FROM node:23 AS build-env
 ENV NODE_ENV production
-ARG NPM_TOKEN
 LABEL maintainer="Team Bidrag"
 WORKDIR /app
 
