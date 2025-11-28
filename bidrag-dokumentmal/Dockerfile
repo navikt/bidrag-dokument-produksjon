@@ -9,7 +9,7 @@ RUN --mount=type=secret,id=reader_token \
     npm config set //npm.pkg.github.com/:_authToken=$(cat /run/secrets/reader_token)
 
 COPY package*.json ./
-RUN npm ci
+RUN npm ci --include=dev
 COPY . .
 RUN npm run build
 
@@ -18,7 +18,7 @@ WORKDIR /app
 COPY --from=build /app/package*.json ./
 COPY --from=build /app/node_modules ./node_modules
 COPY --from=build /app/build ./build
-
+COPY --from=build /app/public ./public
 ENV PORT 8080
 
 CMD ["node", "./build/server/index.js"]
