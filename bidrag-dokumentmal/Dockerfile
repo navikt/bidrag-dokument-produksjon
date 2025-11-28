@@ -11,7 +11,7 @@ RUN --mount=type=secret,id=reader_token \
 ENV NODE_ENV production
 
 COPY package*.json ./
-RUN npm ci && npm prune --production
+RUN npm ci
 COPY . .
 RUN npm run build
 
