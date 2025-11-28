@@ -21,4 +21,4 @@ COPY --from=build /app/build ./build
 COPY --from=build /app/public ./public
 ENV PORT 8080
 
-CMD ["node", "./build/server/index.js"]
+CMD ["./node_modules/.bin/remix-serve", "./build/server/index.js"]
