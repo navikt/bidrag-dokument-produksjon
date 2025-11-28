@@ -1,4 +1,4 @@
-FROM node:23 AS build-env
+FROM node:23 AS build
 ENV NODE_ENV production
 LABEL maintainer="Team Bidrag"
 WORKDIR /app
@@ -11,15 +11,16 @@ RUN --mount=type=secret,id=reader_token \
 ENV NODE_ENV production
 
 COPY package*.json ./
-RUN npm ci --include=dev
+RUN npm ci && npm prune --production
 COPY . .
 RUN npm run build
 
 FROM europe-north1-docker.pkg.dev/cgr-nav/pull-through/nav.no/node:22-slim
-COPY --from=build-env /app /app
-COPY --from=build-env /usr/local/lib/node_modules /app/node_modules
+WORKDIR /app
+COPY --from=build /app/package*.json ./
+COPY --from=build /app/node_modules ./node_modules
+COPY --from=build /app/build ./build
 
 ENV PORT 8080
-WORKDIR /app
 
 CMD ["./node_modules/.bin/remix-serve", "./build/server/index.js"]
