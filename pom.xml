@@ -31,7 +31,7 @@
         <junit.jupiter.version>5.13.4</junit.jupiter.version>
         <verapdf.version>1.26.1</verapdf.version>
         <ktfmt.version>0.44</ktfmt.version>
-        <bidrag.felles.version>2025.11.24.184132</bidrag.felles.version>
+        <bidrag.felles.version>2025.12.01.151816</bidrag.felles.version>
         <kotlin.logger.version>7.0.7</kotlin.logger.version>
         <snakeyaml.version>2.3</snakeyaml.version>
         <swagger.version>2.2.34</swagger.version>
