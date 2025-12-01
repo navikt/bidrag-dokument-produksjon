@@ -3,7 +3,7 @@ import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { NotatUnderholdBarnDto } from "~/types/Api";
 import { DataViewTable } from "~/components/DataViewTable";
 import { CommonTable } from "~/components/CommonTable";
-import { formatPeriode, dateToDDMMYYYY } from "~/utils/date-utils";
+import { formatPeriode, dateToDDMMYYYY, sortByAge } from "~/utils/date-utils";
 import tekster from "~/tekster";
 import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import KildeIcon from "~/components/KildeIcon";
@@ -27,6 +27,7 @@ export default function Underholdskostnad({ vedleggNummer }: VedleggProps) {
       <>
         {underholdskostnader.underholdskostnaderBarn
           .filter((barn) => barn.gjelderBarn.rolle != null)
+          .sort((a, b) => sortByAge(a.gjelderBarn, b.gjelderBarn))
           .map((barn, i) => (
             <UnderholdskostnaderSøknadsbarn
               data={barn}

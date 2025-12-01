@@ -1,9 +1,9 @@
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
-import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { CommonTable } from "~/components/CommonTable";
 import { konverterRolletype } from "~/utils/converter-utils";
 import { Rolletype } from "~/types/Api";
+import { rolleTilVisningsnavnV2 } from "~/utils/visningsnavn";
 
 export default function Gebyr() {
   const { data, erAvslag } = useNotatFelles();
@@ -29,7 +29,7 @@ export default function Gebyr() {
                 data={
                   [
                     {
-                      label: rolleTilVisningsnavn(gebyRolle.rolle.rolle!),
+                      label: rolleTilVisningsnavnV2(gebyRolle.rolle),
                       labelBold: true,
                       value: gebyRolle.rolle.navn,
                     },

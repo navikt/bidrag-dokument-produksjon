@@ -20,10 +20,10 @@ import Samvær from "~/routes/notat.bidrag/Samvær";
 import Vedtak from "~/routes/notat.bidrag/Vedtak";
 import VedleggBeregningsDetaljer from "~/routes/notat.bidrag/VedleggBeregningsDetaljer";
 import VedleggSamvær from "~/routes/notat.bidrag/VedleggSamvær";
-import Gebyr from "~/routes/notat.bidrag/Gebyr";
 import VedleggUnderholdskostnader from "~/routes/notat.bidrag/VedleggUnderholdskostnader";
 import PrivatAvtale from "~/routes/notat.bidrag/PrivatAvtale";
 import { Vedtakstype } from "~/types/Api";
+import GebyrV2 from "~/routes/notat.bidrag/GebyrV2";
 
 export async function action(args: ActionFunctionArgs) {
   return await parseRequestAction(args);
@@ -45,6 +45,11 @@ export default function NotatBidrag() {
   }
 
   const data = response.data;
+  const saker = new Set(
+    response.data.personer
+      .map((p) => p.saksnummer)
+      .filter((p) => p != undefined),
+  );
   const renderMode = response.renderForPdf ? RenderMode.PDF : RenderMode.HTML;
   return (
     <div id="bidrag_notat">
@@ -54,10 +59,7 @@ export default function NotatBidrag() {
         renderPDFVersion={response.renderPDFVersion}
         renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
       >
-        <HeaderFooter
-          saksnummer={response.data.saksnummer}
-          renderMode={renderMode}
-        />
+        <HeaderFooter saker={Array.from(saker)} renderMode={renderMode} />
         <div className={"container page"}>
           <Soknaddetaljer />
           <NotatTittel title={tekster.titler.bidrag} />
@@ -76,7 +78,7 @@ function renderBidrag() {
       <PrivatAvtale />
       <Underholdskostnad vedleggNummer={1} />
       <Inntekter vedleggNummer={2} />
-      <Gebyr />
+      <GebyrV2 />
       <Boforhold vedleggNummer={3} />
       <Samvær vedleggNummer={4} />
       <Vedtak vedleggNummer={5} />

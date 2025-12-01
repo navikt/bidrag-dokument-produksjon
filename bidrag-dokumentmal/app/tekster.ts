@@ -19,6 +19,7 @@ export default {
       tittel: "Boforhold",
       beregnetBoforholdTittel: "Beregnet boforhold",
       søknadsbarn: "Søknadsbarn",
+      revurderingsbarn: "Revurderingsbarn",
       egetBarnIHusstanden: "Eget barn i husstanden",
     },
     andreVoksneIHusstanden: {

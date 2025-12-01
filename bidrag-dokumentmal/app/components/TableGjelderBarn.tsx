@@ -1,9 +1,9 @@
 import { DokumentmalPersonDto } from "~/types/Api";
 import { dateToDDMMYYYY } from "~/utils/date-utils";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
-import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
 import { useTheme } from "~/components/notat_felles/ThemeContext";
 import Person from "~/components/Person";
+import { rolleTilVisningsnavnV2 } from "~/utils/visningsnavn";
 
 export default function TableGjelderBarn({
   gjelderBarn,
@@ -18,7 +18,7 @@ export default function TableGjelderBarn({
         data={
           [
             {
-              label: rolleTilVisningsnavn(gjelderBarn.rolle!),
+              label: rolleTilVisningsnavnV2(gjelderBarn),
               labelBold: true,
               value: (
                 <Person

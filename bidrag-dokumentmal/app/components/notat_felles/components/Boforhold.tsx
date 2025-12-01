@@ -11,7 +11,7 @@ import tekster from "~/tekster";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import Sivilstand from "~/components/notat_felles/components/Sivilstand";
 import { CommonTable } from "~/components/CommonTable";
-import { formatPeriode } from "~/utils/date-utils";
+import { formatPeriode, sortByAge } from "~/utils/date-utils";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { VedleggProps } from "~/types/commonTypes";
 
@@ -27,9 +27,11 @@ export default function Boforhold({ vedleggNummer = 1 }: VedleggProps) {
         </a>
       </div>
       <>
-        {data.boforhold.barn.map((b, i) => (
-          <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />
-        ))}
+        {data.boforhold.barn
+          .sort((a, b) => sortByAge(a.gjelder, b.gjelder))
+          .map((b, i) => (
+            <BoforholdHusstandsmedlem key={b.gjelder + i.toString()} data={b} />
+          ))}
         {data.type === NotatMalType.FORSKUDD && <Sivilstand />}
         {data.type !== NotatMalType.FORSKUDD && (
           <BoforholdAndreVoksneIHusstanden
@@ -100,7 +102,9 @@ function BoforholdHusstandsmedlem({ data }: { data: BoforholdBarn }) {
           [
             {
               label: data.medIBehandling
-                ? tekster.titler.boforhold.søknadsbarn
+                ? data.gjelder.revurdering
+                  ? tekster.titler.boforhold.revurderingsbarn
+                  : tekster.titler.boforhold.søknadsbarn
                 : tekster.titler.boforhold.egetBarnIHusstanden,
               labelBold: true,
               value: (

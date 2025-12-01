@@ -1,8 +1,8 @@
 import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import tekster from "~/tekster";
 import {
-  NotatDelberegningBidragsevneDto,
-  NotatResultatBeregningInntekterDto,
+  DokumentmalDelberegningBidragsevneDto,
+  DokumentmalResultatBeregningInntekterDto,
 } from "~/types/Api";
 import { CommonTable } from "~/components/CommonTable";
 import {
@@ -15,8 +15,8 @@ export const BPsEvneTable = ({
   delberegningBidragsevne,
   inntekter,
 }: {
-  delberegningBidragsevne: NotatDelberegningBidragsevneDto;
-  inntekter: NotatResultatBeregningInntekterDto;
+  delberegningBidragsevne: DokumentmalDelberegningBidragsevneDto;
+  inntekter: DokumentmalResultatBeregningInntekterDto;
 }) => {
   return (
     <>

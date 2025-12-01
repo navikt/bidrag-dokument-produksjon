@@ -1,4 +1,4 @@
-import { Rolletype, SoktAvType } from "~/types/Api";
+import { Rolletype, SoktAvType, DokumentmalPersonDto } from "~/types/Api";
 import { konverterRolletype } from "~/utils/converter-utils";
 import { localeMap, SpråkType } from "./oversettelser";
 
@@ -22,6 +22,23 @@ export function søktAvTilVisningsnavn(søktAv?: SoktAvType) {
       return capitalizeFirstLetter(søktAv);
   }
 }
+export const rolleTilVisningsnavnV2 = (rolle: DokumentmalPersonDto): string => {
+  switch (konverterRolletype(rolle.rolle)) {
+    case Rolletype.BM:
+      return "Bidragsmottaker";
+    case Rolletype.BP:
+      return "Bidragspliktig";
+    case Rolletype.BA:
+      if (rolle.revurdering) {
+        return "Revurderingsbarn";
+      } else {
+        return "Søknadsbarn";
+      }
+    default:
+      return capitalizeFirstLetter(rolle.rolle) ?? "";
+  }
+};
+
 export const rolleTilVisningsnavn = (rolle: Rolletype): string => {
   switch (konverterRolletype(rolle)) {
     case Rolletype.BM:
