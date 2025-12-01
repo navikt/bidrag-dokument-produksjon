@@ -16,6 +16,8 @@ export default function HeaderFooter({
   saker?: string[];
 }) {
   const flereSaker = saker && saker.length > 1;
+  const enesteSaksnummer =
+    saksnummer ?? (saker && saker.length > 0 ? saker[0] : "Ukjent");
   const renderHeaderFooterV2 = (isHeader: boolean) => (
     <>
       <div id={isHeader ? "header" : "footer"}>
@@ -34,7 +36,7 @@ export default function HeaderFooter({
         >
           {flereSaker
             ? `Saker ${saker.join(", ")}`
-            : `Saksnummer ${saksnummer}`}
+            : `Saksnummer ${enesteSaksnummer}`}
         </span>
         <span
           style={{
