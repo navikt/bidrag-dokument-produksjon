@@ -8,11 +8,13 @@ import {
   useDokumentFelles,
 } from "~/components/vedtak_felles/FellesContext";
 import { isNullOrEmpty } from "~/utils/string-utils";
-import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 
-export default function Soknaddetaljer() {
+export default function Soknaddetaljer({
+  gjelderFlereSaker,
+}: {
+  gjelderFlereSaker: boolean;
+}) {
   const { roller, saksnummer, typeInnhold } = useDokumentFelles();
-  const { gjelderFlereSaker } = useNotatFelles();
   const rollerIkkeBarn = roller.filter(
     (rolle) => !sammenlignRoller(rolle.rolle, Rolletype.BA),
   );

@@ -40,7 +40,7 @@ export default function ForsideOrkestrertBidragsvedtak() {
         />
         <div className={"container page"}>
           <BrevAdresseKontaktinfo />
-          <Soknaddetaljer />
+          <Soknaddetaljer gjelderFlereSaker={false} />
           <div className={"mb-4"}>
             <h4>Informasjon om klage</h4>
             <p>

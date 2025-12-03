@@ -50,7 +50,7 @@ export default function NotatForskudd() {
           renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
         />
         <div className={"container page"}>
-          <Soknaddetaljer />
+          <Soknaddetaljer gjelderFlereSaker={false} />
           <NotatTittel title={tekster.titler.forskudd} />
           <Virkningstidspunkt />
           <Boforhold vedleggNummer={1} />

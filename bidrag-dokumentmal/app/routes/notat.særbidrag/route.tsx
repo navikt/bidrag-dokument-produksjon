@@ -51,7 +51,7 @@ export default function NotatSærbidrag() {
           renderMode={response.renderForPdf ? RenderMode.PDF : RenderMode.HTML}
         />
         <div className={"container page"}>
-          <Soknaddetaljer />
+          <Soknaddetaljer gjelderFlereSaker={false} />
           <NotatTittel title={tekster.titler.særbidrag} />
           <Utgifter />
           <Inntekter vedleggNummer={1} />

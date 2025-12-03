@@ -51,6 +51,12 @@ export default function NotatBidrag() {
       .filter((p) => p != undefined),
   );
   const renderMode = response.renderForPdf ? RenderMode.PDF : RenderMode.HTML;
+  const gjelderFlereSaker =
+    new Set(
+      response.data.roller
+        .filter((b) => b.saksnummer !== undefined)
+        .map((b) => b.saksnummer),
+    ).size > 1;
   return (
     <div id="bidrag_notat">
       <NotatProvider
@@ -61,7 +67,7 @@ export default function NotatBidrag() {
       >
         <HeaderFooter saker={Array.from(saker)} renderMode={renderMode} />
         <div className={"container page"}>
-          <Soknaddetaljer />
+          <Soknaddetaljer gjelderFlereSaker={gjelderFlereSaker} />
           <NotatTittel title={tekster.titler.bidrag} />
           <Virkningstidspunkt />
           {data.behandling.vedtakstype === Vedtakstype.INNKREVING
