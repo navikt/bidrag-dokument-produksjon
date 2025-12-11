@@ -301,8 +301,8 @@ export interface DokumentmalResultatBeregningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  totalEndeligInntekt: number;
   inntektBarnMånedlig?: number;
+  totalEndeligInntekt: number;
   inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
 }
@@ -331,6 +331,7 @@ export type DokumentmalResultatBidragsberegningBarnDto = UtilRequiredKeys<Vedtak
     monthValue?: number;
     leapYear?: boolean;
   };
+  erAvvistRevurdering: boolean;
   minstEnPeriodeHarSlåttUtTilFF: boolean;
   perioderSlåttUtTilFF: PeriodeSlattUtTilFF[];
   orkestrertVedtak?: EndeligOrkestrertVedtak;
@@ -342,10 +343,10 @@ export interface DokumentmalSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattAlminneligInntektMånedsbeløp: number;
-  skattMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
+  skattMånedsbeløp: number;
 }
 
 export interface DokumentmalSluttberegningBarnebidragDetaljer {
@@ -580,11 +581,11 @@ export interface NotatBehandlingDetaljerDto {
   avslag?: Resultatkode;
   /** @format date */
   klageMottattDato?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
-  erAvvisning: boolean;
-  avslagVisningsnavn?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
+  avslagVisningsnavn?: string;
+  erAvvisning: boolean;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -648,8 +649,8 @@ export interface NotatGebyrDetaljerDto {
   beløpGebyrsats: number;
   /** @deprecated */
   rolle: DokumentmalPersonDto;
-  erManueltOverstyrt: boolean;
   gebyrResultatVisningsnavn: string;
+  erManueltOverstyrt: boolean;
 }
 
 export interface NotatGebyrInntektDto {
@@ -693,9 +694,9 @@ export interface NotatInntektDto {
   gjelderBarn?: DokumentmalPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
+  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
-  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -806,8 +807,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
   bpHarEvne: boolean;
-  beløpSomInnkreves: number;
   resultatVisningsnavn: string;
+  beløpSomInnkreves: number;
 };
 
 export interface NotatSamvaerDto {
@@ -1611,9 +1612,9 @@ export interface DokumentBestilling {
   datoSakOpprettet?: string;
   spraak?: string;
   roller: {
+    barn: Barn[];
     bidragsmottaker?: PartInfo;
     bidragspliktig?: PartInfo;
-    barn: Barn[];
     isEmpty: boolean;
     /** @format int32 */
     size: number;
@@ -1791,10 +1792,10 @@ export interface Skatt {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattAlminneligInntektMånedsbeløp: number;
-  skattMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
+  skattMånedsbeløp: number;
 }
 
 export interface SaerbidragBeregning {

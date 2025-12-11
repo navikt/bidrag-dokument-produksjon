@@ -69,7 +69,7 @@ function VirkningstidspunktPerBarn() {
                       value: søktAvTilVisningsnavn(behandling.søktAv),
                     },
                     ...[
-                      behandling.avslag
+                      barn.avslag
                         ? {
                             label: "Avslag",
                             value: barn.avslagVisningsnavn,
