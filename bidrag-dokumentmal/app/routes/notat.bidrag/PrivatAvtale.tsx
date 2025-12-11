@@ -15,9 +15,9 @@ import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { formatterBeløp, formatterProsent } from "~/utils/visningsnavn";
 
 export default function PrivatAvtale() {
-  const { data } = useNotatFelles();
+  const { data, erAvslag } = useNotatFelles();
   const privatAvtale = data.privatavtale;
-  if (privatAvtale.length == 0) return null;
+  if (privatAvtale.length == 0 || erAvslag) return null;
   return (
     <div>
       <div className={"elements_inline section-title"}>
