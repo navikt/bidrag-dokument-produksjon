@@ -68,6 +68,17 @@ function VirkningstidspunktPerBarn() {
                       label: "Søknad fra",
                       value: søktAvTilVisningsnavn(behandling.søktAv),
                     },
+                    ...[
+                      behandling.avslag
+                        ? {
+                            label: "Avslag",
+                            value: barn.avslagVisningsnavn,
+                          }
+                        : {
+                            label: "Årsak",
+                            value: barn.årsakVisningsnavn,
+                          },
+                    ],
                   ]}
                 />
                 <DataViewTable
