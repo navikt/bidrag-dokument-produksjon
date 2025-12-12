@@ -33,7 +33,9 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
         <tbody>
           {data.map((row, rowIndex) => (
             <>
-              <tr key={rowIndex + "-" + row.value}>
+              <tr
+                key={rowIndex + "-" + row.value + "-" + title + "-" + row.label}
+              >
                 {row.label && (
                   <td
                     style={{
