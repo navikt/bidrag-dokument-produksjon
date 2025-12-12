@@ -62,10 +62,6 @@ export function NotatProvider({
   };
 
   function erDirekteAvslagForBarn(barnIdent: string): boolean {
-    console.log(
-      barnIdent,
-      data.virkningstidspunktV2.barn.find((b) => barnIdent === b.rolle.ident),
-    );
     return (
       data.virkningstidspunktV2.barn.find((b) => barnIdent === b.rolle.ident)
         ?.avslag != null

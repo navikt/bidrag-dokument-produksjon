@@ -6,8 +6,8 @@ export function sortByAge(
   rolleB: DokumentmalPersonDto,
 ) {
   return (
-    (dateOrNull(rolleB.fødselsdato)?.getTime() ?? 1) -
-    (dateOrNull(rolleA.fødselsdato)?.getTime() ?? 1)
+    (dateOrNull(rolleA.fødselsdato)?.getTime() ?? 1) -
+    (dateOrNull(rolleB.fødselsdato)?.getTime() ?? 1)
   );
 }
 export const dateOrNull = (dateString?: string | null): Date | null =>

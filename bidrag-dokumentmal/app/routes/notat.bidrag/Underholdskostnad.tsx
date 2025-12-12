@@ -5,7 +5,10 @@ import { DataViewTable } from "~/components/DataViewTable";
 import { CommonTable } from "~/components/CommonTable";
 import { formatPeriode, dateToDDMMYYYY, sortByAge } from "~/utils/date-utils";
 import tekster from "~/tekster";
-import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
+import {
+  formatterBeløpForBeregning,
+  rolleTilVisningsnavnV2,
+} from "~/utils/visningsnavn";
 import KildeIcon from "~/components/KildeIcon";
 import elementIds from "~/utils/elementIds";
 import { VedleggProps } from "~/types/commonTypes";
@@ -82,7 +85,7 @@ function UnderholdskostnaderSøknadsbarn({
         className={"mb-2 mt-2"}
         data={[
           {
-            label: "Barn i saken",
+            label: rolleTilVisningsnavnV2(data.gjelderBarn),
             labelBold: true,
             value: data.gjelderBarn.navn,
           },

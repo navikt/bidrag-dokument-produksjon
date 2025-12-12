@@ -78,8 +78,12 @@ function VedleggBeregningsDetaljerEndeligVedtakInnhold() {
         d.vedtakstype == Vedtakstype.ALDERSJUSTERING,
     ),
   );
-  if (perioder.every((p) => p?.length === 0))
+
+  if (
+    perioder.every((p) => p?.filter((pd) => !pd.erDirekteAvslag)?.length === 0)
+  ) {
     return <div>Ingen beregningsdetaljer å vise</div>;
+  }
 
   return (
     <>
@@ -99,7 +103,7 @@ function VedleggBeregningsDetaljerEndeligVedtakInnhold() {
                 ]}
               />
               {resultat.orkestrertVedtak?.perioder.length === 0 ? (
-                <div>resultat.orkestrertVedtak?.perioder</div>
+                <div>Ingen beregningsdetaljer å vise</div>
               ) : (
                 resultat.orkestrertVedtak?.perioder
                   .filter(
@@ -201,107 +205,121 @@ function VedleggBeregningsDetaljerInnhold() {
         </div>
       )}
       {resultatPerioder?.map(
-        (resultat: DokumentmalResultatBidragsberegningBarnDto) => (
-          <>
-            <DataViewTable
-              data={[
-                {
-                  label: rolleTilVisningsnavnV2(resultat.barn),
-                  labelBold: true,
-                  value: resultat.barn.navn,
-                },
-              ]}
-            />
-            {resultat.perioder.length === 0 ? (
-              <div>Ingen beregningsdetaljer å vise</div>
-            ) : (
-              resultat.perioder
-                .filter(
-                  (d) =>
-                    d.beregningsdetaljer?.sluttberegning &&
-                    !d.beregningsdetaljer.sluttberegning!
-                      .barnetErSelvforsørget &&
-                    !d.beregningsdetaljer.sluttberegning!.ikkeOmsorgForBarnet,
-                )
-                .map((periode) => {
-                  const detaljer = periode.beregningsdetaljer!;
-                  return (
-                    <>
-                      <BidragBeregningContext.Provider
-                        value={{
-                          ...detaljer,
-                          periode,
-                          endeligBeløp: periode.faktiskBidrag,
-                          erEndringUnderGrense:
-                            periode.resultatKode ===
-                            Resultatkode.INGEN_ENDRING_UNDER_GRENSE,
-                        }}
-                      >
-                        <>
-                          <div className={"pb-2"}>
-                            <DataViewTable
-                              className={"mb-2"}
-                              data={[
-                                {
-                                  label: "Periode",
-                                  labelBold: true,
-                                  value: formatPeriode(
-                                    periode.periode.fom,
-                                    deductDays(periode.periode!.til, 1),
-                                  ),
-                                },
-                              ]}
-                            />
-                            <BPAndelUnderholdskostnad />
-                          </div>
-                          {!detaljer.deltBosted && (
-                            <>
-                              <Samværsfradrag />
-                              <div className={"pt-2 pb-2"} />
-                            </>
-                          )}
-                          {!detaljer.deltBosted &&
-                            detaljer.barnetilleggBM &&
-                            detaljer.barnetilleggBM.barnetillegg.length > 0 && (
+        (resultat: DokumentmalResultatBidragsberegningBarnDto) => {
+          const perioderUtenAvslag = resultat.perioder.filter(
+            (p) => !p.erDirekteAvslag,
+          );
+          return (
+            <>
+              <DataViewTable
+                data={[
+                  {
+                    label: rolleTilVisningsnavnV2(resultat.barn),
+                    labelBold: true,
+                    value: resultat.barn.navn,
+                  },
+                ]}
+              />
+              {perioderUtenAvslag.length === 0 ? (
+                <div>Ingen beregningsdetaljer å vise</div>
+              ) : (
+                perioderUtenAvslag
+                  .filter(
+                    (d) =>
+                      d.beregningsdetaljer?.sluttberegning &&
+                      !d.beregningsdetaljer.sluttberegning!
+                        .barnetErSelvforsørget &&
+                      !d.beregningsdetaljer.sluttberegning!.ikkeOmsorgForBarnet,
+                  )
+                  .map((periode) => {
+                    const detaljer = periode.beregningsdetaljer!;
+                    return (
+                      <>
+                        <BidragBeregningContext.Provider
+                          value={{
+                            ...detaljer,
+                            periode,
+                            endeligBeløp: periode.faktiskBidrag,
+                            erEndringUnderGrense:
+                              periode.resultatKode ===
+                              Resultatkode.INGEN_ENDRING_UNDER_GRENSE,
+                          }}
+                        >
+                          <>
+                            <div className={"pb-2"}>
+                              <DataViewTable
+                                className={"mb-2"}
+                                data={[
+                                  {
+                                    label: "Periode",
+                                    labelBold: true,
+                                    value: formatPeriode(
+                                      periode.periode.fom,
+                                      deductDays(periode.periode!.til, 1),
+                                    ),
+                                  },
+                                ]}
+                              />
+                              <BPAndelUnderholdskostnad />
+                            </div>
+                            {!detaljer.deltBosted && (
                               <>
-                                <BarnetilleggSkattesats rolle={Rolletype.BM} />
-                                <NettoBarnetilleggTable rolle={Rolletype.BM} />
+                                <Samværsfradrag />
                                 <div className={"pt-2 pb-2"} />
                               </>
                             )}
-                          <div className={"pt-2 pb-2"}>
-                            <BPsEvneTable
-                              inntekter={detaljer!.inntekter!}
-                              delberegningBidragsevne={
-                                detaljer!.delberegningBidragsevne!
-                              }
-                            />
-                            <BeregningFordeltBidragEvne />
-                            <BeregningForholdsmessigFordeling />
-                          </div>
+                            {!detaljer.deltBosted &&
+                              detaljer.barnetilleggBM &&
+                              detaljer.barnetilleggBM.barnetillegg.length >
+                                0 && (
+                                <>
+                                  <BarnetilleggSkattesats
+                                    rolle={Rolletype.BM}
+                                  />
+                                  <NettoBarnetilleggTable
+                                    rolle={Rolletype.BM}
+                                  />
+                                  <div className={"pt-2 pb-2"} />
+                                </>
+                              )}
+                            <div className={"pt-2 pb-2"}>
+                              <BPsEvneTable
+                                inntekter={detaljer!.inntekter!}
+                                delberegningBidragsevne={
+                                  detaljer!.delberegningBidragsevne!
+                                }
+                              />
+                              <BeregningFordeltBidragEvne />
+                              <BeregningForholdsmessigFordeling />
+                            </div>
 
-                          <BeregningBegrensetRevurdering />
-                          {!detaljer.deltBosted &&
-                            detaljer.barnetilleggBP?.barnetillegg &&
-                            detaljer.barnetilleggBP?.barnetillegg?.length >
-                              0 && (
-                              <>
-                                <BarnetilleggSkattesats rolle={Rolletype.BP} />
-                                <NettoBarnetilleggTable rolle={Rolletype.BP} />
-                                <div className={"pt-2 pb-2"} />
-                              </>
-                            )}
-                          <EndeligBidragTable />
-                          <EndringUnderGrense />
-                        </>
-                      </BidragBeregningContext.Provider>
-                      <HorizontalLine />
-                    </>
-                  );
-                })
-            )}
-          </>
-        ),
+                            <BeregningBegrensetRevurdering />
+                            {!detaljer.deltBosted &&
+                              detaljer.barnetilleggBP?.barnetillegg &&
+                              detaljer.barnetilleggBP?.barnetillegg?.length >
+                                0 && (
+                                <>
+                                  <BarnetilleggSkattesats
+                                    rolle={Rolletype.BP}
+                                  />
+                                  <NettoBarnetilleggTable
+                                    rolle={Rolletype.BP}
+                                  />
+                                  <div className={"pt-2 pb-2"} />
+                                </>
+                              )}
+                            <EndeligBidragTable />
+                            <EndringUnderGrense />
+                          </>
+                        </BidragBeregningContext.Provider>
+                        <HorizontalLine />
+                      </>
+                    );
+                  })
+              )}
+            </>
+          );
+        },
       )}
     </>
   );

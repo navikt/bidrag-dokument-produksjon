@@ -12,7 +12,11 @@ import tekster from "~/tekster";
 import { dateToDDMMYYYY, formatPeriode } from "~/utils/date-utils";
 import { DataViewTable } from "~/components/DataViewTable";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
-import { formatterBeløp, formatterProsent } from "~/utils/visningsnavn";
+import {
+  formatterBeløp,
+  formatterProsent,
+  rolleTilVisningsnavnV2,
+} from "~/utils/visningsnavn";
 
 export default function PrivatAvtale() {
   const { data, erAvslag } = useNotatFelles();
@@ -53,7 +57,7 @@ function PrivatAvtaleBarn({
         gap={"5px"}
         data={[
           {
-            label: "Barn i saken",
+            label: rolleTilVisningsnavnV2(data.gjelderBarn),
             labelBold: true,
             value: data.gjelderBarn.navn,
           },

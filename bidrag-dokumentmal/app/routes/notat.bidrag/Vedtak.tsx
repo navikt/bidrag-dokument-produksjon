@@ -164,7 +164,6 @@ function ResultatTable({
     rows: TableRow[];
   };
 }) {
-  console.log(resultat);
   if (resultat.erAvvistRevurdering) {
     return (
       <div>

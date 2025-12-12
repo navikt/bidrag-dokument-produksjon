@@ -5,6 +5,7 @@ import { NotatSamvaerDto, NotatSamvaersperiodeDto } from "~/types/Api";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import { formatPeriode } from "~/utils/date-utils";
 import { VedleggProps } from "~/types/commonTypes";
+import { rolleTilVisningsnavnV2 } from "~/utils/visningsnavn";
 
 export default function VedleggSamvær({ vedleggNummer }: VedleggProps) {
   const { data, erAvslag } = useNotatFelles();
@@ -38,7 +39,7 @@ function SamværsberegningDetaljerBarn({
         data={
           [
             {
-              label: "Barn i saken",
+              label: rolleTilVisningsnavnV2(samværBarn.gjelderBarn),
               labelBold: true,
               value: samværBarn.gjelderBarn.navn,
             },
