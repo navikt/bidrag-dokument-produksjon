@@ -301,10 +301,10 @@ export interface DokumentmalResultatBeregningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  inntektBMMånedlig?: number;
-  inntektBPMånedlig?: number;
-  totalEndeligInntekt: number;
   inntektBarnMånedlig?: number;
+  totalEndeligInntekt: number;
+  inntektBPMånedlig?: number;
+  inntektBMMånedlig?: number;
 }
 
 export type DokumentmalResultatBidragsberegningBarnDto = UtilRequiredKeys<VedtakResultatInnhold, "type"> & {
@@ -344,10 +344,10 @@ export interface DokumentmalSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
+  skattMånedsbeløp: number;
 }
 
 export interface DokumentmalSluttberegningBarnebidragDetaljer {
@@ -590,11 +590,11 @@ export interface NotatBehandlingDetaljerDto {
    * @deprecated
    */
   avslag?: Resultatkode;
-  avslagVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
-  erAvvisning: boolean;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
+  erAvvisning: boolean;
+  avslagVisningsnavnUtenPrefiks?: string;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -658,8 +658,8 @@ export interface NotatGebyrDetaljerDto {
   beløpGebyrsats: number;
   /** @deprecated */
   rolle: DokumentmalPersonDto;
-  erManueltOverstyrt: boolean;
   gebyrResultatVisningsnavn: string;
+  erManueltOverstyrt: boolean;
 }
 
 export interface NotatGebyrInntektDto {
@@ -703,9 +703,9 @@ export interface NotatInntektDto {
   gjelderBarn?: DokumentmalPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
-  visningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
+  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -816,15 +816,20 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
   bpHarEvne: boolean;
-  beløpSomInnkreves: number;
   resultatVisningsnavn: string;
+  beløpSomInnkreves: number;
 };
 
-export interface NotatSamvaerDto {
+export interface NotatSamvaerBarnDto {
   gjelderBarn: DokumentmalPersonDto;
   /** Notat begrunnelse skrevet av saksbehandler */
   begrunnelse?: NotatBegrunnelseDto;
   perioder: NotatSamvaersperiodeDto[];
+}
+
+export interface NotatSamvaerDto {
+  erSammeForAlle: boolean;
+  barn: NotatSamvaerBarnDto[];
 }
 
 export interface NotatSamvaersperiodeDto {
@@ -991,7 +996,7 @@ export interface NotatVedtakDetaljerDto {
 
 export interface NotatVirkningstidspunktBarnDto {
   rolle: DokumentmalPersonDto;
-  behandlingstype?: string;
+  behandlingstype?: Behandlingstype;
   /**
    * Bruk behandlingstype
    * @deprecated
@@ -1086,10 +1091,11 @@ export interface NotatVirkningstidspunktBarnDto {
    * @deprecated
    */
   notat: NotatBegrunnelseDto;
-  avslagVisningsnavn?: string;
+  erAvvisning: boolean;
+  behandlingstypeVisningsnavn?: string;
   årsakVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
-  erAvvisning: boolean;
+  avslagVisningsnavn?: string;
 }
 
 export interface NotatVirkningstidspunktDto {
@@ -1466,7 +1472,8 @@ export interface VedtakNotatDto {
   virkningstidspunkt: NotatVirkningstidspunktDto;
   utgift?: NotatSaerbidragUtgifterDto;
   boforhold: NotatBoforholdDto;
-  samvær: NotatSamvaerDto[];
+  samvær: NotatSamvaerBarnDto[];
+  samværV2?: NotatSamvaerDto;
   gebyr?: NotatGebyrDetaljerDto[];
   gebyrV2?: NotatGebyrV2Dto;
   underholdskostnader?: NotatUnderholdDto;
@@ -1650,9 +1657,9 @@ export interface DokumentBestilling {
   datoSakOpprettet?: string;
   spraak?: string;
   roller: {
-    bidragspliktig?: PartInfo;
-    bidragsmottaker?: PartInfo;
     barn: Barn[];
+    bidragsmottaker?: PartInfo;
+    bidragspliktig?: PartInfo;
     isEmpty: boolean;
     /** @format int32 */
     size: number;
@@ -1830,10 +1837,10 @@ export interface Skatt {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  skattMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
+  skattMånedsbeløp: number;
 }
 
 export interface SaerbidragBeregning {
