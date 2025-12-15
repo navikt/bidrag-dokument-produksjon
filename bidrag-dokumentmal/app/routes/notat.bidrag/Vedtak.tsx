@@ -128,7 +128,7 @@ function VedtakTableAvslag({
 }: {
   data: DokumentmalResultatBidragsberegningBarnDto[];
 }) {
-  const { erOpphør, erAvvisning } = useNotatFelles();
+  const { erOpphør } = useNotatFelles();
 
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (

@@ -301,9 +301,9 @@ export interface DokumentmalResultatBeregningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  totalEndeligInntekt: number;
-  inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
+  inntektBPMånedlig?: number;
+  totalEndeligInntekt: number;
   inntektBarnMånedlig?: number;
 }
 
@@ -345,9 +345,9 @@ export interface DokumentmalSkattBeregning {
   trinnskatt: number;
   trygdeavgift: number;
   skattMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface DokumentmalSluttberegningBarnebidragDetaljer {
@@ -550,7 +550,8 @@ export interface NotatBegrunnelseDto {
 }
 
 export interface NotatBehandlingDetaljerDto {
-  søknadstype?: string;
+  /** @format date */
+  klageMottattDato?: string;
   vedtakstype?: Vedtakstype;
   opprinneligVedtakstype?: Vedtakstype;
   kategori?: NotatSaerbidragKategoriDto;
@@ -577,14 +578,21 @@ export interface NotatBehandlingDetaljerDto {
     monthValue?: number;
     leapYear?: boolean;
   };
-  /** @format date */
+  søknadstype?: string;
+  /**
+   * Hent informasjon fra virkningstidspunkt
+   * @deprecated
+   * @format date
+   */
   virkningstidspunkt?: string;
+  /**
+   * Hent informasjon fra virkningstidspunkt
+   * @deprecated
+   */
   avslag?: Resultatkode;
-  /** @format date */
-  klageMottattDato?: string;
-  erAvvisning: boolean;
   avslagVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
+  erAvvisning: boolean;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
 }
@@ -676,8 +684,8 @@ export interface NotatGebyrSoknadDetaljerDto {
   søktAvType: SoktAvType;
   behandlingstype?: Behandlingstype;
   behandlingstema?: Behandlingstema;
-  søktAvTypeVisningsnavn?: string;
   behandlingstypeVisningsnavn?: string;
+  søktAvTypeVisningsnavn?: string;
   behandlingstemaVisningsnavn?: string;
 }
 
@@ -983,6 +991,11 @@ export interface NotatVedtakDetaljerDto {
 
 export interface NotatVirkningstidspunktBarnDto {
   rolle: DokumentmalPersonDto;
+  behandlingstype?: string;
+  /**
+   * Bruk behandlingstype
+   * @deprecated
+   */
   søknadstype?: string;
   vedtakstype?: Vedtakstype;
   søktAv?: SoktAvType;
@@ -1075,10 +1088,35 @@ export interface NotatVirkningstidspunktBarnDto {
   notat: NotatBegrunnelseDto;
   avslagVisningsnavn?: string;
   årsakVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
+  erAvvisning: boolean;
 }
 
 export interface NotatVirkningstidspunktDto {
+  /** Hvis det er likt for alle bruk avslag/årsak fra ett av barna */
   erLikForAlle: boolean;
+  erVirkningstidspunktLikForAlle: boolean;
+  erAvslagForAlle: boolean;
+  eldsteVirkningstidspunkt: {
+    /** @format int32 */
+    year?: number;
+    month?:
+      | "JANUARY"
+      | "FEBRUARY"
+      | "MARCH"
+      | "APRIL"
+      | "MAY"
+      | "JUNE"
+      | "JULY"
+      | "AUGUST"
+      | "SEPTEMBER"
+      | "OCTOBER"
+      | "NOVEMBER"
+      | "DECEMBER";
+    /** @format int32 */
+    monthValue?: number;
+    leapYear?: boolean;
+  };
   barn: NotatVirkningstidspunktBarnDto[];
 }
 
@@ -1426,7 +1464,6 @@ export interface VedtakNotatDto {
   behandling: NotatBehandlingDetaljerDto;
   saksbehandlerNavn?: string;
   virkningstidspunkt: NotatVirkningstidspunktDto;
-  virkningstidspunktV2: NotatVirkningstidspunktDto;
   utgift?: NotatSaerbidragUtgifterDto;
   boforhold: NotatBoforholdDto;
   samvær: NotatSamvaerDto[];
@@ -1613,9 +1650,9 @@ export interface DokumentBestilling {
   datoSakOpprettet?: string;
   spraak?: string;
   roller: {
-    barn: Barn[];
-    bidragsmottaker?: PartInfo;
     bidragspliktig?: PartInfo;
+    bidragsmottaker?: PartInfo;
+    barn: Barn[];
     isEmpty: boolean;
     /** @format int32 */
     size: number;
@@ -1794,9 +1831,9 @@ export interface Skatt {
   trinnskatt: number;
   trygdeavgift: number;
   skattMånedsbeløp: number;
+  skattAlminneligInntektMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattAlminneligInntektMånedsbeløp: number;
 }
 
 export interface SaerbidragBeregning {

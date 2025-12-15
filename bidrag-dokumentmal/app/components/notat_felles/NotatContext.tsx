@@ -63,7 +63,7 @@ export function NotatProvider({
 
   function erDirekteAvslagForBarn(barnIdent: string): boolean {
     return (
-      data.virkningstidspunktV2.barn.find((b) => barnIdent === b.rolle.ident)
+      data.virkningstidspunkt.barn.find((b) => barnIdent === b.rolle.ident)
         ?.avslag != null
     );
   }
@@ -89,7 +89,7 @@ export function NotatProvider({
             søknadsbarn: dataCorrected.roller.filter(erRolle(Rolletype.BA)),
             harFlereEnnEttSøknadsbarn:
               dataCorrected.roller.filter(erRolle(Rolletype.BA)).length > 1,
-            erAvslag: dataCorrected.behandling.avslag != null,
+            erAvslag: dataCorrected.virkningstidspunkt.erAvslagForAlle,
             erAvvisning: dataCorrected.behandling.erAvvisning,
             erOpphør:
               dataCorrected.behandling.vedtakstype == Vedtakstype.OPPHOR,
