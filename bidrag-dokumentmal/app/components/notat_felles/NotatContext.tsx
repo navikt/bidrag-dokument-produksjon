@@ -23,6 +23,7 @@ interface INotatContext {
   erAvslag: boolean;
   erOpphør: boolean;
   harFlereEnnEttSøknadsbarn: boolean;
+  erDirekteAvslagForBarn: (barnIdent: string) => boolean;
   erInnkrevingsgrunnlag: boolean;
   gjelderFlereSaker: boolean;
   bidragsmottaker: DokumentmalPersonDto;
@@ -59,12 +60,20 @@ export function NotatProvider({
       rolle: konverterRolletype(d.rolle),
     })),
   };
+
+  function erDirekteAvslagForBarn(barnIdent: string): boolean {
+    return (
+      data.virkningstidspunkt.barn.find((b) => barnIdent === b.rolle.ident)
+        ?.avslag != null
+    );
+  }
   return (
     <ThemeProvider styling={styling}>
       <DokumentFellesProvider styling={styling} notat={data}>
         <NotatContext.Provider
           value={{
             renderMode,
+            erDirekteAvslagForBarn,
             renderPDFVersion,
             data: dataCorrected,
             type: dataCorrected.type,
@@ -80,7 +89,7 @@ export function NotatProvider({
             søknadsbarn: dataCorrected.roller.filter(erRolle(Rolletype.BA)),
             harFlereEnnEttSøknadsbarn:
               dataCorrected.roller.filter(erRolle(Rolletype.BA)).length > 1,
-            erAvslag: dataCorrected.behandling.avslag != null,
+            erAvslag: dataCorrected.virkningstidspunkt.erAvslagForAlle,
             erAvvisning: dataCorrected.behandling.erAvvisning,
             erOpphør:
               dataCorrected.behandling.vedtakstype == Vedtakstype.OPPHOR,

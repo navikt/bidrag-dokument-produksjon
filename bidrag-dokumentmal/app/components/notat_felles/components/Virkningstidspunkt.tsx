@@ -16,7 +16,7 @@ import {
 
 export default function Virkningstidspunkt() {
   const { data } = useNotatFelles();
-  const virkningstidspunkt = data.virkningstidspunktV2;
+  const virkningstidspunkt = data.virkningstidspunkt;
   return (
     <div className={"virkningstidspunkt"}>
       <h2>Virkningstidspunkt</h2>
@@ -32,10 +32,9 @@ export default function Virkningstidspunkt() {
 function VirkningstidspunktPerBarn() {
   const { data, gjelderFlereSaker } = useNotatFelles();
   const { typeInnhold } = useDokumentFelles();
-  const behandling = data.behandling;
   return (
     <div className={"flex flex-col gap-2"}>
-      {data.virkningstidspunktV2.barn
+      {data.virkningstidspunkt.barn
         .sort((a, b) => sortByAge(a.rolle, b.rolle))
         .map((barn) => {
           return (
@@ -62,12 +61,23 @@ function VirkningstidspunktPerBarn() {
                     }) as unknown as DataViewTableData,
                     {
                       label: "Søknadstype",
-                      value: capitalizeFirstLetter(behandling.søknadstype),
+                      value: barn.behandlingstypeVisningsnavn,
                     },
                     {
                       label: "Søknad fra",
-                      value: søktAvTilVisningsnavn(behandling.søktAv),
+                      value: søktAvTilVisningsnavn(barn.søktAv),
                     },
+                    ...[
+                      barn.avslag
+                        ? {
+                            label: "Avslag",
+                            value: barn.avslagVisningsnavn,
+                          }
+                        : {
+                            label: "Årsak",
+                            value: barn.årsakVisningsnavn,
+                          },
+                    ],
                   ]}
                 />
                 <DataViewTable
@@ -76,11 +86,11 @@ function VirkningstidspunktPerBarn() {
                   data={[
                     {
                       label: "Mottatt dato",
-                      value: dateToDDMMYYYY(behandling.mottattDato as string),
+                      value: dateToDDMMYYYY(barn.mottattDato as string),
                     },
                     {
                       label: "Søkt fra dato",
-                      value: dateToDDMMYYYY(behandling.søktFraDato as string),
+                      value: dateToDDMMYYYY(barn.søktFraDato as string),
                     },
                   ]}
                 />
@@ -95,16 +105,18 @@ function VirkningstidspunktPerBarn() {
                     },
                   ]}
                 />
-                <DataViewTable
-                  key={barn.rolle.ident}
-                  labelColWidth={"100px"}
-                  data={[
-                    {
-                      label: "Opphørsdato",
-                      value: dateToDDMMYYYY(barn.opphørsdato as string),
-                    },
-                  ]}
-                />
+                {barn.opphørsdato && (
+                  <DataViewTable
+                    key={barn.rolle.ident}
+                    labelColWidth={"100px"}
+                    data={[
+                      {
+                        label: "Opphørsdato",
+                        value: dateToDDMMYYYY(barn.opphørsdato as string),
+                      },
+                    ]}
+                  />
+                )}
                 <Beregningsperiode virkningstidspunkt={barn} />
                 <NotatBegrunnelse data={barn.begrunnelse} />
                 {data.stønadstype == Stonadstype.BIDRAG18AAR && (
@@ -123,8 +135,8 @@ function VirkningstidspunktPerBarn() {
 
 function VirkningstidspunktFelles() {
   const { data } = useNotatFelles();
-  const virkningstidspunkt = data.virkningstidspunktV2.barn[0];
-  const behandling = data.behandling;
+  const virkningstidspunkt = data.virkningstidspunkt;
+  const virkningstidspunktBarn = virkningstidspunkt.barn[0];
   return (
     <div>
       <div className={"flex flex-row justify-between w-[500px]"}>
@@ -133,21 +145,21 @@ function VirkningstidspunktFelles() {
           data={[
             {
               label: "Søknadstype",
-              value: capitalizeFirstLetter(behandling.søknadstype),
+              value: capitalizeFirstLetter(virkningstidspunktBarn.søknadstype),
             },
             {
               label: "Søknad fra",
-              value: søktAvTilVisningsnavn(behandling.søktAv),
+              value: søktAvTilVisningsnavn(virkningstidspunktBarn.søktAv),
             },
             ...[
-              behandling.avslag
+              virkningstidspunkt.erAvslagForAlle
                 ? {
                     label: "Avslag",
-                    value: behandling.avslagVisningsnavn,
+                    value: virkningstidspunktBarn.avslagVisningsnavn,
                   }
                 : {
                     label: "Årsak",
-                    value: virkningstidspunkt.årsakVisningsnavn,
+                    value: virkningstidspunktBarn.årsakVisningsnavn,
                   },
             ],
           ]}
@@ -157,11 +169,15 @@ function VirkningstidspunktFelles() {
           data={[
             {
               label: "Mottatt dato",
-              value: dateToDDMMYYYY(behandling.mottattDato as string),
+              value: dateToDDMMYYYY(
+                virkningstidspunktBarn.mottattDato as string,
+              ),
             },
             {
               label: "Søkt fra dato",
-              value: dateToDDMMYYYY(behandling.søktFraDato as string),
+              value: dateToDDMMYYYY(
+                virkningstidspunktBarn.søktFraDato as string,
+              ),
             },
           ]}
         />
@@ -172,30 +188,29 @@ function VirkningstidspunktFelles() {
         data={[
           {
             label: "Virkningstidspunkt",
-            value: dateToDDMMYYYY(behandling.virkningstidspunkt),
+            value: dateToDDMMYYYY(virkningstidspunktBarn.virkningstidspunkt),
           },
         ]}
       />
-      {data.roller
-        .filter((d) => d.opphørsdato != null)
-        .map((rolle) => (
-          <DataViewTable
-            key={rolle.ident}
-            labelColWidth={"100px"}
-            data={[
-              {
-                label: "Opphørsdato",
-                value: dateToDDMMYYYY(rolle.opphørsdato),
-              },
-            ]}
-          />
-        ))}
-      <Beregningsperiode virkningstidspunkt={virkningstidspunkt} />
-      <NotatBegrunnelse data={virkningstidspunkt.begrunnelse} />
+      {virkningstidspunktBarn.opphørsdato && (
+        <DataViewTable
+          labelColWidth={"100px"}
+          data={[
+            {
+              label: "Opphørsdato",
+              value: dateToDDMMYYYY(
+                virkningstidspunktBarn.opphørsdato as string,
+              ),
+            },
+          ]}
+        />
+      )}
+      <Beregningsperiode virkningstidspunkt={virkningstidspunktBarn} />
+      <NotatBegrunnelse data={virkningstidspunktBarn.begrunnelse} />
       {data.stønadstype == Stonadstype.BIDRAG18AAR && (
         <NotatBegrunnelse
           label={"Vurdering av skolegang"}
-          data={virkningstidspunkt.begrunnelseVurderingAvSkolegang}
+          data={virkningstidspunktBarn.begrunnelseVurderingAvSkolegang}
         />
       )}
     </div>

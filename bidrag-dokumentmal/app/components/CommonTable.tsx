@@ -65,7 +65,7 @@ export function CommonTable({
           borderBottom: row.borderBottom ? "1px solid black" : undefined,
         }}
       >
-        {row.columns.map((column) => {
+        {row.columns.map((column, colIndex) => {
           return (
             <td
               className={`
@@ -82,7 +82,7 @@ export function CommonTable({
                     } ${row.periodColumn ? false : (row.zebraStripe != false && index % 2 == 1) || row.zebraStripe == true ? "bg-table-bg-even" : ""} ${row.className}`
                   : cellV2StylingOnlyBorder
               } `}
-              key={column.content?.toString()}
+              key={column.content?.toString() + colIndex.toString()}
               colSpan={column.fullSpan ? headers.length : column.colSpan}
               style={{
                 fontWeight: column.labelBold ? "bold" : "normal",

@@ -1,6 +1,7 @@
 import {
   DokumentmalResultatBidragsberegningBarnDto,
   Samvaersklasse,
+  ResultatBarnebidragsberegningPeriodeDto,
 } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
@@ -127,7 +128,7 @@ function VedtakTableAvslag({
 }: {
   data: DokumentmalResultatBidragsberegningBarnDto[];
 }) {
-  const { erOpphør, erAvvisning } = useNotatFelles();
+  const { erOpphør } = useNotatFelles();
 
   if (data.length == 0) return <div>Mangler resultat</div>;
   return (
@@ -136,29 +137,16 @@ function VedtakTableAvslag({
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
         const tableData: TableData = {
-          headers: [
-            { name: "Periode", width: "170px" },
-            { name: "Resultat", width: "150px" },
-            { name: "Årsak", width: "250px" },
-          ],
+          headers: headersAvslag(),
           rows: perioder.map((d) => ({
-            columns: [
-              { content: formatPeriode(d.periode!.fom, d.periode!.til) },
-              { content: erOpphør ? "Opphør" : "Avslag" },
-              { content: d.resultatkodeVisningsnavn },
-            ],
+            columns: contentAvslag(d, erOpphør),
           })),
         };
+        console.log("HERE");
         return (
           <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
-            {perioder.length == 0 && erAvvisning ? (
-              <div>
-                Vedtak er avslag på behandling og har derfor ingen perioder
-              </div>
-            ) : (
-              <CommonTable data={tableData} />
-            )}
+            <ResultatTable resultat={value[0]} tableData={tableData} />
           </div>
         );
       })}
@@ -166,11 +154,39 @@ function VedtakTableAvslag({
   );
 }
 
+function ResultatTable({
+  tableData,
+  resultat,
+}: {
+  resultat: DokumentmalResultatBidragsberegningBarnDto;
+  tableData: {
+    headers: TableHeader[];
+    rows: TableRow[];
+  };
+}) {
+  if (resultat.erAvvistRevurdering) {
+    return (
+      <div>
+        Ingen perioder har slått ut til FF. Det vil derfor ikke fattes noe
+        vedtak for revurderingsbarnet.
+      </div>
+    );
+  }
+  if (resultat.erAvvisning) {
+    return renderResultatAvvisning();
+  }
+  return <CommonTable data={tableData} />;
+}
+
+function renderResultatAvvisning() {
+  return <div>Vedtak er avslag på behandling og har derfor ingen perioder</div>;
+}
 function VedtakTable({
   data,
 }: {
   data: DokumentmalResultatBidragsberegningBarnDto[];
 }) {
+  const { erOpphør, erDirekteAvslagForBarn } = useNotatFelles();
   if (data.length == 0) return <div>Mangler resultat</div>;
 
   function renderAvslag(_) {
@@ -247,77 +263,95 @@ function VedtakTable({
     ];
   }
 
+  function opprettTabelldata(
+    erDirektAvslag: boolean,
+    perioder: ResultatBarnebidragsberegningPeriodeDto[],
+  ) {
+    if (erDirektAvslag) {
+      return {
+        headers: headersAvslag(),
+        rows: perioder.map((d) => ({
+          columns: contentAvslag(d, erOpphør),
+        })),
+      };
+    } else {
+      return {
+        headers: [
+          { name: "U", width: "50px" },
+          { name: "BPs andel U", width: "120px" },
+          { name: "Samvær", width: "100px" },
+          { name: "Evne / 25%", width: "100px" },
+          { name: "Beregnet bidrag", width: "80px" },
+          { name: "Endelig bidrag", width: "80px" },
+        ],
+        rows: perioder
+          .flatMap((d) => [
+            {
+              skipBorderBottom: true,
+              periodColumn: formatPeriode(
+                d.periode!.fom,
+                deductDays(d.periode!.til, 1),
+              ),
+              columns: d.beregningsdetaljer?.sluttberegning?.ikkeOmsorgForBarnet
+                ? renderAvslag(d)
+                : renderResult(d),
+            },
+            {
+              zebraStripe: false,
+              skipPadding: true,
+              columns: [
+                {
+                  colSpan: 8,
+                  content: (
+                    <DataViewTable
+                      className={"pl-0 ml-0"}
+                      data={[
+                        {
+                          label: "Resultat",
+                          labelBold: true,
+                          value: d.resultatkodeVisningsnavn,
+                        },
+                      ]}
+                    />
+                  ),
+                },
+              ],
+            },
+          ])
+          .concat([
+            // eslint-disable-next-line @typescript-eslint/ban-ts-comment
+            //@ts-ignore
+            {
+              skipBorderBottom: true,
+              zebraStripe: false,
+              skipPadding: true,
+              className: "pt-2",
+              columns: [
+                {
+                  fullSpan: true,
+                  content:
+                    "U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
+                },
+              ],
+            } as TableRow,
+          ]) as TableRow[],
+      };
+    }
+  }
+
   return (
     <>
       {groupBy(data, (d) => d.barn?.ident!)
         .sort(([d, a], [d2, b]) => sortByAge(a[0].barn, b[0].barn))
         .map(([_, value]) => {
           const gjelderBarn = value[0].barn!;
+          const erDirektAvslag = erDirekteAvslagForBarn(gjelderBarn.ident!);
           const perioder = value[0].perioder;
           const ingenFFSlåttUtForRevurderingsbarn =
-            gjelderBarn.revurdering && !value[0].minstEnPeriodeHarSlåttUtTilFF;
-          const tableData: TableData = {
-            headers: [
-              { name: "U", width: "50px" },
-              { name: "BPs andel U", width: "120px" },
-              { name: "Samvær", width: "100px" },
-              { name: "Evne / 25%", width: "100px" },
-              { name: "Beregnet bidrag", width: "80px" },
-              { name: "Endelig bidrag", width: "80px" },
-            ],
-            rows: perioder
-              .flatMap((d) => [
-                {
-                  skipBorderBottom: true,
-                  periodColumn: formatPeriode(
-                    d.periode!.fom,
-                    deductDays(d.periode!.til, 1),
-                  ),
-                  columns: d.beregningsdetaljer?.sluttberegning
-                    ?.ikkeOmsorgForBarnet
-                    ? renderAvslag(d)
-                    : renderResult(d),
-                },
-                {
-                  zebraStripe: false,
-                  skipPadding: true,
-                  columns: [
-                    {
-                      colSpan: 8,
-                      content: (
-                        <DataViewTable
-                          className={"pl-0 ml-0"}
-                          data={[
-                            {
-                              label: "Resultat",
-                              labelBold: true,
-                              value: d.resultatkodeVisningsnavn,
-                            },
-                          ]}
-                        />
-                      ),
-                    },
-                  ],
-                },
-              ])
-              .concat([
-                // eslint-disable-next-line @typescript-eslint/ban-ts-comment
-                //@ts-ignore
-                {
-                  skipBorderBottom: true,
-                  zebraStripe: false,
-                  skipPadding: true,
-                  className: "pt-2",
-                  columns: [
-                    {
-                      fullSpan: true,
-                      content:
-                        "U = Underholdskostnad, BP = Bidragspliktig, BM = Bidragsmottaker",
-                    },
-                  ],
-                } as TableRow,
-              ]) as TableRow[],
-          };
+            value[0].erAvvistRevurdering;
+          const erAvvisning = value[0].erAvvisning;
+          const tableData = opprettTabelldata(erDirektAvslag, perioder);
+
           return (
             <>
               <TableGjelderBarn gjelderBarn={gjelderBarn} />
@@ -326,10 +360,11 @@ function VedtakTable({
                   className={"mb-1 mt-2"}
                   data={
                     [
-                      !ingenFFSlåttUtForRevurderingsbarn && {
-                        label: "Neste indeksår",
-                        value: value[0].indeksår,
-                      },
+                      !ingenFFSlåttUtForRevurderingsbarn &&
+                        !erAvvisning && {
+                          label: "Neste indeksår",
+                          value: value[0].indeksår,
+                        },
                     ].filter((d) => d != null) as DataViewTableData[]
                   }
                 />
@@ -346,14 +381,7 @@ function VedtakTable({
                   ]}
                 />
               )}
-              {ingenFFSlåttUtForRevurderingsbarn ? (
-                <div>
-                  Ingen perioder har slått ut til FF. Det vil derfor ikke fattes
-                  noe vedtak for revurderingsbarnet.
-                </div>
-              ) : (
-                <CommonTable data={tableData} />
-              )}
+              <ResultatTable resultat={value[0]} tableData={tableData} />
             </>
           );
         })}
@@ -498,4 +526,22 @@ export function VedtakEndeligTable({
         })}
     </>
   );
+}
+
+function contentAvslag(
+  d: ResultatBarnebidragsberegningPeriodeDto,
+  erOpphør: boolean,
+) {
+  return [
+    { content: formatPeriode(d.periode!.fom, d.periode!.til) },
+    { content: erOpphør ? "Opphør" : "Avslag" },
+    { content: d.resultatkodeVisningsnavn },
+  ];
+}
+function headersAvslag() {
+  return [
+    { name: "Periode", width: "170px" },
+    { name: "Resultat", width: "150px" },
+    { name: "Årsak", width: "250px" },
+  ];
 }
