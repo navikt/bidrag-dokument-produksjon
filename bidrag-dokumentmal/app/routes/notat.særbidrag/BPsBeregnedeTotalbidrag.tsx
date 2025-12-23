@@ -37,7 +37,7 @@ export const BPsBeregnedeTotalbidrag = ({
           rows: delberegning.beregnetBidragPerBarnListe
             .map(({ beregnetBidragPerBarn: row, personidentBarn }) => {
               const showBeregningAvU =
-                row.beregnetBeløp !== 0 || row.faktiskBeløp !== 0;
+                row.beregnetBidrag !== 0 || row.faktiskBeløp !== 0;
               return {
                 expandableContent: showBeregningAvU
                   ? [
@@ -106,7 +106,7 @@ export const BPsBeregnedeTotalbidrag = ({
                   },
                   {
                     content: formatterBeløpForBeregning(
-                      row.beregnetBeløp,
+                      row.beregnetBidrag,
                       true,
                     ),
                   },
