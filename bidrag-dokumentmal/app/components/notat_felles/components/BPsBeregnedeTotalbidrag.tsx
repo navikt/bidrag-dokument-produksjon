@@ -1,17 +1,39 @@
-import { NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto } from "~/types/Api";
+import {
+  DokumentmalDelberegningBidragspliktigesBeregnedeTotalbidragDto,
+  NotatMalType,
+  NotatBeregnetBidragPerBarnDto,
+} from "~/types/Api";
 import { formatterBeløpForBeregning } from "~/utils/visningsnavn";
 import tekster from "~/tekster";
 import { CommonTable, TableColumn, TableRow } from "~/components/CommonTable";
 import { CalculationTable } from "~/components/vedtak/CalculationTable";
+import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 
-export const BPsBeregnedeTotalbidrag = ({
+export const BPsBeregnedeTotalbidragSærbidrag = ({
   delberegning,
 }: {
-  delberegning: NotatDelberegningBidragspliktigesBeregnedeTotalbidragDto;
+  delberegning: DokumentmalDelberegningBidragspliktigesBeregnedeTotalbidragDto;
 }) => {
   return (
+    <BPsBeregnedeTotalbidrag
+      delberegning={delberegning.beregnetBidragPerBarnListe}
+      bidragspliktigesBeregnedeTotalbidrag={
+        delberegning.bidragspliktigesBeregnedeTotalbidrag
+      }
+    />
+  );
+};
+export const BPsBeregnedeTotalbidrag = ({
+  delberegning,
+  bidragspliktigesBeregnedeTotalbidrag,
+}: {
+  bidragspliktigesBeregnedeTotalbidrag: number;
+  delberegning: NotatBeregnetBidragPerBarnDto[];
+}) => {
+  const { type } = useNotatFelles();
+  return (
     <div>
-      <h4>{`${tekster.begreper.bidragspliktiges} beregnede totalbidrag`}</h4>
+      <h4>{`${tekster.begreper.bidragspliktiges} beregnede totalbidrag${type === NotatMalType.BIDRAG ? " for andre barn" : ""}`}</h4>
       <CommonTable
         data={{
           headers: [
@@ -34,10 +56,10 @@ export const BPsBeregnedeTotalbidrag = ({
               name: "Sum",
             },
           ],
-          rows: delberegning.beregnetBidragPerBarnListe
+          rows: delberegning
             .map(({ beregnetBidragPerBarn: row, personidentBarn }) => {
               const showBeregningAvU =
-                row.beregnetBeløp !== 0 || row.faktiskBeløp !== 0;
+                row.beregnetBidrag !== 0 || row.faktiskBeløp !== 0;
               return {
                 expandableContent: showBeregningAvU
                   ? [
@@ -106,7 +128,7 @@ export const BPsBeregnedeTotalbidrag = ({
                   },
                   {
                     content: formatterBeløpForBeregning(
-                      row.beregnetBeløp,
+                      row.beregnetBidrag,
                       true,
                     ),
                   },
@@ -130,7 +152,7 @@ export const BPsBeregnedeTotalbidrag = ({
                   {
                     textAlign: "center",
                     content: formatterBeløpForBeregning(
-                      delberegning.bidragspliktigesBeregnedeTotalbidrag,
+                      bidragspliktigesBeregnedeTotalbidrag,
                       true,
                     ),
                   } as TableColumn,
