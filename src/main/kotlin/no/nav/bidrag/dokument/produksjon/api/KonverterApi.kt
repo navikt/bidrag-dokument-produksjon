@@ -26,6 +26,17 @@ class KonverterApi(
         return pdfProducerService.htmlToPDF(payload)
     }
 
+    @PostMapping("/rtf")
+    fun rtfToPDF(
+        @org.springframework.web.bind.annotation.RequestBody payload: ByteArray,
+    ): ResponseEntity<ByteArray> {
+        SIKKER_LOGG.info {
+            "Konverterer RTF til HTM"
+        }
+        log.info { "Produserer notat HTML for dokumentmal" }
+        return pdfProducerService.rtfToPDF(payload)
+    }
+
     @PostMapping("/flatten")
     fun flattenPDF(
         @org.springframework.web.bind.annotation.RequestBody payload: ByteArray,

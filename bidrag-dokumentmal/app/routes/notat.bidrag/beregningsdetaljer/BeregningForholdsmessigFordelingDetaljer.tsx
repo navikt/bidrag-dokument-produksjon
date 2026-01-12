@@ -10,7 +10,10 @@ import {
   TableColumn,
 } from "~/components/CommonTable";
 import Person from "~/components/Person";
-import { BPsBeregnedeTotalbidrag } from "~/components/notat_felles/components/BPsBeregnedeTotalbidrag";
+import {
+  BPsBeregnedeTotalbidrag,
+  BPsPrivatAvtaler,
+} from "~/components/notat_felles/components/BPsBeregnedeTotalbidrag";
 import { NotatBeregnetBidragPerBarnDto } from "~/types/Api";
 
 export const BeregningForholdsmessigFordeling = () => {
@@ -111,12 +114,30 @@ const ForholdsmessigFordelingBeregningAndreBarn = () => {
       beregnetBidragPerBarn: { ...b.beregnetBidrag, gjelderBarn: b.barn.ident },
       personidentBarn: b.barn.ident,
       erSøknadsbarn: b.erSøknadsbarn,
+      privatAvtale: b.privatAvtale,
     }),
   );
-  const bpsBarnIkkeSøknadsbarn = beregningBarn.filter((b) => !b.erSøknadsbarn);
-  if (bpsBarnIkkeSøknadsbarn.length === 0) return null;
+  const bpsBarnIkkeSøknadsbarn = beregningBarn.filter(
+    (b) => !b.erSøknadsbarn && !b.privatAvtale,
+  );
+  const bpsBarnIkkeSøknadsbarnPrivatAvtaler = beregningBarn.filter(
+    (b) => !b.erSøknadsbarn && b.privatAvtale,
+  );
+  if (
+    bpsBarnIkkeSøknadsbarn.length === 0 &&
+    bpsBarnIkkeSøknadsbarnPrivatAvtaler.length == 0
+  )
+    return null;
   return (
     <>
+      <BPsPrivatAvtaler
+        bidragspliktigeTotalPrivatAvtaler={
+          forholdsmessigFordeling.sumBidragTilFordelingPrivatAvtale
+        }
+        delberegning={
+          bpsBarnIkkeSøknadsbarnPrivatAvtaler as NotatBeregnetBidragPerBarnDto[]
+        }
+      />
       <BPsBeregnedeTotalbidrag
         bidragspliktigesBeregnedeTotalbidrag={
           forholdsmessigFordeling.sumBidragTilFordelingIkkeSøknadsbarn
