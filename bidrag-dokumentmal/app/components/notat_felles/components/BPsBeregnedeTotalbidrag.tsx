@@ -98,7 +98,7 @@ export const BPsPrivatAvtaler = ({
                 columns: [
                   {
                     content: "",
-                    colSpan: 3,
+                    colSpan: 4,
                   } as TableColumn,
                   {
                     content: "Sum: ",

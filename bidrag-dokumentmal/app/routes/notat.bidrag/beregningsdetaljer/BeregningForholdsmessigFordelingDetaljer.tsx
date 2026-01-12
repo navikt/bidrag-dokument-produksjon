@@ -58,6 +58,10 @@ export const BeregningForholdsmessigFordeling = () => {
     forholdsmessigFordeling?.bidragTilFordelingForBarnet ??
     bpsAndel.andelBeløp ??
     0;
+  const sumBidragIkkeSøknadsbarn =
+    forholdsmessigFordeling.sumBidragTilFordelingPrivatAvtale +
+    forholdsmessigFordeling.sumBidragTilFordelingIkkeSøknadsbarn +
+    forholdsmessigFordeling.sumBidragTilFordelingSPrioritertBidrag;
   return (
     <div className={"mt-2"}>
       <ForholdsmessigFordelingBeregningAndreBarn />
@@ -76,7 +80,7 @@ export const BeregningForholdsmessigFordeling = () => {
             },
             forholdsmessigFordeling.finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn && {
               label: "BPs totale underholdskostnad",
-              value: `${formatterBeløpForBeregning(forholdsmessigFordeling.sumBidragTilFordelingIkkeSøknadsbarn)} + ${formatterBeløpForBeregning(forholdsmessigFordeling.sumBidragTilFordelingSøknadsbarn)}`,
+              value: `${formatterBeløpForBeregning(sumBidragIkkeSøknadsbarn)} + ${formatterBeløpForBeregning(forholdsmessigFordeling.sumBidragTilFordelingSøknadsbarn)}`,
               result: `${formatterBeløpForBeregning(forholdsmessigFordeling.sumBidragTilFordeling)}`,
             },
             {
