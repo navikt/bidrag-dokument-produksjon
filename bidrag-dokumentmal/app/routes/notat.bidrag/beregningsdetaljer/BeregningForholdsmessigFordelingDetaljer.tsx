@@ -10,6 +10,11 @@ import {
   TableColumn,
 } from "~/components/CommonTable";
 import Person from "~/components/Person";
+import {
+  BPsBeregnedeTotalbidrag,
+  BPsPrivatAvtaler,
+} from "~/components/notat_felles/components/BPsBeregnedeTotalbidrag";
+import { NotatBeregnetBidragPerBarnDto } from "~/types/Api";
 
 export const BeregningForholdsmessigFordeling = () => {
   const {
@@ -20,9 +25,8 @@ export const BeregningForholdsmessigFordeling = () => {
   } = useBeregningDetaljer();
 
   const erFF =
-    (sluttberegning.bpAndelAvUVedForholdsmessigFordelingFaktor &&
-      sluttberegning.bpAndelAvUVedForholdsmessigFordelingFaktor < 1) ||
-    forholdsmessigFordeling?.erForholdsmessigFordelt;
+    forholdsmessigFordeling &&
+    forholdsmessigFordeling.andelAvSumBidragTilFordelingFaktor < 1;
   if (!erFF) return null;
   function renderResult() {
     if (sluttberegning.bidragJustertNedTil25ProsentAvInntekt) {
@@ -54,9 +58,14 @@ export const BeregningForholdsmessigFordeling = () => {
     forholdsmessigFordeling?.bidragTilFordelingForBarnet ??
     bpsAndel.andelBeløp ??
     0;
+  const sumBidragIkkeSøknadsbarn =
+    forholdsmessigFordeling.sumBidragTilFordelingPrivatAvtale +
+    forholdsmessigFordeling.sumBidragTilFordelingIkkeSøknadsbarn +
+    forholdsmessigFordeling.sumBidragTilFordelingSPrioritertBidrag;
   return (
     <div className={"mt-2"}>
       <ForholdsmessigFordelingBeregningAndreBarn />
+      <ForholdsmessigFordelingBeregningSøknadsbarn />
 
       <DataViewTable
         className={"mt-2"}
@@ -68,6 +77,11 @@ export const BeregningForholdsmessigFordeling = () => {
               textRight: false,
               labelBold: false,
               value: `${formatterBeløpForBeregning(bpsSumAndelAvU)}`,
+            },
+            forholdsmessigFordeling.finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn && {
+              label: "BPs totale underholdskostnad",
+              value: `${formatterBeløpForBeregning(sumBidragIkkeSøknadsbarn)} + ${formatterBeløpForBeregning(forholdsmessigFordeling.sumBidragTilFordelingSøknadsbarn)}`,
+              result: `${formatterBeløpForBeregning(forholdsmessigFordeling.sumBidragTilFordeling)}`,
             },
             {
               label: "Barnets andel av underholdskostnad",
@@ -95,19 +109,65 @@ export const BeregningForholdsmessigFordeling = () => {
     </div>
   );
 };
-
 const ForholdsmessigFordelingBeregningAndreBarn = () => {
   const { forholdsmessigFordelingBeregningsdetaljer: forholdsmessigFordeling } =
     useBeregningDetaljer();
 
+  const beregningBarn = forholdsmessigFordeling.bidragTilFordelingAlle.flatMap(
+    (b) => ({
+      beregnetBidragPerBarn: { ...b.beregnetBidrag, gjelderBarn: b.barn.ident },
+      personidentBarn: b.barn.ident,
+      erSøknadsbarn: b.erSøknadsbarn,
+      privatAvtale: b.privatAvtale,
+    }),
+  );
+  const bpsBarnIkkeSøknadsbarn = beregningBarn.filter(
+    (b) => !b.erSøknadsbarn && !b.privatAvtale,
+  );
+  const bpsBarnIkkeSøknadsbarnPrivatAvtaler = beregningBarn.filter(
+    (b) => !b.erSøknadsbarn && b.privatAvtale,
+  );
   if (
-    !forholdsmessigFordeling ||
-    forholdsmessigFordeling?.bidragTilFordelingAlle?.length === 0
+    bpsBarnIkkeSøknadsbarn.length === 0 &&
+    bpsBarnIkkeSøknadsbarnPrivatAvtaler.length == 0
   )
     return null;
   return (
     <>
-      <h4>BPs totale underholdskostnad</h4>
+      <BPsPrivatAvtaler
+        bidragspliktigeTotalPrivatAvtaler={
+          forholdsmessigFordeling.sumBidragTilFordelingPrivatAvtale
+        }
+        delberegning={
+          bpsBarnIkkeSøknadsbarnPrivatAvtaler as NotatBeregnetBidragPerBarnDto[]
+        }
+      />
+      <BPsBeregnedeTotalbidrag
+        bidragspliktigesBeregnedeTotalbidrag={
+          forholdsmessigFordeling.sumBidragTilFordelingIkkeSøknadsbarn
+        }
+        delberegning={bpsBarnIkkeSøknadsbarn as NotatBeregnetBidragPerBarnDto[]}
+      />
+    </>
+  );
+};
+const ForholdsmessigFordelingBeregningSøknadsbarn = () => {
+  const { forholdsmessigFordelingBeregningsdetaljer: forholdsmessigFordeling } =
+    useBeregningDetaljer();
+
+  return (
+    <div
+      className={
+        forholdsmessigFordeling.finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn
+          ? "mt-2"
+          : ""
+      }
+    >
+      <h4>
+        {forholdsmessigFordeling.finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn
+          ? "BPs totale underholdskostnad for søknadsbarna"
+          : "BPs totale underholdskostnad"}
+      </h4>
       <CommonTable
         layoutAuto
         data={{
@@ -122,6 +182,7 @@ const ForholdsmessigFordelingBeregningAndreBarn = () => {
             },
           ].filter((h) => h != null) as TableHeader[],
           rows: forholdsmessigFordeling.bidragTilFordelingAlle
+            .filter((b) => b.erSøknadsbarn)
             .map((bt) => ({
               columns: [
                 {
@@ -151,7 +212,7 @@ const ForholdsmessigFordelingBeregningAndreBarn = () => {
                   },
                   {
                     content: formatterBeløpForBeregning(
-                      forholdsmessigFordeling.sumBidragTilFordeling,
+                      forholdsmessigFordeling.sumBidragTilFordelingSøknadsbarn,
                     ),
                   },
                 ] as TableColumn[],
@@ -159,6 +220,6 @@ const ForholdsmessigFordelingBeregningAndreBarn = () => {
             ]),
         }}
       />
-    </>
+    </div>
   );
 };

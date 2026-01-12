@@ -164,6 +164,21 @@ class PdfProducerService(
             ).body(bytes)
     }
 
+    fun rtfToPDF(payload: ByteArray): ResponseEntity<ByteArray> {
+        val bytes =
+            bidragPdfGenConsumer.rtfToPDF(
+                payload.toString(Charsets.UTF_8),
+            )
+
+        return ResponseEntity
+            .ok()
+            .contentType(MediaType.APPLICATION_PDF)
+            .header(
+                HttpHeaders.CONTENT_DISPOSITION,
+                "inline; filename=dokumenter_sammenslatt.pdf",
+            ).body(bytes)
+    }
+
     fun htmlToPDF(payload: ByteArray): ResponseEntity<ByteArray> {
         val bytes =
             bidragPdfGenConsumer.produserPdf(

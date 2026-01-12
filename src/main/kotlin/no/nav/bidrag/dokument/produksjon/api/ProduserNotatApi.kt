@@ -58,4 +58,15 @@ class ProduserNotatApi(
             getObjectmapper().writeValueAsString(payload),
         )
     }
+
+    @PostMapping("/html/debug")
+    fun generateHTMLDebug(): ResponseEntity<String> {
+        val payload = Paths.get("data/notat/bidrag.json").readText()
+
+        return pdfProducerService.generateHTMLResponseV2(
+            "notat",
+            "bidrag",
+            payload,
+        )
+    }
 }

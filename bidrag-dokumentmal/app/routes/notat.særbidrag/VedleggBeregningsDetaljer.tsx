@@ -10,8 +10,8 @@ import tekster from "~/tekster";
 import { BPsEvneTable } from "~/components/vedtak/BPsEvneTable";
 import { CommonTable, TableHeader } from "~/components/CommonTable";
 import { BPsAndel } from "~/routes/notat.særbidrag/BPAndelTable";
-import { BPsBeregnedeTotalbidrag } from "~/routes/notat.særbidrag/BPsBeregnedeTotalbidrag";
 import { VedleggProps } from "~/types/commonTypes";
+import { BPsBeregnedeTotalbidragSærbidrag } from "~/components/notat_felles/components/BPsBeregnedeTotalbidrag";
 
 export default function VedleggBeregningsDetaljer({
   vedleggNummer = 2,
@@ -56,7 +56,7 @@ function VedleggBeregningsDetaljerInnhold() {
         delberegningBidragsevne={beregnetSærbidrag.delberegningBidragsevne!}
       />
       <div className={"mb-medium"} />
-      <BPsBeregnedeTotalbidrag
+      <BPsBeregnedeTotalbidragSærbidrag
         delberegning={
           beregnetSærbidrag.delberegningBidragspliktigesBeregnedeTotalbidrag!
         }

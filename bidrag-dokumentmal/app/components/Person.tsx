@@ -29,7 +29,8 @@ export function PersonV2(
 ) {
   const { visFødselsdato = false, ...person } = props;
   const { gjelderFlereSaker } = useNotatFelles();
-  const erBp = person.rolle === Rolletype.BP;
+  const erBp =
+    person.rolle === Rolletype.BP || person.rolle === "BIDRAGSPLIKTIG";
   const sakDetaljer =
     gjelderFlereSaker && !erBp ? ` (sak ${person.saksnummer})` : "";
   if (person.erBeskyttet) {

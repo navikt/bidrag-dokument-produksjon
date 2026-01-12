@@ -1,188 +1,240 @@
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
-import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
-import { CommonTable } from "~/components/CommonTable";
-import { konverterRolletype } from "~/utils/converter-utils";
-import { Rolletype } from "~/types/Api";
-import { PersonV2 } from "~/components/Person";
 import HorizontalLine from "~/components/HorizontalLine";
-import { dateToDDMMYYYY } from "~/utils/date-utils";
+import { rolleTilVisningsnavn } from "~/utils/visningsnavn";
+import { PersonV2 } from "~/components/Person";
+import { CommonTable } from "~/components/CommonTable";
+import { NotatGebyrDetaljerDto } from "~/types/Api";
 
 export default function GebyrV2() {
   const { data, erAvslag } = useNotatFelles();
-  const gebyr = data.gebyrV2;
-  if (!gebyr || gebyr.gebyrRoller.length == 0) return null;
+  const gebyr = data.gebyrV3;
+  if (!gebyr || gebyr.saker.length == 0) return null;
+
+  function map18ÅrsBidrag(gebyr18År: NotatGebyrDetaljerDto[]) {
+    if (gebyr18År.length == 0) return null;
+    const gebyr18ÅrInnhold = gebyr18År.map((gebyrRolle, index) => {
+      const gebyrDetaljer = gebyrRolle;
+
+      return (
+        <>
+          <DataViewTable
+            className={"mb-1 mt-2"}
+            data={
+              [
+                {
+                  label: rolleTilVisningsnavn(gebyrRolle.rolle.rolle!),
+                  labelBold: true,
+                  value: <PersonV2 {...gebyrRolle.rolle} />,
+                },
+              ].filter((d) => d != null) as DataViewTableData[]
+            }
+          />
+
+          <div
+            key={`${index} ${gebyrRolle.rolle.ident}`}
+            className={index > 0 ? "mt-2" : ""}
+          >
+            <CommonTable
+              layoutAuto
+              data={{
+                headers: [
+                  {
+                    name: "Beskrivelse",
+                  },
+                  {
+                    name: "Beløp",
+                  },
+                ],
+                rows: [
+                  {
+                    columns: [
+                      {
+                        content: erAvslag
+                          ? "Inntekt siste 12 måneder"
+                          : "Skattepliktig inntekt",
+                      },
+                      {
+                        content: gebyrDetaljer.inntekt.skattepliktigInntekt,
+                      },
+                    ],
+                  },
+                  !erAvslag && {
+                    columns: [
+                      {
+                        content: "Høyeste barnetillegg",
+                      },
+                      {
+                        content: gebyrDetaljer.inntekt.maksBarnetillegg ?? 0,
+                      },
+                    ],
+                  },
+                  !erAvslag && {
+                    columns: [
+                      {
+                        labelBold: true,
+                        content: "Total",
+                      },
+                      {
+                        content: gebyrDetaljer.inntekt.totalInntekt,
+                      },
+                    ],
+                  },
+                ].filter((d) => d != false),
+              }}
+            />
+            <DataViewTable
+              className={"mt-4"}
+              data={
+                [
+                  {
+                    label: "Gebyr",
+                    value: gebyrDetaljer.gebyrResultatVisningsnavn,
+                  },
+                  gebyrDetaljer.erManueltOverstyrt && {
+                    label: "Begrunnelse",
+                    value: gebyrDetaljer.begrunnelse,
+                  },
+                ].filter((d) => d) as DataViewTableData[]
+              }
+            />
+          </div>
+        </>
+      );
+    });
+
+    return (
+      <div className={"mt-2"}>
+        <h3>Gebyr 18 års søknad:</h3>
+        {gebyr18ÅrInnhold}
+      </div>
+    );
+  }
+
   return (
     <div>
       <div className={"elements_inline section-title"}>
         <h2>Gebyr</h2>
       </div>
       <>
-        {gebyr.gebyrRoller
-          .sort((d) =>
-            konverterRolletype(d.rolle.rolle) == Rolletype.BP ? 1 : -1,
-          )
-          .map((gebyRolle, i) => (
-            <div
-              key={gebyRolle.rolle.ident! + i}
-              className={gebyr.gebyrRoller.length - 1 == i ? "" : "mb-2"}
-            >
+        {gebyr.saker.map((gebyrSak, i) => (
+          <div
+            key={gebyrSak.saksnummer}
+            className={gebyr.saker.length - 1 == i ? "" : "mb-2"}
+          >
+            {gebyr.saker.length > 1 && (
               <DataViewTable
                 className={"mb-1 mt-2"}
                 data={
                   [
                     {
-                      label: rolleTilVisningsnavn(gebyRolle.rolle.rolle!),
+                      label: "Gebyr for sak",
                       labelBold: true,
-                      value: <PersonV2 {...gebyRolle.rolle} />,
+                      value: gebyrSak.saksnummer,
                     },
                   ].filter((d) => d != null) as DataViewTableData[]
                 }
               />
-              {Array.from(
-                gebyRolle.gebyrDetaljer
-                  .reduce((grouped, gebyrDetaljer) => {
-                    const saksnummer =
-                      gebyrDetaljer.søknad?.saksnummer || "Unknown";
-                    if (!grouped.has(saksnummer)) {
-                      grouped.set(saksnummer, []);
-                    }
-                    grouped.get(saksnummer)!.push(gebyrDetaljer);
-                    return grouped;
-                  }, new Map<string, typeof gebyRolle.gebyrDetaljer>())
-                  .entries(),
-              ).map(([saksnummer, gebyrDetaljerListe], index) => (
-                <div
-                  key={`${index} ${gebyRolle.rolle.ident}`}
-                  className={index > 0 ? "mt-2" : ""}
-                >
-                  {gebyrDetaljerListe[0].søknad &&
-                    gebyRolle.gebyrDetaljer.length > 1 && (
+            )}
+            <div>
+              {gebyrSak.gebyrRoller.map((gebyrRolle, index) => {
+                const gebyrDetaljer = gebyrRolle;
+
+                return (
+                  <>
+                    <DataViewTable
+                      className={"mb-1 mt-2"}
+                      data={
+                        [
+                          {
+                            label: rolleTilVisningsnavn(
+                              gebyrRolle.rolle.rolle!,
+                            ),
+                            labelBold: true,
+                            value: <PersonV2 {...gebyrRolle.rolle} />,
+                          },
+                        ].filter((d) => d != null) as DataViewTableData[]
+                      }
+                    />
+
+                    <div
+                      key={`${index} ${gebyrRolle.rolle.ident}`}
+                      className={index > 0 ? "mt-2" : ""}
+                    >
+                      <CommonTable
+                        layoutAuto
+                        data={{
+                          headers: [
+                            {
+                              name: "Beskrivelse",
+                            },
+                            {
+                              name: "Beløp",
+                            },
+                          ],
+                          rows: [
+                            {
+                              columns: [
+                                {
+                                  content: erAvslag
+                                    ? "Inntekt siste 12 måneder"
+                                    : "Skattepliktig inntekt",
+                                },
+                                {
+                                  content:
+                                    gebyrDetaljer.inntekt.skattepliktigInntekt,
+                                },
+                              ],
+                            },
+                            !erAvslag && {
+                              columns: [
+                                {
+                                  content: "Høyeste barnetillegg",
+                                },
+                                {
+                                  content:
+                                    gebyrDetaljer.inntekt.maksBarnetillegg ?? 0,
+                                },
+                              ],
+                            },
+                            !erAvslag && {
+                              columns: [
+                                {
+                                  labelBold: true,
+                                  content: "Total",
+                                },
+                                {
+                                  content: gebyrDetaljer.inntekt.totalInntekt,
+                                },
+                              ],
+                            },
+                          ].filter((d) => d != false),
+                        }}
+                      />
                       <DataViewTable
-                        gap={"5px"}
+                        className={"mt-4"}
                         data={
                           [
                             {
-                              label: "Sak",
-                              textRight: false,
-                              value: `${gebyrDetaljerListe[0].søknad.saksnummer}`,
+                              label: "Gebyr",
+                              value: gebyrDetaljer.gebyrResultatVisningsnavn,
                             },
-                          ].filter((d) => d != null) as DataViewTableData[]
+                            gebyrDetaljer.erManueltOverstyrt && {
+                              label: "Begrunnelse",
+                              value: gebyrDetaljer.begrunnelse,
+                            },
+                          ].filter((d) => d) as DataViewTableData[]
                         }
                       />
-                    )}
-                  <CommonTable
-                    layoutAuto
-                    data={{
-                      headers: [
-                        {
-                          name: "Beskrivelse",
-                        },
-                        {
-                          name: "Beløp",
-                        },
-                      ],
-                      rows: [
-                        {
-                          columns: [
-                            {
-                              content: erAvslag
-                                ? "Inntekt siste 12 måneder"
-                                : "Skattepliktig inntekt",
-                            },
-                            {
-                              content:
-                                gebyrDetaljerListe[0].inntekt
-                                  .skattepliktigInntekt,
-                            },
-                          ],
-                        },
-                        !erAvslag && {
-                          columns: [
-                            {
-                              content: "Høyeste barnetillegg",
-                            },
-                            {
-                              content:
-                                gebyrDetaljerListe[0].inntekt
-                                  .maksBarnetillegg ?? 0,
-                            },
-                          ],
-                        },
-                        !erAvslag && {
-                          columns: [
-                            {
-                              labelBold: true,
-                              content: "Total",
-                            },
-                            {
-                              content:
-                                gebyrDetaljerListe[0].inntekt.totalInntekt,
-                            },
-                          ],
-                        },
-                      ].filter((d) => d != false),
-                    }}
-                  />
-                  {gebyrDetaljerListe.map((gebyrDetaljer) => (
-                    <>
-                      {gebyrDetaljer.søknad &&
-                      gebyRolle.gebyrDetaljer.length > 1 ? (
-                        <DataViewTable
-                          gap={"5px"}
-                          className={"mt-4"}
-                          data={
-                            [
-                              {
-                                label: "Søkt fra dato",
-                                textRight: false,
-                                value: `${dateToDDMMYYYY(gebyrDetaljer.søknad.søknadFomDato)}`,
-                              },
-                              {
-                                label: "Mottatt dato",
-                                textRight: false,
-                                value: `${dateToDDMMYYYY(gebyrDetaljer.søknad.mottattDato)}`,
-                              },
-                              {
-                                label: "Søknad fra",
-                                textRight: false,
-                                value: `${gebyrDetaljer.søknad.søktAvTypeVisningsnavn}`,
-                              },
-                              {
-                                label: "Gebyr",
-                                value: gebyrDetaljer.gebyrResultatVisningsnavn,
-                              },
-                              gebyrDetaljer.erManueltOverstyrt && {
-                                label: "Begrunnelse",
-                                value: gebyrDetaljer.begrunnelse,
-                              },
-                            ].filter((d) => d != null) as DataViewTableData[]
-                          }
-                        />
-                      ) : (
-                        <DataViewTable
-                          className={"mt-4"}
-                          data={
-                            [
-                              {
-                                label: "Gebyr",
-                                value: gebyrDetaljer.gebyrResultatVisningsnavn,
-                              },
-                              gebyrDetaljer.erManueltOverstyrt && {
-                                label: "Begrunnelse",
-                                value: gebyrDetaljer.begrunnelse,
-                              },
-                            ].filter((d) => d) as DataViewTableData[]
-                          }
-                        />
-                      )}
-                    </>
-                  ))}
-                </div>
-              ))}
-              <HorizontalLine />
+                    </div>
+                  </>
+                );
+              })}
+              {map18ÅrsBidrag(gebyrSak.gebyr18År)}
             </div>
-          ))}
+            <HorizontalLine />
+          </div>
+        ))}
       </>
     </div>
   );
