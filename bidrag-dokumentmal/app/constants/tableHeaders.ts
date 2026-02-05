@@ -23,7 +23,8 @@ export const getInntektTableHeaders = (
     erBarnetillegg
       ? [
           { name: tekster.tabell.felles.type, width: "160px" },
-          { name: tekster.tabell.inntekt.beløpMnd, width: "80px" },
+          { name: tekster.tabell.inntekt.beløp, width: "80px" },
+          { name: tekster.tabell.inntekt.beløpstype, width: "80px" },
           { name: tekster.tabell.inntekt.beløp12Mnd, width: "120px" },
         ]
       : {

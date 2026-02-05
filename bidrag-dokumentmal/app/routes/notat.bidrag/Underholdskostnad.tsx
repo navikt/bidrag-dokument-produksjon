@@ -8,6 +8,7 @@ import tekster from "~/tekster";
 import {
   formatterBeløpForBeregning,
   rolleTilVisningsnavnV2,
+  beløpstypeVisningsnavn,
 } from "~/utils/visningsnavn";
 import KildeIcon from "~/components/KildeIcon";
 import elementIds from "~/utils/elementIds";
@@ -126,7 +127,11 @@ function TilleggstønadTabell({ data }: { data: NotatUnderholdBarnDto }) {
               name: tekster.tabell.felles.fraTilOgMed,
             },
             {
-              name: tekster.tabell.underholdskostnader.tilleggsstønad.dagsats,
+              name: tekster.tabell.underholdskostnader.tilleggsstønad.beløp,
+            },
+            {
+              name: tekster.tabell.underholdskostnader.tilleggsstønad
+                .beløpstype,
             },
             {
               name: tekster.tabell.underholdskostnader.faktiskeTilsynsutgifter
@@ -136,7 +141,10 @@ function TilleggstønadTabell({ data }: { data: NotatUnderholdBarnDto }) {
           rows: data.tilleggsstønad.map((d) => ({
             columns: [
               { content: formatPeriode(d.periode.fom, d.periode.tom) },
-              { content: formatterBeløpForBeregning(d.dagsats) },
+              { content: formatterBeløpForBeregning(d.beløp) },
+              {
+                content: beløpstypeVisningsnavn(d.beløpstype),
+              },
               { content: formatterBeløpForBeregning(d.total) },
             ],
           })),

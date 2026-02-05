@@ -1,4 +1,9 @@
-import { Rolletype, SoktAvType, DokumentmalPersonDto } from "~/types/Api";
+import {
+  Rolletype,
+  SoktAvType,
+  DokumentmalPersonDto,
+  InntektBelopstype,
+} from "~/types/Api";
 import { konverterRolletype } from "~/utils/converter-utils";
 import { localeMap, SpråkType } from "./oversettelser";
 
@@ -7,6 +12,10 @@ export const sammenlignRoller = (rolle?: Rolletype, erLikRolle?: Rolletype) =>
   erLikRolle != undefined &&
   (rolle == erLikRolle || rolle == rolleTilType[erLikRolle]);
 
+export function beløpstypeVisningsnavn(type: InntektBelopstype) {
+  if (type === InntektBelopstype.DAGSATS) return "Dagsats";
+  return "Måned";
+}
 export function søktAvTilVisningsnavn(søktAv?: SoktAvType) {
   switch (søktAv) {
     case SoktAvType.NAV_INTERNASJONALT:
@@ -66,7 +75,7 @@ export function capitalizeFirstLetter(str?: string) {
 }
 export const formatterBeløpForBeregning = (
   beløp: number | string | undefined,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   visSymbol = false,
 ): string => {
   return (beløp ?? 0).toLocaleString("nb-NO", {
@@ -80,7 +89,7 @@ export const formatterBeløpForBeregning = (
 };
 export const formatterBeløp = (
   beløp: number | string | undefined,
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+
   visSymbol = false,
 ): string => {
   return (beløp ?? 0).toLocaleString("nb-NO", {

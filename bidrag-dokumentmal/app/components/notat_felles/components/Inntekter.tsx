@@ -6,7 +6,6 @@ import {
   NotatMalType,
   DokumentmalPersonDto,
   Rolletype,
-  Kilde,
 } from "~/types/Api";
 import { deductDays, formatPeriode, sortByAge } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
@@ -276,10 +275,10 @@ function InntektPerBarnTable({
                             ? [
                                 { content: visningsnavnInntektstype },
                                 {
-                                  content:
-                                    d.kilde == Kilde.OFFENTLIG
-                                      ? Number(d.beløp / 12)
-                                      : formatterBeløp(d.månedsbeløp),
+                                  content: Number(d.beløpMånedDagsats),
+                                },
+                                {
+                                  content: d.beløpstypeVisningsnavn,
                                 },
                                 { content: formatterBeløp(d.beløp) },
                               ]
