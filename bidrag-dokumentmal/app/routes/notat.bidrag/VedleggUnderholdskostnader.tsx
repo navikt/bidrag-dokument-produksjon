@@ -6,6 +6,7 @@ import {
   DokumentmalPersonDto,
   NotatUnderholdskostnadPeriodeBeregningsdetaljer,
   Rolletype,
+  InntektBelopstype,
 } from "~/types/Api";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import GjelderPerson from "~/components/GjelderPerson";
@@ -195,6 +196,11 @@ function UnderholdskostnadBeregningsdetaljer({
   detaljer?: NotatUnderholdskostnadPeriodeBeregningsdetaljer;
 }) {
   if (!detaljer) return <div>Ingen beregningsdetaljer</div>;
+  const tilleggstønad =
+    detaljer.tilsynsutgifterBarn?.filter(
+      (b) => b.tilleggsstønadBeløp !== undefined,
+    ) ?? [];
+
   return (
     <>
       <DataViewTable
@@ -224,13 +230,48 @@ function UnderholdskostnadBeregningsdetaljer({
           },
         ].filter((d) => typeof d !== "boolean")}
       />
+
+      {tilleggstønad.length > 0 && (
+        <CalculationTable
+          title="Faktisk Tilsynsutgifter"
+          data={
+            detaljer.tilsynsutgifterBarn
+              ?.flatMap((b) => [
+                {
+                  label: b.gjelderBarn.navn,
+                  calculation: `(${formatterBeløpForBeregning(b.totalTilsynsutgift)} - ${formatterBeløpForBeregning(b.kostpenger)}) x 11/12`,
+                  result: formatterBeløpForBeregning(b.faktiskUtgiftBeregnet),
+                },
+              ])
+              .filter((d) => d) ?? []
+          }
+        />
+      )}
+      {tilleggstønad.length > 0 && (
+        <CalculationTable
+          title="Tilleggsstønad"
+          data={detaljer.tilsynsutgifterBarn
+            ?.filter((b) => b.tilleggsstønadBeløp !== undefined)
+            .map((b) => ({
+              label: b.gjelderBarn.navn,
+              calculation:
+                b.beløpstype === InntektBelopstype.DAGSATS
+                  ? `(${formatterBeløpForBeregning(b.tilleggsstønadBeløp)} x 260) / 12 x 11 / 12`
+                  : `${formatterBeløpForBeregning(b.tilleggsstønadBeløp)} x 11 / 12`,
+              result: formatterBeløpForBeregning(b.tilleggsstønad),
+            }))
+            .filter((d) => d)}
+        />
+      )}
       <CalculationTable
         title="Tilsynsutgifter"
         data={[
           ...(detaljer.tilsynsutgifterBarn?.flatMap((b) => [
             {
               label: b.gjelderBarn.navn,
-              value: `(${formatterBeløpForBeregning(b.totalTilsynsutgift)} - ${formatterBeløpForBeregning(b.kostpenger)}${b.tilleggsstønad ? " - " + formatterBeløpForBeregning(b.tilleggsstønad) : ""}) x 11/12`,
+              calculation: b.tilleggsstønad
+                ? `${formatterBeløpForBeregning(b.faktiskUtgiftBeregnet)} - ${formatterBeløpForBeregning(b.tilleggsstønad)}`
+                : undefined,
               result: formatterBeløpForBeregning(b.beløp),
             },
           ]) ?? []),

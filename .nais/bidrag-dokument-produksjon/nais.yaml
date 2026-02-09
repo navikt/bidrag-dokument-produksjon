@@ -16,7 +16,6 @@ spec:
       destinations:
         - id: loki
         - id: elastic
-        - id: secure_logs
   image: {{ image }}
   ingresses:
   {{#each ingresses as |url|}}
@@ -49,8 +48,6 @@ spec:
     cpuThresholdPercentage: 90
   liveness:
     path: /actuator/health
-  secureLogs:
-    enabled: true
   readiness:
     path: /actuator/health
   prometheus:

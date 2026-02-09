@@ -72,6 +72,8 @@ export default {
       },
       tilleggsstønad: {
         dagsats: "Dagsats",
+        beløp: "Beløp",
+        beløpstype: "Beløpstype",
         totalt: "Totalt (12 mnd)",
       },
     },
@@ -87,6 +89,7 @@ export default {
     inntekt: {
       beløp: "Beløp",
       beløpMnd: "Beløp (mnd)",
+      beløpstype: "Beløpstype",
       beløp12Mnd: "Beløp (12mnd)",
     },
     arbeidsforhold: {
