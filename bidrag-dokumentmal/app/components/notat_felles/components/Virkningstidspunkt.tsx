@@ -1,13 +1,12 @@
 import {
-  capitalizeFirstLetter,
-  søktAvTilVisningsnavn,
   rolleTilVisningsnavnV2,
+  søktAvTilVisningsnavn,
 } from "~/utils/visningsnavn";
 import { dateToDDMMYYYY, sortByAge } from "~/utils/date-utils";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
-import { Stonadstype } from "~/types/Api";
+import { Stonadstype, Innkrevingstype } from "~/types/Api";
 import Beregningsperiode from "~/routes/notat.bidrag/Beregningsperiode";
 import {
   TypeInnhold,
@@ -66,6 +65,10 @@ function VirkningstidspunktPerBarn() {
                     {
                       label: "Søknad fra",
                       value: søktAvTilVisningsnavn(barn.søktAv),
+                    },
+                    {
+                      label: "Innkreving",
+                      value: barn.innkreving ? "Ja" : "Nei",
                     },
                     ...[
                       barn.avslag
@@ -145,7 +148,15 @@ function VirkningstidspunktFelles() {
           data={[
             {
               label: "Søknadstype",
-              value: capitalizeFirstLetter(virkningstidspunktBarn.søknadstype),
+              value: virkningstidspunktBarn.behandlingstypeVisningsnavn,
+            },
+            {
+              label: "Innkreving",
+              value:
+                virkningstidspunktBarn.innkrevingstype ===
+                Innkrevingstype.MED_INNKREVING
+                  ? "Ja"
+                  : "Nei",
             },
             {
               label: "Søknad fra",

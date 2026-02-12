@@ -86,7 +86,8 @@ export enum BeregnTil {
 export interface BeregnetBidragBarnDto {
   saksnummer: string;
   løpendeBeløp: number;
-  valutakode: string;
+  valutakode: Valutakode;
+  valutakurs: number;
   samværsklasse: Samvaersklasse;
   samværsfradrag: number;
   beregnetBeløp: number;
@@ -262,10 +263,10 @@ export interface DokumentmalDelberegningBidragspliktigesBeregnedeTotalbidragDto 
 export interface DokumentmalForholdsmessigFordelingBeregningsdetaljer {
   sumBidragTilFordeling: number;
   finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn: boolean;
-  sumBidragTilFordelingSPrioritertBidrag: number;
   sumBidragTilFordelingSøknadsbarn: number;
   sumBidragTilFordelingIkkeSøknadsbarn: number;
   sumBidragTilFordelingPrivatAvtale: number;
+  sumBidragSomIkkeKanFordeles: number;
   sumPrioriterteBidragTilFordeling: number;
   bidragTilFordelingForBarnet: number;
   andelAvSumBidragTilFordelingFaktor: number;
@@ -278,12 +279,14 @@ export interface DokumentmalForholdsmessigFordelingBeregningsdetaljer {
 }
 
 export interface DokumentmalForholdsmessigFordelingBidragTilFordelingBarn {
-  prioritertBidrag: boolean;
+  utenlandskbidrag: boolean;
+  oppfostringsbidrag: boolean;
   privatAvtale: boolean;
   erSøknadsbarn: boolean;
   beregnetBidrag?: BeregnetBidragBarnDto;
   bidragTilFordeling: number;
   barn: DokumentmalPersonDto;
+  erBidragSomIkkeKanFordeles: boolean;
 }
 
 export interface DokumentmalManuellVedtak {
@@ -583,6 +586,7 @@ export interface NotatBehandlingDetaljerDto {
   opprinneligVedtakstype?: Vedtakstype;
   kategori?: NotatSaerbidragKategoriDto;
   søktAv?: SoktAvType;
+  innkreving: boolean;
   /** @format date */
   mottattDato?: string;
   søktFraDato?: {
@@ -617,10 +621,10 @@ export interface NotatBehandlingDetaljerDto {
    * @deprecated
    */
   avslag?: Resultatkode;
+  avslagVisningsnavn?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
   erAvvisning: boolean;
-  avslagVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
 }
 
@@ -717,9 +721,9 @@ export interface NotatGebyrSoknadDetaljerDto {
   søktAvType: SoktAvType;
   behandlingstype?: Behandlingstype;
   behandlingstema?: Behandlingstema;
-  behandlingstypeVisningsnavn?: string;
   søktAvTypeVisningsnavn?: string;
   behandlingstemaVisningsnavn?: string;
+  behandlingstypeVisningsnavn?: string;
 }
 
 export interface NotatGebyrV2Dto {
@@ -740,15 +744,15 @@ export interface NotatInntektDto {
   gjelderBarn?: DokumentmalPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
+  visningsnavn: string;
+  beløpstypeVisningsnavn: string;
   /** Avrundet dagsats for barnetillegg */
   dagsats?: number;
   beløpstype?: InntektBelopstype;
-  beløpstypeVisningsnavn: string;
   /** Avrundet månedsbeløp for barnetillegg */
   beløpMånedDagsats?: number;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
-  visningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -1054,6 +1058,7 @@ export interface NotatVirkningstidspunktBarnDto {
    */
   søknadstype?: string;
   vedtakstype?: Vedtakstype;
+  innkreving: boolean;
   søktAv?: SoktAvType;
   /**
    * @format date
@@ -1142,10 +1147,10 @@ export interface NotatVirkningstidspunktBarnDto {
    * @deprecated
    */
   notat: NotatBegrunnelseDto;
-  behandlingstypeVisningsnavn?: string;
-  årsakVisningsnavn?: string;
-  erAvvisning: boolean;
   avslagVisningsnavn?: string;
+  erAvvisning: boolean;
+  årsakVisningsnavn?: string;
+  behandlingstypeVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
 }
 
@@ -1269,6 +1274,7 @@ export enum Resultatkode {
   AVSLUTTET_SKOLEGANG = "AVSLUTTET_SKOLEGANG",
   IKKESTERKNOKGRUNNOGBIDRAGETHAROPPHORT = "IKKE_STERK_NOK_GRUNN_OG_BIDRAGET_HAR_OPPHØRT",
   IKKE_OMSORG_FOR_BARNET = "IKKE_OMSORG_FOR_BARNET",
+  PARTENE_BOR_SAMMEN = "PARTENE_BOR_SAMMEN",
   BARNETERDODT = "BARNET_ER_DØDT",
   BIDRAGSMOTTAKER_HAR_OMSORG_FOR_BARNET = "BIDRAGSMOTTAKER_HAR_OMSORG_FOR_BARNET",
   BIDRAGSPLIKTIGERDOD = "BIDRAGSPLIKTIG_ER_DØD",
@@ -1296,7 +1302,7 @@ export enum Resultatkode {
   FULLT_UNDERHOLDT_AV_OFFENTLIG = "FULLT_UNDERHOLDT_AV_OFFENTLIG",
   IKKE_OPPHOLD_I_RIKET = "IKKE_OPPHOLD_I_RIKET",
   MANGLENDE_DOKUMENTASJON = "MANGLENDE_DOKUMENTASJON",
-  PAGRUNNAVSAMMENFLYTTING = "PÅ_GRUNN_AV_SAMMENFLYTTING",
+  PARTENEANSESABOMEDBEGGEFORELDRE = "PARTENE_ANSES_Å_BO_MED_BEGGE_FORELDRE",
   OPPHOLD_I_UTLANDET = "OPPHOLD_I_UTLANDET",
   UTENLANDSK_YTELSE = "UTENLANDSK_YTELSE",
   AVSLAG_PRIVAT_AVTALE_BIDRAG = "AVSLAG_PRIVAT_AVTALE_BIDRAG",
@@ -1709,9 +1715,9 @@ export interface DokumentBestilling {
   datoSakOpprettet?: string;
   spraak?: string;
   roller: {
+    barn: Barn[];
     bidragsmottaker?: PartInfo;
     bidragspliktig?: PartInfo;
-    barn: Barn[];
     isEmpty: boolean;
     /** @format int32 */
     size: number;
