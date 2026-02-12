@@ -6,7 +6,7 @@ import { dateToDDMMYYYY, sortByAge } from "~/utils/date-utils";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
-import { Stonadstype, Innkrevingstype } from "~/types/Api";
+import { Stonadstype } from "~/types/Api";
 import Beregningsperiode from "~/routes/notat.bidrag/Beregningsperiode";
 import {
   TypeInnhold,
@@ -152,11 +152,7 @@ function VirkningstidspunktFelles() {
             },
             {
               label: "Innkreving",
-              value:
-                virkningstidspunktBarn.innkrevingstype ===
-                Innkrevingstype.MED_INNKREVING
-                  ? "Ja"
-                  : "Nei",
+              value: virkningstidspunktBarn.innkreving ? "Ja" : "Nei",
             },
             {
               label: "Søknad fra",
