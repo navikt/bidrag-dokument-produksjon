@@ -267,6 +267,8 @@ export interface DokumentmalForholdsmessigFordelingBeregningsdetaljer {
   sumBidragTilFordelingIkkeSøknadsbarn: number;
   sumBidragTilFordelingPrivatAvtale: number;
   sumBidragSomIkkeKanFordeles: number;
+  sumBidragTilFordelingJustertForPrioriterteBidrag: number;
+  evneJustertForPrioriterteBidrag: number;
   sumPrioriterteBidragTilFordeling: number;
   bidragTilFordelingForBarnet: number;
   andelAvSumBidragTilFordelingFaktor: number;
@@ -325,9 +327,9 @@ export interface DokumentmalResultatBeregningInntekterDto {
   inntektBarn?: number;
   barnEndeligInntekt?: number;
   inntektBarnMånedlig?: number;
-  totalEndeligInntekt: number;
-  inntektBPMånedlig?: number;
   inntektBMMånedlig?: number;
+  inntektBPMånedlig?: number;
+  totalEndeligInntekt: number;
 }
 
 export type DokumentmalResultatBidragsberegningBarnDto = UtilRequiredKeys<VedtakResultatInnhold, "type"> & {
@@ -621,11 +623,11 @@ export interface NotatBehandlingDetaljerDto {
    * @deprecated
    */
   avslag?: Resultatkode;
-  avslagVisningsnavn?: string;
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
-  erAvvisning: boolean;
+  avslagVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
+  erAvvisning: boolean;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -721,9 +723,9 @@ export interface NotatGebyrSoknadDetaljerDto {
   søktAvType: SoktAvType;
   behandlingstype?: Behandlingstype;
   behandlingstema?: Behandlingstema;
+  behandlingstypeVisningsnavn?: string;
   søktAvTypeVisningsnavn?: string;
   behandlingstemaVisningsnavn?: string;
-  behandlingstypeVisningsnavn?: string;
 }
 
 export interface NotatGebyrV2Dto {
@@ -746,13 +748,13 @@ export interface NotatInntektDto {
   inntektsposter: NotatInntektspostDto[];
   visningsnavn: string;
   beløpstypeVisningsnavn: string;
-  /** Avrundet dagsats for barnetillegg */
-  dagsats?: number;
-  beløpstype?: InntektBelopstype;
   /** Avrundet månedsbeløp for barnetillegg */
   beløpMånedDagsats?: number;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
+  beløpstype?: InntektBelopstype;
+  /** Avrundet dagsats for barnetillegg */
+  dagsats?: number;
 }
 
 export interface NotatInntekterDto {
@@ -1147,11 +1149,11 @@ export interface NotatVirkningstidspunktBarnDto {
    * @deprecated
    */
   notat: NotatBegrunnelseDto;
-  avslagVisningsnavn?: string;
-  erAvvisning: boolean;
-  årsakVisningsnavn?: string;
   behandlingstypeVisningsnavn?: string;
+  årsakVisningsnavn?: string;
+  avslagVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
+  erAvvisning: boolean;
 }
 
 export interface NotatVirkningstidspunktDto {
@@ -1715,9 +1717,9 @@ export interface DokumentBestilling {
   datoSakOpprettet?: string;
   spraak?: string;
   roller: {
-    barn: Barn[];
     bidragsmottaker?: PartInfo;
     bidragspliktig?: PartInfo;
+    barn: Barn[];
     isEmpty: boolean;
     /** @format int32 */
     size: number;

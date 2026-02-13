@@ -79,13 +79,7 @@ export const BeregningForholdsmessigFordeling = () => {
               labelBold: false,
               value: `${formatterBeløpForBeregning(bpsSumAndelAvU)}`,
             },
-            finnesPriorierteBidrag && {
-              label: "BPs totale underholdskostnad som kan fordeles",
-              textRight: false,
-              labelBold: false,
-              value: `${formatterBeløpForBeregning(forholdsmessigFordeling.sumBidragTilFordeling)} - ${formatterBeløpForBeregning(forholdsmessigFordeling.sumBidragSomIkkeKanFordeles)}`,
-              result: `${formatterBeløpForBeregning(bidragTilFordelingMinusUtlandsbidrag)}`,
-            },
+
             {
               label: "Barnets andel av underholdskostnad",
               textRight: false,
@@ -93,13 +87,21 @@ export const BeregningForholdsmessigFordeling = () => {
               value: `${formatterBeløpForBeregning(andelFordeltTilBarnet)} / ${formatterBeløpForBeregning(bidragTilFordelingMinusUtlandsbidrag)}`,
               result: `${formatterProsent(bpAndelAvUVedForholdsmessigFordelingFaktor)}`,
             },
+            finnesPriorierteBidrag && {
+              label: "BPs evne som kan fordeles",
+              textRight: false,
+              labelBold: false,
+              value: `${formatterBeløpForBeregning(delberegningBidragsevne.bidragsevne)} - ${formatterBeløpForBeregning(forholdsmessigFordeling.sumPrioriterteBidragTilFordeling)}`,
+              result: `${formatterBeløpForBeregning(forholdsmessigFordeling.evneJustertForPrioriterteBidrag)}`,
+            },
             {
               label: "Barnets andel etter forholdsmessig fordeling",
               textRight: false,
               labelBold: false,
-              value: `${formatterProsent(bpAndelAvUVedForholdsmessigFordelingFaktor)} x ${formatterBeløpForBeregning(bidragTilFordelingForBarnet)}`,
+              value: `${formatterProsent(bpAndelAvUVedForholdsmessigFordelingFaktor)} x ${formatterBeløpForBeregning(forholdsmessigFordeling.evneJustertForPrioriterteBidrag)}`,
               result: `${formatterBeløpForBeregning(bpEvneVedForholdsmessigFordeling)}`,
             },
+
             {
               label: "Foreløpig bidrag",
               textRight: false,
