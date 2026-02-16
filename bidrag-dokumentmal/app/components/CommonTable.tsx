@@ -5,6 +5,7 @@ export type RowContent = ReactElement | string | number | null | undefined;
 export type TableColumn = {
   width?: string;
   colSpan?: number;
+  colSpanNegative?: number;
   fullSpan?: boolean;
   labelBold?: boolean;
   textAlign?: "left" | "right" | "center";
@@ -83,7 +84,13 @@ export function CommonTable({
                   : cellV2StylingOnlyBorder
               } `}
               key={column.content?.toString() + colIndex.toString()}
-              colSpan={column.fullSpan ? headers.length : column.colSpan}
+              colSpan={
+                column.fullSpan
+                  ? headers.length
+                  : column.colSpanNegative
+                    ? headers.length - column.colSpanNegative
+                    : column.colSpan
+              }
               style={{
                 fontWeight: column.labelBold ? "bold" : "normal",
                 textAlign: column.textAlign ?? "left",

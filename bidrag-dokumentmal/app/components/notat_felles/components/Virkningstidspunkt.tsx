@@ -1,7 +1,6 @@
 import {
-  capitalizeFirstLetter,
-  søktAvTilVisningsnavn,
   rolleTilVisningsnavnV2,
+  søktAvTilVisningsnavn,
 } from "~/utils/visningsnavn";
 import { dateToDDMMYYYY, sortByAge } from "~/utils/date-utils";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
@@ -66,6 +65,10 @@ function VirkningstidspunktPerBarn() {
                     {
                       label: "Søknad fra",
                       value: søktAvTilVisningsnavn(barn.søktAv),
+                    },
+                    {
+                      label: "Innkreving",
+                      value: barn.innkreving ? "Ja" : "Nei",
                     },
                     ...[
                       barn.avslag
@@ -145,7 +148,11 @@ function VirkningstidspunktFelles() {
           data={[
             {
               label: "Søknadstype",
-              value: capitalizeFirstLetter(virkningstidspunktBarn.søknadstype),
+              value: virkningstidspunktBarn.behandlingstypeVisningsnavn,
+            },
+            {
+              label: "Innkreving",
+              value: virkningstidspunktBarn.innkreving ? "Ja" : "Nei",
             },
             {
               label: "Søknad fra",

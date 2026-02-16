@@ -169,6 +169,10 @@ function SøknadsDetaljer() {
               label: "Søkt fra",
               value: søktAvTilVisningsnavn(behandling.søktAv),
             },
+            {
+              label: "Innkreving",
+              value: behandling.innkreving ? "Ja" : "Nei",
+            },
           ]}
         />
         <DataViewTableV2
