@@ -98,33 +98,70 @@ class ProduserDokumentmalApi(
         )
     }
 
-    @GetMapping("/html/{dokumentmal}")
+    @PostMapping("/html/{category}/{dokumentmal}")
+    @Operation(
+        description = "Beregn bidrag",
+        security = [SecurityRequirement(name = "bearer-key")],
+    )
+    @RequestBody(
+        content =
+            [
+                Content(
+                    examples =
+                        [
+                            ExampleObject(
+                                ref = "#/components/examples/Vedtak bidrag",
+                                name = "Vedtak bidrag",
+                            ),
+                        ],
+                ),
+            ],
+    )
+    fun generateHTMLV2(
+        @PathVariable category: String,
+        @PathVariable dokumentmal: String,
+        @org.springframework.web.bind.annotation.RequestBody payload: DokumentBestilling,
+    ): ResponseEntity<String> {
+        SIKKER_LOGG.info {
+            "Produserer notat HTML for dokumentmal $dokumentmal for input $payload"
+        }
+        log.info { "Produserer notat HTML for dokumentmal $dokumentmal" }
+        return pdfProducerService.generateHTMLResponseV2(
+            category,
+            dokumentmal,
+            getObjectmapper().writeValueAsString(payload),
+        )
+    }
+
+    @GetMapping("/html/{category}/{dokumentmal}")
     @Operation(
         description = "Beregn bidrag",
         security = [SecurityRequirement(name = "bearer-key")],
     )
     fun generateHTMLDebug(
+        @PathVariable category: String,
         @PathVariable dokumentmal: String,
     ): ResponseEntity<String> {
         log.info { "Produserer notat HTML for dokumentmal $dokumentmal" }
         return pdfProducerService.generateHTMLResponseV2(
-            "vedtak",
+            category,
             dokumentmal,
             Paths.get("data/vedtak/klage_orkestrering.json").readText(),
         )
     }
 
-    @GetMapping("/pdf/{dokumentmal}")
+    @GetMapping("/pdf/{category}/{dokumentmal}")
     @Operation(
         description = "Beregn bidrag",
         security = [SecurityRequirement(name = "bearer-key")],
     )
     fun generatePDFDebug(
+        @PathVariable category: String,
         @PathVariable dokumentmal: String,
     ): ResponseEntity<ByteArray> {
         log.info { "Produserer notat HTML for dokumentmal $dokumentmal" }
         return pdfProducerService.generatePDFResponseV2(
-            "vedtak",
+            category,
             dokumentmal,
             Paths.get("data/vedtak/klage_orkestrering.json").readText(),
         )

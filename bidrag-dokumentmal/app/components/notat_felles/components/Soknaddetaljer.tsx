@@ -63,19 +63,17 @@ export default function Soknaddetaljer({
             {
               label: "Søknadsbarn",
               value: (
-                <div style={{ display: "inline-table" }}>
-                  {rollerBarn.sort(sortByAge).map((rolle) => (
-                    <span
-                      key={rolle.ident}
-                      style={{
-                        width: "100%",
-                        display: "block",
-                      }}
-                    >
-                      {`${tilNavnOgFødselsdato(rolle)}${gjelderFlereSaker && rolle.rolle != Rolletype.BP ? ` / ${rolle.saksnummer}` : ""}`}
-                    </span>
-                  ))}
-                </div>
+                <table className="w-full no-border">
+                  <tbody>
+                    {rollerBarn.sort(sortByAge).map((rolle) => (
+                      <tr key={rolle.ident}>
+                        <td className="py-0">
+                          {`${tilNavnOgFødselsdato(rolle)}${gjelderFlereSaker && rolle.rolle != Rolletype.BP ? ` / ${rolle.saksnummer}` : ""}`}
+                        </td>
+                      </tr>
+                    ))}
+                  </tbody>
+                </table>
               ),
             },
           ]}

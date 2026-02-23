@@ -144,6 +144,10 @@
   margin: 32px 0 0 0
 }
 
+.collapse {
+  visibility: collapse
+}
+
 .fixed {
   position: fixed
 }
@@ -236,6 +240,39 @@
   width: 5px
 }
 
+.w-max {
+  width: -moz-max-content;
+  width: max-content
+}
+
+.w-full {
+  width: 100%
+}
+
+.w-1\/2 {
+  width: 50%
+}
+
+.w-\[50vw\] {
+  width: 50vw
+}
+
+.w-\[70\%\] {
+  width: 70%
+}
+
+.w-\[90\%\] {
+  width: 90%
+}
+
+.flex-1 {
+  flex: 1 1 0%
+}
+
+.table-fixed {
+  table-layout: fixed
+}
+
 .break-before-page {
   -moz-column-break-before: page;
        break-before: page
@@ -247,6 +284,10 @@
 
 .flex-col {
   flex-direction: column
+}
+
+.items-start {
+  align-items: flex-start
 }
 
 .justify-between {
@@ -271,6 +312,10 @@
 
 .gap-5 {
   gap: 20px
+}
+
+.gap-\[200px\] {
+  gap: 200px
 }
 
 .self-center {
@@ -347,12 +392,24 @@
   padding-top: 16px
 }
 
+.pl-4 {
+  padding-left: 16px
+}
+
+.pr-4 {
+  padding-right: 16px
+}
+
 .text-left {
   text-align: left
 }
 
 .text-right {
   text-align: right
+}
+
+.align-top {
+  vertical-align: top
 }
 
 .align-middle {

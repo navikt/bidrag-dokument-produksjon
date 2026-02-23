@@ -10,13 +10,21 @@ export default function BrevAdresseKontaktinfo() {
     <div className={"soknad_detaljer"}>
       <div>
         <NavLogo />
-        <div className={"flex flex-row justify-between"}>
-          <div>
-            <span>{mottaker?.navn}</span>
-            {renderAdresse(mottaker?.adresse)}
-          </div>
-          {renderKontaktinfo(data?.kontaktInfo)}
-        </div>
+        <table
+          className="table w-full lexical-locked-region"
+          data-editable="false"
+        >
+          <tbody>
+            <tr>
+              <td className="align-top w-[90%]" style={{ width: "70%" }}>
+                {renderAdresse(mottaker?.adresse, mottaker?.navn)}
+              </td>
+              <td className="align-top w-1/2">
+                {renderKontaktinfo(data?.kontaktInfo)}
+              </td>
+            </tr>
+          </tbody>
+        </table>
       </div>
     </div>
   );
@@ -24,36 +32,47 @@ export default function BrevAdresseKontaktinfo() {
 
 function renderKontaktinfo(kontaktInfo?: EnhetKontaktInfo) {
   if (!kontaktInfo) return null;
-  return (
-    <div className={"flex flex-col"}>
-      {kontaktInfo?.navn && <span>{kontaktInfo?.navn}</span>}
-      {renderAdresse(kontaktInfo.postadresse)}
-    </div>
-  );
+
+  return renderAdresse(kontaktInfo.postadresse, kontaktInfo.navn);
 }
-function renderAdresse(adresse?: Adresse) {
-  if (!adresse) return null;
-  const adresseFull =
-    adresse.adresselinje1 +
-    adresse.adresselinje2 +
-    adresse.adresselinje3 +
-    adresse.adresselinje4;
+
+function buildAdresseLines(adresse?: Adresse): string[] {
+  if (!adresse) return [];
+
+  const lines = [
+    adresse.bruksenhetsnummer
+      ? `Bolignummer ${adresse.bruksenhetsnummer}`
+      : null,
+    adresse.adresselinje1,
+    adresse.adresselinje2,
+    adresse.adresselinje3,
+    adresse.adresselinje4,
+  ].filter((line): line is string => Boolean(line && line.trim()));
+
+  const adresseFull = lines.join("");
   const adresseInneholdPoststed =
-    adresseFull && adresse?.poststed && adresseFull.includes(adresse?.poststed);
+    adresseFull && adresse.poststed && adresseFull.includes(adresse.poststed);
+
+  if (adresse.postnummer && !adresseInneholdPoststed) {
+    lines.push(`${adresse.postnummer} ${adresse.poststed ?? ""}`.trim());
+  }
+
+  return lines;
+}
+
+function renderAdresse(adresse?: Adresse, navn?: string) {
+  const lines = buildAdresseLines(adresse);
+  const allLines = [navn, ...lines].filter((line): line is string =>
+    Boolean(line && line.trim()),
+  );
+
+  if (allLines.length === 0) return null;
+
   return (
-    <div className={"flex flex-col"}>
-      <span>
-        {adresse?.bruksenhetsnummer
-          ? `Bolignummer ${adresse?.bruksenhetsnummer}`
-          : ""}
-      </span>
-      {adresse?.adresselinje1 && <span>{adresse?.adresselinje1}</span>}
-      {adresse?.adresselinje2 && <span>{adresse?.adresselinje2}</span>}
-      {adresse?.adresselinje3 && <span>{adresse?.adresselinje3}</span>}
-      {adresse?.adresselinje4 && <span>{adresse?.adresselinje4}</span>}
-      {adresse?.postnummer && !adresseInneholdPoststed && (
-        <span>{adresse?.postnummer + " " + adresse?.poststed}</span>
-      )}
-    </div>
+    <address>
+      {allLines.map((line, index) => (
+        <div key={`${line}-${index}`}>{line}</div>
+      ))}
+    </address>
   );
 }

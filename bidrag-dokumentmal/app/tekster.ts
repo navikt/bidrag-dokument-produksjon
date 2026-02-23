@@ -14,6 +14,7 @@ export default {
     forskudd: "Forskudd, saksbehandlingsnotat",
     særbidrag: "Særbidrag, saksbehandlingsnotat",
     bidrag: "Bidrag, saksbehandlingsnotat",
+    fritekst: "Fritekstbrev",
     barnISaken: "Barn i saken",
     boforhold: {
       tittel: "Boforhold",

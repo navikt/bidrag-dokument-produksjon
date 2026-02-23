@@ -29,36 +29,39 @@ export const DataViewTable: React.FC<DataViewTableProps> = ({
   return (
     <div className={className} style={{ width: width }}>
       {title && <h4>{title}</h4>}
-      <table style={{ borderSpacing: 0 }}>
+      <table className="w-full" style={{ borderCollapse: "collapse" }}>
         <tbody>
           {data.map((row, rowIndex) => (
-            <>
-              <tr
-                key={rowIndex + "-" + row.value + "-" + title + "-" + row.label}
-              >
+            <React.Fragment
+              key={rowIndex + "-" + row.value + "-" + title + "-" + row.label}
+            >
+              <tr>
                 {row.label && (
-                  <td
+                  <th
                     style={{
-                      verticalAlign: "text-top",
                       width: labelColWidth,
                       paddingRight: gap,
                       fontWeight: row.labelBold ? "bold" : "normal",
+                      textAlign: "left",
+                      verticalAlign: "top",
                     }}
                   >
-                    {row.label}:{" "}
-                  </td>
+                    {row.label}:
+                  </th>
                 )}
-                <td>
+                <td style={{ verticalAlign: "top" }}>
                   <>{row.value}</>
+                  {harResultat && row.result && (
+                    <span style={{ marginLeft: "4px" }}>= {row.result}</span>
+                  )}
                 </td>
-                {harResultat && row.result && <td>= {row.result}</td>}
               </tr>
               {row.additionalInfo && (
-                <tr aria-colspan={2} key={rowIndex + "2"}>
-                  <td colSpan={2}>{row.additionalInfo}</td>
+                <tr>
+                  <td colSpan={row.label ? 2 : 1}>{row.additionalInfo}</td>
                 </tr>
               )}
-            </>
+            </React.Fragment>
           ))}
         </tbody>
       </table>
