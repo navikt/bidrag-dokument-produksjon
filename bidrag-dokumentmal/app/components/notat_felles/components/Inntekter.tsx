@@ -10,7 +10,11 @@ import {
 import { deductDays, formatPeriode, sortByAge } from "~/utils/date-utils";
 import KildeIcon from "~/components/KildeIcon";
 import { groupBy, hasValue } from "~/utils/array-utils";
-import { formatterBeløp, sammenlignRoller } from "~/utils/visningsnavn";
+import {
+  formatterBeløp,
+  sammenlignRoller,
+  formatterProsent,
+} from "~/utils/visningsnavn";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import elementIds from "~/utils/elementIds";
 import {
@@ -280,6 +284,7 @@ function InntektPerBarnTable({
                                 {
                                   content: d.beløpstypeVisningsnavn,
                                 },
+                                { content: formatterProsent(d.skattefaktor) },
                                 { content: formatterBeløp(d.beløp) },
                               ]
                             : [{ content: formatterBeløp(d.beløp) }],
