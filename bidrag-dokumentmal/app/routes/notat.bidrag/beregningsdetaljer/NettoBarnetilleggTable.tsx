@@ -51,7 +51,7 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
               width: "50px",
             },
             {
-              name: "Skatteprosent",
+              name: "Skattesats",
               width: "50px",
             },
           ].filter((h) => h != null) as TableHeader[],
