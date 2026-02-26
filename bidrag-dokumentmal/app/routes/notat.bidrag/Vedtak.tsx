@@ -2,6 +2,7 @@ import {
   DokumentmalResultatBidragsberegningBarnDto,
   Samvaersklasse,
   ResultatBarnebidragsberegningPeriodeDto,
+  DokumentmalPersonDto,
 } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
@@ -268,12 +269,14 @@ function VedtakTable({
   function opprettTabelldata(
     erDirektAvslag: boolean,
     perioder: ResultatBarnebidragsberegningPeriodeDto[],
+    gjelderBarn: DokumentmalPersonDto,
   ) {
     if (erDirektAvslag) {
+      const erOpphørAvStønad = erOpphør || gjelderBarn.harLøpendeBidrag == true;
       return {
         headers: headersAvslag(),
         rows: perioder.map((d) => ({
-          columns: contentAvslag(d, erOpphør),
+          columns: contentAvslag(d, erOpphørAvStønad),
         })),
       };
     } else {
@@ -352,7 +355,11 @@ function VedtakTable({
           const ingenFFSlåttUtForRevurderingsbarn =
             value[0].erAvvistRevurdering;
           const erAvvisning = value[0].erAvvisning;
-          const tableData = opprettTabelldata(erDirektAvslag, perioder);
+          const tableData = opprettTabelldata(
+            erDirektAvslag,
+            perioder,
+            gjelderBarn,
+          );
 
           return (
             <>
