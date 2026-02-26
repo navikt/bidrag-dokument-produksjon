@@ -2,6 +2,7 @@ import {
   DokumentmalResultatBidragsberegningBarnDto,
   Samvaersklasse,
   ResultatBarnebidragsberegningPeriodeDto,
+  DokumentmalPersonDto,
 } from "~/types/Api";
 import { useNotatFelles } from "~/components/notat_felles/NotatContext";
 import { VedtakFattetDetaljer } from "~/components/notat_felles/components/VedtakFattetDetaljer";
@@ -136,13 +137,15 @@ function VedtakTableAvslag({
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
+
+        const erOpphørAvStønad =
+          erOpphør || gjelderBarn.harLøpendeBidrag == true;
         const tableData: TableData = {
           headers: headersAvslag(),
           rows: perioder.map((d) => ({
-            columns: contentAvslag(d, erOpphør),
+            columns: contentAvslag(d, erOpphørAvStønad),
           })),
         };
-        console.log("HERE");
         return (
           <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />
@@ -266,12 +269,14 @@ function VedtakTable({
   function opprettTabelldata(
     erDirektAvslag: boolean,
     perioder: ResultatBarnebidragsberegningPeriodeDto[],
+    gjelderBarn: DokumentmalPersonDto,
   ) {
     if (erDirektAvslag) {
+      const erOpphørAvStønad = erOpphør || gjelderBarn.harLøpendeBidrag == true;
       return {
         headers: headersAvslag(),
         rows: perioder.map((d) => ({
-          columns: contentAvslag(d, erOpphør),
+          columns: contentAvslag(d, erOpphørAvStønad),
         })),
       };
     } else {
@@ -350,7 +355,11 @@ function VedtakTable({
           const ingenFFSlåttUtForRevurderingsbarn =
             value[0].erAvvistRevurdering;
           const erAvvisning = value[0].erAvvisning;
-          const tableData = opprettTabelldata(erDirektAvslag, perioder);
+          const tableData = opprettTabelldata(
+            erDirektAvslag,
+            perioder,
+            gjelderBarn,
+          );
 
           return (
             <>
