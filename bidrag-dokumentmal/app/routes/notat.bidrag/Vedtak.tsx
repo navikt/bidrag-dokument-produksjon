@@ -136,13 +136,15 @@ function VedtakTableAvslag({
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
+
+        const erOpphørAvStønad =
+          erOpphør || gjelderBarn.harLøpendeBidrag == true;
         const tableData: TableData = {
           headers: headersAvslag(),
           rows: perioder.map((d) => ({
-            columns: contentAvslag(d, erOpphør),
+            columns: contentAvslag(d, erOpphørAvStønad),
           })),
         };
-        console.log("HERE");
         return (
           <div key={key} className="table_container">
             <TableGjelderBarn gjelderBarn={gjelderBarn} />

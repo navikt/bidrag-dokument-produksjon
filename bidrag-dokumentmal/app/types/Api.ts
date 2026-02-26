@@ -53,6 +53,7 @@ export enum Behandlingstype {
   SOKNAD = "SØKNAD",
   INNKREVINGSGRUNNLAG = "INNKREVINGSGRUNNLAG",
   FORHOLDSMESSIG_FORDELING = "FORHOLDSMESSIG_FORDELING",
+  FORHOLDSMESSIG_FORDELING_KLAGE = "FORHOLDSMESSIG_FORDELING_KLAGE",
   ALDERSJUSTERING = "ALDERSJUSTERING",
   INDEKSREGULERING = "INDEKSREGULERING",
   KLAGE_BEGRENSET_SATS = "KLAGE_BEGRENSET_SATS",
@@ -229,6 +230,7 @@ export interface DelberegningUtgift {
 export interface DokumentmalBarnetilleggDetaljerDto {
   bruttoBeløp: number;
   nettoBeløp: number;
+  skattefaktor?: number;
   visningsnavn: string;
 }
 
@@ -319,6 +321,8 @@ export interface DokumentmalPersonDto {
   saksnummer?: string;
   bidragsmottakerIdent?: string;
   revurdering: boolean;
+  harLøpendeForskudd?: boolean;
+  harLøpendeBidrag?: boolean;
 }
 
 export interface DokumentmalResultatBeregningInntekterDto {
@@ -326,10 +330,10 @@ export interface DokumentmalResultatBeregningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  inntektBarnMånedlig?: number;
-  inntektBMMånedlig?: number;
-  inntektBPMånedlig?: number;
   totalEndeligInntekt: number;
+  inntektBPMånedlig?: number;
+  inntektBMMånedlig?: number;
+  inntektBarnMånedlig?: number;
 }
 
 export type DokumentmalResultatBidragsberegningBarnDto = UtilRequiredKeys<VedtakResultatInnhold, "type"> & {
@@ -369,9 +373,9 @@ export interface DokumentmalSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
+  skattMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattMånedsbeløp: number;
   skattAlminneligInntektMånedsbeløp: number;
 }
 
@@ -626,8 +630,8 @@ export interface NotatBehandlingDetaljerDto {
   kategoriVisningsnavn?: string;
   vedtakstypeVisningsnavn?: string;
   avslagVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
   erAvvisning: boolean;
+  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatBeregnetBidragPerBarnDto {
@@ -746,15 +750,16 @@ export interface NotatInntektDto {
   gjelderBarn?: DokumentmalPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
-  visningsnavn: string;
-  beløpstypeVisningsnavn: string;
+  skattefaktor?: number;
   /** Avrundet månedsbeløp for barnetillegg */
   beløpMånedDagsats?: number;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
-  beløpstype?: InntektBelopstype;
+  visningsnavn: string;
+  beløpstypeVisningsnavn: string;
   /** Avrundet dagsats for barnetillegg */
   dagsats?: number;
+  beløpstype?: InntektBelopstype;
 }
 
 export interface NotatInntekterDto {
@@ -773,6 +778,7 @@ export interface NotatInntektspostDto {
   inntektstype?: Inntektstype;
   beløp: number;
   beløpstype: InntektBelopstype;
+  skattefaktor?: number;
   visningsnavn?: string;
 }
 
@@ -866,8 +872,8 @@ export type NotatResultatSaerbidragsberegningDto = UtilRequiredKeys<VedtakResult
   enesteVoksenIHusstandenErEgetBarn?: boolean;
   erDirekteAvslag: boolean;
   bpHarEvne: boolean;
-  resultatVisningsnavn: string;
   beløpSomInnkreves: number;
+  resultatVisningsnavn: string;
 };
 
 export interface NotatSamvaerBarnDto {
@@ -1149,11 +1155,11 @@ export interface NotatVirkningstidspunktBarnDto {
    * @deprecated
    */
   notat: NotatBegrunnelseDto;
-  behandlingstypeVisningsnavn?: string;
-  årsakVisningsnavn?: string;
   avslagVisningsnavn?: string;
-  avslagVisningsnavnUtenPrefiks?: string;
   erAvvisning: boolean;
+  årsakVisningsnavn?: string;
+  behandlingstypeVisningsnavn?: string;
+  avslagVisningsnavnUtenPrefiks?: string;
 }
 
 export interface NotatVirkningstidspunktDto {
@@ -1304,7 +1310,7 @@ export enum Resultatkode {
   FULLT_UNDERHOLDT_AV_OFFENTLIG = "FULLT_UNDERHOLDT_AV_OFFENTLIG",
   IKKE_OPPHOLD_I_RIKET = "IKKE_OPPHOLD_I_RIKET",
   MANGLENDE_DOKUMENTASJON = "MANGLENDE_DOKUMENTASJON",
-  PARTENEANSESABOMEDBEGGEFORELDRE = "PARTENE_ANSES_Å_BO_MED_BEGGE_FORELDRE",
+  BARNETANSESABOSAMMENMEDBEGGEFORELDRE = "BARNET_ANSES_Å_BO_SAMMEN_MED_BEGGE_FORELDRE",
   OPPHOLD_I_UTLANDET = "OPPHOLD_I_UTLANDET",
   UTENLANDSK_YTELSE = "UTENLANDSK_YTELSE",
   AVSLAG_PRIVAT_AVTALE_BIDRAG = "AVSLAG_PRIVAT_AVTALE_BIDRAG",
@@ -1897,9 +1903,9 @@ export interface Skatt {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
+  skattMånedsbeløp: number;
   trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
-  skattMånedsbeløp: number;
   skattAlminneligInntektMånedsbeløp: number;
 }
 
