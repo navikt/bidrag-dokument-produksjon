@@ -321,6 +321,8 @@ export interface DokumentmalPersonDto {
   saksnummer?: string;
   bidragsmottakerIdent?: string;
   revurdering: boolean;
+  harLøpendeForskudd?: boolean;
+  harLøpendeBidrag?: boolean;
 }
 
 export interface DokumentmalResultatBeregningInntekterDto {
@@ -328,10 +330,10 @@ export interface DokumentmalResultatBeregningInntekterDto {
   inntektBP?: number;
   inntektBarn?: number;
   barnEndeligInntekt?: number;
-  inntektBarnMånedlig?: number;
   totalEndeligInntekt: number;
-  inntektBMMånedlig?: number;
   inntektBPMånedlig?: number;
+  inntektBMMånedlig?: number;
+  inntektBarnMånedlig?: number;
 }
 
 export type DokumentmalResultatBidragsberegningBarnDto = UtilRequiredKeys<VedtakResultatInnhold, "type"> & {
@@ -371,9 +373,9 @@ export interface DokumentmalSkattBeregning {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  trinnskattMånedsbeløp: number;
-  trygdeavgiftMånedsbeløp: number;
   skattMånedsbeløp: number;
+  trygdeavgiftMånedsbeløp: number;
+  trinnskattMånedsbeløp: number;
   skattAlminneligInntektMånedsbeløp: number;
 }
 
@@ -625,10 +627,10 @@ export interface NotatBehandlingDetaljerDto {
    * @deprecated
    */
   avslag?: Resultatkode;
-  kategoriVisningsnavn?: string;
-  vedtakstypeVisningsnavn?: string;
   avslagVisningsnavn?: string;
   erAvvisning: boolean;
+  kategoriVisningsnavn?: string;
+  vedtakstypeVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
 }
 
@@ -693,8 +695,8 @@ export interface NotatGebyrDetaljerDto {
   beløpGebyrsats: number;
   /** @deprecated */
   rolle: DokumentmalPersonDto;
-  gebyrResultatVisningsnavn: string;
   erManueltOverstyrt: boolean;
+  gebyrResultatVisningsnavn: string;
 }
 
 export interface NotatGebyrInntektDto {
@@ -726,8 +728,8 @@ export interface NotatGebyrSoknadDetaljerDto {
   behandlingstype?: Behandlingstype;
   behandlingstema?: Behandlingstema;
   behandlingstypeVisningsnavn?: string;
-  behandlingstemaVisningsnavn?: string;
   søktAvTypeVisningsnavn?: string;
+  behandlingstemaVisningsnavn?: string;
 }
 
 export interface NotatGebyrV2Dto {
@@ -756,8 +758,8 @@ export interface NotatInntektDto {
   beløpMånedDagsats?: number;
   /** Avrundet månedsbeløp for barnetillegg */
   månedsbeløp?: number;
-  beløpstypeVisningsnavn: string;
   visningsnavn: string;
+  beløpstypeVisningsnavn: string;
 }
 
 export interface NotatInntekterDto {
@@ -1057,6 +1059,7 @@ export interface NotatVedtakDetaljerDto {
 
 export interface NotatVirkningstidspunktBarnDto {
   rolle: DokumentmalPersonDto;
+  stønadstype?: Stonadstype;
   behandlingstype?: Behandlingstype;
   /**
    * Bruk behandlingstype
@@ -1153,10 +1156,10 @@ export interface NotatVirkningstidspunktBarnDto {
    * @deprecated
    */
   notat: NotatBegrunnelseDto;
-  årsakVisningsnavn?: string;
-  behandlingstypeVisningsnavn?: string;
   avslagVisningsnavn?: string;
   erAvvisning: boolean;
+  behandlingstypeVisningsnavn?: string;
+  årsakVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
 }
 
@@ -1308,7 +1311,7 @@ export enum Resultatkode {
   FULLT_UNDERHOLDT_AV_OFFENTLIG = "FULLT_UNDERHOLDT_AV_OFFENTLIG",
   IKKE_OPPHOLD_I_RIKET = "IKKE_OPPHOLD_I_RIKET",
   MANGLENDE_DOKUMENTASJON = "MANGLENDE_DOKUMENTASJON",
-  BARNET_BOR_SAMMEN_MED_BEGGE_FORELDRE = "BARNET_BOR_SAMMEN_MED_BEGGE_FORELDRE",
+  BARNETANSESABOSAMMENMEDBEGGEFORELDRE = "BARNET_ANSES_Å_BO_SAMMEN_MED_BEGGE_FORELDRE",
   OPPHOLD_I_UTLANDET = "OPPHOLD_I_UTLANDET",
   UTENLANDSK_YTELSE = "UTENLANDSK_YTELSE",
   AVSLAG_PRIVAT_AVTALE_BIDRAG = "AVSLAG_PRIVAT_AVTALE_BIDRAG",
@@ -1901,9 +1904,9 @@ export interface Skatt {
   skattAlminneligInntekt: number;
   trinnskatt: number;
   trygdeavgift: number;
-  trinnskattMånedsbeløp: number;
-  trygdeavgiftMånedsbeløp: number;
   skattMånedsbeløp: number;
+  trygdeavgiftMånedsbeløp: number;
+  trinnskattMånedsbeløp: number;
   skattAlminneligInntektMånedsbeløp: number;
 }
 
