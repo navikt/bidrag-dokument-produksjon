@@ -47,11 +47,11 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
               width: "50px",
             },
             {
-              name: "Netto",
+              name: "Skattesats",
               width: "50px",
             },
             {
-              name: "Skattesats",
+              name: "Netto",
               width: "50px",
             },
           ].filter((h) => h != null) as TableHeader[],
@@ -68,12 +68,11 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
                       ? "Ikke relevant"
                       : formatterBeløpForBeregning(bt.bruttoBeløp, true),
                 },
-
-                {
-                  content: formatterBeløpForBeregning(bt.nettoBeløp, true),
-                },
                 {
                   content: formatterProsent(bt.skattefaktor),
+                },
+                {
+                  content: formatterBeløpForBeregning(bt.nettoBeløp, true),
                 },
               ].filter((d) => d != null) as TableColumn[],
             }))
@@ -89,13 +88,14 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
                     ),
                   },
                   {
+                    content: "",
+                  },
+                  {
                     content: formatterBeløpForBeregning(
                       barnetillegg!.sumNettoBeløp,
                     ),
                   },
-                  {
-                    content: "",
-                  },
+
                 ] as TableColumn[],
               },
             ]),
