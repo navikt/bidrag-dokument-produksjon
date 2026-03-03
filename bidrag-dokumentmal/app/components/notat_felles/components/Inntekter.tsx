@@ -1,10 +1,10 @@
 import {
   DelberegningSumInntekt,
+  DokumentmalPersonDto,
   Inntektsrapportering,
   NotatBeregnetInntektDto,
   NotatInntektDto,
   NotatMalType,
-  DokumentmalPersonDto,
   Rolletype,
 } from "~/types/Api";
 import { deductDays, formatPeriode, sortByAge } from "~/utils/date-utils";
@@ -12,8 +12,8 @@ import KildeIcon from "~/components/KildeIcon";
 import { groupBy, hasValue } from "~/utils/array-utils";
 import {
   formatterBeløp,
-  sammenlignRoller,
   formatterProsent,
+  sammenlignRoller,
 } from "~/utils/visningsnavn";
 import NotatBegrunnelse from "~/components/NotatBegrunnelse";
 import elementIds from "~/utils/elementIds";
@@ -224,6 +224,8 @@ function InntektPerBarnTable({
 }: InntektTableProps) {
   const inntekter = data.filter((d) => !bareMedIBeregning || d.medIBeregning);
   const { styling } = useTheme();
+  const { type } = useNotatFelles();
+  const erBidrag = type === NotatMalType.BIDRAG;
   if (inntekter.length == 0) return null;
 
   const inntekterBarn = groupBy(data, (d) => d.gjelderBarn?.ident!);
@@ -253,6 +255,7 @@ function InntektPerBarnTable({
                 data={{
                   headers: getInntektTableHeaders(
                     erBarnetillegg,
+                    erBidrag,
                     true,
                     styling,
                   ),
@@ -275,7 +278,7 @@ function InntektPerBarnTable({
                             content: formatPeriode(periode!.fom, periode!.til),
                           },
                           { content: <KildeIcon kilde={d.kilde} /> },
-                          erBarnetillegg
+                          erBarnetillegg && erBidrag
                             ? [
                                 { content: visningsnavnInntektstype },
                                 {
@@ -287,7 +290,18 @@ function InntektPerBarnTable({
                                 { content: formatterProsent(d.skattefaktor) },
                                 { content: formatterBeløp(d.beløp) },
                               ]
-                            : [{ content: formatterBeløp(d.beløp) }],
+                            : erBarnetillegg
+                              ? [
+                                  { content: visningsnavnInntektstype },
+                                  {
+                                    content: Number(d.beløpMånedDagsats),
+                                  },
+                                  {
+                                    content: d.beløpstypeVisningsnavn,
+                                  },
+                                  { content: formatterBeløp(d.beløp) },
+                                ]
+                              : [{ content: formatterBeløp(d.beløp) }],
                         ]
                           .filter((d) => typeof d != "boolean")
                           .flatMap((d) => d as TableColumn),
