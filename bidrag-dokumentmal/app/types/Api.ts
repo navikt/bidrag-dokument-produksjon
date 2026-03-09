@@ -374,8 +374,8 @@ export interface DokumentmalSkattBeregning {
   trinnskatt: number;
   trygdeavgift: number;
   skattMånedsbeløp: number;
-  trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  trinnskattMånedsbeløp: number;
   skattAlminneligInntektMånedsbeløp: number;
 }
 
@@ -627,10 +627,10 @@ export interface NotatBehandlingDetaljerDto {
    * @deprecated
    */
   avslag?: Resultatkode;
-  kategoriVisningsnavn?: string;
-  vedtakstypeVisningsnavn?: string;
   avslagVisningsnavn?: string;
   erAvvisning: boolean;
+  kategoriVisningsnavn?: string;
+  vedtakstypeVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
 }
 
@@ -695,8 +695,8 @@ export interface NotatGebyrDetaljerDto {
   beløpGebyrsats: number;
   /** @deprecated */
   rolle: DokumentmalPersonDto;
-  gebyrResultatVisningsnavn: string;
   erManueltOverstyrt: boolean;
+  gebyrResultatVisningsnavn: string;
 }
 
 export interface NotatGebyrInntektDto {
@@ -750,6 +750,9 @@ export interface NotatInntektDto {
   gjelderBarn?: DokumentmalPersonDto;
   historisk: boolean;
   inntektsposter: NotatInntektspostDto[];
+  /** Avrundet dagsats for barnetillegg */
+  dagsats?: number;
+  beløpstype?: InntektBelopstype;
   skattefaktor?: number;
   /** Avrundet månedsbeløp for barnetillegg */
   beløpMånedDagsats?: number;
@@ -757,9 +760,6 @@ export interface NotatInntektDto {
   månedsbeløp?: number;
   visningsnavn: string;
   beløpstypeVisningsnavn: string;
-  /** Avrundet dagsats for barnetillegg */
-  dagsats?: number;
-  beløpstype?: InntektBelopstype;
 }
 
 export interface NotatInntekterDto {
@@ -1059,6 +1059,7 @@ export interface NotatVedtakDetaljerDto {
 
 export interface NotatVirkningstidspunktBarnDto {
   rolle: DokumentmalPersonDto;
+  stønadstype?: Stonadstype;
   behandlingstype?: Behandlingstype;
   /**
    * Bruk behandlingstype
@@ -1157,8 +1158,8 @@ export interface NotatVirkningstidspunktBarnDto {
   notat: NotatBegrunnelseDto;
   avslagVisningsnavn?: string;
   erAvvisning: boolean;
-  årsakVisningsnavn?: string;
   behandlingstypeVisningsnavn?: string;
+  årsakVisningsnavn?: string;
   avslagVisningsnavnUtenPrefiks?: string;
 }
 
@@ -1904,8 +1905,8 @@ export interface Skatt {
   trinnskatt: number;
   trygdeavgift: number;
   skattMånedsbeløp: number;
-  trinnskattMånedsbeløp: number;
   trygdeavgiftMånedsbeløp: number;
+  trinnskattMånedsbeløp: number;
   skattAlminneligInntektMånedsbeløp: number;
 }
 
