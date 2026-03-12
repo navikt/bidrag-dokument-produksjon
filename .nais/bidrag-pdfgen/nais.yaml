@@ -57,3 +57,4 @@ spec:
    - gotenberg
    - --pdfengines-engines=libreoffice-pdfengine
    - --api-port=8080
+   - --chromium-auto-start=true
