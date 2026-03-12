@@ -42,6 +42,7 @@ class ProduserNotatApi(
             "notat",
             payload.type.name.lowercase(),
             commonObjectmapper.writeValueAsString(payload),
+            skipNetwork = skipNetwork,
         )
     }
 
