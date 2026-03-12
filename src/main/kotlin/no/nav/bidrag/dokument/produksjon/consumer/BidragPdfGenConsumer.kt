@@ -22,6 +22,7 @@ private val log = KotlinLogging.logger {}
 data class Configuration(
     val scale: BigDecimal = BigDecimal.ONE,
     val convertToPDFA: Boolean = false,
+    val skipNetwork: Boolean = true,
 )
 
 @Component
