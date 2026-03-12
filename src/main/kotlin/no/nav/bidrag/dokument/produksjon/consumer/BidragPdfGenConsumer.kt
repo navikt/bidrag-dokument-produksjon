@@ -93,6 +93,7 @@ class BidragPdfGenConsumer(
             add("pdfua", "true")
         }
         add("emulatedMediaType", "print")
+        add("skipNetworkIdleEvent", "true")
         add("preferCssPageSize", "true")
         add("scale", configuration.scale.toString())
         return this
