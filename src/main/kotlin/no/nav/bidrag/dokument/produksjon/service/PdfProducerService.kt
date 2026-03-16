@@ -116,6 +116,7 @@ class PdfProducerService(
         dokumentmal: String,
         payload: String?,
         useHottemplate: Boolean = false,
+        skipNetwork: Boolean = false,
     ): ResponseEntity<ByteArray> {
         if (payload == null && !useHottemplate) {
             throw RuntimeException(
@@ -130,7 +131,7 @@ class PdfProducerService(
                 val bytes =
                     bidragPdfGenConsumer.produserPdf(
                         document.fjernKontrollTegn(),
-                        Configuration(BigDecimal(1), false),
+                        Configuration(BigDecimal(1), false, skipNetwork = skipNetwork),
                     )
                 log.info {
                     "Done generating PDF for category $category and template $dokumentmal in ${System.currentTimeMillis() - startTime}ms"
