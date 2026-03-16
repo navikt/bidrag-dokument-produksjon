@@ -91,6 +91,7 @@ export default {
       beløp: "Beløp",
       beløpMnd: "Beløp (mnd)",
       beløpstype: "Beløpstype",
+      skattesats: "Skattesats",
       beløp12Mnd: "Beløp (12mnd)",
     },
     arbeidsforhold: {

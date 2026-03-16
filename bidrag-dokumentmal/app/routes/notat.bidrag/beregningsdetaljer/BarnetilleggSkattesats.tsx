@@ -69,7 +69,7 @@ export const BarnetilleggSkattesats = ({ rolle }: { rolle: Rolletype }) => {
             ),
           },
           {
-            label: "Skatteprosent",
+            label: "Skattesats",
             textRight: false,
             value: `${formatterBeløpForBeregning(barnetilleggSkattesats.sumSkatt, true)} / ${formatterBeløpForBeregning(barnetilleggSkattesats.sumInntekt)} = ${formatterProsent(barnetilleggSkattesats.skattFaktor)}`,
           },

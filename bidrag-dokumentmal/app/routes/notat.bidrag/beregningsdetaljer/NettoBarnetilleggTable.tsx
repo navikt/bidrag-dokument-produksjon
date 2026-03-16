@@ -2,6 +2,7 @@ import { DataViewTable, DataViewTableData } from "~/components/DataViewTable";
 import {
   formatterBeløpForBeregning,
   rolleTilVisningsnavn,
+  formatterProsent,
 } from "~/utils/visningsnavn";
 import {
   DelberegningUnderholdskostnad,
@@ -46,6 +47,10 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
               width: "50px",
             },
             {
+              name: "Skattesats",
+              width: "50px",
+            },
+            {
               name: "Netto",
               width: "50px",
             },
@@ -64,6 +69,9 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
                       : formatterBeløpForBeregning(bt.bruttoBeløp, true),
                 },
                 {
+                  content: formatterProsent(bt.skattefaktor),
+                },
+                {
                   content: formatterBeløpForBeregning(bt.nettoBeløp, true),
                 },
               ].filter((d) => d != null) as TableColumn[],
@@ -80,10 +88,14 @@ export const NettoBarnetilleggTable = ({ rolle }: { rolle: Rolletype }) => {
                     ),
                   },
                   {
+                    content: "",
+                  },
+                  {
                     content: formatterBeløpForBeregning(
                       barnetillegg!.sumNettoBeløp,
                     ),
                   },
+
                 ] as TableColumn[],
               },
             ]),

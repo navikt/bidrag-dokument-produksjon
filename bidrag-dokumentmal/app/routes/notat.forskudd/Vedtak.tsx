@@ -39,6 +39,8 @@ function VedtakTableAvslag({
       {groupBy(data, (d) => d.barn?.ident!).map(([key, value]) => {
         const gjelderBarn = value[0].barn!;
         const perioder = value[0].perioder;
+        const erOpphørAvStønad =
+          erOpphør || gjelderBarn.harLøpendeForskudd == true;
         const tableData: TableData = {
           headers: [
             { name: "Periode", width: "170px" },
@@ -48,7 +50,7 @@ function VedtakTableAvslag({
           rows: perioder.map((d) => ({
             columns: [
               { content: formatPeriode(d.periode!.fom, d.periode!.til) },
-              { content: erOpphør ? "Opphør" : "Avslag" },
+              { content: erOpphørAvStønad ? "Opphør" : "Avslag" },
               { content: d.resultatKodeVisningsnavn },
             ],
           })),
