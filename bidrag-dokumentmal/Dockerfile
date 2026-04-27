@@ -1,30 +1,39 @@
-FROM node:23 AS build
-ENV NODE_ENV production
+# syntax=docker/dockerfile:1.7
+
+FROM node:22-alpine3.21 AS build
+ENV NODE_ENV=production
 LABEL maintainer="Team Bidrag"
 WORKDIR /app
 
-RUN npm set registry https://registry.npmjs.org/
-RUN npm set @navikt:registry https://npm.pkg.github.com
-RUN --mount=type=secret,id=reader_token \
-    npm config set //npm.pkg.github.com/:_authToken=$(cat /run/secrets/reader_token)
-
 COPY package*.json ./
-RUN npm ci --include=dev
+RUN --mount=type=cache,target=/root/.npm \
+    --mount=type=secret,id=reader_token \
+    TOKEN="$(cat /run/secrets/reader_token)" && \
+    printf '%s\n' \
+      'registry=https://registry.npmjs.org/' \
+      '@navikt:registry=https://npm.pkg.github.com' \
+      "//npm.pkg.github.com/:_authToken=${TOKEN}" > /root/.npmrc && \
+    npm ci --include=dev --legacy-peer-deps && \
+    rm -f /root/.npmrc
+
+
 COPY . .
 RUN npm run build
+RUN npm prune --omit=dev --legacy-peer-deps && npm cache clean --force
 
-FROM node:current-alpine3.23
-RUN npm set registry https://registry.npmjs.org/
-RUN npm set @navikt:registry https://npm.pkg.github.com
-RUN --mount=type=secret,id=reader_token \
-    npm config set //npm.pkg.github.com/:_authToken=$(cat /run/secrets/reader_token)
+FROM node:22-alpine3.22 AS runtime
+ENV NODE_ENV=production
+ENV PORT=8080
 
 WORKDIR /app
-COPY --from=build /app/package*.json ./
-RUN npm ci --omit=dev
-COPY --from=build /app/build ./build
-COPY --from=build /app/app/style ./app/style
-COPY --from=build /app/public ./public
-ENV PORT 8080
+COPY --from=build --chown=node:node /app/package*.json ./
+COPY --from=build --chown=node:node /app/node_modules ./node_modules
+COPY --from=build --chown=node:node /app/build ./build
+COPY --from=build --chown=node:node /app/app/style ./app/style
+COPY --from=build --chown=node:node /app/public ./public
 
-CMD ["npm", "start"]
+USER node
+
+EXPOSE 8080
+
+CMD ["./node_modules/.bin/remix-serve", "./build/server/index.js"]
