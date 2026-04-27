@@ -13,7 +13,7 @@ RUN npm ci --include=dev
 COPY . .
 RUN npm run build
 
-FROM node:current-alpine3.22
+FROM node:current-alpine3.23
 RUN npm set registry https://registry.npmjs.org/
 RUN npm set @navikt:registry https://npm.pkg.github.com
 RUN --mount=type=secret,id=reader_token \
