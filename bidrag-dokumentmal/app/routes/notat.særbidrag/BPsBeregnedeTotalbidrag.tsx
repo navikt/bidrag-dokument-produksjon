@@ -50,10 +50,13 @@ export const BPsBeregnedeTotalbidrag = ({
                             title={`Reduksjon av BPs andel av U`}
                             data={[
                               {
-                                label: `Beregnet bidrag`,
+                                label: `Beregnet bidrag ${
+                                  row.bidragJustertForNettoBarnetilleggBP &&
+                                  "(justert opp til BPs netto barnetillegg)"
+                                }`,
 
                                 value: formatterBeløpForBeregning(
-                                  row.beregnetBeløp,
+                                  row.bruttoBidragEtterBarnetilleggBM,
                                   true,
                                 ),
                               },
@@ -63,7 +66,7 @@ export const BPsBeregnedeTotalbidrag = ({
                                   <div>
                                     -{" "}
                                     {formatterBeløpForBeregning(
-                                      row.faktiskBeløp,
+                                      row.bruttoBidragEtterBarnetilleggBP,
                                       true,
                                     )}
                                   </div>
