@@ -38,6 +38,9 @@ export const BPsBeregnedeTotalbidrag = ({
             .map(({ beregnetBidragPerBarn: row, personidentBarn }) => {
               const showBeregningAvU =
                 row.beregnetBidrag !== 0 || row.faktiskBeløp !== 0;
+              const erVedtakFraBBM =
+                row.erVedtakKildeBBM === undefined ||
+                row.erVedtakKildeBBM === true;
               return {
                 expandableContent: showBeregningAvU
                   ? [
@@ -51,13 +54,16 @@ export const BPsBeregnedeTotalbidrag = ({
                             data={[
                               {
                                 label: `Beregnet bidrag${
+                                  !erVedtakFraBBM &&
                                   row.bidragJustertForNettoBarnetilleggBP
                                     ? " (justert opp til BPs netto barnetillegg)"
                                     : ""
                                 }`,
 
                                 value: formatterBeløpForBeregning(
-                                  row.bruttoBidragEtterBarnetilleggBM,
+                                  erVedtakFraBBM
+                                    ? row.beregnetBeløp
+                                    : row.bruttoBidragEtterBarnetilleggBM,
                                   true,
                                 ),
                               },
@@ -67,7 +73,9 @@ export const BPsBeregnedeTotalbidrag = ({
                                   <div>
                                     -{" "}
                                     {formatterBeløpForBeregning(
-                                      row.bruttoBidragEtterBarnetilleggBP,
+                                      erVedtakFraBBM
+                                        ? row.faktiskBeløp
+                                        : row.bruttoBidragEtterBarnetilleggBP,
                                       true,
                                     )}
                                   </div>
