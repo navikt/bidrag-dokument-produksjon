@@ -53,7 +53,7 @@ export const BPsBeregnedeTotalbidrag = ({
                             title={`Reduksjon av BPs andel av U`}
                             data={[
                               {
-                                label: `Beregnet bidrag${
+                                label: `BPs andel av U${
                                   !erVedtakFraBBM &&
                                   row.bidragJustertForNettoBarnetilleggBP
                                     ? " (justert opp til BPs netto barnetillegg)"
