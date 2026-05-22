@@ -1,4 +1,4 @@
-FROM gotenberg/gotenberg:8.31.0-chromium@sha256:8293daafae0bfb13027071cf034ece4e1b1b1161a6ce10bb530f2ed8c8c2505c
+FROM gotenberg/gotenberg:8.32.0-chromium
 
 #RUN apt-get update -qq &&\
 #    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends -t trixie-backports libreoffice-l10n-nb &&\
