@@ -38,6 +38,9 @@ export const BPsBeregnedeTotalbidrag = ({
             .map(({ beregnetBidragPerBarn: row, personidentBarn }) => {
               const showBeregningAvU =
                 row.beregnetBidrag !== 0 || row.faktiskBeløp !== 0;
+              const erVedtakFraBBM =
+                row.erVedtakKildeBBM === undefined ||
+                row.erVedtakKildeBBM === true;
               return {
                 expandableContent: showBeregningAvU
                   ? [
@@ -50,10 +53,17 @@ export const BPsBeregnedeTotalbidrag = ({
                             title={`Reduksjon av BPs andel av U`}
                             data={[
                               {
-                                label: `Beregnet bidrag`,
+                                label: `BPs andel av U${
+                                  !erVedtakFraBBM &&
+                                  row.bidragJustertForNettoBarnetilleggBP
+                                    ? " (justert opp til BPs netto barnetillegg)"
+                                    : ""
+                                }`,
 
                                 value: formatterBeløpForBeregning(
-                                  row.beregnetBeløp,
+                                  erVedtakFraBBM
+                                    ? row.beregnetBeløp
+                                    : row.bruttoBidragEtterBarnetilleggBM,
                                   true,
                                 ),
                               },
@@ -63,7 +73,9 @@ export const BPsBeregnedeTotalbidrag = ({
                                   <div>
                                     -{" "}
                                     {formatterBeløpForBeregning(
-                                      row.faktiskBeløp,
+                                      erVedtakFraBBM
+                                        ? row.faktiskBeløp
+                                        : row.bruttoBidragEtterBarnetilleggBP,
                                       true,
                                     )}
                                   </div>

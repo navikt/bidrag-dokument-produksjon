@@ -15,7 +15,8 @@ spring:
       enabled: false
   jackson:
     deserialization:
-      READ_UNKNOWN_ENUM_VALUES_AS_NULL: true
+      fail-on-missing-creator-properties: false
+      fail-on-ignored-properties: false
   main:
     lazy-initialization: true
 
