@@ -26,7 +26,6 @@ export const BeregningForholdsmessigFordeling = () => {
     (sluttberegning.bpAndelAvUVedForholdsmessigFordelingFaktor &&
       sluttberegning.bpAndelAvUVedForholdsmessigFordelingFaktor < 1) ||
     forholdsmessigFordeling?.erForholdsmessigFordelt;
-  if (!erFF) return null;
   function renderResult() {
     if (sluttberegning.bidragJustertNedTil25ProsentAvInntekt) {
       return ` (redusert ned til 25% av inntekt)`;
@@ -64,10 +63,25 @@ export const BeregningForholdsmessigFordeling = () => {
   const bidragTilFordelingMinusUtlandsbidrag =
     forholdsmessigFordeling.sumBidragTilFordeling -
     forholdsmessigFordeling.sumBidragSomIkkeKanFordeles;
-  return (
-    <div className={"mt-2"}>
-      <ForholdsmessigFordelingBeregningAndreBarn />
-
+  const erRedusertEvne =
+    sluttberegning.bidragJustertNedTilEvne ||
+    sluttberegning.bidragJustertNedTil25ProsentAvInntekt;
+  function renderTableFFDetaljer() {
+    if (!erRedusertEvne) {
+      if (!erRedusertEvne) {
+        return (
+          <div>
+            Evnen på{" "}
+            {formatterBeløpForBeregning(delberegningBidragsevne.bidragsevne)} er
+            tilstrekkelig for å dekke total andel av U på{" "}
+            {formatterBeløpForBeregning(
+              forholdsmessigFordeling.sumBidragTilFordeling,
+            )}
+          </div>
+        );
+      }
+    }
+    return (
       <DataViewTable
         className={"mt-2"}
         title="Forholdsmessig fordeling"
@@ -111,6 +125,12 @@ export const BeregningForholdsmessigFordeling = () => {
           ].filter((d) => d != null) as DataViewTableData[]
         }
       />
+    );
+  }
+  return (
+    <div className={"mt-2"}>
+      <ForholdsmessigFordelingBeregningAndreBarn />
+      {renderTableFFDetaljer()}
     </div>
   );
 };
