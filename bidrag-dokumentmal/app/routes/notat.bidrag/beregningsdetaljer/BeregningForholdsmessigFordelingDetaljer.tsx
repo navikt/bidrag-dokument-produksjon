@@ -70,7 +70,7 @@ export const BeregningForholdsmessigFordeling = () => {
     if (!erRedusertEvne) {
       if (!erRedusertEvne) {
         return (
-          <div>
+          <div className={"mt-2"}>
             Evnen på{" "}
             {formatterBeløpForBeregning(delberegningBidragsevne.bidragsevne)} er
             tilstrekkelig for å dekke total andel av U på{" "}
