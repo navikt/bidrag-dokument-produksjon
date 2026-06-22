@@ -55,6 +55,7 @@ export default function VedleggBeregningsDetaljer({
 
 type BeregnindDetaljerContextProps = BidragPeriodeBeregningsdetaljer & {
   endeligBeløp: number;
+  kanFatteVedtakForRevurderingsbarn: boolean;
   periode: ResultatBarnebidragsberegningPeriodeDto;
   erEndringUnderGrense: boolean;
 };
@@ -133,6 +134,8 @@ function VedleggBeregningsDetaljerEndeligVedtakInnhold() {
                           value={{
                             ...detaljer,
                             periode,
+                            kanFatteVedtakForRevurderingsbarn:
+                              data.vedtak.kanFatteVedtakForRevurderingsbarn,
                             endeligBeløp: periode.faktiskBidrag,
                             erEndringUnderGrense:
                               periode.resultatKode ===
@@ -240,6 +243,8 @@ function VedleggBeregningsDetaljerInnhold() {
                             ...detaljer,
                             periode,
                             endeligBeløp: periode.faktiskBidrag,
+                            kanFatteVedtakForRevurderingsbarn:
+                              data.vedtak.kanFatteVedtakForRevurderingsbarn,
                             erEndringUnderGrense:
                               periode.resultatKode ===
                               Resultatkode.INGEN_ENDRING_UNDER_GRENSE,
