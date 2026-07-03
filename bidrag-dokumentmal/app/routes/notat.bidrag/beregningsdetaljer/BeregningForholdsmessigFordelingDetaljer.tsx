@@ -42,9 +42,9 @@ export const BeregningForholdsmessigFordeling = () => {
 
   if (periodeInneholderRevurderingsbarn && kanFatteVedtakForRevurderingsbarn) {
     return (
-      <div className="flex flex-col gap-6 mt-2">
-        <div className="border border-gray-200 bg-neutral-soft rounded p-1">
-          <div className="flex flex-col gap-4">
+      <div className="flex flex-col gap-3 mt-2">
+        <div className="border border-gray-200 rounded">
+          <div className="flex flex-col gap-1">
             <h3>
               {forholdsmessigFordeling.beregningFordelingAvBidrag
                 .finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn
@@ -56,7 +56,7 @@ export const BeregningForholdsmessigFordeling = () => {
         </div>
 
         {kanFatteVedtakForRevurderingsbarn && (
-          <div className="border border-gray-200 bg-neutral-soft rounded p-1">
+          <div className="border border-gray-200  rounded">
             <div className="flex flex-col gap-1">
               <h3>Beregning for søknadsbarn og revurderingsbarn</h3>
               <BeregningForholdsmessigFordelingSøknadsbarn />
@@ -140,7 +140,7 @@ export const BeregningForholdsmessigFordelingRevurdering = () => {
           {forholdsmessigFordeling.beregningFordelingAvBidrag
             .finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn && (
             <DataViewTable
-              className="pb-8"
+              className="pb-2"
               title="Forholdsmessig fordeling"
               data={
                 [
@@ -173,7 +173,7 @@ export const BeregningForholdsmessigFordelingRevurdering = () => {
       );
     }
     return (
-      <>
+      <div>
         <DataViewTable
           title="Forholdsmessig fordeling"
           data={
@@ -197,7 +197,7 @@ export const BeregningForholdsmessigFordelingRevurdering = () => {
             ? `Evnen på ${formatterBeløpForBeregning(evne)} er ikke tilstrekkelig for å dekke total andel av U på ${formatterBeløpForBeregning(beregningFordelingAvBidrag.sumBidragTilFordeling)}.${erSistePeriode ? " Det anbefales derfor å fatte vedtak for revurderingsbarn." : ""}`
             : `Evnen på ${formatterBeløpForBeregning(evne)} er tilstrekkelig for å dekke total andel av U på ${formatterBeløpForBeregning(beregningFordelingAvBidrag.sumBidragTilFordeling)}.${erSistePeriode ? " Det anbefales derfor å ikke fatte vedtak for revurderingsbarn." : ""}`}
         </p>
-      </>
+      </div>
     );
   }
 
@@ -357,7 +357,6 @@ export const BeregningForholdsmessigFordelingSøknadsbarn = () => {
           {forholdsmessigFordeling.beregningFordelingAvBidrag
             .finnesBarnMedLøpendeBidragSomIkkeErSøknadsbarn && (
             <DataViewTable
-              className="pb-8"
               title="Forholdsmessig fordeling"
               data={
                 [
@@ -476,7 +475,7 @@ const ForholdsmessigFordelingBeregningAndreBarn = ({
   );
 
   return (
-    <div className="mb-2">
+    <div>
       <BpsPrivatAvtalerTabellIkkeTilFordeling
         beregning={bpsBarnIkkeSøknadsbarn}
         sumBidrag={sumFordeling.sumBidragSomIkkeKanFordeles}

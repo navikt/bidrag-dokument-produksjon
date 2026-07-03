@@ -194,8 +194,8 @@ function OverstyrFatteVedtakRevurderingsbarnInformasjon() {
     <div>
       <h2 className={"section-title"}>{"Vedtak for revurderingsbarn"}</h2>
       {data.vedtak.skalFatteVedtakForRevurderingsbarn
-        ? "Det ble foreslått å fatte vedtak for revurderingsbarn"
-        : "Det ble foreslått å ikke fatte vedtak for revurderingsbarn"}
+        ? "Basert på informasjonen som ble lagt inn foreslo beregningen å fatte vedtak for revurderingsbarn."
+        : "Basert på informasjonen som ble lagt inn foreslo beregningen å ikke fatte vedtak for revurderingsbarn."}
 
       {!!data.vedtak.manueltOverstyrtFatteVedtakRevurderingsbarnBegrunnelse && (
         <div className={"mt-2"}>
