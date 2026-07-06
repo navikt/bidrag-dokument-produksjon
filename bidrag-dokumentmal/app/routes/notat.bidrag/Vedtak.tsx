@@ -56,7 +56,6 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
             data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
           }
         />
-        <OverstyrFatteVedtakRevurderingsbarnInformasjon />
       </>
     );
   }
@@ -86,6 +85,7 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
           />
         </>
       )}
+      <OverstyrFatteVedtakRevurderingsbarnInformasjon />
       <VedtakFattetDetaljer data={data.vedtak} />
     </>
   );

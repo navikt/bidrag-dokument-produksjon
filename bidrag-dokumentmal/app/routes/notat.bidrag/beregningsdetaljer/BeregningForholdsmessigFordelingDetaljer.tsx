@@ -485,6 +485,7 @@ const ForholdsmessigFordelingBeregningAndreBarn = ({
         bidragspliktigesBeregnedeTotalbidrag={
           sumFordeling.sumBidragTilFordelingIkkeSøknadsbarn
         }
+        title={"BP's beregnede totalbidrag for andre barn"}
       />
 
       <BpsPrivatAvtalerTabell
