@@ -17,6 +17,7 @@ export default {
     colors: {
       "table-header": "#E6F0FF",
       "table-bg-even": "#F2F3F5",
+      "neutral-soft": "#F2F3F5",
     },
 
     spacing: {

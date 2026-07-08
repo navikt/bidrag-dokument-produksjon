@@ -50,11 +50,13 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
     }
 
     return (
-      <VedtakTable
-        data={
-          data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
-        }
-      />
+      <>
+        <VedtakTable
+          data={
+            data.vedtak.resultat as DokumentmalResultatBidragsberegningBarnDto[]
+          }
+        />
+      </>
     );
   }
   return (
@@ -83,6 +85,7 @@ export default function Vedtak({ vedleggNummer }: VedleggProps) {
           />
         </>
       )}
+      <OverstyrFatteVedtakRevurderingsbarnInformasjon />
       <VedtakFattetDetaljer data={data.vedtak} />
     </>
   );
@@ -183,6 +186,30 @@ function ResultatTable({
 
 function renderResultatAvvisning() {
   return <div>Vedtak er avslag på behandling og har derfor ingen perioder</div>;
+}
+function OverstyrFatteVedtakRevurderingsbarnInformasjon() {
+  const { data } = useNotatFelles();
+  if (!data.vedtak.kanFatteVedtakForRevurderingsbarn) return null;
+  return (
+    <div>
+      <h2 className={"section-title"}>{"Vedtak for revurderingsbarn"}</h2>
+      {data.vedtak.skalFatteVedtakForRevurderingsbarn
+        ? "Basert på informasjonen som ble lagt inn foreslo beregningen å fatte vedtak for revurderingsbarn."
+        : "Basert på informasjonen som ble lagt inn foreslo beregningen å ikke fatte vedtak for revurderingsbarn."}
+
+      {!!data.vedtak.manueltOverstyrtFatteVedtakRevurderingsbarnBegrunnelse && (
+        <div className={"mt-2"}>
+          {data.vedtak.skalFatteVedtakForRevurderingsbarn
+            ? "Det ble manuelt overstyrt til å ikke fatte vedtak for revurderingsbarn"
+            : "Det ble manuelt overstyrt til å fatte vedtak for revurderingsbarn"}
+          <div>
+            <h5 style={{ margin: 0 }}>Begrunnelse:</h5>
+            {`${data.vedtak.manueltOverstyrtFatteVedtakRevurderingsbarnBegrunnelse}`}
+          </div>
+        </div>
+      )}
+    </div>
+  );
 }
 function VedtakTable({
   data,
