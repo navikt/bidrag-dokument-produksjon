@@ -2,7 +2,7 @@ services:
   gotenberg:
     build:
       context: .
-      dockerfile: DockerfileGotenberg
+      dockerfile: gotenberg.Dockerfile
     ports:
       - "3054:3000"
     command:

@@ -1,4 +1,4 @@
-FROM gotenberg/gotenberg:edge-chromium
+FROM gotenberg/gotenberg:8.34.0-chromium
 
 #RUN apt-get update -qq &&\
 #    DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends -t trixie-backports libreoffice-l10n-nb &&\
