@@ -1,12 +1,23 @@
 services:
-  gotenberg:
+  weasyprint:
     build:
       context: .
-      dockerfile: gotenberg.Dockerfile
+      dockerfile: DockerfileWeasyprint
+    # The container listens on 8080 (same as the Nais `port:`); 3054 is what
+    # bidrag-dokument-produksjon expects via `bidrag-pdfgen.url` locally.
     ports:
-      - "3054:3000"
-    command:
-      - "gotenberg"
-      - "--pdfengines-convert-engines=libreoffice-pdfengine"
-      - "--pdfengines-flatten-engines=qpdf"
-      - "--api-port=3000"
+      - "3054:8080"
+    environment:
+      LOG_LEVEL: INFO
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "python",
+          "-c",
+          "import urllib.request;urllib.request.urlopen('http://localhost:8080/health').read()",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s

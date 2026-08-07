@@ -1,6 +1,12 @@
 * {
-  --paper-width: 595px;
-  --paper-height: 842px;
+  /* A4 er 595 x 842 *punkter*, som tilsvarer 793,7 x 1122,5 CSS-px ved 96 dpi.
+     Å deklarere 595px x 842px ga en side som var 25 % for liten, med bare
+     595 - 128 = 467px innholdsbredde for et oppsett bygget rundt
+     --content-width: 670px. Chromium skjulte dette ved å skalere innholdet ned
+     til det passet (~2/3); WeasyPrint rendrer det tro mot CSS, så innholdet
+     rant over sidekantene. Bruk ekte A4 slik at siden matcher oppsettet. */
+  --paper-width: 210mm;
+  --paper-height: 297mm;
   --content-width: 670px;
   --a-blue-800: rgba(0, 52, 125, 1);
   --a-blue-600: rgba(0, 86, 180, 1);
@@ -19,9 +25,16 @@
 
   @top-center {
     content: element(header);
+    /* Uten eksplisitt bredde blir marginboksen shrink-to-fit og innholdet
+       midtstilt. 100% = bredden på marginbåndet mellom hjørneboksene, som er
+       nøyaktig lik innholdsbredden på siden. */
+    width: 100%;
+    vertical-align: top;
   }
   @bottom-center {
     content: element(footer);
+    width: 100%;
+    vertical-align: bottom;
   }
 }
 
@@ -51,7 +64,12 @@
 }
 
 @media print {
-  div {
+  /* `div { break-inside: avoid }` traff *alle* divs, også de ytterste
+     container-divene. En container som er høyere enn én side kan ikke unngå
+     sidebrudd; Chromium ignorerte regelen da, mens WeasyPrint tegnet innholdet
+     oppå hverandre nederst på siden. Begrens derfor til de innerste divene
+     (de som ikke selv inneholder en div), som er de vi faktisk vil holde samlet. */
+  div:not(:has(div)) {
     break-inside: avoid;
   }
 
@@ -89,9 +107,30 @@
 
 #footer {
   position: running(footer);
-  font-size: 12px;
-  margin-top: -25px;
-  padding-left: 0.6cm;
+}
+
+/* Header og footer er running elements som hentes inn i @top-center /
+   @bottom-center. De legges ut som en sidebred flex-rad: saksreferanse til
+   venstre, sidetall til høyre. */
+#header,
+#footer {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 100%;
+  font-family: "Source Sans 3";
+  font-size: 8px;
+  line-height: 16px;
+}
+
+#header > span,
+#footer > span {
+  white-space: nowrap;
+}
+
+.pageSeparator {
+  margin-left: 5px;
+  margin-right: 5px;
 }
 
 body {
@@ -148,8 +187,11 @@ dt {
 }
 
 #header {
-  position: relative;
-  height: 80px;
+  /* Må være et running element slik at @top-center-marginboksen kan hente det
+     inn på hver side. Med `position: relative` ble det liggende i den normale
+     flyten og la beslag på hele første side. Den gamle høyden på 80px reserverte
+     plass i Gotenbergs separate header-dokument og trengs ikke lenger. */
+  position: running(header);
 }
 
 .title2 {
@@ -555,8 +597,15 @@ Custom components
 
   @top-center {
     content: element(header);
+    /* Uten eksplisitt bredde blir marginboksen shrink-to-fit og innholdet
+       midtstilt. 100% = bredden på marginbåndet mellom hjørneboksene, som er
+       nøyaktig lik innholdsbredden på siden. */
+    width: 100%;
+    vertical-align: top;
   }
   @bottom-center {
     content: element(footer);
+    width: 100%;
+    vertical-align: bottom;
   }
 }

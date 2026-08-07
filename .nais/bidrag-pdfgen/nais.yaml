@@ -13,7 +13,7 @@ spec:
   observability:
     autoInstrumentation:
       enabled: true
-      runtime: java
+      runtime: python
     logging:
         destinations:
           - id: loki
@@ -33,27 +33,39 @@ spec:
       {{/each}}
          - application: logging
            namespace: nais-system
+  # WeasyPrint + fontconfig need a few seconds before the first request is served.
+  startup:
+    path: /health
+    initialDelay: 5
+    timeout: 2
+    periodSeconds: 3
+    failureThreshold: 20
   liveness:
     path: /health
     initialDelay: 10
-    timeout: 1
+    # A 1s timeout is too tight: a pod busy rendering answered /health in >1s
+    # with gunicorn's sync worker, so Kubernetes restarted healthy pods under
+    # load. The gthread worker class fixes the underlying cause; this is margin.
+    timeout: 5
     periodSeconds: 10
     failureThreshold: 10
   readiness:
     path: /health
     initialDelay: 10
-    timeout: 1
+    timeout: 3
+    periodSeconds: 10
+    failureThreshold: 3
   resources:
     limits:
+      # Rendering is CPU-bound; measured ~150Mi per gunicorn worker (2 workers,
+      # ~360Mi resident under concurrent load), so 1000Mi leaves ample headroom.
       memory: 1000Mi
     requests:
-      cpu: 50m
-      memory: 500Mi
+      # Bumped from 50m: a full saksbehandlingsnotat takes ~1.5s of solid CPU,
+      # and a 50m request means the pod is throttled hard on a busy node.
+      cpu: 200m
+      memory: 512Mi
   ingresses:
   {{#each ingresses as |url|}}
      - {{url}}
   {{/each}}
-  command:
-   - gotenberg
-   - --pdfengines-engines=libreoffice-pdfengine
-   - --api-port=8080
