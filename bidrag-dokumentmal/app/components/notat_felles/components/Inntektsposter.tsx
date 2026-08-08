@@ -18,7 +18,7 @@ export default function Inntektsposter({
   return (
     <div
       style={{
-        width: "700px",
+        width: "100%",
       }}
     >
       <Inntektspost

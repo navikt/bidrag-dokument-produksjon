@@ -63,7 +63,7 @@ spec:
     requests:
       # Bumped from 50m: a full saksbehandlingsnotat takes ~1.5s of solid CPU,
       # and a 50m request means the pod is throttled hard on a busy node.
-      cpu: 200m
+      cpu: 500m
       memory: 512Mi
   ingresses:
   {{#each ingresses as |url|}}
