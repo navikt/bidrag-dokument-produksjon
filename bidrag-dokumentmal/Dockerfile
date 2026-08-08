@@ -25,6 +25,11 @@ FROM node:22-alpine3.22 AS runtime
 ENV NODE_ENV=production
 ENV PORT=8080
 
+# Patch OS packages from the base image. node:22-alpine3.22 currently ships
+# openssl 3.5.6-r0, which has known CVEs fixed in 3.5.7-r0. The base image is
+# only rebuilt periodically, so upgrade explicitly rather than waiting for it.
+RUN apk upgrade --no-cache
+
 # Drop the bundled npm/corepack CLIs from the runtime image. They are never used
 # here - the container starts react-router-serve directly - but their vendored
 # dependencies dominate the image's CVE report (npm bundles its own copies of

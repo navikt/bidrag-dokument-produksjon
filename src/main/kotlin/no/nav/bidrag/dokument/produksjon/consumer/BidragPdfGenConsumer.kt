@@ -47,7 +47,12 @@ class BidragPdfGenConsumer(
                     .queryParam("pdfa", configuration.convertToPDFA)
                     .toUriString()
 
-            val headers = HttpHeaders().apply { contentType = MediaType.TEXT_HTML }
+            // Charset må angis eksplisitt. Uten den tolkes text/html som
+            // ISO-8859-1 av HTTP-standarden, og norske tegn (æøå) blir ødelagt.
+            val headers =
+                HttpHeaders().apply {
+                    contentType = MediaType(MediaType.TEXT_HTML, Charsets.UTF_8)
+                }
             restTemplate
                 .postForEntity<ByteArray>(
                     convertUrl,

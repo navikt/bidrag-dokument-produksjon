@@ -16,6 +16,7 @@ ENV PYTHONUNBUFFERED=1 \
     PORT=8080
 
 RUN apt-get update -qq \
+    && DEBIAN_FRONTEND=noninteractive apt-get upgrade -y -qq \
     && DEBIAN_FRONTEND=noninteractive apt-get install -y -qq --no-install-recommends \
         # WeasyPrint's rendering stack
         libpango-1.0-0 \
