@@ -74,20 +74,32 @@ USER 1001
 
 EXPOSE 8080
 
-# Rendering is CPU-bound, so scale with processes; ~150 MiB per worker means two
-# fit comfortably inside the 1000Mi Nais limit.
+# Rendering is CPU-bound, so scale with processes rather than threads.
 #
 # The `gthread` worker class is deliberate: with the default sync worker a pod
-# that is busy rendering cannot answer GET /health at all, so Kubernetes' 1s
+# that is busy rendering cannot answer GET /health at all, so Kubernetes'
 # readiness probe fails and the pod is pulled out of the service under exactly
 # the load it is supposed to handle. WeasyPrint spends most of its time in
-# Pango/cairo, which release the GIL, so a few threads let the trivial health
+# Pango/cairo, which release the GIL, so a spare thread lets the trivial health
 # handler be scheduled promptly without hurting render throughput.
+#
+# Thread count is 2, not 4. Each in-flight render holds a full document tree,
+# so memory scales with threads while throughput does not. Measured with a
+# 15-page saksbehandlingsnotat (2 workers, resident set of the whole container):
+#
+#   threads=1 -> 327 MiB, /health 0.58s under 2 concurrent renders
+#   threads=2 -> 486 MiB, /health 0.007s
+#   threads=4 -> 758 MiB, /health 0.007s
+#
+# 2 keeps a thread free to answer probes at a third less memory than 4; going
+# higher only buys memory pressure. Note that under *saturation* (more requests
+# than worker slots) /health queues and times out in every configuration - the
+# Nais probes are tuned to tolerate that rather than restart a busy pod.
 CMD exec gunicorn \
     --worker-class gthread \
     --bind "0.0.0.0:${PORT}" \
     --workers "${GUNICORN_WORKERS:-2}" \
-    --threads "${GUNICORN_THREADS:-4}" \
+    --threads "${GUNICORN_THREADS:-2}" \
     --timeout "${GUNICORN_TIMEOUT:-120}" \
     --graceful-timeout 30 \
     --keep-alive 15 \

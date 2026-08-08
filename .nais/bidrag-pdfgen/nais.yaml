@@ -57,8 +57,10 @@ spec:
     failureThreshold: 3
   resources:
     limits:
-      # Rendering is CPU-bound; measured ~150Mi per gunicorn worker (2 workers,
-      # ~360Mi resident under concurrent load), so 1000Mi leaves ample headroom.
+      # Two gunicorn workers at two threads each. Measured ~490Mi resident for
+      # the whole container under concurrent load with a 15-page notat, so
+      # 1000Mi leaves roughly 2x headroom. (An earlier 4-thread configuration
+      # sat at ~780Mi, which was uncomfortably close to this limit.)
       memory: 1000Mi
     requests:
       # Bumped from 50m: a full saksbehandlingsnotat takes ~1.5s of solid CPU,
