@@ -13,20 +13,20 @@ RUN --mount=type=cache,target=/root/.npm \
       'registry=https://registry.npmjs.org/' \
       '@navikt:registry=https://npm.pkg.github.com' \
       "//npm.pkg.github.com/:_authToken=${TOKEN}" > /root/.npmrc && \
-    npm ci --include=dev --legacy-peer-deps && \
+    npm ci --include=dev && \
     rm -f /root/.npmrc
 
 
 COPY . .
 RUN npm run build
-RUN npm prune --omit=dev --legacy-peer-deps && npm cache clean --force
+RUN npm prune --omit=dev && npm cache clean --force
 
 FROM node:22-alpine3.22 AS runtime
 ENV NODE_ENV=production
 ENV PORT=8080
 
 # Drop the bundled npm/corepack CLIs from the runtime image. They are never used
-# here - the container starts remix-serve directly - but their vendored
+# here - the container starts react-router-serve directly - but their vendored
 # dependencies dominate the image's CVE report (npm bundles its own copies of
 # brace-expansion, picomatch, ip-address, tar and friends, which are flagged even
 # though no code path can reach them). Removing them eliminates that whole class
@@ -48,4 +48,4 @@ USER node
 
 EXPOSE 8080
 
-CMD ["./node_modules/.bin/remix-serve", "./build/server/index.js"]
+CMD ["./node_modules/.bin/react-router-serve", "./build/server/index.js"]

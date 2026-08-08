@@ -1,5 +1,4 @@
-import { useActionData } from "@remix-run/react";
-import { ActionFunctionArgs } from "@remix-run/node";
+import { useActionData, ActionFunctionArgs } from "react-router";
 import "../../style/style.css";
 import tekster from "~/tekster";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";

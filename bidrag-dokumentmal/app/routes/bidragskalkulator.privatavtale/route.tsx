@@ -2,10 +2,9 @@
 import "../../style/style.css";
 
 import { parseRequestAction } from "~/routes/common";
-import { ActionFunctionArgs } from "@remix-run/node";
+import { ActionFunctionArgs, useActionData } from "react-router";
 import HeaderFooter from "~/features/bidragskalkulator/HeaderFooterKalkulator";
 import NavLogo from "~/components/NavLogo";
-import { useActionData } from "@remix-run/react";
 import {
   kodeOfNavSkjemaIdKey,
   GenererPrivatAvtalePdfRequest,
