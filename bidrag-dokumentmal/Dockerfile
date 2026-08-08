@@ -1,6 +1,6 @@
 # syntax=docker/dockerfile:1.7
 
-FROM node:22-alpine3.21 AS build
+FROM node:22-alpine3.22 AS build
 ENV NODE_ENV=production
 LABEL maintainer="Team Bidrag"
 WORKDIR /app
@@ -24,6 +24,18 @@ RUN npm prune --omit=dev --legacy-peer-deps && npm cache clean --force
 FROM node:22-alpine3.22 AS runtime
 ENV NODE_ENV=production
 ENV PORT=8080
+
+# Drop the bundled npm/corepack CLIs from the runtime image. They are never used
+# here - the container starts remix-serve directly - but their vendored
+# dependencies dominate the image's CVE report (npm bundles its own copies of
+# brace-expansion, picomatch, ip-address, tar and friends, which are flagged even
+# though no code path can reach them). Removing them eliminates that whole class
+# of findings instead of suppressing them one by one.
+RUN rm -rf /usr/local/lib/node_modules/npm \
+           /usr/local/lib/node_modules/corepack \
+           /usr/local/bin/npm /usr/local/bin/npx \
+           /usr/local/bin/corepack /opt/yarn* \
+           /usr/local/bin/yarn /usr/local/bin/yarnpkg
 
 WORKDIR /app
 COPY --from=build --chown=node:node /app/package*.json ./
