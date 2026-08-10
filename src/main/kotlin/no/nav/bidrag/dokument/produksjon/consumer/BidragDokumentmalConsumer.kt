@@ -30,7 +30,7 @@ class BidragDokumentmalConsumer(
                     .defaultHeader("renderforpdf", renderforpdf.toString())
                     .defaultHeader("renderPDFVersion", RenderPDFVersion.V2.name)
                     .build()
-            restTemplate.postForEntity<String>(malUrl, payload).body!!
+            restTemplate.postForEntity<ByteArray>(malUrl, payload).body?.toString(Charsets.UTF_8)
         } catch (e: Exception) {
             log.error(e) { "Det skjedde en feil ved henting av dokumentmal fra url $url" }
             null

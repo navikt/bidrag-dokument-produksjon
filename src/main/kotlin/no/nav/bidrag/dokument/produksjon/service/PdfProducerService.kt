@@ -150,10 +150,7 @@ class PdfProducerService(
     }
 
     fun flattenPDF(payload: ByteArray): ResponseEntity<ByteArray> {
-        val bytes =
-            bidragPdfGenConsumer.flattenPDF(
-                payload.toString(Charsets.UTF_8),
-            )
+        val bytes = bidragPdfGenConsumer.flattenPDF(payload)
 
         return ResponseEntity
             .ok()

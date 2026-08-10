@@ -1,4 +1,4 @@
-import { useActionData } from "@remix-run/react";
+import { useActionData, ActionFunctionArgs } from "react-router";
 import "../../style/style.css";
 import Vedtak from "~/routes/notat.forskudd/Vedtak";
 import tekster from "~/tekster";
@@ -14,7 +14,6 @@ import VedleggInntekter from "~/components/notat_felles/components/VedleggInntek
 import NotatTittel from "~/components/NotatTittel";
 import HeaderFooter from "~/components/notat_felles/HeaderFooter";
 import { parseRequestAction, NotatRequest } from "~/routes/common";
-import { ActionFunctionArgs } from "@remix-run/node";
 import Virkningstidspunkt from "~/components/notat_felles/components/Virkningstidspunkt";
 
 export async function action(args: ActionFunctionArgs) {

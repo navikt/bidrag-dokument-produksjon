@@ -33,7 +33,7 @@ jobs:
           image_suffix: bidrag-pdfgen
           tag: bidrag-pdfgen
           docker_context: ./bidrag-pdfgen
-          dockerfile: ./bidrag-pdfgen/gotenberg.Dockerfile
+          dockerfile: ./bidrag-pdfgen/DockerfileWeasyprint
       - name: Deploy to dev-gcp
         uses: nais/deploy/actions/deploy@v2
         env:
