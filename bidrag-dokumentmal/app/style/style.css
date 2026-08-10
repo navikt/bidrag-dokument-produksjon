@@ -7,7 +7,11 @@
      rant over sidekantene. Bruk ekte A4 slik at siden matcher oppsettet. */
   --paper-width: 210mm;
   --paper-height: 297mm;
-  --content-width: 670px;
+  /* Må følge den faktiske innholdsbredden på siden. En fast 670px var bredere
+     enn A4 minus sidemargene (210mm - 128px ≈ 666px) og container-paddingen,
+     så innhold med w-[--content-width] rant ut over høyremargen og fikk
+     venstre- og høyremarg til å se ulike ut. */
+  --content-width: 100%;
   --a-blue-800: rgba(0, 52, 125, 1);
   --a-blue-600: rgba(0, 86, 180, 1);
   --a-blue-700: rgba(0, 69, 156, 1);
@@ -241,7 +245,12 @@ dt {
 }
 
 .container {
-  margin: 0cm 0.5cm;
+  /* Tailwind gir .container `width: 100%`. Kombinert med horisontale marginer
+     flyter boksen 1cm ut til høyre for sideområdet, slik at venstre- og
+     høyremargen i PDF-en ble ulike. Bruk padding + border-box i stedet. */
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0cm 0.5cm;
   height: 100%;
 }
 

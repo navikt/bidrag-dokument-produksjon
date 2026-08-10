@@ -55,8 +55,8 @@ export function CommonTable({
     "pb-1 pt-1 border-b border-solid border-t-0 border-r-0 border-l-0";
   const cellV2StylingWithoutBorder = "pb-2 pt-2 pl-3 pr-3";
   const style = expressiveStyling
-    ? { width: "670px" }
-    : { width: width, maxWidth: "620px" };
+    ? { width: "630px" }
+    : { width: width, maxWidth: "590px" };
 
   function renderRow(row: TableRow, index: number, isPeriodColumn: boolean) {
     return (

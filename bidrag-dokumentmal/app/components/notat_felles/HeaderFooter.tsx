@@ -21,7 +21,7 @@ export default function HeaderFooter({
   // Gotenberg rendret header/footer som egne, sidebrede dokumenter. Som CSS
   // running elements lever de nå inni @top-center/@bottom-center-marginboksen.
   const renderHeaderFooterV2 = (isHeader: boolean) => (
-    <div id={isHeader ? "header" : "footer"} className={"pt-2 pb-2"}>
+    <div id={isHeader ? "header" : "footer"} className={"mt-4 mb-4"}>
       <span>{saksreferanse}</span>
       <span>
         <span className="pageNumber"></span>
