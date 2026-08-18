@@ -185,8 +185,18 @@
     </dependencies>
 
     <build>
-        <sourceDirectory>${project.basedir}/src/main/kotlin</sourceDirectory>
-        <testSourceDirectory>${project.basedir}/src/test/kotlin</testSourceDirectory>
+        <sourceDirectory>${project.basedir}/bidrag-dokument-produksjon/src/main/kotlin</sourceDirectory>
+        <testSourceDirectory>${project.basedir}/bidrag-dokument-produksjon/src/test/kotlin</testSourceDirectory>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/bidrag-dokument-produksjon/src/main/resources</directory>
+            </resource>
+        </resources>
+        <testResources>
+            <testResource>
+                <directory>${project.basedir}/bidrag-dokument-produksjon/src/test/resources</directory>
+            </testResource>
+        </testResources>
         <plugins>
             <plugin>
                 <groupId>org.springframework.boot</groupId>
@@ -269,7 +279,7 @@
                             <target name="ktlint">
                                 <java taskname="ktlint" dir="${basedir}" fork="true" failonerror="true"
                                       classpathref="maven.plugin.classpath" classname="com.pinterest.ktlint.Main">
-                                    <arg value="src/**/*.kt"/>
+                                    <arg value="bidrag-dokument-produksjon/src/**/*.kt"/>
                                 </java>
                             </target>
                         </configuration>
@@ -287,7 +297,7 @@
                                     <jvmarg value="--add-opens"/>
                                     <jvmarg value="java.base/java.lang=ALL-UNNAMED"/>
                                     <arg value="-F"/>
-                                    <arg value="src/**/*.kt"/>
+                                    <arg value="bidrag-dokument-produksjon/src/**/*.kt"/>
                                 </java>
                             </target>
                         </configuration>
