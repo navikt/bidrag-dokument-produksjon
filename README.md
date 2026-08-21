@@ -1,3 +1,8 @@
+## ⚠️ DETTE REPOET ER FLYTTET
+
+> **Dette repoet er flyttet til [navikt/bidrag-backend](https://github.com/navikt/bidrag-backend).**
+> Bruk det nye repoet for videre utvikling — dette repoet oppdateres ikke lenger.
+
 # pdfgen
 
 [![Build master](https://github.com/navikt/pdfgen/actions/workflows/build.yml/badge.svg?branch=master)](https://github.com/navikt/pdfgen/actions/workflows/build.yml)
